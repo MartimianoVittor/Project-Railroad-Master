@@ -1,0 +1,46 @@
+/* Gerenciamento de sessões: arrastar, duplicar e excluir. */
+.modal-sessoes {
+    width: min(650px, calc(100vw - 1.4rem)); max-height: min(720px, 88dvh);
+    padding: 1.25rem; border: 5px double #795637;
+    background: #f7ebce; color: #3d2314;
+    box-shadow: 0 20px 70px #140a0577;
+}
+.modal-sessoes::backdrop { background: #21130999; }
+.modal-cabecalho { display: flex; justify-content: space-between; align-items: start; gap: 1rem; }
+.modal-cabecalho .sobretitulo { margin-bottom: .25rem; font-size: 1.1rem; }
+.modal-cabecalho h2 { margin: 0; font-size: 1.45rem; }
+.lista-gerenciar-sessoes {
+    display: grid; gap: .55rem; overflow-y: auto;
+    max-height: min(470px, 50dvh); margin: .8rem 0; padding: 0;
+    list-style: none;
+}
+.linha-gerenciar {
+    display: flex; align-items: center; flex-wrap: wrap; gap: .5rem;
+    padding: .65rem; border: 1px solid #a0825e;
+    background: #fff8e8;
+}
+.linha-gerenciar.arrastando { opacity: .45; }
+.linha-gerenciar.sobre { outline: 2px dashed #9c4927; }
+.alca-arrastar { cursor: grab; font-size: 1.25rem; padding: 0 .3rem; }
+.nome-sessao-gerenciar { flex: 1 1 110px; font-weight: bold; }
+.acoes-gerenciar { display: flex; flex-wrap: wrap; gap: .3rem; }
+.acoes-gerenciar .botao { min-height: 32px; padding: .3rem .5rem; }
+.modal-rodape { display: flex; justify-content: flex-end; padding-top: .8rem; border-top: 2px double #ad906d; }
+
+/* Campos de criação e edição de sessões. */
+.modal-criar-sessao { width: min(520px, calc(100vw - 1.4rem)); }
+.modal-criar-sessao .formulario-compacto { gap: .85rem; }
+.modal-criar-sessao .modal-cabecalho { margin-bottom: .4rem; }
+.modal-criar-sessao .formulario-compacto input { min-height: 43px; }
+.rotulo-com-contador { display: flex; align-items: center; justify-content: space-between; gap: .6rem; }
+.rotulo-com-contador output { color: #735741; font-size: .8rem; font-variant-numeric: tabular-nums; }
+.modal-criar-sessao .modal-rodape { gap: .5rem; }
+.detalhes-sessao-gerenciar {
+    display: flex; flex: 1 1 150px; flex-direction: column;
+    min-width: 0; gap: .16rem;
+}
+.numero-sessao-gerenciar { color: #8c4b2b; font: .8rem 'Rye', Georgia, serif; }
+.nome-sessao-gerenciar { overflow-wrap: anywhere; font-weight: bold; }
+.descricao-sessao-gerenciar { color: #70543e; overflow-wrap: anywhere; font-size: .78rem; }
+.linha-gerenciar.sobre { outline: 0; border-top: 3px solid #a64b2a; }
+.linha-gerenciar.sobre.inserir-depois { border-top: 1px solid #a0825e; border-bottom: 3px solid #a64b2a; }

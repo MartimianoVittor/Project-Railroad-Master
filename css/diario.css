@@ -1,0 +1,113 @@
+/* Diário: 40% de escrita, 60% de quadro. */
+.barra-sessoes {
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: .65rem; padding: .65rem .8rem; margin-bottom: .8rem;
+    border: 2px solid #896748; background: #e7d3ab;
+}
+.barra-sessoes select {
+    width: clamp(200px, 24vw, 345px); max-width: 100%; min-width: 0;
+    min-height: 40px; padding: .45rem .65rem;
+    border: 2px solid #94714e; border-radius: 3px;
+    background: #fff9e9; color: #3d2314;
+}
+.grupo-seletor-sessoes { display: flex; align-items: center; flex: 0 1 auto; min-width: 0; }
+.acoes-barra-sessoes { display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: .5rem; margin-left: auto; }
+.barra-sessoes .botao { min-height: 39px; padding: .45rem .8rem; }
+.diario-vazio {
+    display: grid; flex: 1 1 auto; place-content: center; min-height: 220px;
+    padding: 1.5rem; border: 2px dashed #b49a75;
+    background: #f4e5c8; text-align: center;
+}
+.diario-vazio p { margin: 0; color: #735741; }
+.grade-diario {
+    flex: 1 1 auto; min-height: 0;
+    display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    gap: .85rem; align-items: stretch;
+}
+.cartao-marcos, .cartao-quadro {
+    display: flex; flex-direction: column;
+    min-width: 0; min-height: 0; overflow: hidden;
+    padding: .9rem;
+}
+.cabecalho-marcos {
+    display: flex; align-items: center; justify-content: space-between;
+    flex: 0 0 auto; gap: .7rem; margin-bottom: .65rem;
+}
+.cabecalho-marcos h2 { margin: 0; font-size: 1.15rem; }
+.cartao-marcos textarea {
+    display: block; flex: 1 1 auto; width: 100%; min-height: 0;
+    padding: .8rem; resize: none;
+    border: 2px solid #a18360; border-radius: 3px;
+    background: repeating-linear-gradient(to bottom, #fffaf0 0 31px, #e5d4b6 32px 33px);
+    color: #3d2314; font-size: .95rem; line-height: 33px;
+}
+.ferramentas-quadro {
+    display: flex; flex: 0 0 auto; flex-wrap: wrap; align-items: center;
+    gap: .3rem; margin: 0 0 0 auto; padding: .35rem;
+    border: 1px solid #8b6845; background: #e8d6b5;
+}
+.ferramenta-quadro {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-height: 33px; padding: .3rem .55rem;
+    border: 1px solid #53351f; border-radius: 3px;
+    background: #4a2c1b; color: #fff2d9;
+    font: bold .77rem Georgia, serif; cursor: pointer;
+}
+.ferramenta-quadro:hover:not(:disabled) { background: #755039; }
+.ferramenta-quadro.ativo { background: #aa512e; }
+.ferramenta-perigo { margin-left: auto; background: #8b252d; }
+.botao-upload { user-select: none; }
+.ferramentas-quadro input[type="color"] {
+    width: 34px; height: 33px; padding: 1px;
+    border: 1px solid #6f4b30; background: #fffaf0; cursor: pointer;
+}
+.zona-quadro {
+    position: relative; flex: 1 1 auto; min-height: 0;
+    overflow: hidden; border: 2px dashed #78543a;
+    background: #fcf8f2; touch-action: none;
+}
+.zona-quadro canvas {
+    display: block; width: 100%; height: 100%; cursor: crosshair;
+    touch-action: none;
+}
+.zona-quadro.quadro-inativo { opacity: .6; pointer-events: none; }
+.zona-quadro .item-movel {
+    position: absolute; z-index: 2; user-select: none;
+    pointer-events: none; box-sizing: border-box;
+}
+.zona-quadro .texto-conteudo {
+    display: block; padding: .2rem .35rem;
+    font-family: Georgia, serif; font-weight: bold;
+    line-height: 1.2; overflow-wrap: anywhere; white-space: pre-wrap;
+}
+.zona-quadro .imagem-conteudo {
+    display: block; width: 100%; height: auto; max-height: 100%;
+    object-fit: contain; border: 2px solid #4d3324;
+    box-shadow: 1px 3px 7px #26150744;
+}
+.zona-quadro.modo-mover-ativo .item-movel {
+    pointer-events: auto; cursor: grab; outline: 1px dashed #b35a31;
+    touch-action: none;
+}
+.zona-quadro.modo-mover-ativo .item-movel.selecionado {
+    outline: 2px solid #a64b2a; z-index: 3;
+}
+.zona-quadro .alca-redimensionar {
+    display: none; position: absolute; right: -7px; bottom: -7px;
+    width: 16px; height: 16px; border: 2px solid #fff8e9;
+    border-radius: 50%; background: #a64b2a; cursor: nwse-resize;
+}
+.zona-quadro.modo-mover-ativo .alca-redimensionar { display: block; }
+
+/* O título divide a mesma linha com a barra de ferramentas. */
+.cabecalho-quadro {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: .45rem;
+    margin-bottom: .55rem;
+}
+.cabecalho-quadro h2 { margin: 0; font-size: 1.05rem; white-space: nowrap; }
+.cabecalho-quadro .ferramentas-quadro { flex: 0 1 auto; }

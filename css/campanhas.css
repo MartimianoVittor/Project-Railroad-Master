@@ -1,0 +1,166 @@
+/* 3. Campanhas: criação/seleção à esquerda e jogadores à direita. */
+.grade-gerenciamento {
+    display: grid;
+    grid-template-columns: minmax(290px, .7fr) minmax(0, 1.3fr);
+    gap: 1.3rem;
+    align-items: stretch;
+}
+.selecao-campanhas, .quadro-jogadores { min-height: 550px; }
+.selecao-campanhas { display: flex; flex-direction: column; gap: 1.35rem; }
+.formulario-criar { padding-bottom: 1.35rem; border-bottom: 3px double #a58a64; }
+.formulario-criar h2 { margin: 0 0 .4rem; }
+.acoes-formulario { display: flex; justify-content: flex-end; margin-top: .4rem; }
+.acoes-formulario .botao { justify-self: auto; }
+.divisao-lista-campanhas { display: grid; gap: .7rem; align-content: start; }
+.divisao-lista-campanhas .titulo-cartao h2 { display: flex; align-items: center; gap: .7rem; margin: 0 0 .4rem; }
+.lista-campanhas, .lista-registros, .lista-participantes {
+    display: grid;
+    gap: .7rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.item-campanha {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .8rem;
+    padding: .85rem;
+    border: 2px solid #aa8a61;
+    border-left: 5px solid #96744c;
+    border-radius: 4px;
+    background: #f3e4c9;
+}
+.item-campanha.selecionada { border-left-color: #8b252d; background: #e9d2a3; }
+.item-campanha-info { flex: 1 1 auto; min-width: 0; }
+.item-campanha-info strong { display: block; overflow-wrap: anywhere; font: .95rem 'Rye', Georgia, serif; }
+.item-campanha-info small { display: block; margin-top: .4rem; color: #74563f; font-size: .72rem; }
+.botao-selecionar { flex: 0 0 auto; background: #f0ddad; }
+.item-campanha.selecionada .botao-selecionar { background: #d4af37; }
+
+.quadro-jogadores { display: flex; flex-direction: column; }
+.estado-vazio {
+    display: grid;
+    flex: 1;
+    min-height: 390px;
+    align-content: center;
+    justify-items: center;
+    gap: .5rem;
+    padding: 1.5rem;
+    border: 2px dashed #bc9a72;
+    background: #f4e5c8;
+    text-align: center;
+}
+.estado-vazio .sobretitulo { margin-bottom: .4rem; }
+.estado-vazio h2 { max-width: 490px; font-size: clamp(1.35rem, 2.4vw, 2rem); }
+.estado-vazio p:last-child { margin-bottom: 0; color: var(--muted); line-height: 1.7; }
+.painel-campanha { display: flex; flex: 1; flex-direction: column; gap: 1.1rem; min-width: 0; }
+/* A campanha selecionada e a ação de atualizar dividem a mesma linha. */
+.cabecalho-campanha {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: .7rem;
+    padding-bottom: 1.05rem;
+    border-bottom: 3px double #a58a64;
+}
+.cabecalho-campanha-texto { flex: 1 1 auto; min-width: 0; }
+.cabecalho-campanha h2 { margin-bottom: .45rem; overflow-wrap: anywhere; font-size: clamp(1.45rem, 2.4vw, 2.25rem); }
+.cabecalho-campanha .botao { flex: 0 0 auto; }
+.descricao-campanha-ativa { margin: .3rem 0 0; color: #775943; line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; }
+.cabecalho-jogadores { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.cabecalho-jogadores h3 { margin: 0; font-size: 1.1rem; }
+
+/* Cada jogador ocupa uma linha compacta, com seus personagens ao lado. */
+.lista-participantes { gap: .45rem; }
+.participante {
+    display: grid;
+    grid-template-columns: minmax(130px, .33fr) minmax(0, 1fr);
+    align-items: start;
+    gap: .65rem;
+    min-width: 0;
+    padding: .5rem .6rem;
+    border: 1px solid #a88a66;
+    border-radius: 4px;
+    background: #f4e6ce;
+}
+.participante-cabecalho {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .35rem;
+    min-width: 0;
+}
+.participante-identidade { min-width: 0; }
+.rotulo-campo {
+    display: block;
+    margin-bottom: .12rem;
+    color: #8a4f2b;
+    font: .9rem 'Smokum', Georgia, serif;
+    letter-spacing: .04em;
+    line-height: 1.1;
+}
+.nome-jogador { display: block; overflow-wrap: anywhere; font: .86rem 'Rye', Georgia, serif; line-height: 1.4; }
+.personagens-participante { display: grid; gap: .3rem; min-width: 0; }
+.personagem-participante {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: .3rem .45rem;
+    min-width: 0;
+    min-height: 46px;
+    padding: .35rem .5rem;
+    border: 1px solid #c2a783;
+    background: #fff8e9;
+}
+.personagem-identidade { flex: 1 1 105px; min-width: 0; }
+.nome-personagem-lista { display: block; overflow-wrap: anywhere; font-size: .86rem; line-height: 1.35; }
+.personagem-ausente {
+    align-self: center;
+    min-width: 0;
+    margin: 0;
+    color: #785943;
+    font-size: .78rem;
+    line-height: 1.4;
+}
+.participante .selo-status { padding: .2rem .4rem; font-size: .67rem; white-space: nowrap; }
+.acoes-participante { display: flex; flex: 0 0 auto; flex-wrap: wrap; gap: .3rem; margin: 0; }
+.acoes-participante .botao { min-height: 30px; padding: .28rem .46rem; font-size: .69rem; white-space: nowrap; }
+.acoes-exclusao { justify-content: flex-end; margin-top: .2rem; }
+.painel-adicionar-jogador { padding: 1rem; border: 1px solid #b19774; background: #f3e3c4; }
+.painel-adicionar-jogador .instrucao { margin: 0; }
+.acoes-rodape-campanha { display: flex; justify-content: flex-end; margin-top: auto; padding-top: 1rem; border-top: 3px double #a58a64; }
+
+.registro {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: .7rem;
+    padding: .85rem;
+    border: 1px solid #aa8963;
+    border-radius: 4px;
+    background: #f3e4cb;
+}
+.registro-info { flex: 1 1 170px; min-width: 0; }
+.registro-info strong { display: block; font-size: .9rem; overflow-wrap: anywhere; }
+.registro-info small { display: block; margin-top: .3rem; color: #785c45; font-size: .72rem; overflow-wrap: anywhere; }
+.selo-status { flex: 0 0 auto; padding: .35rem .55rem; border: 1px solid #9a763f; border-radius: 3px; color: #775024; font-size: .75rem; font-weight: bold; }
+.status-aceito, .status-aprovada { border-color: #578054; color: #356039; background: #e6efdc; }
+.status-recusado, .status-recusada { border-color: #aa5956; color: #832d2c; background: #f8dfd8; }
+.status-pendente { border-color: #b1833d; color: #795123; background: #f5e5be; }
+.acoes-registro { display: flex; flex: 0 0 100%; flex-wrap: wrap; gap: .4rem; }
+.acoes-registro .botao { min-height: 35px; font-size: .75rem; }
+.botao-remover { border-color: #ac726a; }
+.lista-fichas-campanha { grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); }
+.registro-ficha { align-content: start; }
+
+.selecao-campanhas > .instrucao-contextual { padding-bottom: .45rem; border-bottom: 1px solid #b69a77; }
+
+/* Respiro no fim da lista, inclusive quando a coluna tem rolagem. */
+#lista-campanhas { padding-bottom: 1.5rem; }
+.item-campanha-acoes { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .4rem; }
+.item-campanha-acoes .botao { white-space: nowrap; }
+.item-campanha-acoes .botao-excluir-campanha { color: #72232a; border-color: #a77c6c; background: #f4e5d5; }
+.item-campanha-acoes .botao-excluir-campanha:hover { background: #ead0c3; }
+@media (max-width: 550px) { .item-campanha { flex-wrap: wrap; } .item-campanha-acoes { width: 100%; } }

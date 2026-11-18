@@ -1,0 +1,66 @@
+<section id="pagina-campanhas" class="pagina-mestre" data-pagina-container="campanhas" aria-label="Campanhas">
+    <div class="grade-gerenciamento">
+        <section class="cartao-campanha selecao-campanhas" aria-label="Criação e seleção de campanhas">
+            <p id="instrucao-campanhas" class="instrucao-contextual" aria-live="polite">Crie sua primeira campanha</p>
+            <form id="form-campanha" class="formulario-compacto formulario-criar">
+                <h2>Criar campanha</h2>
+                <label for="nome-campanha">Nome da campanha</label>
+                <input id="nome-campanha" type="text" maxlength="120" required placeholder="Ex.: Sombras do Oeste" autocomplete="off">
+                <label for="descricao-campanha">Descrição da campanha</label>
+                <textarea id="descricao-campanha" maxlength="1000" rows="4" placeholder="Descreva o cenário e a proposta desta campanha..."></textarea>
+                <div class="acoes-formulario">
+                    <button type="submit" class="botao botao-destaque">Criar campanha</button>
+                </div>
+            </form>
+            <div class="divisao-lista-campanhas">
+                <div class="titulo-cartao">
+                    <h2>Suas campanhas <span id="total-campanhas" class="quantidade">0</span></h2>
+                </div>
+                <ul id="lista-campanhas" class="lista-campanhas" aria-label="Campanhas cadastradas"></ul>
+            </div>
+        </section>
+
+        <section class="cartao-campanha quadro-jogadores" aria-label="Jogadores da campanha selecionada">
+            <div id="sem-campanha" class="estado-vazio">
+                <p class="sobretitulo">SUA MESA</p>
+                <h2>Nenhuma campanha selecionada</h2>
+                <p>Crie uma campanha ou selecione uma das campanhas ao lado para reunir seus jogadores.</p>
+            </div>
+
+            <div id="painel-campanha" class="painel-campanha" hidden>
+                <div class="cabecalho-campanha">
+                    <div class="cabecalho-campanha-texto">
+                        <h2 id="titulo-campanha">Campanha</h2>
+                        <p id="descricao-campanha-ativa" class="descricao-campanha-ativa"></p>
+                    </div>
+                    <button
+                        id="atualizar-campanha"
+                        type="button"
+                        class="botao botao-pequeno botao-discreto"
+                        aria-label="Atualizar campanha, jogadores e personagens"
+                    >Atualizar</button>
+                </div>
+
+                <div class="cabecalho-jogadores">
+                    <h3>Jogadores e personagens</h3>
+                    <span id="total-jogadores" class="quantidade" aria-label="Quantidade de jogadores">0</span>
+                </div>
+                <ul id="lista-participantes" class="lista-participantes" aria-label="Jogadores e personagens desta campanha"></ul>
+
+                <div id="painel-adicionar-jogador" class="painel-adicionar-jogador" hidden>
+                    <form id="form-convite" class="formulario-compacto">
+                        <label for="codigo-jogador">Código do jogador (UUID)</label>
+                        <input id="codigo-jogador" type="text" required placeholder="Cole o código de jogador" autocomplete="off" spellcheck="false">
+                        <p class="instrucao">O jogador encontra seu código em <strong>Fichas online → Copiar código</strong>.</p>
+                        <div class="acoes-formulario">
+                            <button type="submit" class="botao botao-destaque">Enviar convite</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="acoes-rodape-campanha">
+                    <button id="mostrar-convite" type="button" class="botao botao-destaque" aria-controls="painel-adicionar-jogador" aria-expanded="false">Adicionar jogador</button>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>

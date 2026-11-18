@@ -1,0 +1,22 @@
+<dialog id="modal-criar-sessao" class="modal-sessoes modal-criar-sessao" aria-labelledby="titulo-formulario-sessao">
+    <form id="form-nova-sessao" class="formulario-compacto">
+        <div class="modal-cabecalho">
+            <div>
+                <p class="sobretitulo">CADERNO DE CAMPO</p>
+                <h2 id="titulo-formulario-sessao">Adicionar sessão</h2>
+            </div>
+            <button id="cancelar-sessao-topo" type="button" class="botao botao-discreto">Fechar</button>
+        </div>
+        <label for="nome-nova-sessao">Nome da sessão</label>
+        <input id="nome-nova-sessao" name="nome" type="text" maxlength="80" required autocomplete="off" placeholder="Ex.: O trem da meia-noite">
+        <div class="rotulo-com-contador">
+            <label for="descricao-nova-sessao">Descrição breve</label>
+            <output id="contador-descricao-sessao" for="descricao-nova-sessao">0/25</output>
+        </div>
+        <input id="descricao-nova-sessao" name="descricao" type="text" maxlength="25" autocomplete="off" placeholder="Até 25 caracteres">
+        <div class="modal-rodape">
+            <button id="cancelar-sessao" type="button" class="botao botao-discreto">Cancelar</button>
+            <button id="confirmar-sessao" type="submit" class="botao botao-destaque">Criar sessão</button>
+        </div>
+    </form>
+</dialog>

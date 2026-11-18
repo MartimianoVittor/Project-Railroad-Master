@@ -1,0 +1,48 @@
+/* Transposição dos cartões de arma, munição e capacidade do Jogador 1.3.4. */
+.rr-ficha-inventario .rr-armas-lista { display:grid; gap:10px; min-width:0; }
+.rr-ficha-inventario .rr-cartao-arma {
+    min-width:0; margin:0; padding:8px; border:2px solid #6b4630;
+    border-radius:5px; display:grid; gap:5px; background:rgba(244,220,179,.4);
+    box-shadow:none;
+}
+.rr-ficha-inventario .rr-cartao-arma legend {
+    font:bold 14px 'Rye',Georgia,serif; color:#3d2314; padding:0 5px;
+}
+.rr-ficha-inventario .arma-linha-nome { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:8px; align-items:end; }
+.rr-ficha-inventario .arma-nome { min-width:0; }
+.rr-ficha-inventario .rr-campo-arma, .rr-ficha-inventario .bonus-distancia output {
+    display:block; box-sizing:border-box; width:100%; min-width:0;
+    border:2px solid #6b4630; border-radius:3px; background:#fff7e9;
+    padding:7px 5px; color:#3d2314; font:13px Georgia,serif; overflow-wrap:anywhere;
+}
+.rr-ficha-inventario .arma-municao { display:grid; gap:4px; min-width:0; }
+.rr-ficha-inventario .arma-municao-titulo { font:11px Georgia,serif; text-align:center; }
+.rr-ficha-inventario .arma-municao-controles { display:flex; align-items:stretch; justify-content:center; }
+.rr-ficha-inventario .municao-valor {
+    display:grid; place-items:center; width:45px; min-height:32px; padding:2px;
+    border:2px solid #6b4630; border-radius:3px; background:#fff7e9;
+    color:#3d2314; font:14px Georgia,serif; text-align:center;
+}
+.rr-ficha-inventario .bonus-distancias { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:5px; }
+.rr-ficha-inventario .bonus-distancia { display:grid; gap:4px; min-width:0; text-align:center; font:11px Georgia,serif; }
+.rr-ficha-inventario .bonus-distancia output { text-align:center; }
+.rr-ficha-inventario .rr-inventario-resumo {
+    display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px;
+    min-width:0; padding:12px 0 2px; border-top:2px solid #6b4630;
+    background:#f4eccf;
+}
+.rr-ficha-inventario .inventario-resumo-campo { display:grid; gap:5px; min-width:0; color:#3d2314; font:11px Georgia,serif; }
+.rr-ficha-inventario .inventario-resumo-campo span { text-align:center; overflow-wrap:anywhere; }
+.rr-ficha-inventario .inventario-resumo-campo output {
+    display:grid; place-items:center; min-width:0; min-height:32px;
+    padding:6px 2px; border:2px solid #6b4630; border-radius:3px;
+    background:#fff7e9; color:#3d2314; font:14px Georgia,serif;
+}
+.rr-ficha-inventario .inventario-resumo-campo .rr-capacidade-ocupada { background:#e9ddc6; }
+.rr-ficha-mobile .ficha-retrato img { width:100%; height:100%; object-fit:cover; }
+@media (max-width:650px) {
+    .rr-ficha-inventario .rr-inventario-resumo { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media (max-width:360px) {
+    .rr-ficha-inventario .bonus-distancias { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}

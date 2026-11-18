@@ -1,0 +1,121 @@
+/* 1. Tela de entrada e estrutura principal
+   O Mestre usa o mesmo pergaminho e a mesma paleta do Jogador. */
+.entrada {
+    display: grid;
+    min-height: calc(100vh - 84px);
+    place-items: center;
+    padding: clamp(1.2rem, 4vw, 4rem);
+    background: radial-gradient(ellipse at center, #fff8e8 0%, #e5d4af 76%, #d0b78b 100%);
+}
+.entrada-cartaz {
+    position: relative;
+    width: min(750px, 100%);
+    padding: clamp(2rem, 6vw, 5rem);
+    border: 6px double #765438;
+    background: #f7ebce;
+    box-shadow: 0 15px 0 #8e6a4233, 0 24px 55px #321a0d45, inset 0 0 0 8px #e8d6ad;
+    text-align: center;
+}
+.entrada-ornamento { color: #76512b; font: 2.5rem 'Smokum', Georgia, serif; letter-spacing: .18em; }
+.entrada h1 { margin-bottom: 1.15rem; font-size: clamp(2rem, 4.5vw, 3.8rem); }
+.entrada h1 em { color: #8b252d; font-style: normal; }
+.entrada-descricao { margin-inline: auto; max-width: 560px; line-height: 1.8; }
+.aviso-entrada { margin: 1.3rem auto 0; max-width: 470px; color: #785e46; font-size: .8rem; line-height: 1.7; }
+.entrada .botao { margin-top: .4rem; }
+
+.painel { min-width: 0; min-height: calc(100vh - 84px); padding-bottom: 3rem; }
+.faixa-campanha {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: .35rem 1rem;
+    min-height: 46px;
+    padding: .5rem clamp(1rem, 3vw, 3rem);
+    border-bottom: 1px solid #ac8b67;
+    background: #e2cfaa;
+}
+.faixa-campanha-identidade { display: flex; align-items: center; flex-wrap: wrap; gap: .35rem .7rem; font-size: .76rem; }
+.faixa-campanha-identidade strong { font: .94rem 'Rye', Georgia, serif; overflow-wrap: anywhere; }
+.faixa-salvamento { color: #735741; font-size: .74rem; }
+.faixa-salvamento.pendente { color: #922d28; font-weight: bold; }
+
+.pagina-mestre {
+    width: min(var(--largura-conteudo), 100%);
+    margin: 0 auto;
+    padding: clamp(1.2rem, 3vw, 3rem);
+}
+/* 2. Elementos compartilhados pelas seis áreas. */
+.cartao-campanha {
+    min-width: 0;
+    padding: clamp(1rem, 2vw, 1.6rem);
+    border: 2px solid #805c3e;
+    border-radius: 6px;
+    background: #fff7e5;
+    box-shadow: inset 0 0 0 4px #ead5b2, 0 4px 0 #6f4a2a21;
+}
+.cartao-campanha h2 { margin-bottom: 1rem; font-size: clamp(1.15rem, 1.8vw, 1.5rem); }
+.cartao-campanha h3 { font-size: 1.15rem; }
+.titulo-cartao { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem; }
+.titulo-cartao .sobretitulo { width: 100%; margin-bottom: .1rem; }
+.titulo-cartao h2 { margin-bottom: 1.2rem; }
+.quantidade {
+    display: inline-grid;
+    min-width: 29px;
+    height: 29px;
+    place-items: center;
+    padding: 0 .25rem;
+    border: 2px solid #713d24;
+    border-radius: 50%;
+    background: #d4af37;
+    color: #3d2314;
+    font: bold .9rem Georgia, serif;
+}
+.formulario-compacto { display: grid; gap: .65rem; }
+.formulario-compacto label, .label-anotacao { font-weight: bold; font-size: .85rem; color: #573721; }
+.formulario-compacto input, .formulario-compacto textarea {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    min-height: 43px;
+    padding: .7rem .8rem;
+    border: 2px solid #9c7b58;
+    border-radius: 4px;
+    background: #fffcf4;
+    color: #3d2314;
+    outline-offset: 2px;
+}
+.formulario-compacto textarea { resize: vertical; min-height: 105px; line-height: 1.5; }
+.formulario-compacto .botao { justify-self: start; }
+.instrucao { margin: .9rem 0; font-size: .82rem; line-height: 1.7; color: #745740; }
+.instrucao strong { color: #4f301e; }
+.sem-resultados {
+    padding: .9rem;
+    border: 1px dashed #ad8e6e;
+    border-radius: 4px;
+    background: #f1e4ca;
+    color: #785943;
+    font-size: .84rem;
+    line-height: 1.7;
+}
+.nota-escopo {
+    margin: 1.4rem 0 0;
+    padding: .9rem 1rem;
+    border-left: 4px solid #8b252d;
+    background: #e9dabb;
+    font-size: .86rem;
+    line-height: 1.7;
+}
+
+/* Utilitários de acessibilidade e textos contextuais. */
+.sr-only {
+    position: absolute !important;
+    width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+.instrucao-contextual {
+    margin: 0 0 .4rem;
+    color: #68432a;
+    font: .88rem 'Rye', Georgia, serif;
+    line-height: 1.4;
+}

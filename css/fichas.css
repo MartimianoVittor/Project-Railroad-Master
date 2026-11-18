@@ -1,0 +1,259 @@
+/* Aba Fichas: três colunas verticais ou comparação horizontal por seção.
+ * Todo excesso de conteúdo fica dentro do quadro, nunca na página.
+ */
+.pagina-fichas {
+    display: flex;
+    flex-direction: column;
+    gap: .65rem;
+    min-height: 0;
+}
+
+.barra-consulta-fichas {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: space-between;
+    gap: .7rem 1.2rem;
+    min-width: 0;
+}
+
+.grupo-seletor-ficha {
+    flex: 0 1 355px;
+    min-width: 0;
+}
+
+.grupo-seletor-ficha select {
+    width: 100%;
+    min-height: 41px;
+    padding: .55rem 2.1rem .55rem .75rem;
+    border: 2px solid #805c3e;
+    border-radius: 5px;
+    background: #fff9eb;
+    color: #3d2314;
+    font-weight: bold;
+}
+
+.modos-consulta-fichas {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: flex-end;
+    gap: .45rem;
+}
+
+.modos-consulta-fichas .botao[aria-pressed="true"] {
+    border-color: #66431d;
+    background: #d4af37;
+    box-shadow: inset 0 0 0 2px #f8e6a8;
+}
+
+.quadro-fichas {
+    display: flex;
+    flex: 1 1 auto;
+    min-height: 0;
+    min-width: 0;
+    padding: .8rem;
+    overflow: hidden;
+}
+
+.conteudo-fichas {
+    display: flex;
+    flex: 1 1 auto;
+    gap: .75rem;
+    min-width: 0;
+    min-height: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+    padding: .1rem .15rem .45rem;
+}
+
+.estado-consulta-fichas {
+    display: grid;
+    flex: 1 0 100%;
+    min-height: 180px;
+    place-items: center;
+    align-self: stretch;
+    margin: 0;
+    padding: 1.5rem;
+    border: 1px dashed #b89a74;
+    border-radius: 4px;
+    color: #77573d;
+    font-size: .92rem;
+    text-align: center;
+}
+
+/* Três partes de uma mesma ficha: 1/3 para cada coluna no desktop. */
+.conteudo-fichas.modo-completo .ficha-parte {
+    flex: 0 0 calc((100% - 1.5rem) / 3);
+    min-width: 0;
+}
+
+/* Comparação: até três personagens visíveis; demais aparecem ao deslizar. */
+.conteudo-fichas.modo-comparacao .ficha-parte {
+    flex: 0 0 calc((100% - 1.5rem) / 3);
+    min-width: 265px;
+}
+
+.ficha-parte {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+    border: 2px solid #98724d;
+    border-radius: 5px;
+    background: #f8edda;
+    box-shadow: inset 0 0 0 3px #fdf6e8;
+}
+
+.ficha-parte-cabecalho {
+    flex: 0 0 auto;
+    min-width: 0;
+    padding: .7rem .85rem;
+    border-bottom: 3px double #a5865e;
+    background: #e9d6b1;
+}
+
+.ficha-parte-cabecalho h3 {
+    margin: 0;
+    font-size: clamp(.92rem, 1.15vw, 1.16rem);
+    overflow-wrap: anywhere;
+}
+
+.ficha-parte-cabecalho small {
+    display: block;
+    margin-top: .22rem;
+    color: #78553b;
+    font-size: .75rem;
+    overflow-wrap: anywhere;
+}
+
+.ficha-parte-corpo {
+    flex: 1 1 auto;
+    min-height: 0;
+    min-width: 0;
+    overflow: auto;
+    overscroll-behavior: contain;
+    padding: .85rem;
+    scrollbar-width: thin;
+}
+
+.ficha-retrato {
+    display: grid;
+    width: min(100%, 180px);
+    height: 175px;
+    place-items: center;
+    margin: 0 auto .85rem;
+    overflow: hidden;
+    border: 4px double #98724d;
+    background: #e8d5b4;
+    color: #8b6745;
+    font: 2.4rem 'Smokum', Georgia, serif;
+}
+
+.ficha-retrato img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.ficha-identidade { margin: 0 0 .85rem; text-align: center; }
+.ficha-identidade strong { display: block; font: 1.03rem 'Rye', Georgia, serif; overflow-wrap: anywhere; }
+.ficha-identidade small { display: block; margin-top: .25rem; color: #76533b; }
+.ficha-bloco { min-width: 0; margin: 0 0 1rem; }
+.ficha-bloco:last-child { margin-bottom: 0; }
+.ficha-bloco h4 {
+    margin: 0 0 .55rem;
+    padding-bottom: .3rem;
+    border-bottom: 2px double #b49a75;
+    color: #704027;
+    font: .88rem 'Rye', Georgia, serif;
+}
+
+.ficha-campos { display: grid; gap: .42rem; margin: 0; }
+.ficha-campo { min-width: 0; padding: .25rem .1rem .4rem; border-bottom: 1px dashed #c9af8d; }
+.ficha-campo dt { color: #78583e; font-size: .72rem; font-weight: bold; }
+.ficha-campo dd { margin: .18rem 0 0; overflow-wrap: anywhere; font-size: .87rem; white-space: pre-wrap; }
+.ficha-texto { margin: 0; font-size: .85rem; line-height: 1.55; overflow-wrap: anywhere; white-space: pre-wrap; }
+
+.ficha-condicoes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .55rem; }
+.ficha-condicao { min-width: 0; }
+.ficha-condicao strong { display: block; color: #704c37; font-size: .78rem; }
+.ficha-marcadores { display: flex; flex-wrap: nowrap; gap: .25rem; margin-top: .25rem; }
+.ficha-marcador { color: #b6a28a; font: bold 1.05rem Georgia, serif; }
+.ficha-marcador.marcado { color: #8b252d; }
+.ficha-tracos { display: grid; gap: .25rem; }
+.ficha-traco { display: flex; align-items: center; justify-content: space-between; gap: .35rem; padding: .36rem 0; border-bottom: 1px dashed #ccb18d; }
+.ficha-traco strong { font-size: .77rem; overflow-wrap: anywhere; }
+.ficha-traco span { flex: 0 0 auto; color: #8b252d; font-size: .75rem; font-weight: bold; }
+
+.ficha-arma { margin-bottom: .65rem; padding: .65rem; border: 1px solid #b79a75; background: #fff7e7; }
+.ficha-arma:last-child { margin-bottom: 0; }
+.ficha-arma strong { display: block; font-size: .85rem; }
+.ficha-arma small { display: block; margin: .25rem 0 .45rem; color: #78583e; }
+.ficha-bonus { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .4rem; }
+.ficha-bonus span { font-size: .74rem; overflow-wrap: anywhere; }
+.ficha-capacidades { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .45rem; }
+.ficha-capacidade { padding: .55rem; border: 1px solid #b79a75; background: #fff7e7; }
+.ficha-capacidade strong, .ficha-capacidade span { display: block; font-size: .76rem; }
+.ficha-capacidade span { margin-top: .25rem; }
+
+.ficha-tabela-scroll { max-width: 100%; overflow-x: auto; }
+.ficha-tabela { width: 100%; min-width: 480px; border-collapse: collapse; font-size: .76rem; }
+.ficha-tabela th { background: #714c34; color: #f9e7c1; text-align: left; }
+.ficha-tabela th, .ficha-tabela td { padding: .55rem .45rem; border-bottom: 1px solid #c3a784; vertical-align: top; overflow-wrap: anywhere; }
+.ficha-tabela tbody tr:nth-child(even) { background: #f1dfc1; }
+.ficha-tabela td:nth-child(2), .ficha-tabela td:nth-child(3) { white-space: nowrap; }
+
+@media (max-width: 1099px) {
+    .pagina-fichas { min-height: 540px; }
+    .quadro-fichas { min-height: 475px; }
+    .conteudo-fichas.modo-completo .ficha-parte,
+    .conteudo-fichas.modo-comparacao .ficha-parte {
+        flex: 0 0 min(78vw, 340px);
+        min-width: 260px;
+    }
+}
+
+@media (max-width: 720px) {
+    .barra-consulta-fichas { flex-wrap: wrap; }
+    .grupo-seletor-ficha { flex: 1 1 100%; }
+    .modos-consulta-fichas { flex: 1 1 100%; gap: .25rem; }
+    .modos-consulta-fichas .botao { flex: 1 1 0; padding: .5rem .3rem; font-size: .72rem; }
+    .quadro-fichas { padding: .55rem; }
+    .ficha-parte-corpo { padding: .7rem; }
+}
+
+/* Em comparação de 1 ou 2 fichas, aproveita toda a largura disponível. */
+.conteudo-fichas.modo-comparacao .ficha-parte:only-child { flex-basis: 100%; }
+.conteudo-fichas.modo-comparacao .ficha-parte:first-child:nth-last-child(2),
+.conteudo-fichas.modo-comparacao .ficha-parte:first-child:nth-last-child(2) ~ .ficha-parte {
+    flex-basis: calc((100% - .75rem) / 2);
+}
+
+/* Somente a aba Fichas trava a altura também em telas menores. */
+body.fichas-ativas {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    overflow: hidden;
+}
+
+.fichas-ativas main { display: flex; flex: 1 1 auto; min-height: 0; }
+.fichas-ativas .painel {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-height: 0;
+    padding-bottom: 0;
+}
+.fichas-ativas .pagina-fichas:not([hidden]) {
+    display: flex;
+    flex: 1 1 auto;
+    min-height: 0;
+}
+
+@media (max-width: 1099px) {
+    .fichas-ativas .quadro-fichas { min-height: 0; }
+    .fichas-ativas .pagina-fichas:not([hidden]) { min-height: 0; }
+}
+
+@media (max-width: 720px) {
+    .conteudo-fichas.modo-comparacao .ficha-parte:only-child { flex-basis: 100%; }
+}

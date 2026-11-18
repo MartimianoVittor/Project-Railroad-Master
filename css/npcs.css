@@ -1,0 +1,134 @@
+/* NPCs: lista lateral, consulta e edição de fichas privadas do Mestre. */
+.pagina-npcs { display: flex; flex-direction: column; gap: .75rem; }
+.barra-npcs {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: .5rem 1rem;
+}
+.barra-npcs .instrucao-contextual { margin: 0; }
+.grade-npcs {
+    display: grid;
+    grid-template-columns: minmax(240px, .32fr) minmax(0, 1fr);
+    gap: .9rem;
+    flex: 1 1 auto;
+    min-height: 0;
+}
+.painel-lista-npcs, .painel-ficha-npc { min-width: 0; min-height: 0; }
+.painel-lista-npcs { display: flex; flex-direction: column; gap: .75rem; }
+.cabecalho-lista-npcs { display: grid; gap: .6rem; flex: 0 0 auto; }
+.cabecalho-lista-npcs h2 { display: flex; align-items: center; gap: .6rem; margin: 0; }
+.cabecalho-lista-npcs input {
+    width: 100%; min-height: 39px; padding: .5rem .7rem;
+    border: 2px solid #9c7b58; border-radius: 4px;
+    background: #fffcf4; color: var(--texto);
+}
+.lista-npcs {
+    display: grid;
+    align-content: start;
+    gap: .4rem;
+    min-height: 0;
+    overflow-y: auto;
+    margin: 0; padding: 0 .2rem .3rem 0;
+    list-style: none;
+}
+.item-npc button {
+    display: flex; width: 100%; flex-direction: column; align-items: flex-start;
+    gap: .2rem; padding: .65rem .7rem;
+    border: 1px solid #aa8a61; border-left: 4px solid #a47b4a;
+    border-radius: 4px; background: #f4e6ce;
+    color: var(--texto); text-align: left;
+}
+.item-npc button:hover { background: #f0dcba; }
+.item-npc.ativo button { border-left-color: #8b252d; background: #e9d2a3; }
+.item-npc strong { max-width: 100%; font: .86rem 'Rye', Georgia, serif; overflow-wrap: anywhere; }
+.item-npc small { color: #75543c; font-size: .77rem; overflow-wrap: anywhere; }
+.item-npc .npc-tipo-lista { color: #854b2c; font-size: .68rem; text-transform: uppercase; letter-spacing: .06em; }
+.painel-ficha-npc { display: flex; flex-direction: column; overflow: hidden; }
+.npc-vazio { min-height: 0; }
+.npc-consulta, .formulario-npc { display: flex; flex: 1 1 auto; flex-direction: column; min-height: 0; }
+.cabecalho-ficha-npc {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: .7rem; flex-wrap: wrap; flex: 0 0 auto;
+    padding-bottom: .75rem; border-bottom: 3px double #a58a64;
+}
+.npc-titulo-consulta { min-width: 0; }
+.npc-titulo-consulta h2, .cabecalho-form-npc h2 { margin: .4rem 0 0; overflow-wrap: anywhere; }
+.cabecalho-form-npc h2 { margin: 0; }
+.acoes-ficha-npc { display: flex; gap: .4rem; flex-wrap: wrap; }
+.npc-detalhes, .campos-form-npc {
+    display: grid; align-content: start; gap: .9rem;
+    flex: 1 1 auto; min-height: 0;
+    overflow: auto; padding: 1rem .3rem .4rem 0;
+}
+.npc-bloco { padding: .75rem .9rem; border: 1px solid #b79a76; background: #fbf0da; }
+.npc-bloco h3 { margin: 0 0 .6rem; font-size: .95rem; }
+.npc-bloco p { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.6; }
+.npc-bloco dl { display: grid; grid-template-columns: repeat(auto-fit, minmax(145px, 1fr)); gap: .65rem; margin: 0; }
+.npc-bloco dl div { min-width: 0; }
+.npc-bloco dt { color: #8a4f2b; font-size: .76rem; font-weight: bold; }
+.npc-bloco dd { margin: .2rem 0 0; overflow-wrap: anywhere; }
+.npc-tracos-consulta { display: grid; grid-template-columns: repeat(auto-fit, minmax(195px, 1fr)); gap: .35rem .9rem; }
+.npc-tracos-consulta div { display: flex; align-items: baseline; justify-content: space-between; gap: .6rem; padding: .3rem 0; border-bottom: 1px solid #dfc7a5; }
+.npc-tracos-consulta strong { font-size: .78rem; }
+.npc-tracos-consulta span { font-size: .75rem; text-align: right; }
+.formulario-npc label { display: grid; align-content: start; gap: .3rem; min-width: 0; color: #573721; font-size: .82rem; font-weight: bold; }
+.formulario-npc input, .formulario-npc select, .formulario-npc textarea {
+    display: block; width: 100%; min-width: 0; min-height: 38px;
+    padding: .48rem .6rem; border: 2px solid #9c7b58; border-radius: 4px;
+    background: #fffcf4; color: var(--texto); font-weight: normal;
+}
+.formulario-npc textarea { min-height: 76px; resize: vertical; line-height: 1.5; }
+.grade-campos-npc, .grade-tracos-npc {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: .65rem;
+}
+.grupos-completos-npc { display: grid; gap: .9rem; }
+.grupo-campos-npc { min-width: 0; margin: 0; padding: .85rem; border: 1px solid #b79a76; background: #fbf0da; }
+.grupo-campos-npc legend { padding: 0 .4rem; color: #593b23; font: .93rem 'Rye', Georgia, serif; }
+.grade-armas-npc { display: grid; gap: .8rem; }
+.npc-arma-form { display: grid; gap: .55rem; }
+.npc-arma-form h3 { margin: 0; font-size: .86rem; }
+.npc-arma-form + .npc-arma-form { padding-top: .8rem; border-top: 1px solid #c4a887; }
+.npc-nota-salvamento { margin: 0; color: #765940; font-size: .76rem; line-height: 1.5; }
+
+@media (min-width: 1100px) and (min-height: 620px) {
+    .pagina-npcs:not([hidden]) { display: flex; }
+    .grade-npcs { overflow: hidden; }
+    .painel-lista-npcs, .painel-ficha-npc { overflow: hidden; padding: .9rem; }
+}
+
+@media (max-width: 1060px) {
+    .grade-npcs { grid-template-columns: minmax(0, 1fr); }
+    .painel-lista-npcs { max-height: 340px; }
+    .painel-ficha-npc { min-height: 420px; }
+    .npc-detalhes, .campos-form-npc { max-height: 68vh; }
+}
+
+@media (max-width: 640px) {
+    .barra-npcs .botao { flex: 1 1 auto; }
+    .grade-campos-npc, .grade-tracos-npc { grid-template-columns: minmax(0, 1fr); }
+    .acoes-ficha-npc { width: 100%; }
+    .acoes-ficha-npc .botao { flex: 1 1 auto; }
+}
+
+/* Consulta de NPC: mesma ficha da criação, em modo somente leitura. */
+.pagina-npcs .npc-consulta:not([hidden]) { flex: 0 0 auto; }
+.pagina-npcs .npc-consulta .npc-detalhes { display: none; }
+.pagina-npcs .npc-modo-consulta .cabecalho-form-npc { display: none; }
+.pagina-npcs .npc-modo-consulta .campos-form-npc { padding-top: .75rem; }
+.pagina-npcs .npc-modo-consulta .npc-ficha-aviso { display: none; }
+.pagina-npcs .npc-modo-consulta input,
+.pagina-npcs .npc-modo-consulta textarea,
+.pagina-npcs .npc-modo-consulta select { cursor: default; }
+.pagina-npcs .npc-modo-consulta .texto-hover,
+.pagina-npcs .npc-modo-consulta #npc-adicionar-item,
+.pagina-npcs .npc-modo-consulta [aria-label="Remover item"] { display: none !important; }
+
+/* A ficha consultada ocupa o painel direito com o mesmo layout do editor. */
+.pagina-npcs .npc-modo-consulta:not([hidden]) { display: flex; }
+.pagina-npcs .npc-modo-consulta :is(input, textarea, select):disabled {
+    opacity: 1; -webkit-text-fill-color: currentColor; color: inherit;
+}
+.pagina-npcs .npc-modo-consulta .npc-pagina-original { width: 100%; min-width: 0; }

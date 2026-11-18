@@ -1,0 +1,277 @@
+/* Identidade visual compartilhada com o Railroad Jogador:
+   pergaminho, couro marrom, ferragens douradas e tipografia western. */
+@import url('https://fonts.googleapis.com/css2?family=Rye&family=Smokum&display=swap');
+
+:root {
+    color-scheme: light;
+    font-family: Georgia, 'Times New Roman', serif;
+    color: #3d2314;
+    background-color: #f4eccf;
+
+    --fundo: #f4eccf;
+    --fundo-elevado: #fff9ec;
+    --fundo-escuro: #3d2314;
+    --texto: #3d2314;
+    --pergaminho: #f4eccf;
+    --dourado: #d4af37;
+    --borda: #95734f;
+    --vinho: #8b252d;
+    --muted: #735741;
+    --largura-conteudo: 1510px;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+    min-width: 320px;
+    min-height: 100vh;
+    margin: 0;
+    overflow-x: clip;
+    background:
+        repeating-linear-gradient(135deg, transparent 0 19px, #5c381809 20px 21px),
+        var(--fundo);
+}
+button, input, select, textarea { font: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+button { cursor: pointer; }
+button:disabled { opacity: .56; cursor: not-allowed; }
+[hidden] { display: none !important; }
+a { color: #79411f; }
+:focus-visible { outline: 3px solid #b57520; outline-offset: 3px; }
+
+h1, h2, h3, p { margin-top: 0; }
+h1, h2, h3 { font-family: 'Rye', Georgia, serif; font-weight: 400; line-height: 1.3; }
+.sobretitulo {
+    color: #8a4f2b;
+    font-family: 'Smokum', Georgia, serif;
+    font-size: 1.55rem;
+    line-height: 1;
+    letter-spacing: .055em;
+    text-transform: uppercase;
+}
+
+.botao {
+    display: inline-flex;
+    min-height: 43px;
+    align-items: center;
+    justify-content: center;
+    gap: .45rem;
+    padding: .65rem 1.1rem;
+    border: 2px solid #5b3b22;
+    border-radius: 5px;
+    background: #e1c990;
+    color: var(--texto);
+    font: 700 .85rem Georgia, serif;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    transition: background .17s ease, transform .17s ease, box-shadow .17s ease;
+}
+.botao:hover:not(:disabled) {
+    background: #f5dfa7;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 0 #3d231433;
+}
+.botao-destaque {
+    background: var(--dourado);
+    border-color: #6f4c21;
+}
+.botao-destaque:hover:not(:disabled) { background: #ebc94c; }
+.botao-discreto {
+    background: #f0e2c4;
+    border-color: #8b694a;
+}
+.botao-pequeno { min-height: 36px; padding: .42rem .77rem; font-size: .79rem; }
+
+/* Cabeçalho superior com abas principais e ações da campanha. */
+.barra-superior {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    display: flex;
+    min-height: 84px;
+    align-items: center;
+    gap: clamp(.5rem, 1.35vw, 1.45rem);
+    padding: .65rem clamp(.85rem, 2vw, 1.9rem);
+    border-bottom: 5px double #bb9653;
+    background:
+        linear-gradient(180deg, #4e2c19 0%, #321c10 100%);
+    box-shadow: 0 4px 15px #27120440;
+}
+.marca {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: .65rem;
+    color: #f9e7b7;
+    text-decoration: none;
+}
+.marca strong {
+    display: block;
+    font: 1.45rem 'Rye', Georgia, serif;
+    letter-spacing: .07em;
+    white-space: nowrap;
+}
+.marca small {
+    display: block;
+    margin-top: .2rem;
+    color: #e3bd72;
+    font: 1.1rem 'Smokum', Georgia, serif;
+    letter-spacing: .12em;
+    white-space: nowrap;
+}
+.barra-acoes {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: .55rem;
+}
+.usuario-email {
+    max-width: 170px;
+    overflow: hidden;
+    color: #ead1a7;
+    font-size: .69rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.botao-sair {
+    border-color: #9c7b51;
+    background: transparent;
+    color: #f5e5c6;
+}
+.botao-sair:hover:not(:disabled) { color: var(--texto); }
+.botao-salvar {
+    border-color: #eed272;
+    background: #d4af37;
+    color: #321c10;
+    font-weight: 800;
+}
+
+.navegacao-mestre {
+    display: flex;
+    flex: 1 1 auto;
+    min-width: 0;
+    justify-content: center;
+    gap: clamp(.2rem, .55vw, .6rem);
+}
+.aba-navegacao {
+    position: relative;
+    flex: 0 1 auto;
+    min-height: 45px;
+    padding: .5rem clamp(.5rem, .85vw, 1rem);
+    border: 1px solid transparent;
+    border-radius: 5px;
+    background: transparent;
+    color: #e8d3aa;
+    font: 500 clamp(.8rem, 1.03vw, 1rem) 'Rye', Georgia, serif;
+    white-space: nowrap;
+    transition: color .15s ease, background .15s ease;
+}
+.aba-navegacao:hover { color: #ffda73; background: #ffffff14; }
+.aba-navegacao.ativa {
+    border-color: #cfac53;
+    background: #d4af37;
+    color: #3d2314;
+    box-shadow: inset 0 0 0 2px #fff1c04d, 0 3px 0 #1e100b;
+}
+
+/* Mensagens de feedback. */
+.aviso {
+    position: fixed;
+    z-index: 100;
+    inset: auto 1rem 1rem auto;
+    max-width: min(470px, calc(100vw - 2rem));
+    padding: 1rem 1.1rem;
+    border: 2px solid #9a754a;
+    border-radius: 6px;
+    background: #fff2d5;
+    color: #3d2314;
+    box-shadow: 0 7px 30px #1b0f0b66;
+    font-size: .9rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s ease;
+}
+.aviso.visivel { opacity: 1; }
+.aviso.erro { border-color: #94292d; background: #ffe7d6; }
+
+@media (max-width: 1310px) {
+    .barra-superior { flex-wrap: wrap; justify-content: space-between; gap: .35rem 1rem; padding-bottom: .35rem; }
+    .navegacao-mestre { order: 3; flex: 0 0 100%; justify-content: flex-start; }
+    .aba-navegacao { flex: 1 1 auto; font-size: .92rem; }
+}
+
+@media (max-width: 720px) {
+    .barra-superior { padding: .5rem .65rem .15rem; }
+    .marca strong { font-size: 1.05rem; }
+    .marca small { font-size: .87rem; }
+    .usuario-email { display: none; }
+    .barra-acoes { gap: .35rem; }
+    .barra-acoes .botao { min-height: 36px; padding: .4rem .65rem; font-size: .75rem; }
+    .navegacao-mestre {
+        overflow-x: auto;
+        scrollbar-width: thin;
+        scroll-snap-type: x proximity;
+        margin: 0 -.65rem;
+        padding: .2rem .65rem .5rem;
+    }
+    .aba-navegacao { flex: 0 0 auto; min-height: 37px; padding: .4rem .75rem; font-size: .82rem; scroll-snap-align: start; }
+}
+
+/* Navegação em cartuchos dourados — apenas abas, nunca Salvar/Sair. */
+.navegacao-mestre {
+    align-items: center;
+    column-gap: clamp(.55rem, .9vw, 1rem);
+    row-gap: .35rem;
+    padding: .35rem .45rem .35rem .15rem;
+}
+.aba-navegacao.aba-cartucho {
+    isolation: isolate;
+    position: relative;
+    display: inline-flex;
+    flex: 0 1 auto;
+    align-items: center;
+    justify-content: center;
+    min-height: 39px;
+    min-width: 0;
+    padding: .4rem clamp(.55rem, .75vw, .9rem) .4rem clamp(.7rem, .85vw, 1rem);
+    margin-right: 10px;
+    border: 2px solid #835222;
+    border-left: 5px double #7e481e;
+    border-radius: 7px 3px 3px 7px;
+    background: linear-gradient(180deg, #f8df8e 0%, #d9a944 35%, #c38a2d 72%, #f1cd71 100%);
+    box-shadow: inset 0 2px 1px #fff0b8a6, inset 0 -2px 2px #73471c70, 0 3px 3px #10090370;
+    color: #3b2414;
+    font: 400 clamp(.64rem, .76vw, .81rem) 'Rye', Georgia, serif;
+    line-height: 1.25;
+    text-shadow: 0 1px #ffeab3;
+    white-space: nowrap;
+    transition: transform .18s ease, filter .18s ease;
+}
+.aba-navegacao.aba-cartucho::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    top: 5px;
+    bottom: 5px;
+    right: -13px;
+    width: 13px;
+    border: 1px solid #764329;
+    border-left: 0;
+    border-radius: 0 85% 85% 0;
+    background: linear-gradient(180deg, #d69a62 0%, #ad643b 45%, #8c442d 80%, #c98552 100%);
+    box-shadow: 1px 2px 2px #160a0659;
+}
+.aba-navegacao.aba-cartucho:hover:not(:disabled),
+.aba-navegacao.aba-cartucho.ativa {
+    transform: translateY(-3px);
+    filter: brightness(1.06);
+    background: linear-gradient(180deg, #f8df8e 0%, #d9a944 35%, #c38a2d 72%, #f1cd71 100%);
+    color: #3b2414;
+    border-color: #835222;
+    box-shadow: inset 0 2px 1px #fff0b8a6, inset 0 -2px 2px #73471c70, 0 5px 5px #10090385;
+}
+.aba-navegacao.aba-cartucho:focus-visible { outline-offset: 5px; }
+@media (prefers-reduced-motion: reduce) {
+    .aba-navegacao.aba-cartucho { transition: none; }
+}

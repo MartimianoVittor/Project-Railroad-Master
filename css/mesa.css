@@ -1,0 +1,19 @@
+/* Ponto único de entrada dos estilos da mesa.
+ * Cada arquivo concentra as regras de uma área de responsabilidade.
+ * As regras responsivas vêm por último para manter a cascata previsível.
+ */
+@import url('./layout.css');
+@import url('./campanhas.css');
+@import url('./diario.css');
+@import url('./ferramentas.css');
+@import url('./fichas.css');
+@import url('./npcs.css');
+@import url('./sessoes.css');
+@import url('./responsivo.css');
+
+/* Acesso offline independente do Supabase. */
+.acoes-entrada { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .8rem; }
+.acoes-entrada .botao { min-width: 155px; }
+body.modo-local #usuario-email { font-style: italic; }
+body.modo-local #mostrar-convite { display: none; }
+body.modo-local #painel-adicionar-jogador { display: none !important; }

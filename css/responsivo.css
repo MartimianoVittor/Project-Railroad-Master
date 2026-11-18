@@ -1,0 +1,178 @@
+/* Layout responsivo centralizado: uma consulta de mídia por faixa. */
+
+@media (min-width: 1100px) and (min-height: 620px) {
+    html, body { height: 100%; overflow: hidden; }
+    body { display: flex; flex-direction: column; }
+    .barra-superior { position: relative; flex: 0 0 auto; min-height: 68px; padding-top: .3rem; padding-bottom: .3rem; }
+    .marca strong { font-size: 1.18rem; }
+    .marca small { font-size: .88rem; }
+    .aba-navegacao { min-height: 38px; }
+    main { flex: 1 1 auto; min-height: 0; }
+
+    /* O bloqueio de rolagem acima vale somente para as abas autenticadas.
+       Sem esta exceção, o cartaz de entrada pode esconder o login em
+       monitores menores ou quando o navegador está com zoom aumentado. */
+    html.modo-entrada {
+        height: auto;
+        min-height: 100%;
+        overflow-x: clip;
+        overflow-y: auto;
+    }
+    body.modo-entrada {
+        display: block;
+        height: auto;
+        min-height: 100vh;
+        overflow-x: clip;
+        overflow-y: auto;
+    }
+    body.modo-entrada main { display: block; min-height: 0; }
+    body.modo-entrada .entrada {
+        box-sizing: border-box;
+        min-height: calc(100vh - 68px);
+        min-height: calc(100dvh - 68px);
+        padding: clamp(.75rem, 2.5vh, 1.6rem) clamp(.8rem, 3vw, 2.5rem);
+    }
+    body.modo-entrada .entrada-cartaz {
+        padding: clamp(1.4rem, 3.5vh, 2.8rem) clamp(1rem, 3.5vw, 3.5rem);
+    }
+    body.modo-entrada .entrada-ornamento {
+        margin-bottom: .65rem;
+        font-size: clamp(1.5rem, 2.5vw, 2rem);
+    }
+    body.modo-entrada .entrada h1 {
+        margin-bottom: .85rem;
+        font-size: clamp(1.8rem, 3.6vw, 3.2rem);
+    }
+    body.modo-entrada .entrada-descricao {
+        margin-bottom: .85rem;
+        line-height: 1.5;
+    }
+    body.modo-entrada .aviso-entrada {
+        margin-top: .8rem;
+        line-height: 1.45;
+    }
+
+    .painel { display: flex; flex-direction: column; height: 100%; min-height: 0; padding: 0; overflow: hidden; }
+    .faixa-campanha { flex: 0 0 auto; min-height: 38px; padding-top: .3rem; padding-bottom: .3rem; }
+    .pagina-mestre:not([hidden]) {
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow: hidden;
+        padding: .7rem clamp(.75rem, 1.6vw, 1.6rem);
+    }
+    .grade-gerenciamento, .grade-ferramentas, .grade-utilitarios { flex: 1 1 auto; min-height: 0; overflow: hidden; }
+    .selecao-campanhas, .quadro-jogadores { min-height: 0; overflow: hidden; }
+    .selecao-campanhas { gap: .65rem; padding: .85rem; }
+    .formulario-criar { gap: .3rem; padding-bottom: .65rem; }
+    .formulario-criar h2 { font-size: 1.02rem; margin-bottom: .15rem; }
+    .formulario-criar textarea { min-height: 58px; height: 58px; resize: none; }
+    .formulario-criar input { min-height: 34px; padding: .4rem .6rem; }
+    .formulario-criar .acoes-formulario { margin-top: .2rem; }
+    .formulario-criar .botao { min-height: 34px; padding: .4rem .65rem; }
+    .divisao-lista-campanhas { flex: 1 1 auto; min-height: 0; overflow: hidden; }
+    .lista-campanhas { min-height: 0; overflow-y: auto; padding-right: .2rem; }
+    .item-campanha { padding: .55rem .7rem; }
+    .quadro-jogadores { padding: .85rem; }
+    .painel-campanha { min-height: 0; gap: .55rem; }
+    .cabecalho-campanha { flex: 0 0 auto; padding-bottom: .45rem; }
+    .cabecalho-campanha h2 { font-size: 1.22rem; }
+    .descricao-campanha-ativa { max-height: 3.4em; overflow: auto; font-size: .82rem; }
+    .cabecalho-jogadores { flex: 0 0 auto; }
+    .lista-participantes { flex: 1 1 auto; min-height: 0; overflow-y: auto; }
+    .participante { padding: .45rem .55rem; }
+    .personagens-participante { gap: .25rem; }
+    .personagem-participante { padding: .3rem .45rem; }
+    .acoes-rodape-campanha { flex: 0 0 auto; padding-top: .5rem; }
+    .painel-adicionar-jogador { flex: 0 0 auto; padding: .65rem; }
+    .estado-vazio { min-height: 0; }
+    .barra-sessoes { flex: 0 0 auto; }
+    .grade-diario { flex: 1 1 auto; min-height: 0; }
+    .cartao-marcos, .cartao-quadro { min-height: 0; }
+    .grade-ferramentas > .cartao-campanha { overflow-y: auto; }
+    .nota-escopo { flex: 0 0 auto; margin-top: .5rem; padding: .4rem .7rem; }
+    .divisao-lista-campanhas { display: flex; flex-direction: column; }
+    .lista-campanhas { flex: 1 1 auto; align-content: start; }
+    .lista-participantes { align-content: start; }
+}
+
+@media (max-width: 1099px) {
+    .grade-diario { grid-template-columns: minmax(0, 1fr); }
+    .cartao-marcos { min-height: 300px; }
+    .cartao-marcos textarea { min-height: 240px; }
+    .cartao-quadro { min-height: 490px; }
+    .zona-quadro { min-height: 330px; }
+}
+
+@media (max-width: 1060px) {
+    .grade-gerenciamento, .grade-ferramentas, .grade-utilitarios { grid-template-columns: minmax(0, 1fr); }
+    .selecao-campanhas, .quadro-jogadores { min-height: 0; }
+    .lista-campanhas { grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); }
+}
+
+@media (max-width: 640px) {
+    .pagina-mestre { padding: 1rem; }
+    .faixa-campanha { padding: .6rem 1rem; }
+    .faixa-campanha-identidade { font-size: .72rem; }
+    .estado-vazio { min-height: 300px; padding: 1.2rem; }
+    .item-campanha { align-items: flex-start; }
+    .item-campanha-info strong { font-size: .86rem; }
+    .botao-selecionar { padding: .45rem .55rem; }
+    .participante { grid-template-columns: minmax(0, 1fr); gap: .45rem; padding: .6rem; }
+    .participante-cabecalho { align-items: flex-start; gap: .3rem; }
+    .acoes-exclusao { margin: 0; justify-content: flex-end; }
+    .personagem-participante { gap: .4rem; }
+    .cabecalho-campanha { flex-wrap: wrap; }
+    .entrada { padding: .8rem; }
+    .entrada-cartaz { padding: 2rem 1.2rem; border-width: 4px; }
+    .barra-sessoes { align-items: stretch; gap: .45rem; }
+    .grupo-seletor-sessoes { flex: 1 1 100%; }
+    .grupo-seletor-sessoes select { width: 100%; }
+    .acoes-barra-sessoes { flex: 1 1 100%; justify-content: flex-end; }
+    .acoes-barra-sessoes .botao { flex: 1 1 auto; }
+    .ferramentas-quadro { gap: .25rem; }
+    .ferramenta-quadro { font-size: .71rem; padding: .28rem .42rem; }
+    .modal-cabecalho h2 { font-size: 1.12rem; }
+    .modal-criar-sessao .modal-rodape { flex-wrap: wrap; }
+    .acoes-gerenciar { flex: 1 1 100%; }
+}
+
+
+/* Altura fluida: evita cortes verticais provocados pelo bloqueio da janela.
+   O documento rola quando o conteúdo ultrapassa a área disponível. */
+@media (min-width: 1100px) and (min-height: 620px) {
+    html, body { height: auto; min-height: 100%; overflow-x: clip; overflow-y: auto; }
+    body { display: block; min-height: 100vh; }
+    main { display: block; min-height: 0; }
+    .barra-superior { position: sticky; top: 0; }
+    .painel { display: block; height: auto; min-height: calc(100vh - 90px); overflow: visible; padding-bottom: 2rem; }
+    .pagina-mestre:not([hidden]) {
+        display: block;
+        min-height: 0;
+        overflow: visible;
+        padding: clamp(.85rem, 1.8vw, 1.5rem);
+    }
+    .grade-gerenciamento, .grade-ferramentas, .grade-utilitarios,
+    .grade-diario, .selecao-campanhas, .quadro-jogadores,
+    .divisao-lista-campanhas { min-height: 0; overflow: visible; }
+    .selecao-campanhas, .quadro-jogadores { min-height: 500px; }
+    .lista-campanhas, .lista-participantes { flex: initial; max-height: none; overflow: visible; }
+    .formulario-criar textarea { min-height: 85px; height: auto; resize: vertical; }
+    .descricao-campanha-ativa { max-height: none; overflow: visible; }
+    .grade-ferramentas > .cartao-campanha { overflow: visible; }
+    .cartao-marcos, .cartao-quadro { min-height: 480px; }
+    .zona-quadro { min-height: 350px; }
+    .grade-npcs, .painel-lista-npcs, .painel-ficha-npc { overflow: visible; }
+}
+/* Quando as sete munições não cabem na mesma linha, quebram em linhas
+   sem cortar a ponta e sem encobrir Salvar ou Sair. */
+@media (min-width: 721px) and (max-width: 1480px) {
+    .barra-superior { flex-wrap: wrap; justify-content: space-between; }
+    .navegacao-mestre { order: 3; flex: 0 0 100%; justify-content: center; flex-wrap: wrap; }
+    .aba-navegacao.aba-cartucho { flex: 0 0 auto; font-size: .78rem; }
+}
+@media (max-width: 720px) {
+    .navegacao-mestre { overflow-x: auto; overflow-y: hidden; padding: .65rem 1rem .8rem; }
+    .aba-navegacao.aba-cartucho { flex: 0 0 auto; min-height: 36px; font-size: .74rem; }
+}

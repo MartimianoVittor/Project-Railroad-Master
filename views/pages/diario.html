@@ -1,0 +1,45 @@
+<section id="pagina-diario" class="pagina-mestre" data-pagina-container="diario" aria-label="Diário" hidden>
+    <div class="barra-sessoes" aria-label="Gerenciamento das sessões">
+        <div class="grupo-seletor-sessoes">
+            <select id="seletor-sessoes" aria-label="Selecionar sessão" disabled>
+                <option value="">Nenhuma sessão criada</option>
+            </select>
+        </div>
+        <div class="acoes-barra-sessoes">
+            <button id="adicionar-sessao" class="botao botao-destaque" type="button" disabled>+ Adicionar sessão</button>
+            <button id="salvar-sessao" class="botao" type="button" disabled>Salvar</button>
+            <button id="gerenciar-sessoes" class="botao botao-discreto" type="button" disabled>Gerenciar</button>
+        </div>
+    </div>
+    <div id="diario-vazio" class="diario-vazio">
+        <p>Crie sua primeira sessão para começar a registrar os acontecimentos e organizar suas ideias.</p>
+    </div>
+    <div id="diario-conteudo" class="grade-diario" hidden>
+        <section class="cartao-campanha cartao-marcos" aria-label="Marcos e notas da sessão">
+            <div class="cabecalho-marcos">
+                <h2>Marcos e notas</h2>
+                <button id="limpar-marcos" class="botao botao-pequeno botao-discreto" type="button">Limpar</button>
+            </div>
+            <label class="sr-only" for="diario-anotacoes">Marcos e notas</label>
+            <textarea id="diario-anotacoes" maxlength="50000" placeholder="Anote acontecimentos, pistas, personagens, objetivos e os marcos desta sessão..." disabled></textarea>
+        </section>
+        <section class="cartao-campanha cartao-quadro" aria-label="Quadro de ideias da sessão">
+            <div class="cabecalho-quadro">
+                <h2>Quadro de ideias</h2>
+                <div class="ferramentas-quadro" role="toolbar" aria-label="Ferramentas do quadro">
+                    <button type="button" class="ferramenta-quadro ativo" data-ferramenta-quadro="lapis" aria-pressed="true">Lápis</button>
+                    <button type="button" class="ferramenta-quadro" data-ferramenta-quadro="borracha" aria-pressed="false">Borracha</button>
+                    <button type="button" class="ferramenta-quadro" data-ferramenta-quadro="texto" aria-pressed="false">Texto</button>
+                    <label class="ferramenta-quadro botao-upload" for="imagem-quadro-mestre">Imagem</label>
+                    <input type="file" id="imagem-quadro-mestre" accept="image/*" hidden>
+                    <button type="button" class="ferramenta-quadro" data-ferramenta-quadro="mover" aria-pressed="false">Mover</button>
+                    <input type="color" id="cor-quadro-mestre" value="#3d2314" title="Cor da tinta" aria-label="Cor da tinta">
+                    <button id="limpar-quadro-mestre" type="button" class="ferramenta-quadro ferramenta-perigo">Limpar</button>
+                </div>
+            </div>
+            <div id="zona-quadro-mestre" class="zona-quadro" aria-label="Quadro de ideias. Desenhe ou cole imagens aqui.">
+                <canvas id="quadro-mestre" aria-label="Área de desenho do quadro"></canvas>
+            </div>
+        </section>
+    </div>
+</section>

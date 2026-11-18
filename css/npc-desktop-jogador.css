@@ -1,0 +1,23 @@
+/* Layout desktop baseado nas colunas 1/4, 1/4, 2/4 do Personagem (Jogador v1.3.4). */
+@media (min-width: 1200px) {
+  .pagina-npcs .campos-form-npc { display:block; overflow:auto; }
+  .pagina-npcs .npc-editor-desktop { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,2fr); align-items:start; gap:12px; }
+  .pagina-npcs .npc-editor-coluna { min-width:0; display:flex; flex-direction:column; gap:12px; }
+  .pagina-npcs .npc-editor-coluna > .grupo-campos-npc { width:100%; }
+  .pagina-npcs .npc-editor-tracos .grupos-completos-npc { display:grid; grid-template-columns: minmax(0,1fr); }
+  .pagina-npcs .npc-ficha-jogador .npc-traco-editor .nome-traco { font-size:11px; }
+  .pagina-npcs .npc-ficha-jogador .npc-tracos-cabecalho,.pagina-npcs .npc-ficha-jogador .npc-traco-editor { grid-template-columns:minmax(0,1fr) repeat(4,22px); gap:3px; }
+  .pagina-npcs .npc-ficha-jogador .npc-gota { width:22px; height:25px; }
+}
+@media (max-width:1199px) { .pagina-npcs .npc-editor-desktop { display:flex; flex-direction:column; gap:12px; } .pagina-npcs .npc-editor-coluna { display:flex; flex-direction:column; gap:12px; min-width:0; } }
+.pagina-npcs .npc-upload-foto { display:grid; gap:10px; }
+.pagina-npcs .npc-imagem-area { display:grid; gap:12px; justify-items:center; }
+.pagina-npcs .npc-imagem-area img { display:block; width:min(100%,220px); aspect-ratio:4/5; object-fit:contain; border:3px double #3d2314; background:#ead9ba; }
+.pagina-npcs .npc-imagem-controles { display:grid; gap:8px; min-width:0; width:100%; }
+.pagina-npcs .npc-imagem-controles input { font-size:11px; max-width:100%; }
+.pagina-npcs .npc-retrato-consulta { display:flex; justify-content:center; padding:12px; border:2px solid #3d2314; background:#fcf8f2; }
+.pagina-npcs .npc-retrato-consulta img { display:block; width:min(100%,220px); max-height:300px; object-fit:contain; }
+/* A fotografia editável substitui o retrato decorativo duplicado da ficha completa. */
+.pagina-npcs #npc-campos-completos > .npc-retrato-jogador { display:none; }
+.pagina-npcs .npc-editor-notas > label { min-width:0; }
+.pagina-npcs .npc-editor-notas textarea { min-height:160px; }

@@ -1,0 +1,141 @@
+/* Ficha de NPC: estilos transpostos de ProjectRailroad v1.3.4.
+ * Referências: css/formularios.css, personagem.css, inventario.css, mobile.css.
+ * Escopo exclusivo da aba NPC, sem alterar a navegação do Mestre. */
+.pagina-npcs .npc-ficha-jogador {
+    --npc-tinta: #3d2314;
+    --npc-papel: #fcf8f2;
+    --npc-foco: #a56a42;
+    color: var(--npc-tinta);
+}
+.pagina-npcs .npc-ficha-mobile { gap: 15px; }
+.pagina-npcs .npc-ficha-jogador label {
+    font-family: 'Rye', serif;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: .4px;
+    color: var(--npc-tinta);
+}
+.pagina-npcs .npc-ficha-jogador input:not([type=checkbox]),
+.pagina-npcs .npc-ficha-jogador select,
+.pagina-npcs .npc-ficha-jogador textarea {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    padding: 10px 12px;
+    border: 2px solid var(--npc-tinta);
+    border-radius: 4px;
+    background: var(--npc-papel);
+    color: var(--npc-tinta);
+    font: 14px 'Rye', serif;
+    box-sizing: border-box;
+}
+.pagina-npcs .npc-ficha-jogador textarea { min-height: 80px; resize: vertical; }
+.pagina-npcs .npc-ficha-jogador :is(input,select,textarea):focus-visible {
+    outline: 3px solid var(--npc-foco);
+    outline-offset: 2px;
+}
+.pagina-npcs .npc-ficha-jogador .grupo-campos-npc {
+    min-width: 0;
+    padding: 15px;
+    border: 2px solid var(--npc-tinta);
+    border-radius: 4px;
+    background: var(--npc-papel);
+}
+.pagina-npcs .npc-ficha-jogador .grupo-campos-npc legend,
+.pagina-npcs .npc-ficha-jogador .npc-arma-form legend {
+    padding: 0 8px;
+    color: var(--npc-tinta);
+    font: 18px 'Rye', serif;
+}
+.pagina-npcs .npc-ficha-jogador .npc-tracos-cabecalho,
+.pagina-npcs .npc-ficha-jogador .npc-traco-editor {
+    display: grid;
+    grid-template-columns: minmax(0,1fr) repeat(4, clamp(22px, 2.05vw, 34px));
+    gap: clamp(3px, .55vw, 10px);
+    align-items: center;
+}
+.pagina-npcs .npc-ficha-jogador .npc-tracos-cabecalho {
+    border-bottom: 2px solid var(--npc-tinta);
+    font: 14px 'Rye', serif;
+}
+.pagina-npcs .npc-ficha-jogador .npc-traco-editor { padding: 8px 0; }
+.pagina-npcs .npc-ficha-jogador .npc-traco-editor .nome-traco {
+    font-family: 'Rye', serif;
+    font-size: clamp(12px, 1.25vw, 20px);
+    letter-spacing: .4px;
+}
+.pagina-npcs .npc-ficha-jogador .npc-gotas-editor { display: contents; }
+.pagina-npcs .npc-ficha-jogador .npc-gota {
+    appearance: none;
+    display: block;
+    width: clamp(22px, 2.05vw, 34px);
+    height: clamp(22px, 2.05vw, 34px);
+    min-height: 0;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    background: var(--npc-tinta);
+    -webkit-mask: url('../assets/icons/gota-contorno.svg') center / contain no-repeat;
+    mask: url('../assets/icons/gota-contorno.svg') center / contain no-repeat;
+    cursor: pointer;
+    transition: background-color .15s ease, transform .15s ease;
+}
+.pagina-npcs .npc-ficha-jogador .npc-gota.marcada {
+    -webkit-mask-image: url('../assets/icons/gota-preenchida.svg');
+    mask-image: url('../assets/icons/gota-preenchida.svg');
+    background: var(--npc-tinta);
+}
+.pagina-npcs .npc-ficha-jogador .npc-gota:hover { transform: scale(1.09); }
+.pagina-npcs .npc-ficha-jogador .npc-gota:focus-visible {
+    outline: 3px solid var(--npc-foco);
+    outline-offset: 3px;
+}
+.pagina-npcs .npc-ficha-jogador .npc-arma-form {
+    margin: 0;
+    padding: 14px;
+    border: 2px solid var(--npc-tinta);
+    border-radius: 4px;
+    background: var(--npc-papel);
+}
+.pagina-npcs .npc-ficha-jogador .npc-arma-form + .npc-arma-form {
+    border-top: 2px solid var(--npc-tinta);
+}
+.pagina-npcs .npc-ficha-jogador .npc-aleatorio {
+    border: 2px solid var(--npc-tinta);
+    border-radius: 4px;
+    background: var(--npc-papel);
+}
+.pagina-npcs .npc-ficha-jogador .npc-aleatorio select { width: auto; }
+.pagina-npcs .npc-retrato-jogador {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0 16px;
+}
+.pagina-npcs .npc-retrato-moldura {
+    position: relative;
+    width: min(250px, 100%);
+    aspect-ratio: 1 / 1;
+    background: url('../assets/imgs/imagemPersonagemPlaceholder.png') center / contain no-repeat;
+}
+.pagina-npcs .npc-retrato-moldura img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+/* Mesmo princípio do mobile do Jogador: seções empilhadas, sem cortes laterais. */
+@media (max-width: 768px) {
+    .pagina-npcs .npc-ficha-mobile,
+    .pagina-npcs .grupos-completos-npc { display: flex; flex-direction: column; gap: 12px; }
+    .pagina-npcs .npc-ficha-jogador .grade-campos-npc { grid-template-columns: minmax(0, 1fr); }
+    .pagina-npcs .npc-ficha-jogador .grupo-campos-npc { padding: 14px 16px; }
+}
+@media (max-width: 480px) {
+    .pagina-npcs .npc-ficha-jogador .npc-tracos-cabecalho,
+    .pagina-npcs .npc-ficha-jogador .npc-traco-editor {
+        grid-template-columns: minmax(0, 1fr) repeat(4, 22px);
+        gap: 3px;
+    }
+    .pagina-npcs .npc-ficha-jogador .npc-gota { width: 22px; height: 25px; }
+    .pagina-npcs .npc-ficha-jogador .npc-traco-editor .nome-traco { font-size: 11px; }
+}

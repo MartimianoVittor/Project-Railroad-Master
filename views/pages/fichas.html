@@ -1,0 +1,22 @@
+<section id="pagina-fichas" class="pagina-mestre pagina-fichas" data-pagina-container="fichas" aria-label="Fichas" hidden>
+    <div class="barra-consulta-fichas">
+        <div class="grupo-seletor-ficha">
+            <label for="seletor-personagem" class="sr-only">Selecionar personagem</label>
+            <select id="seletor-personagem" aria-label="Selecionar personagem">
+                <option value="">Selecione um personagem</option>
+            </select>
+        </div>
+
+        <div class="modos-consulta-fichas" role="group" aria-label="Comparar partes das fichas">
+            <button type="button" class="botao botao-pequeno botao-discreto" data-comparar-ficha="jogador" aria-pressed="false">Jogadores</button>
+            <button type="button" class="botao botao-pequeno botao-discreto" data-comparar-ficha="personagem" aria-pressed="false">Personagens</button>
+            <button type="button" class="botao botao-pequeno botao-discreto" data-comparar-ficha="inventario" aria-pressed="false">Inventários</button>
+        </div>
+    </div>
+
+    <section id="quadro-fichas" class="cartao-campanha quadro-fichas" aria-label="Visualização de fichas compartilhadas">
+        <div id="conteudo-fichas" class="conteudo-fichas" aria-live="polite">
+            <p class="estado-consulta-fichas">Selecione uma campanha e um personagem para consultar suas fichas.</p>
+        </div>
+    </section>
+</section>

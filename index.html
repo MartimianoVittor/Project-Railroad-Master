@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="pt-BR" class="modo-entrada">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#3d2314">
+    <meta name="description" content="Railroad — Escudo do Mestre: campanhas, personagens e ferramentas para narrar o Velho Oeste.">
+    <title>Railroad | Escudo do Mestre</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/mesa.css">
+    <link rel="stylesheet" href="css/cartuchos-mestre.css">
+    <link rel="stylesheet" href="css/tela-desktop.css">
+    <link rel="stylesheet" href="css/rolagem-colunas.css">
+    <link rel="stylesheet" href="css/fichas-jogador.css">
+    <link rel="stylesheet" href="css/fichas-mobile-transpostas.css">
+    <link rel="stylesheet" href="css/ficha-original-consulta.css">
+    <link rel="stylesheet" href="css/ficha-cartoes-originais.css">
+    <link rel="stylesheet" href="css/retratos-originais.css">
+    <script type="module" src="js/mesa.js"></script>
+    <link rel="stylesheet" href="css/npc-editor-jogador.css">
+    <link rel="stylesheet" href="css/npc-ficha-original.css">
+    <link rel="stylesheet" href="css/npc-desktop-jogador.css">
+    <link rel="stylesheet" href="css/npc-jogador-integral.css">
+</head>
+<body class="modo-entrada">
+    <header class="barra-superior">
+        <a href="./" class="marca" aria-label="Railroad Escudo do Mestre, início">
+            <span class="marca-texto"><strong>RAILROAD</strong><small>ESCUDO DO MESTRE</small></span>
+        </a>
+
+        <nav id="navegacao-mestre" class="navegacao-mestre" aria-label="Áreas da Mesa do Mestre" hidden>
+            <button id="aba-campanhas" class="aba-navegacao aba-cartucho ativa" type="button" data-pagina="campanhas" aria-current="page"><span class="cartucho-texto">Campanhas</span></button>
+            <button id="aba-diario" class="aba-navegacao aba-cartucho" type="button" data-pagina="diario"><span class="cartucho-texto">Diário</span></button>
+            <button id="aba-fichas" class="aba-navegacao aba-cartucho" type="button" data-pagina="fichas"><span class="cartucho-texto">Fichas</span></button>
+            <button id="aba-npcs" class="aba-navegacao aba-cartucho" type="button" data-pagina="npcs"><span class="cartucho-texto">NPCs</span></button>
+            <button id="aba-combate" class="aba-navegacao aba-cartucho" type="button" data-pagina="combate"><span class="cartucho-texto">Combate</span></button>
+            <button id="aba-viagem" class="aba-navegacao aba-cartucho" type="button" data-pagina="viagem"><span class="cartucho-texto">Viagem</span></button>
+            <button id="aba-utilitarios" class="aba-navegacao aba-cartucho" type="button" data-pagina="utilitarios"><span class="cartucho-texto">Utilitários</span></button>
+        </nav>
+
+        <div class="barra-acoes">
+            <span id="usuario-email" class="usuario-email" hidden></span>
+            <button id="salvar-campanha" type="button" class="botao botao-salvar" hidden disabled>Salvar</button>
+            <button id="sair" type="button" class="botao botao-discreto botao-sair" hidden>Sair</button>
+        </div>
+    </header>
+
+    <main>
+        <section id="tela-entrada" class="entrada">
+            <div class="entrada-cartaz">
+                <p class="entrada-ornamento" aria-hidden="true">★ RAILROAD ★</p>
+                <p class="sobretitulo">O OUTRO LADO DA MESA</p>
+                <h1>O Velho Oeste precisa<br>de um <em>Mestre.</em></h1>
+                <p class="entrada-descricao">
+                    Crie suas campanhas, reúna os personagens dos jogadores e organize
+                    cada capítulo da sua história em uma mesa feita para narradores.
+                </p>
+                <div class="acoes-entrada"><button id="entrar" type="button" class="botao botao-destaque">Entrar com Google</button><button id="usar-local" type="button" class="botao botao-discreto">Usar local</button></div>
+                <p class="aviso-entrada">Cada jogador continua controlando quais fichas compartilha com você.</p>
+            </div>
+        </section>
+
+        <div id="painel" class="painel" hidden>
+            <div class="faixa-campanha" role="status" aria-live="polite">
+                <div class="faixa-campanha-identidade">
+                    <span>Campanha em uso</span>
+                    <strong id="campanha-ativa">Nenhuma campanha selecionada</strong>
+                </div>
+                <span id="status-rascunho" class="faixa-salvamento">Campanhas e convites são sincronizados com o Supabase.</span>
+            </div>
+
+            <!-- As sete abas são carregadas de views/pages pelo módulo de interface. -->
+            <div id="marcador-paginas" hidden></div>
+        </div>
+    </main>
+
+    <!-- Os diálogos são carregados de views/dialogs. -->
+    <div id="marcador-dialogos" hidden></div>
+
+    <div id="aviso" class="aviso" role="status" aria-live="polite"></div>
+</body>
+</html>

@@ -1,0 +1,93 @@
+/*
+ * Transposição dos marcadores e da grade de traços da ficha mobile do Jogador v1.3.4.
+ * Usa os quatro SVGs originais, copiados sem alteração.
+ * Todos os controles são somente leitura na consulta do Mestre.
+ */
+.ficha-parte, .npc-bloco { color: #3d2314; }
+.ficha-parte-corpo { min-width: 0; }
+.rr-condicoes, .rr-tracos { width: 100%; min-width: 0; }
+.rr-linha-marcadores, .rr-traco-linha {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 0;
+}
+.rr-linha-marcadores > strong, .rr-traco-linha > strong {
+    min-width: 0;
+    font: 12px/1.3 'Rye', Georgia, serif;
+    overflow-wrap: anywhere;
+}
+.rr-caveiras, .rr-gotas {
+    display: grid;
+    grid-template-columns: repeat(4, 21px);
+    gap: 5px;
+    flex: 0 0 auto;
+    justify-content: end;
+}
+.rr-caveiras { grid-template-columns: repeat(3, 23px); }
+.rr-marcador {
+    display: block;
+    width: 100%;
+    height: 25px;
+    background: #3d2314;
+    -webkit-mask: var(--rr-icone-vazio) center / contain no-repeat;
+    mask: var(--rr-icone-vazio) center / contain no-repeat;
+}
+.rr-caveira {
+    --rr-icone-vazio: url('../assets/icons/caveira-contorno.svg');
+    --rr-icone-cheio: url('../assets/icons/caveira-preenchida.svg');
+}
+.rr-gota {
+    --rr-icone-vazio: url('../assets/icons/gota-contorno.svg');
+    --rr-icone-cheio: url('../assets/icons/gota-preenchida.svg');
+}
+.rr-marcador.marcado {
+    background: #8b252d;
+    -webkit-mask-image: var(--rr-icone-cheio);
+    mask-image: var(--rr-icone-cheio);
+}
+.rr-tracos-cabecalho {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) repeat(4, 21px);
+    gap: 5px;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 2px solid #3d2314;
+    font: 11px 'Rye', Georgia, serif;
+}
+.rr-tracos-cabecalho span:not(:first-child) { text-align: center; }
+.rr-traco-linha { border-bottom: 1px solid #c7ad88; }
+.rr-traco-linha .rr-gotas { align-items: center; }
+.rr-traco-linha .rr-marcador { height: 25px; }
+/* Empilhamento das partes da ficha no padrão mobile original. */
+@media (max-width: 1200px) {
+    .conteudo-fichas.modo-completo {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        overflow-y: auto;
+        overflow-x: hidden;
+        gap: 12px;
+    }
+    .conteudo-fichas.modo-completo > .ficha-parte {
+        flex: none;
+        width: 100%;
+        min-width: 0;
+        max-width: none;
+        height: auto;
+        min-height: 0;
+        overflow: visible;
+    }
+    .conteudo-fichas.modo-completo .ficha-parte-corpo {
+        overflow: visible;
+        height: auto;
+    }
+    .npc-detalhes { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 440px) {
+    .rr-gotas { grid-template-columns: repeat(4, 18px); gap: 3px; }
+    .rr-caveiras { grid-template-columns: repeat(3, 20px); gap: 3px; }
+    .rr-tracos-cabecalho { grid-template-columns: minmax(0, 1fr) repeat(4, 18px); gap: 3px; }
+    .rr-traco-linha > strong { font-size: 10px; }
+}

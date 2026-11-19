@@ -179,8 +179,7 @@ export function criarControladorCampanhas(contexto) {
         estado.envios = [];
         estado.versaoCampanha++;
         if (mudou) {
-            contexto.diario.carregarRascunho();
-            contexto.npcs.carregarCampanha();
+            await Promise.all([contexto.diario.carregarRascunho(), contexto.npcs.carregarCampanha()]);
             mostrarFormularioConvite(false);
         }
         listarCampanhas();
@@ -209,8 +208,7 @@ export function criarControladorCampanhas(contexto) {
             estado.participantes = [];
             estado.envios = [];
             estado.versaoCampanha++;
-            contexto.diario.carregarRascunho();
-            contexto.npcs.carregarCampanha();
+            await Promise.all([contexto.diario.carregarRascunho(), contexto.npcs.carregarCampanha()]);
             listarCampanhas();
             listarParticipantes();
             contexto.fichas.listarEnvios();

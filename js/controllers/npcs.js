@@ -1,3 +1,4 @@
+import { listarNpcsRemotos, gravarNpcRemoto, apagarNpcRemoto } from '../services/conteudoCampanha.js';
 import { porId, elemento, mensagemLista } from '../core/dom.js';
 import { montarCamposDinamicosNpc, atualizarGotasNpc } from '../modules/formularioNpc.js';
 import { mostrarAviso, executar } from '../core/feedback.js';
@@ -83,6 +84,20 @@ export function criarControladorNpcs({ estado }) {
         if (lista) {
             lista.replaceChildren();
             for (const item of npc.itens || []) adicionarLinhaItem(item);
+            atualizarPesoItens();
+        }
+    }
+    function atualizarPesoItens() {
+        const totais = { personagem: 0, montaria: 0 };
+        document.querySelectorAll('#npc-orig-lista-itens tr').forEach((linha) => {
+            const local = linha.querySelector('[data-item="local"]')?.value;
+            const qtd = Math.max(0, Number(linha.querySelector('[data-item="quantidade"]')?.value) || 0);
+            const tamanho = Math.max(0, Number(linha.querySelector('[data-item="tamanho"]')?.value) || 0);
+            totais[local === 'montaria' ? 'montaria' : 'personagem'] += qtd * tamanho;
+        });
+        for (const [local, sufixo] of [['personagem','jogador'],['montaria','montaria']]) {
+            const campo = original(`espaco-ocupado-${sufixo}`);
+            if (campo) campo.value = String(totais[local]);
         }
     }
     function adicionarLinhaItem(item = {}) {
@@ -90,7 +105,7 @@ export function criarControladorNpcs({ estado }) {
         if (!lista) return;
         const linha = document.createElement('tr');
         const colunas = [
-            ['local','select',item.local || 'personagem'],
+            ['local','select',item.local === 'jogador' ? 'personagem' : (item.local ?? 'personagem')],
             ['nome','text',item.nome || ''],
             ['quantidade','number',item.quantidade ?? 1],
             ['tamanho','number',item.tamanho ?? 1],
@@ -105,17 +120,48 @@ export function criarControladorNpcs({ estado }) {
                     const opcao = document.createElement('option'); opcao.value = local;
                     opcao.textContent = local === 'personagem' ? 'Personagem' : 'Montaria'; campo.append(opcao);
                 }
+                campo.classList.add('npc-local-valor');
+                campo.setAttribute('aria-label', 'Local do item');
+                const controles = document.createElement('div');
+                controles.className = 'local-item-controles';
+                controles.setAttribute('role', 'group');
+                controles.setAttribute('aria-label', 'Local do item');
+                for (const [local, icone, titulo] of [
+                    ['personagem', 'chapeu', 'Chapéu: carregado pelo personagem'],
+                    ['montaria', 'alforge', 'Alforge: carregado pela montaria'],
+                ]) {
+                    const botao = document.createElement('button');
+                    botao.type = 'button';
+                    botao.className = `botao-local-item icone-${icone}`;
+                    botao.dataset.local = local;
+                    botao.title = titulo;
+                    botao.setAttribute('aria-label', titulo);
+                    botao.setAttribute('aria-pressed', String(valor === local || (valor === 'jogador' && local === 'personagem')));
+                    botao.addEventListener('click', () => {
+                        if (!editando) return;
+                        campo.value = campo.value === local ? '' : local;
+                        controles.querySelectorAll('.botao-local-item').forEach((controle) =>
+                            controle.setAttribute('aria-pressed', String(controle.dataset.local === campo.value)));
+                        alterado = true;
+                        atualizarPesoItens();
+                    });
+                    controles.append(botao);
+                }
+                td.append(controles);
             } else { campo.type = tipo; if (tipo === 'number') { campo.min = '0'; campo.step = '1'; } }
             campo.value = String(valor);td.append(campo);linha.append(td);
         }
         const td = document.createElement('td');
         const remover = document.createElement('button');remover.type='button';remover.textContent='×';
         remover.setAttribute('aria-label','Remover item');
-        remover.addEventListener('click',()=>{linha.remove();alterado=true;});td.append(remover);linha.append(td);
+        remover.addEventListener('click',()=>{linha.remove();alterado=true;atualizarPesoItens();});td.append(remover);linha.append(td);
         lista.append(linha);
+        linha.addEventListener("input", atualizarPesoItens);
+        linha.addEventListener("change", atualizarPesoItens);
+        atualizarPesoItens();
     }
     function prepararFormularioOriginal() {
-        // Os botões de rolagem não fazem parte do editor; somente campos de ficha.
+        // A rolagem permanece na coluna original do inventário.
         const cabecalho = document.querySelector('.npc-form-reiniciado .inventario-cabecalho');
         if (cabecalho && !document.getElementById('npc-adicionar-item')) {
             const botao = document.createElement('button');botao.type='button';botao.id='npc-adicionar-item';
@@ -153,8 +199,70 @@ export function criarControladorNpcs({ estado }) {
         porId('npc-consulta').hidden = modo !== 'consulta';
         porId('form-npc').hidden = modo === 'vazio';
         porId('form-npc').classList.toggle('npc-modo-consulta', modo === 'consulta');
-        // A consulta reutiliza exatamente a ficha de criação, sem permitir alterações.
-        porId('form-npc').querySelector('.campos-form-npc').inert = modo !== 'edicao';
+        porId('npc-rolagem-consulta').hidden = modo === 'vazio';
+        // Bloqueia a edição dos dados, preservando os botões de rolagem e munição.
+        const consulta = modo === 'consulta';
+        porId('form-npc').querySelectorAll('.campos-form-npc input, .campos-form-npc textarea, .campos-form-npc select').forEach((campo) => {
+            if (campo.closest('#npc-rolagem-consulta')) return;
+            campo.disabled = consulta;
+        });
+        porId('form-npc').querySelectorAll('.campos-form-npc button').forEach((botao) => {
+            if (botao.closest('#npc-rolagem-consulta') || botao.matches('.municao-botao')) return;
+            botao.disabled = consulta;
+        });
+    }
+
+    function ajustarMunicao(chave, variacao) {
+        const campo = original(`municao-${chave}`);
+        if (!campo) return;
+        const atual = Number(campo.value) || 0;
+        const proximo = Math.max(0, Math.min(99, atual + variacao));
+        if (proximo === atual) return;
+        if (editando) {
+            campo.value = proximo;
+            alterado = true;
+            return;
+        }
+        const npc = npcSelecionado();
+        if (!npc) return;
+        const atualizado = structuredClone(npc);
+        atualizado.armas[chave].municao = proximo;
+        try {
+            const lista = estado.npcs.map((item) => item.id === npc.id ? atualizado : item);
+            estado.npcs = estado.npcsRepo.salvar(estado.usuario?.id, estado.campanhaId, lista);
+            campo.value = proximo;
+        } catch (erro) {
+            mostrarAviso(`Não foi possível salvar a munição: ${erro.message}`);
+        }
+    }
+
+    function rolarNpcSelecionado() {
+        const npc = npcSelecionado();
+        if (!npc && !editando) return;
+        const nome = porId('npc-rolagem-traco').value;
+        const indiceTraco = TRACOS_NPC.indexOf(nome) + 1;
+        const nivelAtual = editando
+            ? document.querySelectorAll(`.npc-form-reiniciado .check-tracos[data-grupo="traco-${indiceTraco}"]:checked`).length
+            : Number(npc?.tracos?.[nome]) || 0;
+        const nivel = Math.max(0, Math.min(4, nivelAtual));
+        const faces = [1, 4, 6, 8, 12][nivel];
+        const modificador = Number(porId('npc-rolagem-modificador').value) || 0;
+        const resultado = porId('npc-rolagem-resultado');
+        if (nivel === 0) {
+            resultado.textContent = `${nome}: falha automática (nível 0).`;
+            return;
+        }
+        let soma = 0;
+        const dados = [];
+        // Dado explosivo: um resultado máximo permite nova rolagem.
+        // Limite de segurança evita travamento em sequências excepcionalmente longas.
+        for (let tentativa = 0; tentativa < 100; tentativa++) {
+            const dado = Math.floor(Math.random() * faces) + 1;
+            dados.push(dado);
+            soma += dado;
+            if (dado !== faces) break;
+        }
+        resultado.textContent = `${nome} (d${faces}): ${dados.join(' + ')} ${modificador < 0 ? '−' : '+'} ${Math.abs(modificador)} = ${soma + modificador}`;
     }
 
     function mostrarLista() {
@@ -194,6 +302,7 @@ export function criarControladorNpcs({ estado }) {
         mostrarModo('consulta');
         porId('npc-nome-consulta').textContent = npc.nome;
         atualizarFormularioOriginal(npc);
+        porId('form-npc').querySelector('.campos-form-npc').scrollTop = 0;
     }
 
     function atualizarContexto() {
@@ -205,11 +314,31 @@ export function criarControladorNpcs({ estado }) {
             : 'Selecione uma campanha para criar NPCs.';
     }
 
-    function carregarCampanha() {
+    async function carregarCampanha() {
         const escopo = escopoAtual();
         const mudou = escopo !== escopoAnterior;
         escopoAnterior = escopo;
-        estado.npcs = estado.npcsRepo?.carregar(estado.usuario?.id, estado.campanhaId) ?? [];
+        const local = estado.npcsRepo?.carregar(estado.usuario?.id, estado.campanhaId) ?? [];
+        estado.npcs = local;
+        if (!estado.modoLocal && estado.campanhaId && estado.usuario?.id) {
+            try {
+                const remotos = await listarNpcsRemotos(estado.campanhaId);
+                if (escopo !== escopoAtual()) return;
+                const ids = new Set(remotos.map(n => n.id));
+                const ausentes = local.filter(n => !ids.has(n.id));
+                if (ausentes.length && confirm(`Há ${ausentes.length} NPC(s) guardados apenas neste navegador. Importar para a campanha no Supabase?`)) {
+                    for (const n of ausentes) await gravarNpcRemoto(estado.campanhaId,n);
+                    if (escopo !== escopoAtual()) return;
+                    remotos.push(...ausentes);
+                }
+                estado.npcs = remotos;
+            } catch (erro) {
+                if (escopo !== escopoAtual()) return;
+                mostrarAviso(`Não foi possível carregar os NPCs do Supabase: ${erro.message}`,true);
+                // Não substitui dados remotos por dados locais em caso de erro.
+                estado.npcs = [];
+            }
+        }
         if (mudou) {
             selecionadoId = null;
             editando = null;
@@ -334,7 +463,7 @@ export function criarControladorNpcs({ estado }) {
         return validarNpc(normalizarNpc(dados));
     }
 
-    function salvarNpc() {
+    async function salvarNpc() {
         if (!editando) return;
         const npc = lerFormulario();
         const existe = estado.npcs.some((item) => item.id === npc.id);
@@ -342,6 +471,7 @@ export function criarControladorNpcs({ estado }) {
             ? estado.npcs.map((item) => item.id === npc.id ? npc : item)
             : [...estado.npcs, npc];
         // A lista em memória só muda depois que a gravação local teve sucesso.
+        if (!estado.modoLocal) await gravarNpcRemoto(estado.campanhaId, npc);
         const gravados = estado.npcsRepo.salvar(estado.usuario?.id, estado.campanhaId, lista);
         estado.npcs = gravados;
         selecionadoId = npc.id;
@@ -349,20 +479,21 @@ export function criarControladorNpcs({ estado }) {
         alterado = false;
         mostrarLista();
         renderizarConsulta();
-        mostrarAviso('Ficha de NPC salva neste navegador.');
+        mostrarAviso(estado.modoLocal ? 'Ficha de NPC salva neste navegador.' : 'Ficha de NPC salva no Supabase.');
     }
 
-    function salvarEdicaoPendente() {
+    async function salvarEdicaoPendente() {
         if (!editando) return;
         if (!porId('form-npc').reportValidity()) {
             throw new Error('Preencha os campos obrigatórios do NPC antes de salvar.');
         }
-        salvarNpc();
+        await salvarNpc();
     }
 
-    function excluirSelecionado() {
+    async function excluirSelecionado() {
         const npc = npcSelecionado();
         if (!npc || !confirm(`Excluir a ficha de NPC “${npc.nome}”? Esta ação não pode ser desfeita.`)) return;
+        if (!estado.modoLocal) await apagarNpcRemoto(estado.campanhaId, npc.id);
         const gravados = estado.npcsRepo.salvar(estado.usuario?.id, estado.campanhaId,
             estado.npcs.filter((item) => item.id !== npc.id));
         estado.npcs = gravados;
@@ -436,6 +567,17 @@ export function criarControladorNpcs({ estado }) {
         });
         montarCamposDinamicosNpc();
         prepararFormularioOriginal();
+        const seletorRolagem = porId('npc-rolagem-traco');
+        seletorRolagem.replaceChildren(...TRACOS_NPC.map((nome) => {
+            const opcao = document.createElement('option');
+            opcao.value = nome;
+            opcao.textContent = nome;
+            return opcao;
+        }));
+        porId('npc-rolar').addEventListener('click', rolarNpcSelecionado);
+        document.querySelectorAll('#form-npc .municao-botao').forEach((botao) => {
+            botao.addEventListener('click', () => ajustarMunicao(botao.dataset.municao, Number(botao.dataset.variacao)));
+        });
         porId('npc-sortear-tracos').addEventListener('click', () => {
             if (!editando || !confirm('Substituir os níveis atuais dos 12 traços por uma distribuição aleatória?')) return;
             const pontos = Number(valor('npc-pontos'));

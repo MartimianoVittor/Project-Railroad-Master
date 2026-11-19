@@ -271,9 +271,25 @@ function tabelaItens(itens) {
     const corpo = criar('tbody');
     for (const item of itens) {
         const linha = criar('tr');
-        const local = item.local === 'jogador' ? 'Personagem'
-            : item.local === 'montaria' ? 'Montaria' : '—';
-        for (const valor of [item.nome, item.quantidade, item.tamanho, local, item.descricao]) {
+        const celulaLocal = criar('td', 'celula-local-item');
+        const controles = criar('div', 'local-item-controles');
+        controles.setAttribute('role', 'group');
+        controles.setAttribute('aria-label', 'Local do item');
+        for (const [local, icone, titulo] of [
+            ['jogador', 'chapeu', 'Carregado pelo personagem'],
+            ['montaria', 'alforge', 'Carregado pela montaria'],
+        ]) {
+            const iconeLocal = criar('span', `botao-local-item icone-${icone}`);
+            iconeLocal.setAttribute('role', 'img');
+            iconeLocal.setAttribute('aria-label', titulo);
+            iconeLocal.setAttribute('aria-pressed', String(
+                item.local === local || (local === 'jogador' && item.local === 'personagem')
+            ));
+            controles.append(iconeLocal);
+        }
+        celulaLocal.append(controles);
+        linha.append(celulaLocal);
+        for (const valor of [item.nome, item.quantidade, item.tamanho, item.descricao]) {
             linha.append(criar('td', '', valor));
         }
         corpo.append(linha);
@@ -295,7 +311,7 @@ function parteInventario(registro) {
     equipamento.append(criar('h4', '', 'Armas e munição'), armas(rolagens));
     const itensBloco = criar('section', 'rr-secao-original');
     itensBloco.append(criar('h4', '', 'Itens'), tabelaItens(itens));
-    conteudo.append(cabecalho, equipamento, itensBloco);
+    conteudo.append(equipamento, cabecalho, itensBloco);
     return conteudo;
 }
 

@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/mesa.css">
+    <link rel="stylesheet" href="css/combate.css">
     <link rel="stylesheet" href="css/cartuchos-mestre.css">
     <link rel="stylesheet" href="css/tela-desktop.css">
     <link rel="stylesheet" href="css/rolagem-colunas.css">
@@ -41,7 +42,10 @@
         </nav>
 
         <div class="barra-acoes">
-            <span id="usuario-email" class="usuario-email" hidden></span>
+            <div id="identidade-sessao" class="identidade-sessao" hidden>
+                <div class="campanha-sessao"><span>Campanha em uso</span><strong id="campanha-ativa">Nenhuma campanha selecionada</strong></div>
+                <span id="usuario-email" class="usuario-email" hidden></span>
+            </div>
             <button id="salvar-campanha" type="button" class="botao botao-salvar" hidden disabled>Salvar</button>
             <button id="sair" type="button" class="botao botao-discreto botao-sair" hidden>Sair</button>
         </div>
@@ -63,13 +67,7 @@
         </section>
 
         <div id="painel" class="painel" hidden>
-            <div class="faixa-campanha" role="status" aria-live="polite">
-                <div class="faixa-campanha-identidade">
-                    <span>Campanha em uso</span>
-                    <strong id="campanha-ativa">Nenhuma campanha selecionada</strong>
-                </div>
-                <span id="status-rascunho" class="faixa-salvamento">Campanhas e convites são sincronizados com o Supabase.</span>
-            </div>
+            <span id="status-rascunho" class="faixa-salvamento" hidden aria-live="polite"></span>
 
             <!-- As sete abas são carregadas de views/pages pelo módulo de interface. -->
             <div id="marcador-paginas" hidden></div>

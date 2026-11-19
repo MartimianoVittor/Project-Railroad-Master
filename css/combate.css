@@ -1,0 +1,518 @@
+
+/* Railroad: a linguagem gráfica das fichas (papel, tinta, bordas e tipografia). */
+.combate-pagina {--rr-tinta:#3d2314;--rr-borda:#6b4630;--rr-papel:#f4eccf;--rr-cartao:rgba(244,220,179,.4);display:flex;flex-direction:column;gap:10px;min-height:0;height:100%;overflow:hidden;color:var(--rr-tinta)}
+.combate-pagina[hidden]{display:none}
+.combate-barra{display:flex;align-items:center;gap:8px;padding:7px;min-height:74px;max-height:86px;overflow:hidden;border:2px solid var(--rr-borda);background:var(--rr-papel)}
+.combate-acao{width:220px;min-width:220px;align-self:stretch;display:flex;flex-direction:column;justify-content:center;padding:5px 9px;border:2px solid #7c302d;border-radius:4px;background:rgba(121,28,29,.18);overflow:hidden}
+.combate-acao>small{font:11px 'Rye',Georgia,serif;letter-spacing:1px;color:#762c29}
+#combate-atual{display:flex;align-items:center;gap:7px;min-width:0}
+#combate-atual strong{font:13px 'Rye',Georgia,serif;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#combate-atual small{font:11px Georgia,serif;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.combate-trilho{flex:1;min-width:0;display:flex;align-items:stretch;gap:8px;overflow:hidden;position:relative}
+.combate-trilho::before{content:'';display:block;flex:none;width:0}
+.combate-turno{width:220px;min-width:220px;max-width:220px;height:58px;flex:none;display:grid;grid-template-columns:minmax(0,1fr) 23px;grid-template-rows:1fr 1fr;column-gap:6px;align-content:center;text-align:left;padding:6px 9px;border:2px solid var(--rr-borda);border-radius:4px;background:var(--rr-cartao);color:var(--rr-tinta);transform:translateX(calc(-1 * var(--combate-deslocamento,0px)));transition:transform .48s cubic-bezier(.22,.7,.22,1),opacity .25s ease;overflow:hidden}
+.combate-turno strong{grid-column:1;grid-row:1;font:12px 'Rye',Georgia,serif}
+.combate-turno small{grid-column:1;grid-row:2;font:11px Georgia,serif}
+.combate-turno .combate-estrela{grid-column:2;grid-row:1/3;align-self:center}
+.combate-turno strong,.combate-turno small{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.combate-turno.passado{opacity:0;pointer-events:none}
+.combate-barra-botoes{display:flex;gap:6px;align-items:center;flex:none}
+.combate-barra-botoes .botao{white-space:nowrap;padding:7px 9px;font-size:12px}
+.combate-grade{display:grid;grid-template-columns:minmax(310px,355px) minmax(0,1fr);gap:10px;flex:1;min-height:0}
+.combate-lateral,.combate-detalhe{min-height:0;overflow:auto}
+.combate-cabecalho{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.combate-cabecalho h2{margin:0;font:18px 'Rye',Georgia,serif}
+.combate-lista{display:grid;align-content:start;gap:7px;margin-top:12px}
+.combate-linha{display:grid;grid-template-columns:minmax(0,1fr) 65px 32px;gap:7px;align-items:center;padding:8px;border:2px solid var(--rr-borda);border-radius:4px;background:var(--rr-cartao)}
+.combate-linha.ativa{background:#e8d2ac;box-shadow:inset 3px 0 #7b302c}
+.combate-nome{border:0;background:transparent;text-align:left;color:inherit;cursor:pointer;min-width:0;overflow-wrap:anywhere;font:12px 'Rye',Georgia,serif}
+.combate-nome small{display:block;margin-top:4px;font:11px Georgia,serif}
+.combate-linha input{width:100%;min-width:0;box-sizing:border-box;padding:6px 3px;text-align:center;border:2px solid var(--rr-borda);border-radius:3px;background:#fff7e9;color:var(--rr-tinta)}
+.combate-estrela{display:inline-block;flex:none;width:26px;height:28px;padding:0;border:0;background:#711a19;cursor:pointer;-webkit-mask:url('../assets/icons/estrela-contorno.svg') center/contain no-repeat;mask:url('../assets/icons/estrela-contorno.svg') center/contain no-repeat}
+.combate-estrela.preparada{-webkit-mask-image:url('../assets/icons/estrela-preenchida.svg');mask-image:url('../assets/icons/estrela-preenchida.svg')}
+.combate-estrela:hover{filter:brightness(.85)}
+.combate-colunas{display:grid;grid-template-columns:minmax(165px,1fr) minmax(215px,1.25fr) minmax(215px,1.25fr);gap:10px}
+.combate-coluna{display:flex;flex-direction:column;gap:10px;min-width:0}
+.combate-cartao{min-width:0;margin:0;padding:9px;border:2px solid var(--rr-borda);border-radius:5px;background:var(--rr-cartao);color:var(--rr-tinta);box-shadow:none}
+.combate-cartao h3{margin:0 0 9px;font:bold 14px 'Rye',Georgia,serif;color:var(--rr-tinta)}
+.combate-cartao label{display:grid;gap:4px;margin-bottom:8px;font:11px Georgia,serif}
+.combate-cartao input,.combate-cartao select,.combate-cartao textarea{box-sizing:border-box;display:block;width:100%;min-width:0;max-width:100%;padding:6px;border:2px solid var(--rr-borda);border-radius:3px;background:#fff7e9;color:var(--rr-tinta);font:13px Georgia,serif}
+.combate-cartao textarea{resize:vertical}
+.combate-cartao .botao,.combate-preparar{padding:7px 9px}
+.combate-preparar{display:flex;align-items:center;gap:8px;border:2px solid var(--rr-borda);border-radius:4px;background:#e8d4ad;color:var(--rr-tinta);cursor:pointer;font:12px 'Rye',Georgia,serif}
+.combate-retrato{display:block;width:100%;max-height:300px;object-fit:contain;border:2px solid var(--rr-borda);background:#e8d4ad}
+.combate-contador{display:flex;align-items:center;gap:8px}
+.combate-contador input{max-width:80px}
+.combate-condicao{display:grid;grid-template-columns:minmax(100px,1fr) minmax(0,2fr) auto;gap:5px;margin:6px 0}
+.combate-modal{width:min(640px,92vw);max-height:80vh;border:3px solid var(--rr-borda);border-radius:8px;background:var(--rr-papel);color:var(--rr-tinta)}
+.combate-modal::backdrop{background:#170e09a8}
+.combate-disponiveis{display:grid;gap:6px;max-height:50vh;overflow:auto;margin-top:12px}
+.combate-disponiveis button{text-align:left;padding:10px}
+.combate-aviso{font-size:.85rem}
+.combate-cartao .combate-resultado{display:block;margin-top:8px;font-weight:bold}
+@media(max-width:1180px){.combate-grade{grid-template-columns:minmax(265px,310px) minmax(0,1fr)}.combate-colunas{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:850px){.combate-pagina{overflow:auto}.combate-grade{grid-template-columns:1fr;overflow:visible}.combate-lateral{max-height:300px}.combate-barra{flex-wrap:wrap;max-height:none}.combate-trilho{min-height:58px}.combate-acao{width:180px;min-width:180px}.combate-barra-botoes{margin-left:auto}}
+@media(max-width:560px){.combate-colunas{grid-template-columns:1fr}.combate-acao{width:160px;min-width:160px}.combate-turno{width:180px;min-width:180px;max-width:180px}.combate-barra-botoes{width:100%;justify-content:flex-end}}
+@media(prefers-reduced-motion:reduce){.combate-turno{transition:none}}
+
+/* A fila circular mantém os combatentes que já agiram no fim do trilho. */
+.combate-trilho .combate-turno {transform:none;opacity:1;pointer-events:auto;transition:none;}
+.combate-trilho.combate-avancando .combate-turno {animation:combate-entrada .35s ease-out both;}
+@keyframes combate-entrada {from {transform:translateX(24px);opacity:.65;} to {transform:translateX(0);opacity:1;}}
+@media(prefers-reduced-motion:reduce){.combate-trilho.combate-avancando .combate-turno{animation:none;}}
+
+/* Ações da lista lateral: botão discreto de retirada. */
+.combate-linha{grid-template-columns:minmax(0,1fr) 65px 32px 25px}
+.combate-excluir{width:25px;height:26px;display:grid;place-items:center;padding:0;border:1px solid #875e4a;border-radius:3px;background:rgba(105,39,31,.09);color:#782b25;cursor:pointer;font:bold 18px Georgia,serif}
+.combate-excluir:hover,.combate-excluir:focus-visible{background:#782b25;color:#fff2dc}
+/* Cartões de armas: mesmos componentes e organização da ficha do jogador. */
+.combate-pagina .combate-arma{min-width:0;margin:0;padding:8px;border:2px solid #6b4630;border-radius:5px;display:grid;gap:5px;background:rgba(244,220,179,.4)}
+.combate-pagina .combate-arma legend{font:bold 14px 'Rye',Georgia,serif;color:#3d2314;padding:0 5px}
+.combate-pagina .combate-arma .arma-linha-nome{display:flex;gap:7px;align-items:end;min-width:0}
+.combate-pagina .combate-arma .arma-nome{display:block;flex:1;min-width:0;margin:0}
+.combate-pagina .combate-arma .arma-municao{display:grid;gap:3px;flex:none}
+.combate-pagina .combate-arma .arma-municao-titulo{text-align:center;font:11px Georgia,serif}
+.combate-pagina .combate-arma .arma-municao-controles{display:flex;align-items:center;gap:3px}
+.combate-pagina .combate-arma .municao-botao{width:25px;height:28px;border:2px solid #6b4630;border-radius:3px;background:#e9d5ae;color:#3d2314;cursor:pointer;font:bold 16px Georgia,serif}
+.combate-pagina .combate-arma .municao-valor{width:43px;min-width:0;text-align:center;padding:4px 0}
+.combate-pagina .combate-arma .bonus-distancias{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}
+.combate-pagina .combate-arma .bonus-distancia{display:grid;gap:4px;min-width:0;text-align:center;font:11px Georgia,serif;margin:0}
+.combate-pagina .combate-arma .bonus-distancia span{min-height:25px;display:flex;align-items:end;justify-content:center}
+.combate-pagina .combate-arma .bonus-distancia input{text-align:center;padding:4px 2px}
+
+/* Regras originais dos cartões da ficha do Jogador, escopadas ao Combate. */
+.combate-pagina .cartao-rolagem{
+    display: grid;
+    gap: 5px;
+    padding: 10px;
+    border: 2px solid #6b4630;
+    border-radius: 5px;
+    background: rgba(244,220,179,.4);
+}
+.combate-pagina .cartao-rolagem h3{
+    font: clamp(13px,1.1vw,17px) 'Rye',serif;
+    margin: 0 0 3px;
+}
+.combate-pagina .cartao-rolagem label{
+    font: 12px 'Rye',serif;
+}
+.combate-pagina .campo-inventario{
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    min-height: 30px;
+    padding: 5px 7px;
+    border: 2px solid #6b4630;
+    border-radius: 3px;
+    background: #fff7e9;
+    color: #3d2314;
+    font: 13px Georgia,serif;
+}
+.combate-pagina .botao-rolar{
+    padding: 8px 10px;
+    margin-top: 4px;
+    border: 2px solid #27170f;
+    border-radius: 4px;
+    background: linear-gradient(#805032,#422515);
+    color: #fff0d3;
+    font: bold 13px 'Rye',serif;
+    cursor: pointer;
+    box-shadow: 2px 3px 0 #24170f;
+}
+.combate-pagina .botao-rolar:hover{
+    filter: brightness(1.15);
+}
+.combate-pagina .botao-rolar:focus-visible,.combate-pagina .campo-inventario:focus-visible{
+    outline: 3px solid #c58c42;
+    outline-offset: 2px;
+}
+.combate-pagina .resultado-rolagem{
+    display: block;
+    min-height: 16px;
+    color: #70251d;
+    font: bold 13px Georgia,serif;
+    overflow-wrap: anywhere;
+}
+.combate-pagina .cartao-arma{
+    min-width: 0;
+    margin: 0;
+    padding: 8px;
+    border: 2px solid #6b4630;
+    border-radius: 5px;
+    display: grid;
+    gap: 5px;
+    background: rgba(244,220,179,.4);
+}
+.combate-pagina .cartao-arma legend{
+    font: bold 14px 'Rye',Georgia,serif;
+    color: #3d2314;
+    padding: 0 5px;
+}
+.combate-pagina .cartao-arma > label{
+    font-size: 12px;
+}
+.combate-pagina .bonus-distancias{
+    display: grid;
+    grid-template-columns: repeat(4,minmax(0,1fr));
+    gap: 5px;
+}
+.combate-pagina .bonus-distancia{
+    display: grid;
+    gap: 4px;
+    min-width: 0;
+    text-align: center;
+    font: 11px Georgia,serif;
+}
+.combate-pagina .bonus-distancia span{
+    min-height: 25px;
+    display: flex;
+    align-items: end;
+    justify-content: center;
+}
+.combate-pagina .bonus-distancia input{
+    text-align: center;
+    padding: 4px 2px;
+}
+.combate-pagina .inventario-cabecalho .botao-rolar{
+    margin: 0;
+}
+/* Nome e contador de munição compartilham a largura já existente da arma. */
+.combate-pagina .arma-linha-nome, .combate-pagina .arma-linha-nome{
+    display: grid;
+    grid-template-columns: minmax(0,1fr) auto;
+    gap: 8px;
+    align-items: end;
+    min-width: 0;
+}
+.combate-pagina .arma-nome, .combate-pagina .arma-nome{
+    display: grid;
+    gap: 4px;
+    min-width: 0;
+}
+.combate-pagina .arma-nome input, .combate-pagina .arma-nome input{
+    min-width: 0;
+    width: 100%;
+}
+.combate-pagina .arma-municao, .combate-pagina .arma-municao{
+    display: grid;
+    gap: 4px;
+    min-width: 0;
+}
+.combate-pagina .arma-municao-titulo, .combate-pagina .arma-municao-titulo{
+    font: 11px Georgia,serif;
+    text-align: center;
+}
+.combate-pagina .arma-municao-controles, .combate-pagina .arma-municao-controles{
+    display: flex;
+    align-items: stretch;
+    gap: 2px;
+}
+.combate-pagina .municao-botao, .combate-pagina .municao-botao{
+    width: 26px;
+    min-width: 26px;
+    padding: 0;
+    border: 1px solid #442818;
+    border-radius: 3px;
+    background: #70452c;
+    color: #fff3dc;
+    font: bold 17px Georgia,serif;
+    cursor: pointer;
+}
+.combate-pagina .municao-valor, .combate-pagina .municao-valor{
+    width: 35px;
+    min-width: 0;
+    height: 32px;
+    padding: 2px;
+    border: 2px solid #6b4630;
+    border-radius: 3px;
+    background: #fff7e9;
+    color: #3d2314;
+    font: 14px Georgia,serif;
+    text-align: center;
+    box-sizing: border-box;
+    appearance: textfield;
+    -moz-appearance: textfield;
+}
+.combate-pagina .municao-valor::-webkit-inner-spin-button, .combate-pagina .municao-valor::-webkit-inner-spin-button{
+    -webkit-appearance: none;
+    margin: 0;
+}
+.combate-pagina .municao-botao:focus-visible, .combate-pagina .municao-botao:focus-visible{
+    outline: 3px solid #c58c42;
+    outline-offset: 2px;
+}
+.combate-pagina .municao-botao{
+        min-height: 40px;
+        min-width: 30px;
+        width: 30px;
+    }
+.combate-pagina .municao-valor{
+        height: 40px;
+        width: 38px;
+    }
+.combate-pagina .grupo-caveiras{
+    padding-block: 16px;
+}
+.combate-pagina .linha-check{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+    min-width: 0;
+}
+.combate-pagina .linha-check > label{
+    font-family: 'Rye', serif;
+    font-size: clamp(14px, 1.25vw, 20px);
+    font-weight: bold;
+    letter-spacing: .4px;
+}
+.combate-pagina .caveiras-box, .combate-pagina .tracos-box{
+    display: flex;
+    align-items: center;
+    gap: clamp(3px, .55vw, 10px);
+    flex: 0 0 auto;
+}
+/* A própria caixa de seleção é clicável, acessível e salva pelo JS. */
+.combate-pagina .check-caveira, .combate-pagina .check-tracos{
+    appearance: none;
+    -webkit-appearance: none;
+    display: block;
+    flex: 0 0 auto;
+    width: clamp(22px, 2.05vw, 34px);
+    height: clamp(22px, 2.05vw, 34px);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background-color: #3d2314;
+    -webkit-mask: var(--icone-vazio) center / contain no-repeat;
+    mask: var(--icone-vazio) center / contain no-repeat;
+    cursor: pointer;
+    transition: background-color .15s ease, transform .15s ease;
+}
+.combate-pagina .check-caveira{
+    --icone-vazio: url('../assets/icons/caveira-contorno.svg');
+    --icone-cheio: url('../assets/icons/caveira-preenchida.svg');
+}
+.combate-pagina .check-caveira:checked, .combate-pagina .check-tracos:checked{
+    -webkit-mask-image: var(--icone-cheio);
+    mask-image: var(--icone-cheio);
+    background-color: #3d2314;
+}
+.combate-pagina .check-caveira:hover, .combate-pagina .check-tracos:hover{
+    transform: scale(1.09);
+}
+.combate-pagina .check-caveira:focus-visible, .combate-pagina .check-tracos:focus-visible{
+    outline: 3px solid #a56a42;
+    outline-offset: 3px;
+    border-radius: 3px;
+}
+.combate-pagina .linha-check > label{
+        font-size: 14px;
+    }
+.combate-pagina .grupo-caveiras .linha-check{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.combate-pagina .check-caveira{--icone-vazio:url('../assets/icons/caveira-contorno.svg');--icone-cheio:url('../assets/icons/caveira-preenchida.svg')}
+.combate-pagina .cartao-rolagem{width:100%;box-sizing:border-box}
+.combate-pagina .cartao-arma{width:100%;box-sizing:border-box}
+
+/* Combate 06 — componentes e controles reorganizados. */
+.combate-pagina .combate-cartao-retrato > h3,
+.combate-pagina .combate-cartao-ferimentos > h3 {display:none}
+.combate-pagina .combate-cartao-retrato .combate-retrato{margin-top:0}
+.combate-pagina .combate-modificadores{display:grid;gap:10px}
+.combate-pagina .combate-modificador{display:flex;flex-direction:row;align-items:center;justify-content:space-between;gap:8px;margin:0;font:700 16px Georgia,serif}
+.combate-pagina .combate-modificador span{font-size:16px}
+.combate-pagina .combate-modificador input{flex:0 0 48px;width:48px;height:42px;min-width:48px;max-width:48px;padding:4px;text-align:center;font-size:18px;border-radius:3px}
+.combate-pagina .combate-modificadores-total{display:block;margin-top:9px;font:700 15px Georgia,serif}
+.combate-pagina .combate-condicoes-cabecalho,
+.combate-pagina .combate-preparar-cabecalho{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:9px}
+.combate-pagina .combate-condicoes-cabecalho h3,
+.combate-pagina .combate-preparar-cabecalho h3{margin:0}
+.combate-pagina .combate-adicionar-condicao{flex:none;white-space:nowrap;padding:5px 7px;font-size:11px}
+.combate-pagina .combate-preparar-cabecalho .combate-estrela{flex:0 0 28px;min-width:28px;min-height:28px}
+.combate-pagina .combate-preparar-cartao > textarea{margin-top:4px}
+
+/* Atualização Combate 07 */
+.combate-pagina .combate-linha.combate-fora{background:#3d332e;color:#ddd0b9;border-color:#29211d;opacity:.85}
+.combate-pagina .combate-linha.combate-fora .combate-nome{color:#ddd0b9}
+.combate-pagina .combate-linha.combate-fora input{background:#b7ada1}
+.combate-pagina .combate-turno{display:flex;align-items:center;gap:5px}
+.combate-pagina .combate-turno-identificacao{display:grid;align-content:center;flex:1;min-width:0;padding:0;border:0;background:transparent;text-align:left;color:inherit;cursor:pointer}
+.combate-pagina .combate-turno-identificacao strong,.combate-pagina .combate-turno-identificacao small{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.combate-pagina .combate-turno .combate-estrela{grid-column:auto;grid-row:auto;flex:none}
+.combate-pagina .combate-modificador-controles{display:flex;align-items:center;gap:4px}
+.combate-pagina .combate-modificador-botao{width:28px;height:38px;border:2px solid #6b4630;border-radius:3px;background:#e8d4ad;color:#3d2314;cursor:pointer;font:bold 17px Georgia,serif}
+.combate-pagina .combate-arma-titulo{font:bold 14px 'Rye',Georgia,serif;color:#3d2314;border-bottom:1px solid #9a7b58;padding-bottom:7px;margin-bottom:7px}
+.combate-pagina .combate-arma{border:2px solid #6b4630}
+.combate-pagina .combate-condicao{display:block;border:1px solid #a58b6b;border-radius:3px;padding:7px;background:#fff7e980}
+.combate-pagina .combate-condicao-topo{display:flex;align-items:center;justify-content:space-between;gap:6px}
+.combate-pagina .combate-condicao-descricao{white-space:pre-wrap;overflow-wrap:anywhere;font:13px/1.45 Georgia,serif;margin:7px 0 0}
+.combate-modal-condicoes{width:min(650px,92vw);padding:15px}
+.combate-modal-condicoes .combate-condicoes-cabecalho{display:flex;align-items:center;justify-content:space-between}
+.combate-modal-condicoes input,.combate-modal-condicoes textarea{box-sizing:border-box;width:100%;padding:8px;margin:5px 0;border:1px solid #6b4630;background:#fff7e9;color:#3d2314}
+.combate-condicoes-opcoes{max-height:35vh;overflow:auto;display:grid;gap:6px;margin:10px 0}
+.combate-condicao-opcao{display:grid;gap:4px;text-align:left;padding:9px;border:1px solid #8a684c;background:#f1e1c4;color:#3d2314;cursor:pointer}
+.combate-condicao-opcao span{font:12px/1.4 Georgia,serif;white-space:normal}
+.combate-condicao-personalizada{border-top:1px solid #8a684c;padding-top:10px;display:grid;gap:5px}
+.combate-condicao-personalizada h4{margin:0}
+
+/* Combate 08: fundo opaco para a janela de condições, acima dos demais painéis. */
+dialog#combate-modal-condicoes {
+  background-color: #f2e2c2 !important;
+  background-image: none !important;
+  color: #352315 !important;
+  opacity: 1 !important;
+  border: 3px solid #6b4630 !important;
+  box-shadow: 0 18px 55px rgba(20, 10, 5, .55) !important;
+  z-index: 10000;
+}
+dialog#combate-modal-condicoes::backdrop {background: rgba(18, 10, 7, .76) !important;}
+
+/* Combate 09: busca e seletores com a identidade visual Railroad. */
+#combate-modal {background:#f2e2c2;color:#352315;border:3px solid #6b4630;box-shadow:0 18px 50px #21140e80;box-sizing:border-box;}
+#combate-modal > label {display:grid;gap:9px;margin:16px 0 12px;font:700 15px Georgia,serif;color:#3d2314;}
+#combate-modal #combate-busca {box-sizing:border-box;display:block;width:100%;height:52px;min-height:52px;padding:10px 14px;border:2px solid #6b4630;border-radius:4px;background:#fff7e9;color:#3d2314;font:17px Georgia,serif;box-shadow:inset 0 1px 3px #6b463022;}
+#combate-modal #combate-busca:focus-visible {outline:2px solid #8b252d;outline-offset:2px;}
+#combate-modal #combate-busca::placeholder {color:#8b7159;opacity:1;}
+.combate-pagina .combate-modificador-controles .municao-botao {width:30px;height:38px;flex:0 0 30px;}
+.combate-pagina .combate-modificador-controles input {width:48px;flex:0 0 48px;}
+.combate-pagina .combate-personagem-funcao {margin:2px 0 0;font:italic 13px Georgia,serif;color:#65452f;overflow-wrap:anywhere;}
+/* O formulário de criação fica fixo e somente a lista de condições rola. */
+dialog#combate-modal-condicoes[open] {display:flex;flex-direction:column;box-sizing:border-box;width:min(650px,92vw);max-height:min(90dvh,850px);overflow:hidden;padding:14px 16px;gap:8px;}
+dialog#combate-modal-condicoes > .combate-condicoes-cabecalho {flex:0 0 auto;margin:0;}
+dialog#combate-modal-condicoes > input[type=search] {flex:0 0 auto;margin:0;}
+dialog#combate-modal-condicoes .combate-condicoes-opcoes {flex:1 1 auto;min-height:48px;max-height:none;overflow-y:auto;overscroll-behavior:contain;margin:0;padding:3px 2px;align-content:start;}
+dialog#combate-modal-condicoes .combate-condicao-personalizada {flex:0 0 auto;display:grid;gap:5px;margin:0;padding-top:8px;}
+dialog#combate-modal-condicoes .combate-condicao-personalizada h4 {margin:0;font-size:13px;}
+dialog#combate-modal-condicoes .combate-condicao-personalizada input {height:32px;margin:0;padding:5px 8px;}
+dialog#combate-modal-condicoes .combate-condicao-personalizada textarea {height:55px;min-height:45px;margin:0;padding:5px 8px;resize:vertical;max-height:90px;}
+dialog#combate-modal-condicoes .combate-condicao-personalizada .botao {justify-self:end;min-height:33px;padding:5px 10px;}
+@media(max-height:560px) {dialog#combate-modal-condicoes[open] {max-height:96dvh;padding:8px 12px;gap:4px;}dialog#combate-modal-condicoes .combate-condicao-personalizada textarea{height:40px;min-height:36px;}dialog#combate-modal-condicoes .combate-condicao-personalizada{gap:3px;padding-top:4px;}}
+
+/* Combate 10 — exclusão à esquerda, lista de condições mais baixa e botão amarelo. */
+.combate-pagina .combate-linha {
+  grid-template-columns:25px minmax(0,1fr) 65px 32px;
+}
+.combate-pagina .combate-linha .combate-excluir {
+  grid-column:1;
+  justify-self:start;
+}
+/* A janela reserva espaço para criar a condição; só as opções rolam. */
+dialog#combate-modal-condicoes[open] {
+  max-height:min(82dvh,720px);
+}
+dialog#combate-modal-condicoes .combate-condicoes-opcoes {
+  flex:0 1 170px;
+  max-height:170px;
+  min-height:55px;
+  overflow-y:auto;
+}
+dialog#combate-modal-condicoes .combate-condicao-personalizada {
+  flex:0 0 auto;
+  min-height:0;
+}
+dialog#combate-modal-condicoes .combate-condicao-personalizada .combate-botao-amarelo {
+  background:#e6bc62;
+  color:#352315;
+  border:2px solid #78512b;
+  border-radius:4px;
+  box-shadow:inset 0 1px rgba(255,246,207,.55);
+  font-weight:700;
+  cursor:pointer;
+}
+dialog#combate-modal-condicoes .combate-condicao-personalizada .combate-botao-amarelo:hover,
+dialog#combate-modal-condicoes .combate-condicao-personalizada .combate-botao-amarelo:focus-visible {
+  background:#f0cc7a;
+}
+@media(max-height:560px){
+ dialog#combate-modal-condicoes[open]{max-height:96dvh;}
+ dialog#combate-modal-condicoes .combate-condicoes-opcoes{flex-basis:85px;max-height:85px;min-height:32px;}
+}
+
+
+/* Layout 11 — uso eficiente do espaço, rolagem independente por coluna. */
+@media (min-width: 851px) {
+  .combate-pagina .combate-grade {
+    grid-template-columns: clamp(245px, 23vw, 315px) minmax(0, 1fr);
+    min-height: 0;
+    align-items: stretch;
+  }
+  .combate-pagina .combate-lateral,
+  .combate-pagina .combate-detalhe {
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    padding: 10px;
+  }
+  .combate-pagina .combate-lateral {
+    display: flex;
+    flex-direction: column;
+  }
+  .combate-pagina .combate-lateral .combate-cabecalho {
+    flex: none;
+    gap: 5px;
+  }
+  .combate-pagina .combate-lateral .combate-cabecalho h2 {font-size: 15px;}
+  .combate-pagina .combate-lateral .combate-cabecalho .botao {
+    padding: 6px 8px;
+    font-size: 11px;
+    white-space: nowrap;
+  }
+  .combate-pagina .combate-lista {
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex: 1 1 auto;
+    align-content: start;
+    margin-top: 8px;
+    padding-right: 3px;
+    scrollbar-gutter: stable;
+  }
+  .combate-pagina .combate-linha {
+    gap: 4px;
+    padding: 5px;
+    grid-template-columns: 23px minmax(0, 1fr) 48px 27px;
+  }
+  .combate-pagina .combate-linha input {padding: 5px 1px;}
+  .combate-pagina .combate-linha .combate-excluir {width: 23px;}
+  .combate-pagina .combate-linha .combate-estrela {width: 24px;}
+  .combate-pagina .combate-detalhe:has(> .combate-colunas) {
+    display: flex;
+    flex-direction: column;
+  }
+  .combate-pagina .combate-colunas {
+    flex: 1 1 auto;
+    min-height: 0;
+    height: 100%;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.13fr) minmax(0, 1.13fr);
+    gap: 8px;
+    align-items: stretch;
+  }
+  .combate-pagina .combate-coluna {
+    min-height: 0;
+    max-height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+    padding: 2px 4px 8px 1px;
+    scrollbar-gutter: stable;
+    align-content: start;
+  }
+  .combate-pagina .combate-cartao {padding: 7px;}
+  .combate-pagina .combate-coluna {gap: 8px;}
+  .combate-pagina .combate-retrato {max-height: 215px;}
+}
+/* Em telas intermediárias, preservar a leitura com duas colunas independentes. */
+@media (min-width: 851px) and (max-width: 1180px) {
+  .combate-pagina .combate-grade {grid-template-columns: 245px minmax(0, 1fr);}
+  .combate-pagina .combate-colunas {grid-template-columns: repeat(2, minmax(0, 1fr));}
+  .combate-pagina .combate-coluna {overflow-y: auto;}
+  .combate-pagina .combate-coluna:last-child {grid-column: 1 / -1;max-height: none;overflow: visible;}
+  .combate-pagina .combate-detalhe {overflow-y: auto;}
+  .combate-pagina .combate-colunas {height: auto;flex: none;}
+}
+@media (max-width: 850px) {
+  .combate-pagina .combate-lateral {overflow: hidden;display:flex;flex-direction:column;}
+  .combate-pagina .combate-lista {min-height:0;overflow-y:auto;flex:1 1 auto;}
+  .combate-pagina .combate-detalhe {overflow: visible;}
+}

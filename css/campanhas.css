@@ -164,3 +164,6 @@
 .item-campanha-acoes .botao-excluir-campanha { color: #72232a; border-color: #a77c6c; background: #f4e5d5; }
 .item-campanha-acoes .botao-excluir-campanha:hover { background: #ead0c3; }
 @media (max-width: 550px) { .item-campanha { flex-wrap: wrap; } .item-campanha-acoes { width: 100%; } }
+
+/* Combate 09: descrição da campanha mais compacta sem limitar a digitação. */
+#descricao-campanha {box-sizing:border-box;min-height:64px;height:74px;max-height:150px;resize:vertical;}

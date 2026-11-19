@@ -1,9 +1,12 @@
+import { listarSessoesRemotas, salvarSessoesRemotas } from '../services/conteudoCampanha.js';
 import { criarSessao, duplicarSessao, moverSessao } from '../modules/sessoes.js';
 import { mostrarAviso } from '../core/feedback.js';
 import { porId, elemento } from '../core/dom.js';
 
 /** Sessões, edição, reordenação e persistência local do diário. */
 export function criarControladorDiario({ estado }) {
+    let idsRemotos = new Set();
+    let escopoCarregado = null;
     function atualizarStatusRascunho() {
         const indicador = porId('status-rascunho');
         indicador.classList.toggle('pendente', estado.rascunhoSujo);
@@ -11,12 +14,12 @@ export function criarControladorDiario({ estado }) {
         if (!estado.campanhaId) {
             indicador.textContent = 'Selecione uma campanha para editar o diário.';
         } else if (estado.rascunhoSujo) {
-            indicador.textContent = 'Sessão alterada — clique em Salvar para guardar neste navegador.';
+            indicador.textContent = (estado.modoLocal ? 'Sessão alterada — salve neste navegador.' : 'Sessão alterada — salve no Supabase.');
         } else if (estado.salvoEm) {
             const data = new Date(estado.salvoEm);
             indicador.textContent = `Sessões salvas em ${data.toLocaleString('pt-BR')}.`;
         } else {
-            indicador.textContent = 'Campanhas online · sessões armazenadas neste navegador.';
+            indicador.textContent = (estado.modoLocal ? 'Sessões armazenadas neste navegador.' : 'Sessões armazenadas no Supabase.');
         }
     }
 
@@ -66,7 +69,7 @@ export function criarControladorDiario({ estado }) {
         else porId('diario-vazio').querySelector('p').textContent = 'Crie sua primeira sessão para começar a registrar os acontecimentos e organizar suas ideias.';
     }
 
-    function carregarRascunho() {
+    async function carregarRascunho() {
         const dados = estado.sessoesRepo.carregar(estado.usuario?.id, estado.campanhaId);
         estado.sessoes = dados.sessoes;
         estado.sessaoId = dados.ativaId;
@@ -74,6 +77,35 @@ export function criarControladorDiario({ estado }) {
         estado.salvoEm = dados.salvoEm;
         mostrarSessao();
         atualizarStatusRascunho();
+        idsRemotos = new Set();
+        const escopo = `${estado.usuario?.id}:${estado.campanhaId}`;
+        escopoCarregado = null;
+        if (!estado.modoLocal && estado.campanhaId && estado.usuario?.id) {
+            try {
+                const remoto = await listarSessoesRemotas(estado.campanhaId);
+                if (escopo !== `${estado.usuario?.id}:${estado.campanhaId}`) return;
+                const ids = new Set(remoto.sessoes.map(s=>s.id));
+                const locaisAusentes = dados.sessoes.filter(s=>!ids.has(s.id));
+                if (locaisAusentes.length && confirm(`Há ${locaisAusentes.length} sessão(ões) guardada(s) apenas neste navegador. Importar para o Supabase?`)) {
+                    remoto.sessoes.push(...locaisAusentes);
+                    remoto.ativaId ||= dados.ativaId;
+                    // A importação não apaga nem substitui sessões remotas.
+                    await salvarSessoesRemotas(estado.campanhaId,remoto,new Set());
+                    if (escopo !== `${estado.usuario?.id}:${estado.campanhaId}`) return;
+                }
+                estado.sessoes=remoto.sessoes;
+                estado.sessaoId=remoto.ativaId;
+                estado.salvoEm=remoto.salvoEm;
+                idsRemotos=new Set(remoto.sessoes.map(s=>s.id));
+                escopoCarregado=escopo;
+                mostrarSessao();atualizarStatusRascunho();
+            } catch(erro) {
+                if (escopo !== `${estado.usuario?.id}:${estado.campanhaId}`) return;
+                estado.sessoes=[];estado.sessaoId=null;
+                mostrarSessao();
+                mostrarAviso(`Não foi possível carregar as sessões do Supabase: ${erro.message}`,true);
+            }
+        }
     }
 
     function marcarRascunhoAlterado() {
@@ -253,15 +285,19 @@ export function criarControladorDiario({ estado }) {
     async function salvarCampanhaAtual() {
         if (!estado.usuario || !estado.campanhaId) throw new Error('Selecione uma campanha antes de salvar.');
         guardarSessaoAtual();
-        const resultado = estado.sessoesRepo.salvar(estado.usuario.id, estado.campanhaId, {
-            sessoes: estado.sessoes,
-            ativaId: estado.sessaoId,
-        });
+        const dados = {sessoes:estado.sessoes,ativaId:estado.sessaoId};
+        if (!estado.modoLocal) {
+            if (escopoCarregado !== `${estado.usuario.id}:${estado.campanhaId}`)
+                throw new Error('As sessões ainda não foram carregadas do Supabase. Aguarde e tente novamente.');
+            await salvarSessoesRemotas(estado.campanhaId,dados,idsRemotos);
+            idsRemotos = new Set(estado.sessoes.map(s=>s.id));
+        }
+        const resultado = estado.sessoesRepo.salvar(estado.usuario.id, estado.campanhaId, dados);
         estado.sessoes = resultado.sessoes;
         estado.rascunhoSujo = false;
         estado.salvoEm = resultado.salvoEm;
         atualizarStatusRascunho();
-        mostrarAviso('Sessões salvas neste navegador. Campanhas e convites continuam sincronizados com o Supabase.');
+        mostrarAviso(estado.modoLocal ? 'Sessões salvas neste navegador.' : 'Sessões salvas no Supabase e neste navegador.');
     }
 
     return {

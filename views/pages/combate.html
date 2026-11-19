@@ -1,18 +1,5 @@
-<section id="pagina-combate" class="pagina-mestre" data-pagina-container="combate" aria-label="Combate" hidden>
-    <div class="grade-ferramentas">
-        <section class="cartao-campanha">
-            <p class="sobretitulo">ORDEM DE AÇÃO</p>
-            <h2>Iniciativa</h2>
-            <div class="quadro-provisorio">
-                <span aria-hidden="true">Ⅰ · Ⅱ · Ⅲ</span>
-                <p>A ordem dos turnos e as rolagens ficarão aqui nas próximas versões.</p>
-            </div>
-        </section>
-        <section class="cartao-campanha">
-            <p class="sobretitulo">MEMBROS DA MESA</p>
-            <h2>Combatentes disponíveis</h2>
-            <ul id="lista-combatentes" class="lista-registros" aria-label="Personagens aprovados para a campanha"></ul>
-            <p class="instrucao">Ações de combate serão independentes dos marcadores nas fichas dos jogadores.</p>
-        </section>
-    </div>
+<section id="pagina-combate" class="pagina-mestre combate-pagina" data-pagina-container="combate" aria-label="Combate" hidden>
+ <header class="combate-barra cartao-campanha"><div class="combate-acao"><small>AÇÃO</small><div id="combate-atual">Aguardando combatentes</div></div><div id="combate-trilho" class="combate-trilho" aria-label="Ordem de iniciativa"></div><div class="combate-barra-botoes"><button id="combate-passar" class="botao" type="button">Passar</button><button id="combate-encerrar" class="botao botao-discreto" type="button">Encerrar combate</button></div></header>
+ <div class="combate-grade"><aside class="cartao-campanha combate-lateral"><header class="combate-cabecalho"><h2>Combatentes</h2><button id="combate-adicionar" class="botao" type="button">+ Adicionar</button></header><div id="combate-lista" class="combate-lista"></div></aside><article id="combate-detalhe" class="cartao-campanha combate-detalhe" aria-live="polite"><p>Adicione um personagem ou NPC para começar.</p></article></div>
+ <dialog id="combate-modal" class="combate-modal"><header class="combate-cabecalho"><h2>Adicionar combatentes</h2><button id="combate-fechar" class="botao" type="button">Fechar</button></header><label>Buscar por nome ou função<input id="combate-busca" type="search" placeholder="Nome, jogador ou função"></label><div id="combate-disponiveis" class="combate-disponiveis"></div></dialog>
 </section>

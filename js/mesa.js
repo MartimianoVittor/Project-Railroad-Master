@@ -13,6 +13,7 @@ import { criarControladorDiario } from './controllers/diario.js';
 import { criarControladorCampanhas } from './controllers/campanhas.js';
 import { criarControladorFichas } from './controllers/fichas.js';
 import { criarControladorNpcs } from './controllers/npcs.js';
+import { criarControladorCombate } from './controllers/combate.js';
 
 // A composição é feita uma única vez; os módulos compartilham o estado da mesa.
 const contexto = { estado };
@@ -20,6 +21,7 @@ contexto.diario = criarControladorDiario(contexto);
 contexto.fichas = criarControladorFichas(contexto);
 contexto.npcs = criarControladorNpcs(contexto);
 contexto.campanhas = criarControladorCampanhas(contexto);
+contexto.combate = criarControladorCombate(contexto);
 
 const {
     carregarRascunho, marcarRascunhoAlterado, selecionarSessao,
@@ -72,6 +74,7 @@ async function quandoSessaoMudar(usuario, local = false) {
     porId('navegacao-mestre').hidden = !usuario;
     porId('salvar-campanha').hidden = !usuario;
     porId('sair').hidden = !usuario;
+    porId('identidade-sessao').hidden = !usuario;
     porId('usuario-email').hidden = !usuario;
     porId('usuario-email').textContent = local ? 'Modo local' : (usuario?.email ?? '');
 
@@ -104,10 +107,12 @@ async function iniciar() {
         aoNavegar: (pagina) => {
             document.body.classList.toggle('fichas-ativas', pagina === 'fichas');
             if (pagina === 'fichas') void contexto.fichas.atualizarVisualizacao();
+            if (pagina === 'combate') contexto.combate.atualizar();
         },
     });
     contexto.fichas.iniciarEventos();
     contexto.npcs.iniciarEventos();
+    contexto.combate.iniciarEventos();
     estado.quadro = iniciarQuadroMestre({ aoAlterar: marcarRascunhoAlterado });
     let armazenamento;
     try {
@@ -174,7 +179,7 @@ async function iniciar() {
     });
     porId('salvar-campanha').addEventListener('click', () =>
         void executar(porId('salvar-campanha'), async () => {
-            contexto.npcs.salvarEdicaoPendente();
+            await contexto.npcs.salvarEdicaoPendente();
             await salvarCampanhaAtual();
         }));
     porId('usar-local').addEventListener('click', () =>

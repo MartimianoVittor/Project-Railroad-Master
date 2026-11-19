@@ -257,3 +257,13 @@ body.fichas-ativas {
 @media (max-width: 720px) {
     .conteudo-fichas.modo-comparacao .ficha-parte:only-child { flex-basis: 100%; }
 }
+
+/* Local dos itens: ícones originais do Jogador. */
+.local-item-controles { display:flex; justify-content:center; align-items:center; gap:3px; }
+.botao-local-item { display:inline-block; flex:0 0 32px; width:32px; height:34px;
+ padding:0; border:0; background:transparent center/contain no-repeat; cursor:pointer; }
+.botao-local-item.icone-chapeu { background-image:url('../assets/icons/chapeu-contorno.svg'); }
+.botao-local-item.icone-chapeu[aria-pressed="true"] { background-image:url('../assets/icons/chapeu-preenchido.svg'); }
+.botao-local-item.icone-alforge { background-image:url('../assets/icons/alforge-contorno.svg'); }
+.botao-local-item.icone-alforge[aria-pressed="true"] { background-image:url('../assets/icons/alforge-preenchido.svg'); }
+.botao-local-item:focus-visible { outline:2px solid #6b4630; outline-offset:2px; }

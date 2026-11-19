@@ -37,7 +37,9 @@
 <button class="botao botao-pequeno botao-destaque" id="salvar-npc" type="submit">Salvar NPC</button>
 </div>
 </div>
-<div class="campos-form-npc npc-ficha-mobile"><div class="npc-legado-oculto" hidden=""><input id="npc-tipo" type="hidden"/><input id="npc-nome" type="hidden"/><input id="npc-papel" type="hidden"/><input id="npc-descricao" type="hidden"/><input id="npc-notas" type="hidden"/><input id="npc-apelido" type="hidden"/><input id="npc-profissao" type="hidden"/><input id="npc-linguas" type="hidden"/><input id="npc-fama" type="hidden"/><input id="npc-palavra" type="hidden"/><input id="npc-dinheiro" type="hidden"/><input id="npc-inventario" type="hidden"/><input id="npc-traco-principal" type="hidden"/><input id="npc-nivel-principal" type="hidden"/><input id="npc-ferimentos-simples" type="hidden"/><div id="npc-grade-tracos"></div><div id="npc-grade-tracos-simples"></div><div id="npc-grade-condicoes"></div><div id="npc-grade-armas"></div><div id="npc-grade-armas-simples"></div><div id="npc-campos-simples"></div><div id="npc-campos-completos"></div><img alt="" id="npc-imagem-preview"/><input accept="image/png,image/jpeg,image/webp" id="npc-imagem-arquivo" type="file"/><button id="npc-remover-imagem" type="button"></button><select id="npc-pontos"><option value="20">20</option><option selected="" value="25">25</option><option value="30">30</option></select><button id="npc-sortear-tracos" type="button"></button></div><section class="npc-pagina-original" data-pagina-npc="personagem"><h3 class="npc-pagina-titulo">Personagem</h3><section class="flex" id="npc-orig-personagem">
+
+<div class="campos-form-npc npc-ficha-mobile"><div class="npc-legado-oculto" hidden=""><input id="npc-tipo" type="hidden"/><input id="npc-nome" type="hidden"/><input id="npc-papel" type="hidden"/><input id="npc-descricao" type="hidden"/><input id="npc-notas" type="hidden"/><input id="npc-apelido" type="hidden"/><input id="npc-profissao" type="hidden"/><input id="npc-linguas" type="hidden"/><input id="npc-fama" type="hidden"/><input id="npc-palavra" type="hidden"/><input id="npc-dinheiro" type="hidden"/><input id="npc-inventario" type="hidden"/><input id="npc-traco-principal" type="hidden"/><input id="npc-nivel-principal" type="hidden"/><input id="npc-ferimentos-simples" type="hidden"/><div id="npc-grade-tracos"></div><div id="npc-grade-tracos-simples"></div><div id="npc-grade-condicoes"></div><div id="npc-grade-armas"></div><div id="npc-grade-armas-simples"></div><div id="npc-campos-simples"></div><div id="npc-campos-completos"></div><img alt="" id="npc-imagem-preview"/><input accept="image/png,image/jpeg,image/webp" id="npc-imagem-arquivo" type="file"/><button id="npc-remover-imagem" type="button"></button><select id="npc-pontos"><option value="20">20</option><option selected="" value="25">25</option><option value="30">30</option></select><button id="npc-sortear-tracos" type="button"></button></div><section class="npc-pagina-original npc-extras"><h3 class="npc-pagina-titulo">Visão geral</h3><div class="campos-texto-container"><div class="grupo-campo"><label class="label-campo" for="npc-orig-papel">Função na história</label><input id="npc-orig-papel" maxlength="100" type="text"/></div><div class="grupo-campo"><label class="label-campo" for="npc-orig-notas">Notas privadas</label><textarea id="npc-orig-notas" maxlength="8000" rows="4"></textarea></div></div></section>
+<section class="npc-pagina-original" data-pagina-npc="personagem"><h3 class="npc-pagina-titulo">Personagem</h3><section class="flex" id="npc-orig-personagem">
 <div class="col coluna-retrato">
 
 <label class="label-retrato" for="npc-orig-escolher-foto-personagem">
@@ -240,6 +242,12 @@
 </section><section class="npc-pagina-original" data-pagina-npc="inventario"><h3 class="npc-pagina-titulo">Inventário</h3><section class="flex" id="npc-orig-inventario">
 <div class="col inventario-rolagens">
 <h2>Rolagens</h2>
+<div class="npc-rolagem-consulta cartao-rolagem" id="npc-rolagem-consulta" hidden>
+<label for="npc-rolagem-traco">Traço</label><select class="campo-inventario" id="npc-rolagem-traco" aria-label="Traço para rolagem"></select>
+<label for="npc-rolagem-modificador">Bônus / penalidade</label><select class="campo-inventario" id="npc-rolagem-modificador" aria-label="Modificador da rolagem"><option value="-3">-3</option><option value="-2">-2</option><option value="-1">-1</option><option value="0" selected>0</option><option value="1">+1</option><option value="2">+2</option><option value="3">+3</option></select>
+<button type="button" class="botao-rolar" id="npc-rolar">🎲 Rolar traço</button>
+<output class="resultado-rolagem" id="npc-rolagem-resultado" aria-live="polite"></output>
+</div>
 
 <h2>Armas</h2>
 <fieldset class="cartao-arma">
@@ -254,7 +262,9 @@
 <span class="arma-municao-titulo">Munição</span>
 <div class="arma-municao-controles">
 
+<button type="button" class="municao-botao" data-municao="primaria" data-variacao="-1" aria-label="Diminuir munição da arma primária">−</button>
 <input aria-label="Quantidade de munição da arma primária" class="municao-valor" id="npc-orig-municao-primaria" max="99" min="0" step="1" type="number" value="0"/>
+<button type="button" class="municao-botao" data-municao="primaria" data-variacao="1" aria-label="Aumentar munição da arma primária">+</button>
 
 </div>
 </div>
@@ -290,7 +300,9 @@
 <span class="arma-municao-titulo">Munição</span>
 <div class="arma-municao-controles">
 
+<button type="button" class="municao-botao" data-municao="secundaria" data-variacao="-1" aria-label="Diminuir munição da arma secundária">−</button>
 <input aria-label="Quantidade de munição da arma secundária" class="municao-valor" id="npc-orig-municao-secundaria" max="99" min="0" step="1" type="number" value="0"/>
+<button type="button" class="municao-botao" data-municao="secundaria" data-variacao="1" aria-label="Aumentar munição da arma secundária">+</button>
 
 </div>
 </div>
@@ -356,7 +368,7 @@
 </div>
 </div>
 </section>
-</section><section class="npc-pagina-original npc-extras"><h3 class="npc-pagina-titulo">Anotações do Mestre</h3><div class="campos-texto-container"><div class="grupo-campo"><label class="label-campo" for="npc-orig-papel">Função na história</label><input id="npc-orig-papel" maxlength="100" type="text"/></div><div class="grupo-campo"><label class="label-campo" for="npc-orig-notas">Notas privadas</label><textarea id="npc-orig-notas" maxlength="8000" rows="4"></textarea></div></div></section></div>
+</section></div>
 </form>
 </section>
 </div>

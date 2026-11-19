@@ -82,6 +82,8 @@ export function criarControladorFichas(contexto) {
 
     function listarCombatentes() {
         const lista = porId('lista-combatentes');
+        // O painel legado foi substituído pela aba Combate.
+        if (!lista) return;
         lista.replaceChildren();
         const aprovados = estado.envios.filter((envio) => envio.status === 'aprovada');
 

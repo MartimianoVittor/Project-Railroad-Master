@@ -44,3 +44,35 @@
 .descricao-sessao-gerenciar { color: #70543e; overflow-wrap: anywhere; font-size: .78rem; }
 .linha-gerenciar.sobre { outline: 0; border-top: 3px solid #a64b2a; }
 .linha-gerenciar.sobre.inserir-depois { border-top: 1px solid #a0825e; border-bottom: 3px solid #a64b2a; }
+
+
+/* Layout 11 — cartões de sessões arrastáveis mais compactos. */
+.modal-sessoes .lista-gerenciar-sessoes {gap: .35rem;}
+.modal-sessoes .linha-gerenciar {
+    flex-wrap: nowrap;
+    gap: .4rem;
+    padding: .35rem .5rem;
+    min-height: 0;
+}
+.modal-sessoes .alca-arrastar {flex: 0 0 auto; padding: 0 .2rem; font-size: 1.1rem;}
+.modal-sessoes .detalhes-sessao-gerenciar {
+    flex: 1 1 auto;
+    min-width: 0;
+    gap: .08rem;
+}
+.modal-sessoes .numero-sessao-gerenciar {font-size: .7rem;line-height: 1.2;}
+.modal-sessoes .nome-sessao-gerenciar {font-size: .9rem;line-height: 1.2;}
+.modal-sessoes .descricao-sessao-gerenciar {
+    font-size: .74rem;
+    line-height: 1.25;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+}
+.modal-sessoes .acoes-gerenciar {flex: 0 0 auto;flex-wrap: nowrap;gap: .2rem;}
+.modal-sessoes .acoes-gerenciar .botao {min-height: 28px;padding: .2rem .4rem;font-size: .78rem;}
+@media (max-width: 500px) {
+    .modal-sessoes .linha-gerenciar {flex-wrap: wrap;}
+    .modal-sessoes .acoes-gerenciar {width: 100%;justify-content: flex-end;}
+}

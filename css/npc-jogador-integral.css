@@ -1125,3 +1125,60 @@
         grid-template-columns: minmax(0, 1fr);
     }
 }
+
+/* Ajustes de proporção e rolagem independente do inventário — NPC. */
+@media (min-width: 1001px) {
+    .pagina-npcs .npc-form-reiniciado #npc-orig-personagem {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr) minmax(0, 2fr);
+    }
+}
+@media (min-width: 769px) {
+    .pagina-npcs .npc-form-reiniciado #npc-orig-inventario > .inventario-itens {
+        height: 420px;
+        min-height: 0;
+        max-height: 420px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+    .pagina-npcs .npc-form-reiniciado #npc-orig-inventario .tabela-itens-rolagem {
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow-y: auto;
+        overflow-x: auto;
+        scrollbar-gutter: stable;
+    }
+}
+
+/* Alinha o resumo de carga ao rodapé do inventário sem esticar a lista de itens. */
+@media (min-width: 769px) {
+    .pagina-npcs .npc-form-reiniciado #npc-orig-inventario {
+        align-items: stretch;
+    }
+    .pagina-npcs .npc-form-reiniciado #npc-orig-inventario > .inventario-itens {
+        display: flex;
+        flex-direction: column;
+    }
+    .pagina-npcs .npc-form-reiniciado #npc-orig-inventario .inventario-resumo {
+        margin-top: auto;
+    }
+}
+
+/* Inventário NPC: alinhamento do rodapé e botão à direita em consulta e edição. */
+@media (min-width: 769px) {
+ .pagina-npcs .npc-form-reiniciado #npc-orig-inventario > .inventario-itens {
+   display:flex; flex-direction:column; min-height:0; height:100%;
+ }
+ .pagina-npcs .npc-form-reiniciado #npc-orig-inventario .tabela-itens-rolagem {
+   flex:1 1 auto; min-height:0; overflow:auto;
+ }
+ .pagina-npcs .npc-form-reiniciado #npc-orig-inventario .inventario-resumo {
+   margin-top:auto; flex-shrink:0;
+ }
+}
+.pagina-npcs .npc-form-reiniciado #npc-orig-inventario .inventario-cabecalho {
+ display:flex; align-items:center; justify-content:space-between; width:100%;
+}
+.pagina-npcs .npc-form-reiniciado #npc-orig-inventario #npc-adicionar-item {
+ margin-left:auto; flex-shrink:0;
+}

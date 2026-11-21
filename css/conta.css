@@ -1,0 +1,63 @@
+/* Painel de conta no cabeçalho — atualização 37 */
+.modal-conta{box-sizing:border-box;width:min(440px,calc(100vw - 32px));max-height:calc(100dvh - 32px);overflow:auto;padding:22px;background:#f2e2c2;color:#3d2314;border:3px solid #6b4630;border-radius:8px;box-shadow:0 15px 55px #130b0799;font-family:Georgia,serif}
+.modal-conta::backdrop{background:#170e09b3}
+.modal-conta .conta-cabecalho{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
+.modal-conta h2{margin:0;font-size:1.35rem}
+.modal-conta .conta-descricao{font-size:.85rem;margin:0 0 4px}
+.modal-conta .conta-identificacao{overflow-wrap:anywhere;margin:0 0 20px;font-weight:700}
+.modal-conta .conta-acoes{display:grid;gap:10px}
+.modal-conta .conta-acoes .botao{width:100%;min-height:40px}
+.modal-conta .conta-acoes .botao:disabled{opacity:.65;cursor:not-allowed}
+
+/* Atualização 38: Conta no cabeçalho, Sair exclusivamente na janela. */
+#abrir-conta:not([hidden]){
+    background:#d4af37;
+    color:#3d2314;
+    border:2px solid #6f4c21;
+    box-shadow:inset 0 1px 0 #ffed95;
+}
+#abrir-conta:hover:not(:disabled){
+    background:#e9c75d;
+}
+#sair{display:none !important;}
+#modal-conta #conta-sair{
+    background:#8b252d;
+    color:#fff4e2;
+    border:2px solid #632027;
+    box-shadow:inset 0 1px 0 #b35d5d;
+}
+#modal-conta #conta-sair:hover:not(:disabled){
+    background:#a52e37;
+}
+
+/* Atualização 39: ações da Conta seguem a paleta já adotada no projeto.
+   Nenhum seletor genérico de botão fora da janela é alterado. */
+#modal-conta #conta-salvar {
+    background: var(--rr-botao-marrom, #68452c);
+    color: #fff2d9;
+    border: 2px solid #3e2517;
+    box-shadow: inset 0 1px 0 #a37a53;
+}
+#modal-conta #conta-salvar:hover:not(:disabled) {
+    background: var(--rr-botao-marrom-hover, #805637);
+}
+#modal-conta #conta-personalizar,
+#modal-conta #fechar-conta {
+    background: var(--rr-botao-bege, #e1c990);
+    color: var(--rr-botao-tinta, #3d2314);
+    border: 2px solid #6b4630;
+}
+#modal-conta #fechar-conta:hover:not(:disabled) {
+    background: var(--rr-botao-bege-hover, #f5dfa7);
+}
+
+/* Atualização 40 — somente Fechar na janela Conta usa o amarelo. */
+#modal-conta #fechar-conta {
+    background: var(--rr-botao-amarelo, #d4af37);
+    color: var(--rr-botao-tinta, #3d2314);
+    border: 2px solid #6f4c21;
+    box-shadow: inset 0 1px 0 #ffed95;
+}
+#modal-conta #fechar-conta:hover:not(:disabled) {
+    background: var(--rr-botao-amarelo-hover, #e9c75d);
+}

@@ -111,3 +111,170 @@
 }
 .cabecalho-quadro h2 { margin: 0; font-size: 1.05rem; white-space: nowrap; }
 .cabecalho-quadro .ferramentas-quadro { flex: 0 1 auto; }
+
+
+/* Quadro de ideias: espelho das regras do Jogador (css/quadro.css).
+   Escopo evita que o tema global dos botões do Mestre sobrescreva o quadro. */
+#pagina-diario .cabecalho-quadro {
+    display: block;
+}
+#pagina-diario .cabecalho-quadro h2 {
+    margin-bottom: 8px;
+}
+#pagina-diario .cabecalho-quadro .ferramentas-quadro {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    width: 100%;
+    margin: 0;
+    padding: 10px;
+    background-color: #e6d8b5;
+    border: 2px solid #3d2314;
+    border-radius: 4px;
+}
+#pagina-diario .ferramentas-quadro .btn-oeste {
+    display: inline-block;
+    flex: 0 0 auto;
+    width: auto;
+    min-width: 0;
+    min-height: 0;
+    height: auto;
+    margin: 0;
+    padding: 6px 12px;
+    background-color: #3d2314;
+    color: #f4eccf;
+    border: 1px solid #2b180d;
+    border-radius: 4px;
+    box-shadow: none;
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: normal;
+    text-transform: none;
+    letter-spacing: normal;
+    text-align: center;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+#pagina-diario .ferramentas-quadro .btn-oeste:hover:not(:disabled) {
+    background-color: #5c3620;
+    color: #f4eccf;
+}
+#pagina-diario .ferramentas-quadro .btn-oeste.ativo,
+#pagina-diario .ferramentas-quadro .btn-oeste[aria-pressed="true"] {
+    background-color: #a64b2a;
+    border-color: #3d2314;
+}
+#pagina-diario .ferramentas-quadro .btn-oeste.btn-perigo {
+    background-color: #7a1c1c;
+    margin-left: auto;
+}
+#pagina-diario .ferramentas-quadro .btn-oeste.btn-perigo:hover:not(:disabled) {
+    background-color: #5c3620;
+}
+#pagina-diario .ferramentas-quadro input[type="color"] {
+    flex: 0 0 35px;
+    width: 35px;
+    height: 32px;
+    padding: 0;
+    border: 2px solid #3d2314;
+    border-radius: 4px;
+    background: transparent;
+    cursor: pointer;
+}
+
+/* Atualização 35: ferramentas em bege; ativa em amarelo; apenas Limpar em vermelho. */
+#pagina-diario .ferramentas-quadro .ferramenta-quadro.btn-oeste:not(.btn-perigo) {
+    background: #e1c990;
+    color: #3d2314;
+    border-color: #6b4630;
+    box-shadow: inset 0 1px 0 #f6e5b7;
+}
+#pagina-diario .ferramentas-quadro .ferramenta-quadro.btn-oeste:not(.btn-perigo):hover:not(:disabled) {
+    background: #f5dfa7;
+    color: #3d2314;
+}
+#pagina-diario .ferramentas-quadro .ferramenta-quadro.btn-oeste:not(.btn-perigo).ativo,
+#pagina-diario .ferramentas-quadro .ferramenta-quadro.btn-oeste:not(.btn-perigo)[aria-pressed="true"],
+#pagina-diario .ferramentas-quadro .ferramenta-quadro.btn-oeste:not(.btn-perigo).ativo:hover:not(:disabled),
+#pagina-diario .ferramentas-quadro .ferramenta-quadro.btn-oeste:not(.btn-perigo)[aria-pressed="true"]:hover:not(:disabled) {
+    background: #d4af37;
+    color: #3d2314;
+    border-color: #6f4c21;
+    box-shadow: inset 0 1px 0 #ffed95;
+}
+#pagina-diario .ferramentas-quadro .ferramenta-quadro.btn-oeste.btn-perigo,
+#pagina-diario .ferramentas-quadro .ferramenta-quadro.btn-oeste.btn-perigo:hover:not(:disabled) {
+    background: #8b252d;
+    color: #fff4e2;
+    border-color: #632027;
+    box-shadow: inset 0 1px 0 #b35d5d;
+}
+#pagina-diario .ferramentas-quadro .ferramenta-quadro.btn-oeste.btn-perigo:hover:not(:disabled) {
+    background: #a3333c;
+}
+
+/* Atualização 36 — barra de sessões com o mesmo cartão superior de Viagem e Combate. */
+#pagina-diario .barra-sessoes {
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: minmax(220px, 1fr) auto;
+    align-items: center;
+    gap: 10px 16px;
+    width: 100%;
+    min-width: 0;
+    margin-bottom: 10px;
+    padding: 12px 13px;
+    background: #f2e2c2;
+    border: 2px solid #6b4630;
+    border-radius: 6px;
+    box-shadow: 0 2px 0 #6b463025, inset 0 1px 0 #fff8e8;
+}
+#pagina-diario .grupo-seletor-sessoes {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    width: 100%;
+}
+#pagina-diario #seletor-sessoes {
+    box-sizing: border-box;
+    width: min(100%, 345px);
+    max-width: 100%;
+    min-width: 0;
+    height: 36px;
+    min-height: 36px;
+    padding: 6px 10px;
+    background: #fff8e8;
+    color: #392719;
+    border: 1px solid #866341;
+    border-radius: 4px;
+    font: 700 13px Georgia, serif;
+}
+#pagina-diario .acoes-barra-sessoes {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 7px;
+    min-width: 0;
+    margin-left: 0;
+}
+#pagina-diario .acoes-barra-sessoes .botao {
+    box-sizing: border-box;
+    min-height: 36px;
+    padding: 7px 12px;
+    white-space: nowrap;
+}
+@media (max-width: 700px) {
+    #pagina-diario .barra-sessoes {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 9px;
+    }
+    #pagina-diario #seletor-sessoes {
+        width: 100%;
+    }
+    #pagina-diario .acoes-barra-sessoes {
+        justify-content: flex-start;
+    }
+}

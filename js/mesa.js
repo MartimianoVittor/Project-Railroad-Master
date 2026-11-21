@@ -14,6 +14,8 @@ import { criarControladorCampanhas } from './controllers/campanhas.js';
 import { criarControladorFichas } from './controllers/fichas.js';
 import { criarControladorNpcs } from './controllers/npcs.js';
 import { criarControladorCombate } from './controllers/combate.js';
+import { criarControladorViagem } from './controllers/viagem.js';
+import { criarMenuConta } from './modules/contaMestre.js';
 
 // A composição é feita uma única vez; os módulos compartilham o estado da mesa.
 const contexto = { estado };
@@ -22,6 +24,7 @@ contexto.fichas = criarControladorFichas(contexto);
 contexto.npcs = criarControladorNpcs(contexto);
 contexto.campanhas = criarControladorCampanhas(contexto);
 contexto.combate = criarControladorCombate(contexto);
+contexto.viagem = criarControladorViagem(contexto);
 
 const {
     carregarRascunho, marcarRascunhoAlterado, selecionarSessao,
@@ -33,6 +36,7 @@ const {
     atualizarCampanhas, criarCampanha, convidarJogador,
 } = contexto.campanhas;
 const { listarEnvios } = contexto.fichas;
+const conta = criarMenuConta({ estado, contexto, salvarCampanhaAtual });
 
 async function quandoSessaoMudar(usuario, local = false) {
     if (estado.modoLocal && !local) return;
@@ -72,8 +76,7 @@ async function quandoSessaoMudar(usuario, local = false) {
     porId('tela-entrada').hidden = Boolean(usuario);
     porId('painel').hidden = !usuario;
     porId('navegacao-mestre').hidden = !usuario;
-    porId('salvar-campanha').hidden = !usuario;
-    porId('sair').hidden = !usuario;
+    conta.atualizarSessao(usuario);
     porId('identidade-sessao').hidden = !usuario;
     porId('usuario-email').hidden = !usuario;
     porId('usuario-email').textContent = local ? 'Modo local' : (usuario?.email ?? '');
@@ -108,11 +111,13 @@ async function iniciar() {
             document.body.classList.toggle('fichas-ativas', pagina === 'fichas');
             if (pagina === 'fichas') void contexto.fichas.atualizarVisualizacao();
             if (pagina === 'combate') contexto.combate.atualizar();
+            if (pagina === 'viagem') contexto.viagem.atualizar();
         },
     });
     contexto.fichas.iniciarEventos();
     contexto.npcs.iniciarEventos();
     contexto.combate.iniciarEventos();
+    contexto.viagem.iniciarEventos();
     estado.quadro = iniciarQuadroMestre({ aoAlterar: marcarRascunhoAlterado });
     let armazenamento;
     try {
@@ -177,6 +182,7 @@ async function iniciar() {
         evento.preventDefault();
         evento.returnValue = '';
     });
+    conta.iniciarEventos();
     porId('salvar-campanha').addEventListener('click', () =>
         void executar(porId('salvar-campanha'), async () => {
             await contexto.npcs.salvarEdicaoPendente();

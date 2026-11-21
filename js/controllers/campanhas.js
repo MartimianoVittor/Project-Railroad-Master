@@ -42,9 +42,9 @@ export function criarControladorCampanhas(contexto) {
                 elemento('strong', '', campanha.nome),
                 elemento('small', '', `Criada em ${dataBreve(campanha.criada_em)}`),
             );
-            const botao = botaoAcao('Selecionar', () => selecionarCampanha(campanha.campanha_id),
+            const botao = botaoAcao(selecionada ? 'Selecionado' : 'Selecionar', () => selecionarCampanha(campanha.campanha_id),
                 'botao botao-pequeno botao-selecionar');
-            botao.setAttribute('aria-label', `Selecionar campanha ${campanha.nome}`);
+            botao.setAttribute('aria-label', selecionada ? `Campanha selecionada: ${campanha.nome}` : `Selecionar campanha ${campanha.nome}`);
             botao.setAttribute('aria-pressed', String(selecionada));
             const acoes = elemento('div', 'item-campanha-acoes');
             const excluir = botaoAcao('Excluir', () => void excluirCampanha(campanha),

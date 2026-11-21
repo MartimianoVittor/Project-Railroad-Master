@@ -165,5 +165,11 @@
 .item-campanha-acoes .botao-excluir-campanha:hover { background: #ead0c3; }
 @media (max-width: 550px) { .item-campanha { flex-wrap: wrap; } .item-campanha-acoes { width: 100%; } }
 
-/* Combate 09: descrição da campanha mais compacta sem limitar a digitação. */
-#descricao-campanha {box-sizing:border-box;min-height:64px;height:74px;max-height:150px;resize:vertical;}
+/* Atualização 28 — distinguir de forma estável a campanha em uso. */
+.item-campanha.selecionada .botao-selecionar[aria-pressed="true"]{
+ background:#68452c;border-color:#3e2517;color:#fff2d9;
+ box-shadow:inset 0 1px 0 #a37a53;
+}
+.item-campanha.selecionada .botao-selecionar[aria-pressed="true"]:hover{
+ background:#805637;color:#fff2d9;
+}

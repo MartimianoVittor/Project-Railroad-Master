@@ -1,0 +1,85 @@
+/* Railroad 22 — identidade visual integrada, compartilhada por Mestre e Jogador.
+   Não substitui o layout funcional das fichas nem a navegação própria de cada app. */
+:root {
+ --rr-tinta:#3d2314; --rr-tinta-suave:#735741;
+ --rr-pergaminho:#f4eccf; --rr-cartao:#fff7e5; --rr-campo:#fff9ee;
+ --rr-couro:#805c3e; --rr-couro-escuro:#68452c;
+ --rr-metal:#d4af37; --rr-rubi:#8b252d; --rr-bege:#e1c990;
+ --rr-contorno:#9a754a; --rr-foco:#b57520;
+ --rr-raio:5px; --rr-espaco:10px;
+ --rr-sombra-cartao:inset 0 0 0 4px #ead5b2,0 4px 0 #6f4a2a21;
+}
+/* Tato, contraste e resposta uniforme sem alterar geometria específica. */
+:is(button,a,input,select,textarea,[tabindex]):focus-visible {
+ outline:3px solid var(--rr-foco);
+ outline-offset:2px;
+}
+button:not(:disabled),a[href]{-webkit-tap-highlight-color:transparent}
+button:disabled{opacity:.55;cursor:not-allowed;transform:none}
+::selection{background:#e4c77f;color:var(--rr-tinta)}
+/* A rolagem pertence apenas às áreas que já a possuem. */
+* {scrollbar-color:#b99c76 #f5e9d2;scrollbar-width:thin}
+@media (prefers-reduced-motion:reduce){
+ button,a,input,select,textarea{transition-duration:.01ms!important;animation-duration:.01ms!important}
+}
+
+/* Mestre: mesmo acabamento dos painéis da ficha de Jogador. */
+.cartao-campanha {
+ border-color:var(--rr-couro);
+ border-radius:6px;
+ background:var(--rr-cartao);
+ box-shadow:var(--rr-sombra-cartao);
+}
+/* Títulos em hierarquia legível, sem linhas decorativas sob armas ou ações. */
+.pagina-mestre .titulo-cartao h2,
+#pagina-npcs .cabecalho-ficha-npc h2,
+#pagina-diario .cabecalho-sessao h2{letter-spacing:.015em}
+/* Campos da administração e das janelas: mesma tinta e fundo. */
+.formulario-compacto :is(input,select,textarea),
+#pagina-viagem :is(.vg-dialog input,.vg-dialog select,.vg-dialog-viajante input),
+.combate-pagina .combate-modal :is(input,select),
+#pagina-npcs .formulario-npc :is(input[type=text],input[type=number],select,textarea) {
+ border-color:var(--rr-contorno);
+ border-radius:var(--rr-raio);
+ background-color:var(--rr-campo);
+ color:var(--rr-tinta);
+}
+/* Seletor e status numéricos seguem o mesmo pergaminho. */
+#pagina-viagem .vg-estatisticas > div{
+ border-color:#c5a174;
+ background:#f0dfbd;
+}
+#pagina-viagem .vg-estatisticas strong{font-variant-numeric:tabular-nums}
+#pagina-viagem .vg-geral select{background-color:#f3e5c8}
+/* Cabeçalhos usam mesma altura ótica; listas têm conteúdo estável. */
+#pagina-viagem .vg-viajantes > header,
+#pagina-npcs .cabecalho-lista-npcs,
+#pagina-npcs .cabecalho-ficha-npc {
+ gap:10px;
+}
+#pagina-viagem .vg-viajantes h3,
+#pagina-viagem .vg-geral h3,
+#pagina-viagem .vg-consulta h3 {
+ color:var(--rr-tinta);
+ line-height:1.3;
+}
+/* Ações do diário: ferramenta inativa neutra, ativa em metal dourado. */
+#pagina-diario .ferramenta-quadro:not(.ativo):not(.ferramenta-perigo){
+ background:#e7d6b5;color:var(--rr-tinta);border-color:var(--rr-couro);
+}
+#pagina-diario .ferramenta-quadro.ativo{
+ background:var(--rr-metal);color:var(--rr-tinta);border-color:#6f4c21;
+ box-shadow:inset 0 1px 0 #fff2bd;
+}
+#pagina-diario .ferramenta-quadro:not(.ativo):not(.ferramenta-perigo):hover:not(:disabled){background:#f3e3c4}
+/* Ações de criação, edição e exclusão continuam graduadas pela atualização 21. */
+.botao,.ferramenta-quadro{
+ transition:background-color .15s ease,border-color .15s ease,box-shadow .15s ease,transform .15s ease;
+}
+/* Modal e campos do topo não devem competir com os cartões. */
+#pagina-viagem .vg-dialog :is(input,select),
+#pagina-viagem .vg-dialog-viajante :is(input,select){min-width:0}
+@media(max-width:780px){
+ .pagina-mestre .titulo-cartao,
+ #pagina-npcs .cabecalho-ficha-npc{row-gap:8px}
+}

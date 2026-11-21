@@ -1,0 +1,246 @@
+/* Railroad 20: mesmo vocabulário de botões usado no Railroad Jogador.
+   Função determina a cor, independentemente da página do Mestre.
+   MARROM: confirmar/salvar/rolar/avançar. AMARELO: criar/adicionar.
+   VERMELHO: excluir/remover/encerrar. BEGE: editar/voltar/cancelar/alternar.
+   Adicione .rr-botao-{marrom,amarelo,vermelho,bege} a novos botões.
+*/
+:root{
+ --rr-botao-marrom:#68452c;--rr-botao-marrom-hover:#805637;
+ --rr-botao-amarelo:#d4af37;--rr-botao-amarelo-hover:#ebc94c;
+ --rr-botao-vermelho:#8b252d;--rr-botao-vermelho-hover:#6c1b23;
+ --rr-botao-bege:#e1c990;--rr-botao-bege-hover:#f5dfa7;
+ --rr-botao-tinta:#3d2314;
+}
+/* Base compartilhada; cartões/abas especiais conservam seu formato. */
+.botao,button.rr-botao-marrom,button.rr-botao-amarelo,
+button.rr-botao-vermelho,button.rr-botao-bege{
+ border:2px solid #5b3b22;border-radius:5px;
+ background:var(--rr-botao-bege);color:var(--rr-botao-tinta);
+ font-family:Georgia,serif;font-weight:700;
+ box-shadow:inset 0 1px 0 #fff1ce;
+ transition:background-color .16s ease,filter .16s ease,transform .16s ease;
+}
+.botao:hover:not(:disabled),button.rr-botao-bege:hover:not(:disabled){
+ background:var(--rr-botao-bege-hover);
+}
+/* Ações afirmativas: o marrom da versão Jogador. */
+button.rr-botao-marrom,.botao.rr-botao-marrom,
+#salvar-campanha,#salvar-sessao,#salvar-gerenciador,#salvar-npc,#combate-passar,
+#confirmar-sessao:not(.botao-destaque),#vg-viajar,#vg-confirmar-viajante,
+#vg-form > footer button[type="submit"],
+.combate-pagina .combate-botao-marrom,
+#pagina-npcs .botao-rolar,.combate-pagina .botao-rolar{
+ border-color:#3e2517;background:var(--rr-botao-marrom);
+ color:#fff2d9;box-shadow:inset 0 1px 0 #a37a53;
+}
+button.rr-botao-marrom:hover:not(:disabled),.botao.rr-botao-marrom:hover:not(:disabled),
+#salvar-campanha:hover:not(:disabled),#salvar-sessao:hover:not(:disabled),
+#salvar-gerenciador:hover:not(:disabled),#salvar-npc:hover:not(:disabled),
+#combate-passar:hover:not(:disabled),
+#vg-viajar:hover:not(:disabled),#vg-confirmar-viajante:hover:not(:disabled),
+#vg-form > footer button[type="submit"]:hover:not(:disabled),
+.combate-pagina .botao-rolar:hover:not(:disabled){
+ background:var(--rr-botao-marrom-hover);color:#fff2d9;
+}
+/* Criar, incluir, sortear, iniciar = amarelo ouro. */
+button.rr-botao-amarelo,.botao.rr-botao-amarelo,
+.botao-destaque,#vg-criar,#vg-adicionar,#vg-adicionar-grupo,
+#combate-adicionar,#adicionar-sessao,#novo-npc,#gerar-npc-aleatorio,
+.combate-pagina .combate-botao-amarelo{
+ border-color:#6f4c21;background:var(--rr-botao-amarelo);
+ color:var(--rr-botao-tinta);box-shadow:inset 0 1px 0 #ffed95;
+}
+button.rr-botao-amarelo:hover:not(:disabled),.botao.rr-botao-amarelo:hover:not(:disabled),
+.botao-destaque:hover:not(:disabled),#vg-criar:hover:not(:disabled),
+#vg-adicionar:hover:not(:disabled),#vg-adicionar-grupo:hover:not(:disabled),
+#combate-adicionar:hover:not(:disabled),#gerar-npc-aleatorio:hover:not(:disabled){
+ background:var(--rr-botao-amarelo-hover);
+}
+/* Exclusão/encerramento (incluindo controles compactos). */
+button.rr-botao-vermelho,.botao.rr-botao-vermelho,
+.botao-remover,.botao-perigo,.vg-perigo,
+#vg-excluir-grupo,#vg-excluir-viagem,#excluir-npc,
+#combate-encerrar,.combate-excluir,.combate-remover-condicao,
+#pagina-viagem .vg-item > button:last-child,
+.ferramenta-perigo{
+ border-color:#632027;background:var(--rr-botao-vermelho);
+ color:#fff4e2;box-shadow:inset 0 1px 0 #b35d5d;
+}
+button.rr-botao-vermelho:hover:not(:disabled),.botao.rr-botao-vermelho:hover:not(:disabled),
+.botao-remover:hover:not(:disabled),.botao-perigo:hover:not(:disabled),
+.vg-perigo:hover:not(:disabled),#vg-excluir-grupo:hover:not(:disabled),
+#combate-encerrar:hover:not(:disabled),#excluir-npc:hover:not(:disabled),
+.combate-excluir:hover:not(:disabled),#pagina-viagem .vg-item > button:last-child:hover:not(:disabled){
+ background:var(--rr-botao-vermelho-hover);color:#fff4e2;
+}
+/* Segundo plano: cancelar/fechar/editar/descansar; sem virar amarelo ao passar. */
+button.rr-botao-bege,.botao.rr-botao-bege,
+.botao-discreto,#vg-editar,#vg-descansar,#vg-cancelar,
+#vg-cancelar-viajante,#combate-fechar,#editar-npc,#cancelar-npc{
+ border-color:#6b4630;background:var(--rr-botao-bege);color:var(--rr-botao-tinta);
+}
+button.rr-botao-bege:hover:not(:disabled),.botao.rr-botao-bege:hover:not(:disabled),
+.botao-discreto:hover:not(:disabled),#vg-editar:hover:not(:disabled),
+#vg-descansar:hover:not(:disabled),#vg-cancelar:hover:not(:disabled){
+ background:var(--rr-botao-bege-hover);
+}
+/* Os pequenos botões +/- são auxiliares neutros, não ações destrutivas. */
+.municao-botao,#pagina-viagem .vg-controles button,
+#pagina-viagem .vg-item .vg-editar-viajante{
+ border:1px solid #6b4630;border-radius:4px;background:var(--rr-botao-bege);
+ color:#3d2314;box-shadow:inset 0 1px 0 #fff4db;
+}
+.municao-botao:hover:not(:disabled),#pagina-viagem .vg-controles button:hover:not(:disabled),
+#pagina-viagem .vg-item .vg-editar-viajante:hover:not(:disabled){background:var(--rr-botao-bege-hover)}
+/* Botões de seleção de NPC/personagem não usam cor de ação principal. */
+#vg-disponiveis button,.combate-disponiveis button{
+ border:1px solid #6b4630;border-radius:4px;background:var(--rr-botao-bege);color:#3d2314;
+}
+#vg-disponiveis button:hover:not(:disabled),.combate-disponiveis button:hover:not(:disabled){
+ background:var(--rr-botao-bege-hover);
+}
+/* Acessibilidade: foco e estado inativo previsíveis nos quatro papéis. */
+.botao:focus-visible,button.rr-botao-marrom:focus-visible,
+button.rr-botao-amarelo:focus-visible,button.rr-botao-vermelho:focus-visible,
+button.rr-botao-bege:focus-visible{outline:3px solid #ab6c21;outline-offset:2px}
+.botao:disabled{filter:saturate(.65);opacity:.55;cursor:not-allowed;transform:none}
+
+/* Inclusão e edição compartilham botão, mas têm funções diferentes. */
+#vg-confirmar-viajante[data-acao="adicionar"]{
+ background:var(--rr-botao-amarelo);color:var(--rr-botao-tinta);
+ border-color:#6f4c21;box-shadow:inset 0 1px 0 #ffed95;
+}
+#vg-confirmar-viajante[data-acao="adicionar"]:hover:not(:disabled){background:var(--rr-botao-amarelo-hover)}
+#vg-confirmar-viajante[data-acao="editar"]{
+ background:var(--rr-botao-marrom);color:#fff2d9;border-color:#3e2517;
+}
+#limpar-marcos{background:var(--rr-botao-vermelho);color:#fff4e2;border-color:#632027}
+#limpar-marcos:hover:not(:disabled){background:var(--rr-botao-vermelho-hover)}
+
+
+/* Railroad 25 — correções específicas sobre o primeiro padrão (atualização 20).
+   Conserva as quatro cores históricas, sem alterar layouts ou interações. */
+
+/* Ações de saída e exclusão devem ser sempre vermelhas, mesmo quando também
+   recebam classes auxiliares como .botao-discreto. */
+#sair,
+.item-campanha-acoes .botao-excluir-campanha,
+.acoes-gerenciar button[aria-label^="Excluir sessão"],
+#pagina-campanhas .acoes-exclusao .botao-remover,
+.botao.botao-remover,
+.botao.botao-perigo,
+#vg-excluir-grupo,
+#vg-excluir-viagem,
+#excluir-npc,
+#combate-encerrar,
+.combate-excluir,
+.combate-remover-condicao {
+  background:var(--rr-botao-vermelho);
+  border-color:#632027;
+  color:#fff4e2;
+  box-shadow:inset 0 1px 0 #b35d5d;
+}
+#sair:hover:not(:disabled),
+.item-campanha-acoes .botao-excluir-campanha:hover:not(:disabled),
+.acoes-gerenciar button[aria-label^="Excluir sessão"]:hover:not(:disabled),
+#pagina-campanhas .acoes-exclusao .botao-remover:hover:not(:disabled),
+.botao.botao-remover:hover:not(:disabled),
+.botao.botao-perigo:hover:not(:disabled),
+#vg-excluir-grupo:hover:not(:disabled),
+#vg-excluir-viagem:hover:not(:disabled),
+#excluir-npc:hover:not(:disabled),
+#combate-encerrar:hover:not(:disabled),
+.combate-excluir:hover:not(:disabled),
+.combate-remover-condicao:hover:not(:disabled) {
+  background:var(--rr-botao-vermelho-hover);
+  color:#fff4e2;
+}
+
+/* O comando que abre o seletor de condições é uma ação de inclusão. */
+.combate-pagina .botao.combate-adicionar-condicao,
+#pagina-combate .botao.combate-adicionar-condicao {
+  background:var(--rr-botao-amarelo);
+  border-color:#6f4c21;
+  color:var(--rr-botao-tinta);
+  box-shadow:inset 0 1px 0 #ffed95;
+}
+.combate-pagina .botao.combate-adicionar-condicao:hover:not(:disabled),
+#pagina-combate .botao.combate-adicionar-condicao:hover:not(:disabled) {
+  background:var(--rr-botao-amarelo-hover);
+  color:var(--rr-botao-tinta);
+}
+
+/* Descansar executa uma ação do grupo; os ajustes numéricos usam o mesmo
+   marrom, com dimensões compactas próprias de controles + e −. */
+#pagina-viagem #vg-descansar,
+button.municao-botao,
+#pagina-viagem .vg-controles button {
+  background:var(--rr-botao-marrom);
+  border-color:#3e2517;
+  color:#fff2d9;
+  box-shadow:inset 0 1px 0 #a37a53;
+}
+#pagina-viagem #vg-descansar:hover:not(:disabled),
+button.municao-botao:hover:not(:disabled),
+#pagina-viagem .vg-controles button:hover:not(:disabled) {
+  background:var(--rr-botao-marrom-hover);
+  color:#fff2d9;
+}
+/* Respeita os estilos marrom já aplicados nos controles de NPC e os alvos
+   compactos utilizados em Combatentes e Viagens. */
+#pagina-viagem .vg-controles button:focus-visible,
+button.municao-botao:focus-visible,
+#sair:focus-visible,
+.combate-pagina .combate-adicionar-condicao:focus-visible {
+  outline:3px solid #ab6c21;
+  outline-offset:2px;
+}
+
+
+/* Railroad 26 — botões neutros no mesmo bege do Railroad Jogador.
+   Cores de funções especiais continuam definidas acima (25). */
+
+/* Controles sem classe visual explícita deixam de usar o cinza-branco
+   padrão do navegador. O :where mantém baixa especificidade para que
+   botões com cores funcionais (ex.: os controles + e −) prevaleçam. */
+:where(#pagina-npcs,#pagina-combate,#pagina-viagem,#pagina-campanhas,#pagina-diario,.modal-sessoes) button:not([class]) {
+  border:1px solid #6b4630;
+  border-radius:4px;
+  background:var(--rr-botao-bege);
+  color:var(--rr-botao-tinta);
+  font-family:Georgia,serif;
+  box-shadow:inset 0 1px 0 #f8ebd4;
+}
+:where(#pagina-npcs,#pagina-combate,#pagina-viagem,#pagina-campanhas,#pagina-diario,.modal-sessoes) button:not([class]):hover:not(:disabled) {
+  background:var(--rr-botao-bege-hover);
+}
+
+/* Atualização 28 — seletores em toda a versão Mestre.
+   Mesma aparência de Ritmo e Busca; a largura e a disposição continuam
+   determinadas por cada cartão, evitando alterar o layout dos formulários. */
+body select:not([multiple]),
+#pagina-viagem select:not([multiple]){
+ box-sizing:border-box;appearance:none;-webkit-appearance:none;
+ min-width:0;min-height:34px;
+ border:1.5px solid #916c45;border-radius:5px;
+ background-color:#f4e6c8;
+ background-image:linear-gradient(45deg,transparent 50%,#694329 50%),
+                  linear-gradient(135deg,#694329 50%,transparent 50%);
+ background-position:calc(100% - 16px) 50%,calc(100% - 11px) 50%;
+ background-size:5px 5px;background-repeat:no-repeat;
+ color:#442a1b;font-family:Georgia,serif;font-weight:700;
+ padding:7px 26px 7px 9px;
+ box-shadow:inset 0 1px 2px rgba(76,43,21,.12);
+ cursor:pointer;
+}
+body select:not([multiple]):focus-visible{
+ outline:2px solid #87332a;outline-offset:2px;
+}
+body select:not([multiple]):disabled{
+ opacity:.65;cursor:not-allowed;
+}
+/* A lista reduzida de bônus continua cabendo no cartão de rolagem. */
+.combate-pagina .combate-rolagem-compacta #rolagem-bonus{
+ padding-left:6px;padding-right:21px;
+ background-position:calc(100% - 13px) 50%,calc(100% - 8px) 50%;
+}

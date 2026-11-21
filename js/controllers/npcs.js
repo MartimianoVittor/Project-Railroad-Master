@@ -212,7 +212,8 @@ export function criarControladorNpcs({ estado }) {
         });
     }
 
-    function ajustarMunicao(chave, variacao) {
+    let salvandoMunicaoConsulta = false;
+    async function ajustarMunicao(chave, variacao) {
         const campo = original(`municao-${chave}`);
         if (!campo) return;
         const atual = Number(campo.value) || 0;
@@ -227,12 +228,22 @@ export function criarControladorNpcs({ estado }) {
         if (!npc) return;
         const atualizado = structuredClone(npc);
         atualizado.armas[chave].municao = proximo;
+        if (salvandoMunicaoConsulta) return;
+        salvandoMunicaoConsulta = true;
+        const campanha = estado.campanhaId;
         try {
+            if (!estado.modoLocal && campanha) {
+                // Consulta do NPC também grava no Supabase, não apenas no navegador.
+                await gravarNpcRemoto(campanha, atualizado);
+            }
+            if (estado.campanhaId !== campanha) return;
             const lista = estado.npcs.map((item) => item.id === npc.id ? atualizado : item);
-            estado.npcs = estado.npcsRepo.salvar(estado.usuario?.id, estado.campanhaId, lista);
+            estado.npcs = estado.npcsRepo.salvar(estado.usuario?.id, campanha, lista);
             campo.value = proximo;
         } catch (erro) {
-            mostrarAviso(`Não foi possível salvar a munição: ${erro.message}`);
+            mostrarAviso(`Não foi possível salvar a munição: ${erro.message}`, true);
+        } finally {
+            salvandoMunicaoConsulta = false;
         }
     }
 

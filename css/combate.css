@@ -516,3 +516,595 @@ dialog#combate-modal-condicoes .combate-condicao-personalizada .combate-botao-am
   .combate-pagina .combate-lista {min-height:0;overflow-y:auto;flex:1 1 auto;}
   .combate-pagina .combate-detalhe {overflow: visible;}
 }
+
+/* Layout 12 — cartões e botão de adição alinhados às bordas do painel. */
+.combate-pagina .combate-lateral {
+  padding: 8px 5px;
+  box-sizing: border-box;
+}
+.combate-pagina .combate-lateral .combate-cabecalho {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+.combate-pagina .combate-lateral .combate-cabecalho .botao {
+  margin: 0;
+  flex-shrink: 0;
+}
+.combate-pagina .combate-lista {
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: 6px;
+  padding: 0;
+  scrollbar-gutter: auto;
+}
+.combate-pagina .combate-linha {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+}
+@media (min-width: 851px) {
+  .combate-pagina .combate-lateral {padding: 8px 5px;}
+  .combate-pagina .combate-lista {margin-top: 6px;padding: 0;scrollbar-gutter: auto;}
+}
+
+/* Layout 13 — a primeira coluna exibe retrato e ferimentos sem rolagem. */
+@media (min-width: 1181px) {
+  .combate-pagina .combate-colunas {
+    grid-template-columns: minmax(150px, .82fr) minmax(0, 1.15fr) minmax(0, 1.18fr);
+  }
+  .combate-pagina .combate-coluna:first-child {
+    overflow-y: visible;
+    scrollbar-gutter: auto;
+  }
+  .combate-pagina .combate-coluna:first-child .combate-retrato {
+    max-height: clamp(105px, 19dvh, 180px);
+    width: 100%;
+    object-fit: contain;
+  }
+  .combate-pagina .combate-coluna:first-child .combate-cartao {
+    padding: 6px;
+  }
+  .combate-pagina .combate-coluna:first-child { gap: 6px; }
+  .combate-pagina .combate-coluna:first-child .combate-cartao-retrato p { margin: 2px 0; }
+}
+
+/* Layout 15 — três colunas de consulta com larguras iguais. */
+@media (min-width: 1181px) {
+  .combate-pagina .combate-colunas {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .combate-pagina .combate-coluna:first-child {
+    min-width: 0;
+    overflow-y: auto;
+    scrollbar-gutter: auto;
+  }
+}
+
+/* Layout 16 — retrato/identificação e rolagem compacta lado a lado na primeira coluna. */
+.combate-pagina .combate-identificacao-rolagem {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 6px;
+  align-items: stretch;
+  min-width: 0;
+}
+.combate-pagina .combate-identificacao-rolagem > .combate-cartao {
+  min-width: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 6px;
+}
+.combate-pagina .combate-identificacao-rolagem .combate-cartao-retrato {
+  overflow-wrap: anywhere;
+}
+.combate-pagina .combate-identificacao-rolagem .combate-retrato {
+  width: 100%;
+  max-height: 135px;
+  object-fit: contain;
+}
+.combate-pagina .combate-identificacao-rolagem .combate-cartao-retrato strong,
+.combate-pagina .combate-identificacao-rolagem .combate-cartao-retrato p {
+  overflow-wrap: anywhere;
+}
+.combate-pagina .combate-rolagem-compacta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.combate-pagina .combate-rolagem-compacta h3 {
+  font-size: 12px;
+  margin: 0 0 3px;
+}
+.combate-pagina .combate-rolagem-compacta .cartao-rolagem {
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0;
+  gap: 3px;
+}
+.combate-pagina .combate-rolagem-compacta label {font-size: 11px;}
+.combate-pagina .combate-rolagem-compacta select,
+.combate-pagina .combate-rolagem-compacta input,
+.combate-pagina .combate-rolagem-compacta button {
+  box-sizing: border-box;
+  max-width: 100%;
+  min-width: 0;
+  font-size: 11px;
+  padding: 5px 3px;
+}
+.combate-pagina .combate-rolagem-compacta output {
+  overflow-wrap: anywhere;
+  font-size: 11px;
+}
+@media (min-width: 851px) and (max-width: 1180px) {
+  .combate-pagina .combate-identificacao-rolagem {grid-template-columns: repeat(2,minmax(0,1fr));}
+}
+@media (max-width: 480px) {
+  .combate-pagina .combate-identificacao-rolagem {grid-template-columns: 1fr;}
+}
+
+/* Legenda das armas integrada ao campo de nome */
+.combate-pagina .combate-arma .combate-arma-rotulo{display:block;font:600 12px Georgia,serif;color:#3d2314;margin:0 0 3px}
+
+/* Layout 18 — distribuição contínua e rolagem interna das condições. */
+.combate-pagina .combate-cartao-condicoes {
+  display:flex;
+  flex-direction:column;
+  min-height:0;
+  min-width:0;
+  overflow:hidden;
+}
+.combate-pagina .combate-cartao-condicoes > .combate-condicoes-cabecalho {
+  flex:0 0 auto;
+  min-width:0;
+  gap:6px;
+  flex-wrap:wrap;
+}
+.combate-pagina .combate-cartao-condicoes .combate-condicoes-lista {
+  flex:1 1 auto;
+  min-height:0;
+  overflow-y:auto;
+  overflow-x:hidden;
+  overscroll-behavior:contain;
+  padding:0 3px 2px 0;
+  scrollbar-gutter:stable;
+}
+.combate-pagina .combate-cartao-condicoes .combate-condicao:first-child {margin-top:2px;}
+@media(min-width:1181px) {
+  .combate-pagina .combate-grade {
+    grid-template-columns:clamp(205px,19vw,275px) minmax(0,1fr);
+    gap:6px;
+  }
+  .combate-pagina .combate-detalhe {padding:5px;}
+  .combate-pagina .combate-colunas {
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:6px;
+    min-height:0;
+    height:100%;
+  }
+  .combate-pagina .combate-coluna {
+    gap:6px;
+    padding:0;
+    scrollbar-gutter:auto;
+  }
+  .combate-pagina .combate-coluna:first-child {overflow-y:auto;}
+  .combate-pagina .combate-coluna:last-child {
+    display:flex;
+    overflow:hidden;
+  }
+  .combate-pagina .combate-coluna:last-child > .combate-cartao-condicoes {
+    flex:1 1 auto;
+    max-height:100%;
+  }
+  .combate-pagina .combate-coluna > .combate-cartao,
+  .combate-pagina .combate-coluna > fieldset {margin:0;}
+}
+/* Em layouts empilhados, o cartão tem altura limitada e rolagem própria. */
+@media(max-width:1180px) {
+  .combate-pagina .combate-cartao-condicoes {max-height:clamp(220px,45dvh,460px);}
+  .combate-pagina .combate-condicoes-lista {max-height:clamp(145px,34dvh,370px);}
+}
+
+/* Layout 19 — mais largura para o cartão de rolagem, sem comprimir seus controles. */
+.combate-pagina .combate-identificacao-rolagem {
+  grid-template-columns:minmax(0, 0.72fr) minmax(0, 1.28fr);
+}
+.combate-pagina .combate-identificacao-rolagem .combate-cartao-retrato {
+  min-width:0;
+}
+.combate-pagina .combate-identificacao-rolagem .combate-rolagem-compacta {
+  min-width:0;
+}
+@media (min-width:481px) and (max-width:850px) {
+  .combate-pagina .combate-identificacao-rolagem {
+    grid-template-columns:minmax(0, 0.72fr) minmax(0, 1.28fr);
+  }
+}
+@media (max-width:480px) {
+  .combate-pagina .combate-identificacao-rolagem {grid-template-columns:1fr;}
+}
+
+/* Layout 20 — editor de ações sempre visível, ocupando a altura livre da coluna. */
+.combate-pagina .combate-preparar-cartao {
+  display:flex;
+  flex-direction:column;
+  min-height:0;
+  flex:1 1 auto;
+}
+.combate-pagina .combate-preparar-cartao .combate-preparar-cabecalho {
+  flex:0 0 auto;
+}
+.combate-pagina .combate-preparar-cartao > textarea {
+  display:block;
+  box-sizing:border-box;
+  width:100%;
+  min-height:145px;
+  flex:1 1 auto;
+  resize:vertical;
+  overflow-y:auto;
+}
+@media (min-width:1181px) {
+  .combate-pagina .combate-coluna:nth-child(2) {
+    min-height:0;
+    overflow-y:auto;
+  }
+  .combate-pagina .combate-coluna:nth-child(2) > .combate-preparar-cartao {
+    min-height:150px;
+  }
+}
+
+/* Layout 21 — o editor se ajusta ao espaço disponível sem criar rolagem na coluna. */
+@media (min-width:1181px) {
+  .combate-pagina .combate-coluna:nth-child(2) {
+    display:flex;
+    flex-direction:column;
+    min-height:0;
+    max-height:100%;
+    overflow:hidden;
+  }
+  .combate-pagina .combate-coluna:nth-child(2) > :not(.combate-preparar-cartao) {
+    flex:0 0 auto;
+  }
+  .combate-pagina .combate-coluna:nth-child(2) > .combate-preparar-cartao {
+    flex:1 1 0;
+    min-height:0;
+    max-height:100%;
+    overflow:hidden;
+  }
+  .combate-pagina .combate-preparar-cartao > textarea {
+    flex:1 1 0;
+    height:0;
+    min-height:0;
+    max-height:100%;
+    resize:none;
+    overflow-y:auto;
+  }
+}
+@media (max-width:1180px) {
+  .combate-pagina .combate-preparar-cartao {
+    flex:0 0 auto;
+    min-height:0;
+  }
+  .combate-pagina .combate-preparar-cartao > textarea {
+    flex:0 0 auto;
+    height:clamp(95px,18dvh,170px);
+    min-height:0;
+    max-height:170px;
+    resize:none;
+    overflow-y:auto;
+  }
+}
+
+/* Layout 22 — retrato e rolagem mais altos, mantendo a largura 36/64. */
+@media (min-width: 481px) {
+  .combate-pagina .combate-identificacao-rolagem {
+    min-height: clamp(205px, 30dvh, 265px);
+    align-items: stretch;
+  }
+  .combate-pagina .combate-identificacao-rolagem > .combate-cartao {
+    height: 100%;
+    min-height: 0;
+  }
+  .combate-pagina .combate-identificacao-rolagem .combate-retrato {
+    max-height: clamp(165px, 24dvh, 220px);
+    object-fit: contain;
+  }
+  .combate-pagina .combate-identificacao-rolagem .combate-rolagem-compacta {
+    justify-content: flex-start;
+  }
+}
+@media (max-width: 480px) {
+  .combate-pagina .combate-identificacao-rolagem .combate-retrato {
+    max-height: 220px;
+  }
+}
+
+/* Combate 10 — retrato dentro da moldura de procurado da ficha Jogador. */
+.combate-pagina .combate-cartao-retrato .combate-poster{position:relative;display:block;width:min(100%,210px);aspect-ratio:1/1;margin:0 auto 6px;background:url('../assets/imgs/imagemPersonagemPlaceholder.png') center / 100% 100% no-repeat;overflow:hidden}
+.combate-pagina .combate-cartao-retrato .combate-poster-foto{position:absolute;top:28%;left:11%;width:78%;height:65%;overflow:hidden}
+.combate-pagina .combate-cartao-retrato .combate-poster-foto .combate-retrato{display:block;width:100%;height:100%;max-height:none;object-fit:cover;object-position:center;border:0;border-radius:0;background:transparent}
+.combate-pagina .combate-cartao-retrato .combate-poster-foto .combate-retrato[src="assets/imgs/imagemPersonagemPlaceholder.png"]{opacity:0}
+
+/* Combate 11 — retrato + ferimentos lado a lado, rolagem em uma única linha compacta. */
+.combate-pagina .combate-identificacao-rolagem{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;min-height:0;align-items:start}
+.combate-pagina .combate-identificacao-rolagem > .combate-cartao{height:auto;min-height:0;align-self:start}
+.combate-pagina .combate-identificacao-rolagem .combate-cartao-ferimentos{display:flex;align-items:center;justify-content:center;padding:9px 5px}
+.combate-pagina .combate-cartao-ferimentos .linha-check{display:flex;flex-direction:column;align-items:center;gap:8px;margin:0;width:100%}
+.combate-pagina .combate-cartao-ferimentos .caveiras-box{display:flex;flex-direction:row;justify-content:center;gap:6px;flex-wrap:nowrap}
+.combate-pagina .combate-cartao-ferimentos .check-caveira{flex:0 0 auto}
+.combate-pagina .combate-rolagem-compacta{min-height:0;height:auto;display:block;padding:7px}
+.combate-pagina .combate-rolagem-compacta .cartao-rolagem{display:grid;grid-template-columns:minmax(0,1fr) 100px auto;align-items:end;gap:5px;min-height:0;height:auto;padding:0}
+.combate-pagina .combate-rolagem-compacta .cartao-rolagem label{display:none}
+.combate-pagina .combate-rolagem-compacta .cartao-rolagem select{width:100%;min-width:0;margin:0}
+.combate-pagina .combate-rolagem-compacta .cartao-rolagem button{white-space:nowrap;margin:0}
+.combate-pagina .combate-rolagem-compacta .cartao-rolagem output{grid-column:1/-1;min-height:0;margin:0;padding:0}
+.combate-pagina .combate-arma .combate-arma-titulo{font:bold 14px 'Rye',Georgia,serif;color:var(--rr-tinta,#3d2314);margin:0 0 5px}
+.combate-pagina .combate-cartao-retrato .combate-poster{width:min(100%,210px);height:auto;aspect-ratio:1/1;background-image:url('../assets/imgs/imagemPersonagemPlaceholder.png')}
+.combate-pagina .combate-cartao-retrato .combate-poster-foto{top:28%;left:11%;width:78%;height:65%}
+.combate-pagina .combate-cartao-retrato .combate-poster-foto img.combate-retrato{position:static;display:block;width:100%;height:100%;max-width:none;max-height:none;object-fit:cover;opacity:1}
+.combate-pagina .combate-cartao-retrato .combate-poster-foto img.combate-retrato[src="assets/imgs/imagemPersonagemPlaceholder.png"]{opacity:0}
+@media(max-width:700px){.combate-pagina .combate-rolagem-compacta .cartao-rolagem{grid-template-columns:minmax(0,1fr) 75px}.combate-pagina .combate-rolagem-compacta .cartao-rolagem button{grid-column:1/-1}}
+@media(max-width:480px){.combate-pagina .combate-identificacao-rolagem{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
+
+/* Combate 12 — leitura em três áreas: identidade/estado, arsenal e ações. */
+.combate-pagina .combate-identificacao-rolagem{
+ display:flex;flex-direction:column;gap:8px;min-height:0;align-items:stretch;
+}
+.combate-pagina .combate-identificacao-rolagem > .combate-cartao{width:100%;height:auto;align-self:stretch;box-sizing:border-box}
+.combate-pagina .combate-cartao-retrato{display:flex;flex-direction:column;align-items:center;text-align:center;gap:3px}
+.combate-pagina .combate-cartao-retrato .combate-poster{width:min(100%,175px);flex:none;margin:0 auto 4px}
+.combate-pagina .combate-cartao-retrato strong{font:13px 'Rye',Georgia,serif;line-height:1.35}
+.combate-pagina .combate-cartao-retrato p{margin:1px 0;font-size:12px}
+.combate-pagina .combate-cartao-ferimentos{padding:10px 8px;min-height:68px}
+.combate-pagina .combate-cartao-ferimentos .linha-check{flex-direction:row;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.combate-pagina .combate-cartao-ferimentos .linha-check > label{margin:0;font:bold 12px 'Rye',Georgia,serif}
+.combate-pagina .combate-cartao-ferimentos .caveiras-box{gap:9px}
+.combate-pagina .combate-modificadores{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.combate-pagina .combate-modificadores-total{display:block;text-align:right;margin-top:5px}
+.combate-pagina .combate-rolagem-compacta{flex:none;overflow:visible}
+.combate-pagina .combate-rolagem-compacta .cartao-rolagem{grid-template-columns:minmax(0,1fr) 70px auto;gap:6px;align-items:center}
+.combate-pagina .combate-rolagem-compacta .cartao-rolagem output{grid-column:1/-1;line-height:1.3}
+.combate-pagina .combate-coluna:nth-child(3) > .combate-cartao-condicoes{min-height:140px}
+.combate-pagina .combate-coluna:nth-child(3) > .combate-preparar-cartao{min-height:125px}
+@media(min-width:1181px){
+ .combate-pagina .combate-colunas{grid-template-columns:minmax(0,.95fr) minmax(0,1.12fr) minmax(0,1.18fr);gap:9px}
+ .combate-pagina .combate-coluna{min-height:0;overflow-y:auto;overflow-x:hidden;gap:9px;padding:1px 2px 3px 1px}
+ .combate-pagina .combate-coluna:nth-child(2){display:flex;flex-direction:column;overflow-y:auto;overflow-x:hidden}
+ .combate-pagina .combate-coluna:nth-child(3){display:flex;flex-direction:column;overflow:hidden}
+ .combate-pagina .combate-coluna:nth-child(3) > .combate-cartao-condicoes{flex:1 1 auto;min-height:100px;max-height:none}
+ .combate-pagina .combate-coluna:nth-child(3) > .combate-preparar-cartao{flex:0 0 auto;height:clamp(130px,22dvh,195px);min-height:0;max-height:none;overflow:hidden}
+ .combate-pagina .combate-coluna:nth-child(3) > .combate-preparar-cartao textarea{flex:1 1 auto;height:auto;min-height:0;resize:none}
+}
+@media(min-width:701px) and (max-width:1180px){
+ .combate-pagina .combate-colunas{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .combate-pagina .combate-coluna:nth-child(3){grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start}
+ .combate-pagina .combate-coluna:nth-child(3) > .combate-rolagem-compacta{grid-column:1/-1}
+ .combate-pagina .combate-coluna:nth-child(3) > .combate-preparar-cartao{min-height:180px}
+}
+@media(max-width:700px){
+ .combate-pagina .combate-colunas{grid-template-columns:minmax(0,1fr)}
+ .combate-pagina .combate-coluna:nth-child(3){display:flex;flex-direction:column}
+ .combate-pagina .combate-rolagem-compacta .cartao-rolagem{grid-template-columns:minmax(0,1fr) 74px auto}
+}
+@media(max-width:460px){
+ .combate-pagina .combate-rolagem-compacta .cartao-rolagem{grid-template-columns:minmax(0,1fr) 74px}
+ .combate-pagina .combate-rolagem-compacta .cartao-rolagem button{grid-column:1/-1}
+}
+
+
+/* Combate 13 — controles de vantagens embaixo dos títulos, rolagem antes das armas. */
+.combate-pagina .combate-modificadores{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-items:start;
+}
+.combate-pagina .combate-modificador{
+  display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;
+  gap:7px;min-width:0;text-align:center;
+}
+.combate-pagina .combate-modificador > span{
+  display:block;width:100%;font:700 clamp(12px,1vw,15px) 'Rye',Georgia,serif;
+  white-space:normal;overflow-wrap:anywhere;
+}
+.combate-pagina .combate-modificador-controles{
+  display:flex;align-items:center;justify-content:center;gap:3px;width:100%;min-width:0;
+}
+.combate-pagina .combate-modificador-controles .municao-botao{
+  flex:0 0 27px;width:27px;height:32px;min-width:0;padding:0;
+}
+.combate-pagina .combate-modificador-controles input{
+  flex:0 1 48px;width:48px;min-width:30px;max-width:48px;height:32px;
+  padding:3px 1px;text-align:center;font-size:15px;
+}
+/* O nome da arma fica junto do conteúdo, sem linha divisória ou espaço extra. */
+.combate-pagina .cartao-arma .combate-arma-titulo{
+  border:0;border-bottom:0;padding:0;margin:0 0 2px;
+  font:700 14px 'Rye',Georgia,serif;color:#3d2314;
+}
+.combate-pagina .cartao-arma{
+  display:flex;flex-direction:column;gap:5px;
+  min-width:0;padding:9px 10px;
+}
+.combate-pagina .cartao-arma .arma-linha-nome{margin:0;min-width:0}
+/* Um único cartão visual de rolagem: sem moldura adicional interna. */
+.combate-pagina .combate-rolagem-compacta{padding:9px 10px;min-width:0;background:rgba(244,220,179,.4)}
+.combate-pagina .combate-rolagem-compacta > .cartao-rolagem{
+  padding:0;margin:0;border:0;border-radius:0;box-shadow:none;
+  background:transparent;outline:0;min-width:0;
+  display:grid;grid-template-columns:minmax(0,1fr) 78px auto;
+  align-items:center;column-gap:7px;row-gap:4px;
+}
+.combate-pagina .combate-rolagem-compacta .botao-rolar{width:auto;min-width:95px;height:34px;margin:0;padding:4px 9px;white-space:nowrap}
+.combate-pagina .combate-rolagem-compacta .resultado-rolagem:empty{display:none}
+.combate-pagina .combate-rolagem-compacta .resultado-rolagem:not(:empty){display:block;grid-column:1/-1;margin:3px 0 0;padding:4px 2px;min-height:0}
+@media(max-width:480px){
+ .combate-pagina .combate-rolagem-compacta > .cartao-rolagem{grid-template-columns:minmax(0,1fr) 72px}
+ .combate-pagina .combate-rolagem-compacta .botao-rolar{grid-column:1/-1;justify-self:end}
+}
+
+/* Combate 14 — coluna Combatentes com a mesma largura percentual de Viajantes. */
+@media(min-width:1181px){
+  .combate-pagina .combate-grade{
+    grid-template-columns:minmax(175px,21%) minmax(0,1fr);
+    gap:8px;
+  }
+  .combate-pagina .combate-lateral{min-width:0;}
+  .combate-pagina .combate-lateral .combate-cabecalho{min-width:0;}
+}
+@media(min-width:851px) and (max-width:1180px){
+  .combate-pagina .combate-grade{grid-template-columns:minmax(170px,24%) minmax(0,1fr);}
+}
+
+/* Combate 18 — seletor de traço e bônus na primeira linha; ação abaixo à direita. */
+.combate-pagina .combate-rolagem-compacta > .cartao-rolagem{
+ display:grid;grid-template-columns:minmax(0,1fr) minmax(65px,85px);
+ gap:6px;align-items:center;
+}
+.combate-pagina .combate-rolagem-compacta .botao-rolar{
+ grid-column:1/-1;grid-row:2;justify-self:end;min-width:110px;
+}
+.combate-pagina .combate-rolagem-compacta .resultado-rolagem:not(:empty){
+ grid-column:1/-1;grid-row:3;
+}
+
+
+/* Combate 19 — sem rolagem na coluna central; total destacado como mostrador. */
+.combate-pagina .combate-modificadores-total{
+ box-sizing:border-box;display:block;width:max-content;max-width:100%;min-width:102px;
+ margin:14px 0 1px auto;padding:8px 12px;
+ border:2px solid #6b4630;border-radius:4px;
+ background:#fff7e9;color:#3d2314;
+ text-align:center;font:700 15px Georgia,serif;
+ box-shadow:inset 0 1px 2px rgba(67,40,23,.12);
+}
+@media(min-width:1181px){
+ .combate-pagina .combate-coluna:nth-child(2){
+  min-height:0;overflow:visible;
+ }
+ .combate-pagina .combate-detalhe{overflow-y:auto;overflow-x:hidden}
+}
+
+
+/* Consulta direta da ficha do combatente em ação (Mestre 27). */
+#combate-atual .combate-ficha-em-acao{
+ display:flex;flex:1 1 auto;min-width:0;flex-direction:column;justify-content:center;
+ align-items:flex-start;gap:3px;padding:3px 0;border:0;background:transparent;
+ color:inherit;text-align:left;cursor:pointer;
+}
+#combate-atual .combate-ficha-em-acao:hover strong{text-decoration:underline;text-underline-offset:3px}
+#combate-atual .combate-ficha-em-acao:focus-visible{
+ outline:2px solid #8b252d;outline-offset:3px;border-radius:3px;
+}
+#combate-atual .combate-estrela{flex:0 0 26px}
+
+.combate-acao:has(.combate-ficha-em-acao){cursor:pointer}
+.combate-acao:has(.combate-ficha-em-acao):hover{border-color:#9b463e}
+
+/* Atualização 28 — reduzir a folga sob Rolar traço sem comprimir seletores. */
+.combate-pagina .combate-rolagem-compacta{
+ padding-bottom:4px;
+}
+.combate-pagina .combate-rolagem-compacta > .cartao-rolagem{
+ row-gap:3px;
+}
+.combate-pagina .combate-rolagem-compacta .botao-rolar{
+ height:32px;min-height:32px;padding-block:3px;
+}
+.combate-pagina .combate-rolagem-compacta .resultado-rolagem:not(:empty){
+ margin-top:1px;padding-bottom:1px;
+}
+
+
+/* Mestre 30 — Ficha do combatente em ação no próprio cartão de consulta do Combate. */
+#pagina-combate #combate-detalhe.combate-consulta-ficha-ativa{
+ box-sizing:border-box;display:flex;flex-direction:column;gap:9px;
+ min-width:0;min-height:0;overflow:hidden;padding:9px;
+}
+#pagina-combate .combate-consulta-ficha-cabecalho{
+ flex:none;display:flex;align-items:center;justify-content:space-between;
+ gap:12px;min-width:0;padding:3px 4px 9px;
+ border-bottom:2px double #98724d;
+}
+#pagina-combate .combate-consulta-ficha-titulos{min-width:0;overflow:hidden}
+#pagina-combate .combate-consulta-ficha-titulos small{
+ display:block;font:10px/1.4 'Rye',Georgia,serif;color:#805c3b;
+}
+#pagina-combate .combate-consulta-ficha-titulos h2{
+ margin:3px 0 0;font:clamp(15px,1.4vw,20px)/1.2 'Rye',Georgia,serif;
+ color:#3d2314;overflow-wrap:anywhere;
+}
+#pagina-combate .combate-consulta-ficha-voltar{
+ flex:none;white-space:nowrap;padding:7px 10px;font-size:12px;
+}
+#pagina-combate .combate-consulta-ficha-conteudo{
+ flex:1 1 auto;min-width:0;min-height:0;overflow:auto;
+}
+#pagina-combate .combate-consulta-ficha-grade{
+ display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+ gap:8px;align-items:stretch;overflow:hidden;
+}
+#pagina-combate .combate-consulta-ficha-grade>.ficha-parte{
+ min-width:0;min-height:0;max-height:100%;overflow:hidden;
+ display:flex;flex-direction:column;
+}
+#pagina-combate .combate-consulta-ficha-grade .ficha-parte-corpo{
+ flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;
+ scrollbar-width:thin;overscroll-behavior:contain;
+}
+#pagina-combate .combate-consulta-ficha-aviso{
+ display:grid;place-items:center;min-height:130px;
+ margin:0;padding:18px;border:1px dashed #b89a74;border-radius:4px;
+ color:#76533b;text-align:center;
+}
+@media (min-width:701px) and (max-width:1150px){
+ #pagina-combate .combate-consulta-ficha-grade{
+  grid-template-columns:repeat(3,minmax(235px,1fr));
+  overflow-x:auto;scrollbar-width:thin;scrollbar-gutter:stable;
+ }
+}
+@media(max-width:700px){
+ #pagina-combate #combate-detalhe.combate-consulta-ficha-ativa{
+  min-height:490px;height:min(78vh,720px);overflow:hidden;
+ }
+ #pagina-combate .combate-consulta-ficha-grade{
+  grid-template-columns:repeat(3,minmax(min(78vw,320px),1fr));
+  overflow-x:auto;scroll-snap-type:x proximity;overscroll-behavior-x:contain;
+ }
+ #pagina-combate .combate-consulta-ficha-grade>.ficha-parte{scroll-snap-align:start}
+ #pagina-combate .combate-consulta-ficha-cabecalho{gap:6px}
+ #pagina-combate .combate-consulta-ficha-voltar{white-space:normal;text-align:center;padding:6px;font-size:11px}
+}
+
+/* Atualização 32 — total alinhado à linha de controles de Desvantagem. */
+.combate-pagina .combate-vantagens-alinhadas{
+ display:grid;
+ grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto;
+ column-gap:8px;
+ align-items:end;
+}
+.combate-pagina .combate-vantagens-alinhadas .combate-modificadores{
+ display:contents;
+}
+.combate-pagina .combate-vantagens-alinhadas .combate-modificador{
+ min-width:0;
+}
+.combate-pagina .combate-vantagens-alinhadas .combate-modificadores-total{
+ align-self:end;
+ margin:0;
+ min-width:90px;
+ white-space:nowrap;
+}
+@media(max-width:620px){
+ .combate-pagina .combate-vantagens-alinhadas{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  row-gap:8px;
+ }
+ .combate-pagina .combate-vantagens-alinhadas .combate-modificadores-total{
+  grid-column:2;
+  justify-self:end;
+ }
+}
+/* Mais separação entre os seletores de traço/bônus e o botão Rolar traço. */
+.combate-pagina .combate-rolagem-compacta > .cartao-rolagem{
+ row-gap:9px;
+}

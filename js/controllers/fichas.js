@@ -1,6 +1,6 @@
 import { criarParteFicha, PARTES_FICHA } from '../modules/visualizarFicha.js';
 import { mostrarAviso } from '../core/feedback.js';
-import { porId, elemento, mensagemLista } from '../core/dom.js';
+import { porId, elemento } from '../core/dom.js';
 
 /**
  * Seleção individual (três colunas) e comparação horizontal (uma parte de cada ficha).
@@ -11,6 +11,8 @@ export function criarControladorFichas(contexto) {
     let campanhaAnterior = null;
     let fichaSelecionada = '';
     let parteComparada = null;
+    let registroDoCombate = null; // NPC consultado no quadro existente, nunca editável.
+    const VALOR_NPC_COMBATE = '__consulta-npc-combate__';
 
     function fichasDisponiveis() {
         const ids = new Set();
@@ -44,6 +46,7 @@ export function criarControladorFichas(contexto) {
     function limparVisualizacao() {
         fichaSelecionada = '';
         parteComparada = null;
+        registroDoCombate = null;
         campanhaAnterior = estado.campanhaId;
         estado.versaoFicha++;
         porId('seletor-personagem').value = '';
@@ -70,37 +73,19 @@ export function criarControladorFichas(contexto) {
             if (envio.status === 'pendente') opcao.textContent += ' · aguardando aprovação';
             seletor.append(opcao);
         }
-        seletor.value = fichaSelecionada;
-        seletor.disabled = !fichas.length;
+        if (registroDoCombate) {
+            const npc = elemento('option', '', `NPC · ${registroDoCombate.nome}`);
+            npc.value = VALOR_NPC_COMBATE;
+            seletor.append(npc);
+        }
+        seletor.value = registroDoCombate ? VALOR_NPC_COMBATE : fichaSelecionada;
+        seletor.disabled = !fichas.length && !registroDoCombate;
         for (const botao of document.querySelectorAll('[data-comparar-ficha]')) {
             botao.disabled = !fichas.length;
         }
 
-        listarCombatentes();
+        // A lista de combate pertence exclusivamente ao controlador Combate.
         if (estado.navegacao?.atual === 'fichas') void atualizarVisualizacao();
-    }
-
-    function listarCombatentes() {
-        const lista = porId('lista-combatentes');
-        // O painel legado foi substituído pela aba Combate.
-        if (!lista) return;
-        lista.replaceChildren();
-        const aprovados = estado.envios.filter((envio) => envio.status === 'aprovada');
-
-        for (const envio of aprovados) {
-            const linha = elemento('li', 'registro');
-            const informacoes = elemento('div', 'registro-info');
-            informacoes.append(
-                elemento('strong', '', nomeDoPersonagem(envio)),
-                elemento('small', '', `Jogador: ${envio.jogador_id}`),
-            );
-            linha.append(informacoes, elemento('span', 'selo-status status-aprovada', 'Na campanha'));
-            lista.append(linha);
-        }
-
-        if (!aprovados.length) mensagemLista(lista, estado.campanhaId
-            ? 'Quando você aprovar fichas, os personagens aparecerão aqui para os futuros controles de combate.'
-            : 'Selecione uma campanha para preparar os futuros combates.');
     }
 
     async function decidirFicha(envio, aprovar) {
@@ -123,15 +108,52 @@ export function criarControladorFichas(contexto) {
     function selecionarFicha(id) {
         fichaSelecionada = fichasDisponiveis().some((envio) => envio.ficha_id === id) ? id : '';
         parteComparada = null;
+        registroDoCombate = null;
         atualizarBotoes();
-        void atualizarVisualizacao();
+        listarEnvios();
+        if (estado.navegacao?.atual !== 'fichas') void atualizarVisualizacao();
     }
 
     function compararParte(parte) {
         if (!Object.hasOwn(PARTES_FICHA, parte)) return;
         parteComparada = parte;
+        registroDoCombate = null;
         atualizarBotoes();
-        void atualizarVisualizacao();
+        listarEnvios();
+        if (estado.navegacao?.atual !== 'fichas') void atualizarVisualizacao();
+    }
+
+    // Entrada pelo cartão "Em ação" na página Combate: reutiliza o quadro de
+    // visualização de Fichas e sua navegação, sem criar janelas adicionais.
+    function abrirConsultaDoCombate() {
+        const jaEmFichas = estado.navegacao?.atual === 'fichas';
+        estado.navegacao?.abrir?.('fichas');
+        if (jaEmFichas) void atualizarVisualizacao();
+    }
+
+    function consultarFichaDoCombate(id) {
+        if (campanhaAnterior !== estado.campanhaId) limparVisualizacao();
+        if (!fichasDisponiveis().some((envio) => envio.ficha_id === id)) {
+            mostrarAviso('Esta ficha não está disponível na campanha.', true);
+            return;
+        }
+        registroDoCombate = null;
+        fichaSelecionada = id;
+        parteComparada = null;
+        atualizarBotoes();
+        listarEnvios();
+        abrirConsultaDoCombate();
+    }
+
+    function consultarRegistroDoCombate(registro, nome) {
+        if (!estado.campanhaId || !registro) return;
+        if (campanhaAnterior !== estado.campanhaId) limparVisualizacao();
+        registroDoCombate = { registro, nome: nome || registro.titulo || 'NPC', campanhaId: estado.campanhaId };
+        fichaSelecionada = '';
+        parteComparada = null;
+        atualizarBotoes();
+        listarEnvios();
+        abrirConsultaDoCombate();
     }
 
     async function atualizarVisualizacao() {
@@ -143,6 +165,13 @@ export function criarControladorFichas(contexto) {
 
         if (!campanhaId) {
             mostrarMensagem('Selecione uma campanha na aba Campanhas para consultar as fichas.');
+            return;
+        }
+        if (registroDoCombate && registroDoCombate.campanhaId === campanhaId) {
+            area.className = 'conteudo-fichas modo-completo';
+            area.replaceChildren(...Object.keys(PARTES_FICHA).map((parte) =>
+                criarParteFicha(registroDoCombate.registro, parte)));
+            porId('quadro-fichas').setAttribute('aria-busy', 'false');
             return;
         }
         if (!fichas.length) {
@@ -203,7 +232,8 @@ export function criarControladorFichas(contexto) {
     }
 
     return {
-        iniciarEventos, limparVisualizacao, listarEnvios, listarCombatentes,
+        iniciarEventos, limparVisualizacao, listarEnvios,
         decidirFicha, removerFicha, selecionarFicha, compararParte, atualizarVisualizacao,
+        consultarFichaDoCombate, consultarRegistroDoCombate,
     };
 }

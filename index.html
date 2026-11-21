@@ -24,6 +24,8 @@
     <link rel="stylesheet" href="css/npc-ficha-original.css">
     <link rel="stylesheet" href="css/npc-desktop-jogador.css">
     <link rel="stylesheet" href="css/npc-jogador-integral.css">
+    <link rel="stylesheet" href="css/botoes-railroad.css">
+    <link rel="stylesheet" href="css/conta.css">
 </head>
 <body class="modo-entrada">
     <header class="barra-superior">
@@ -46,11 +48,25 @@
                 <div class="campanha-sessao"><span>Campanha em uso</span><strong id="campanha-ativa">Nenhuma campanha selecionada</strong></div>
                 <span id="usuario-email" class="usuario-email" hidden></span>
             </div>
+            <button id="abrir-conta" type="button" class="botao rr-botao-amarelo" hidden aria-haspopup="dialog" aria-controls="modal-conta">Conta</button>
             <button id="salvar-campanha" type="button" class="botao botao-salvar" hidden disabled>Salvar</button>
             <button id="sair" type="button" class="botao botao-discreto botao-sair" hidden>Sair</button>
         </div>
     </header>
 
+    <dialog id="modal-conta" class="modal-conta" aria-labelledby="titulo-modal-conta">
+        <div class="conta-cabecalho">
+            <h2 id="titulo-modal-conta">Minha conta</h2>
+            <button id="fechar-conta" type="button" class="botao botao-discreto" aria-label="Fechar janela de conta">Fechar</button>
+        </div>
+        <p class="conta-descricao">Sessão atual</p>
+        <p id="conta-identificacao" class="conta-identificacao"></p>
+        <div class="conta-acoes">
+            <button id="conta-salvar" type="button" class="botao rr-botao-marrom">Salvar</button>
+            <button id="conta-personalizar" type="button" class="botao rr-botao-bege" disabled title="Disponível em uma próxima atualização">Personalização (em breve)</button>
+            <button id="conta-sair" type="button" class="botao rr-botao-vermelho">Sair</button>
+        </div>
+    </dialog>
     <main>
         <section id="tela-entrada" class="entrada">
             <div class="entrada-cartaz">

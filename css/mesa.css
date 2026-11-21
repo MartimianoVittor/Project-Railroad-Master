@@ -9,6 +9,7 @@
 @import url('./fichas.css');
 @import url('./npcs.css');
 @import url('./sessoes.css');
+@import url('./viagem.css');
 @import url('./responsivo.css');
 
 /* Acesso offline independente do Supabase. */

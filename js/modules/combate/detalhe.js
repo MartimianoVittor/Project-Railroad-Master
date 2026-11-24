@@ -1,8 +1,8 @@
-import { elemento, botao, porId } from '../../core/dom.js?v=mesa-31';
-import { ARMAS, TRACOS } from '../ficha/campos.js?v=mesa-31';
-import { rolarTraco } from '../rolagem.js?v=mesa-31';
-import { imagemValida, inteiro, RETRATO_PADRAO as imagemPadrao } from './combatentes.js?v=mesa-31';
-import { abrirSeletorCondicoes } from './condicoes.js?v=mesa-31';
+import { elemento, botao, porId } from '../../core/dom.js?v=mesa-32';
+import { ARMAS, TRACOS } from '../ficha/campos.js?v=mesa-32';
+import { rolarTraco } from '../rolagem.js?v=mesa-32';
+import { imagemValida, inteiro, RETRATO_PADRAO as imagemPadrao } from './combatentes.js?v=mesa-32';
+import { abrirSeletorCondicoes } from './condicoes.js?v=mesa-32';
 
 function criarModelo(nome) {
     return porId(`modelo-combate-${nome}`).content.firstElementChild.cloneNode(true);

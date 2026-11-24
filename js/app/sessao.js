@@ -1,8 +1,9 @@
-import { entrarComGoogle, iniciarAutenticacao, obterCliente, sairDaConta } from '../core/cliente.js?v=mesa-31';
-import { porId } from '../core/dom.js?v=mesa-31';
-import { executar, mostrarAviso } from '../core/feedback.js?v=mesa-31';
-import { criarRepositorioCampanhas } from '../services/campanhas.js?v=mesa-31';
-import { criarRepositorioCampanhasLocal } from '../services/campanhasLocal.js?v=mesa-31';
+import { comProcessamento } from '../core/processamento.js?v=mesa-32';
+import { entrarComGoogle, iniciarAutenticacao, obterCliente, sairDaConta } from '../core/cliente.js?v=mesa-32';
+import { porId } from '../core/dom.js?v=mesa-32';
+import { executar, mostrarAviso } from '../core/feedback.js?v=mesa-32';
+import { criarRepositorioCampanhas } from '../services/campanhas.js?v=mesa-32';
+import { criarRepositorioCampanhasLocal } from '../services/campanhasLocal.js?v=mesa-32';
 
 export function iniciarSessao(contexto, conta, armazenamento, conectarCliente = obterCliente) {
     const { estado } = contexto;
@@ -92,7 +93,7 @@ export function iniciarSessao(contexto, conta, armazenamento, conectarCliente = 
         try {
             estado.cliente = await conectarCliente();
             repositorioOnline = criarRepositorioCampanhas(estado.cliente);
-            await iniciarAutenticacao(estado.cliente, quandoSessaoMudar);
+            await comProcessamento('Conectando à conta…', () => iniciarAutenticacao(estado.cliente, quandoSessaoMudar));
         } catch (erro) {
             // O modo local continua disponível mesmo sem Supabase configurado.
             if (estado.modoLocal) return;

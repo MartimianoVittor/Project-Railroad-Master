@@ -1,11 +1,11 @@
-import { elemento, porId } from '../core/dom.js?v=mesa-31';
-import { mostrarAviso } from '../core/feedback.js?v=mesa-31';
-import { listarPersonagensDisponiveis } from '../modules/personagensCampanha.js?v=mesa-31';
-import { criarGrupo, distanciaDoDia, normalizarViagens, novoId, inteiroNaoNegativo } from '../modules/viagem/modelo.js?v=mesa-31';
-import { mostrarPainelViagem } from '../modules/viagem/painel.js?v=mesa-31';
-import { iniciarSeletorViajante } from '../modules/viagem/seletorViajante.js?v=mesa-31';
-import { mostrarViajante } from '../modules/viagem/viajante.js?v=mesa-31';
-import { criarSincronizadorEstadoMesa } from '../services/estadosMesa.js?v=mesa-31';
+import { elemento, porId } from '../core/dom.js?v=mesa-32';
+import { mostrarAviso } from '../core/feedback.js?v=mesa-32';
+import { listarPersonagensDisponiveis } from '../modules/personagensCampanha.js?v=mesa-32';
+import { criarGrupo, distanciaDoDia, normalizarViagens, novoId, inteiroNaoNegativo } from '../modules/viagem/modelo.js?v=mesa-32';
+import { mostrarPainelViagem } from '../modules/viagem/painel.js?v=mesa-32';
+import { iniciarSeletorViajante } from '../modules/viagem/seletorViajante.js?v=mesa-32';
+import { mostrarViajante } from '../modules/viagem/viajante.js?v=mesa-32';
+import { criarSincronizadorEstadoMesa } from '../services/estadosMesa.js?v=mesa-32';
 
 export function criarControladorViagem({ estado }) {
     let chaveArmazenamento = '';

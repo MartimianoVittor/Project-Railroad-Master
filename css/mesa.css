@@ -2,15 +2,15 @@
  * Cada arquivo concentra as regras de uma área de responsabilidade.
  * As regras responsivas vêm por último para manter a cascata previsível.
  */
-@import url('./layout.css?v=mesa-31');
-@import url('./campanhas.css?v=mesa-31');
-@import url('./diario.css?v=mesa-31');
-@import url('./ferramentas.css?v=mesa-31');
-@import url('./fichas.css?v=mesa-31');
-@import url('./npcs.css?v=mesa-31');
-@import url('./sessoes.css?v=mesa-31');
-@import url('./viagem.css?v=mesa-31');
-@import url('./responsivo.css?v=mesa-31');
+@import url('./layout.css?v=mesa-32');
+@import url('./campanhas.css?v=mesa-32');
+@import url('./diario.css?v=mesa-32');
+@import url('./ferramentas.css?v=mesa-32');
+@import url('./fichas.css?v=mesa-32');
+@import url('./npcs.css?v=mesa-32');
+@import url('./sessoes.css?v=mesa-32');
+@import url('./viagem.css?v=mesa-32');
+@import url('./responsivo.css?v=mesa-32');
 
 /* Acesso offline independente do Supabase. */
 .acoes-entrada { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .8rem; }

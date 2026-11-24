@@ -1,8 +1,8 @@
 /** Persistência remota de sessões e NPCs, com transações e controle de revisão.
  * Requer a migração supabase/012_integridade_conteudo_mestre.sql.
  */
-import { obterCliente, exigir } from '../core/cliente.js?v=mesa-31';
-import { normalizarNpc } from '../modules/npcs.js?v=mesa-31';
+import { obterCliente, exigir } from '../core/cliente.js?v=mesa-32';
+import { normalizarNpc } from '../modules/npcs.js?v=mesa-32';
 
 function revisaoRecebida(resultado) {
     const linha = Array.isArray(resultado) ? resultado[0] : resultado;

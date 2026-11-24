@@ -2,7 +2,7 @@
 import {
     ARMAS as ARMAS_NPC, CONDICOES as CONDICOES_NPC,
     DISTANCIAS as DISTANCIAS_NPC, TRACOS as TRACOS_NPC,
-} from './ficha/campos.js?v=mesa-31';
+} from './ficha/campos.js?v=mesa-32';
 
 export { ARMAS_NPC, CONDICOES_NPC, DISTANCIAS_NPC, TRACOS_NPC };
 

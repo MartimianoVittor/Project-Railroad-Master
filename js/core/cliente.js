@@ -1,4 +1,4 @@
-import { SUPABASE } from '../config/supabase.js?v=mesa-31';
+import { SUPABASE } from '../config/supabase.js?v=mesa-32';
 
 let promessaCliente;
 
@@ -11,7 +11,7 @@ export function obterCliente() {
     promessaCliente ??= import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.8/+esm')
         .then(({ createClient }) => createClient(
             SUPABASE.url.trim(), SUPABASE.publishableKey.trim(),
-            { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true } }
+            { auth: { storageKey: 'railroad-mestre-auth-v1', persistSession: true, autoRefreshToken: true, detectSessionInUrl: true } }
         ))
         .catch((erro) => {
             promessaCliente = null;

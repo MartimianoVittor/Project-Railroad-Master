@@ -1,5 +1,5 @@
-import { porId, elemento } from '../../core/dom.js?v=mesa-31';
-import { inteiroNaoNegativo } from './modelo.js?v=mesa-31';
+import { porId, elemento } from '../../core/dom.js?v=mesa-32';
+import { inteiroNaoNegativo } from './modelo.js?v=mesa-32';
 
 export function iniciarSeletorViajante({ grupo, disponiveis, carregarNomesJogadores, aoConfirmar }) {
     let viajanteEscolhido = '';

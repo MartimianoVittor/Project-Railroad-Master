@@ -1,5 +1,5 @@
-import { elemento } from '../core/dom.js?v=mesa-31';
-import { ARMAS_NPC, CONDICOES_NPC, DISTANCIAS_NPC, TRACOS_NPC, rotuloNivelNpc } from './npcs.js?v=mesa-31';
+import { elemento } from '../core/dom.js?v=mesa-32';
+import { ARMAS_NPC, CONDICOES_NPC, DISTANCIAS_NPC, TRACOS_NPC, rotuloNivelNpc } from './npcs.js?v=mesa-32';
 
 /** Consulta somente leitura: usa textContent para todos os dados de NPCs. */
 const texto = (valorCampo, padrao = '—') => String(valorCampo ?? '').trim() || padrao;

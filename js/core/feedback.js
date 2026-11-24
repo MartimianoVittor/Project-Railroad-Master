@@ -1,3 +1,4 @@
+import { comProcessamento } from './processamento.js?v=mesa-32';
 let temporizador;
 
 export function mostrarAviso(texto, erro = false) {
@@ -13,7 +14,7 @@ export async function executar(botao, tarefa) {
     if (botao.disabled) return;
     botao.disabled = true;
     try {
-        await tarefa();
+        await comProcessamento('Processando operação…', tarefa);
     } catch (erro) {
         console.error('Railroad Mestre:', erro);
         mostrarAviso(`Operação não concluída: ${erro.message}`, true);

@@ -1,4 +1,4 @@
-import { elemento, porId } from '../../core/dom.js?v=mesa-31';
+import { elemento, porId } from '../../core/dom.js?v=mesa-32';
 
 const LOCAIS = [
     { valor: 'personagem', classe: 'icone-chapeu', titulo: 'Chapéu: carregado pelo personagem' },

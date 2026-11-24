@@ -1,7 +1,7 @@
-import { agruparParticipantes } from '../modules/participantes.js?v=mesa-31';
-import { executar, mostrarAviso } from '../core/feedback.js?v=mesa-31';
-import { porId, elemento, mensagemLista, dataBreve, botaoAcao } from '../core/dom.js?v=mesa-31';
-import { UUID, ESTADOS_CONVITE, ESTADOS_FICHA } from '../app/estado.js?v=mesa-31';
+import { agruparParticipantes } from '../modules/participantes.js?v=mesa-32';
+import { executar, mostrarAviso } from '../core/feedback.js?v=mesa-32';
+import { porId, elemento, mensagemLista, dataBreve, botaoAcao } from '../core/dom.js?v=mesa-32';
+import { UUID, ESTADOS_CONVITE, ESTADOS_FICHA } from '../app/estado.js?v=mesa-32';
 
 /** Prioriza a campanha ativa sem modificar a ordem dos registros restantes. */
 export function ordenarCampanhas(campanhas, idAtivo) {

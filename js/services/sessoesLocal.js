@@ -1,5 +1,5 @@
-import { criarSessao, normalizarDiario } from '../modules/diario/sessoes.js?v=mesa-31';
-import { criarRepositorioRascunhos } from '../modules/rascunhos.js?v=mesa-31';
+import { criarSessao, normalizarDiario } from '../modules/diario/sessoes.js?v=mesa-32';
+import { criarRepositorioRascunhos } from '../modules/rascunhos.js?v=mesa-32';
 
 const PREFIXO = 'railroad_mestre_sessoes:v2';
 

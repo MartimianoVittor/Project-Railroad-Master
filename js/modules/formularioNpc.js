@@ -1,7 +1,7 @@
-import { elemento, porId } from '../core/dom.js?v=mesa-31';
-import { ARMAS_NPC, CONDICOES_NPC, DISTANCIAS_NPC, TRACOS_NPC } from './npcs.js?v=mesa-31';
-import { DADOS_DE_TRACO } from './rolagem.js?v=mesa-31';
-import { iniciarInventario, lerItens, preencherItens } from './npcs/inventario.js?v=mesa-31';
+import { elemento, porId } from '../core/dom.js?v=mesa-32';
+import { ARMAS_NPC, CONDICOES_NPC, DISTANCIAS_NPC, TRACOS_NPC } from './npcs.js?v=mesa-32';
+import { DADOS_DE_TRACO } from './rolagem.js?v=mesa-32';
+import { iniciarInventario, lerItens, preencherItens } from './npcs/inventario.js?v=mesa-32';
 
 const CAMPOS = {
     'nome-personagem': 'nome', 'apelido-personagem': 'apelido',

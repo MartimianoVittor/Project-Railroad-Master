@@ -1,4 +1,4 @@
-import { ARMAS, DISTANCIAS, TRACOS, nivelTraco } from '../ficha/campos.js?v=mesa-32';
+import { ARMAS, DISTANCIAS, TRACOS, nivelTraco } from '../ficha/campos.js?v=mesa-34';
 
 export const RETRATO_PADRAO = 'assets/imgs/imagemPersonagemPlaceholder.webp';
 

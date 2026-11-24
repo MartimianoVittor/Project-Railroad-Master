@@ -3,7 +3,7 @@
  * Não cria controles editáveis nem interpreta HTML recebido dos jogadores.
  * O quadro de ideias não faz parte dos dados solicitados pela RPC do Mestre.
  */
-import { ARMAS, CONDICOES, DISTANCIAS, TRACOS, nivelTraco } from './ficha/campos.js?v=mesa-32';
+import { ARMAS, CONDICOES, DISTANCIAS, TRACOS, nivelTraco } from './ficha/campos.js?v=mesa-34';
 
 export { nivelTraco };
 

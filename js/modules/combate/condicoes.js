@@ -1,4 +1,4 @@
-import { botao, elemento } from '../../core/dom.js?v=mesa-32';
+import { botao, elemento } from '../../core/dom.js?v=mesa-34';
 
 const CONDICOES = [
     ['Abalado', 'Sofre penalidade em ações sob pressão'],

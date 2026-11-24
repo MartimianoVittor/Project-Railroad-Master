@@ -7,5 +7,5 @@
     "test": "node --test",
     "preparar:publicacao": "node scripts/preparar-publicacao.mjs && node --test"
   },
-  "cacheVersion": "mesa-32"
+  "cacheVersion": "mesa-34"
 }

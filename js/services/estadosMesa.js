@@ -3,7 +3,7 @@
  * As migrações 007, 008 e 009 devem estar aplicadas no Supabase.
  * Não se escrevem fichas pertencentes aos jogadores.
  */
-import { obterCliente, exigir } from '../core/cliente.js?v=mesa-32';
+import { obterCliente, exigir } from '../core/cliente.js?v=mesa-34';
 
 const TIPOS = new Set(['combate', 'viagens']);
 function validar(tipo, campanhaId) {

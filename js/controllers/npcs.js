@@ -1,13 +1,13 @@
-import { listarNpcsRemotos, gravarNpcRemoto, apagarNpcRemoto } from '../services/conteudoCampanha.js?v=mesa-32';
-import { porId, elemento, mensagemLista } from '../core/dom.js?v=mesa-32';
-import { iniciarFormularioNpc, lerFormulario, nivelNoFormulario, preencherFormulario, mostrarRetrato } from '../modules/formularioNpc.js?v=mesa-32';
-import { ARQUETIPOS_NPC, sortearDadosNpc } from '../modules/npcs/gerador.js?v=mesa-32';
-import { rolarTraco } from '../modules/rolagem.js?v=mesa-32';
-import { mostrarAviso, executar } from '../core/feedback.js?v=mesa-32';
+import { listarNpcsRemotos, gravarNpcRemoto, apagarNpcRemoto } from '../services/conteudoCampanha.js?v=mesa-34';
+import { porId, elemento, mensagemLista } from '../core/dom.js?v=mesa-34';
+import { iniciarFormularioNpc, lerFormulario, nivelNoFormulario, preencherFormulario, mostrarRetrato } from '../modules/formularioNpc.js?v=mesa-34';
+import { ARQUETIPOS_NPC, sortearDadosNpc } from '../modules/npcs/gerador.js?v=mesa-34';
+import { rolarTraco } from '../modules/rolagem.js?v=mesa-34';
+import { mostrarAviso, executar } from '../core/feedback.js?v=mesa-34';
 import {
     LIMITE_NPCS,
     TRACOS_NPC, criarNpc, normalizarNpc, validarNpc,
-} from '../modules/npcs.js?v=mesa-32';
+} from '../modules/npcs.js?v=mesa-34';
 
 /** Criação, consulta, edição e exclusão de NPCs da campanha ativa. */
 export function criarControladorNpcs({ estado }, {

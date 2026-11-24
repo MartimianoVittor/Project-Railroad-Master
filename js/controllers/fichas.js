@@ -1,6 +1,6 @@
-import { criarParteFicha, PARTES_FICHA } from '../modules/visualizarFicha.js?v=mesa-32';
-import { mostrarAviso } from '../core/feedback.js?v=mesa-32';
-import { porId, elemento } from '../core/dom.js?v=mesa-32';
+import { criarParteFicha, PARTES_FICHA } from '../modules/visualizarFicha.js?v=mesa-34';
+import { mostrarAviso } from '../core/feedback.js?v=mesa-34';
+import { porId, elemento } from '../core/dom.js?v=mesa-34';
 
 /**
  * Seleção individual (três colunas) e comparação horizontal (uma parte de cada ficha).

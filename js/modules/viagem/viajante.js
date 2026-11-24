@@ -1,5 +1,5 @@
-import { porId, elemento } from '../../core/dom.js?v=mesa-32';
-import { inteiroNaoNegativo, formatarNumero } from './modelo.js?v=mesa-32';
+import { porId, elemento } from '../../core/dom.js?v=mesa-34';
+import { inteiroNaoNegativo, formatarNumero } from './modelo.js?v=mesa-34';
 
 function secao(titulo, classe) {
     const cartao = elemento('section', `vg-ficha-cartao ${classe}`);

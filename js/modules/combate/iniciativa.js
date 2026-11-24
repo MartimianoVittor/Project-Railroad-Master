@@ -1,5 +1,5 @@
-import { botao, elemento, porId } from '../../core/dom.js?v=mesa-32';
-import { inteiro, ordemDeIniciativa } from './combatentes.js?v=mesa-32';
+import { botao, elemento, porId } from '../../core/dom.js?v=mesa-34';
+import { inteiro, ordemDeIniciativa } from './combatentes.js?v=mesa-34';
 
 function estrela(combatente, alternar) {
     const controle = botao('', () => alternar(combatente), 'combate-estrela');

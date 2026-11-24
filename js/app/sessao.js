@@ -1,9 +1,9 @@
-import { comProcessamento } from '../core/processamento.js?v=mesa-32';
-import { entrarComGoogle, iniciarAutenticacao, obterCliente, sairDaConta } from '../core/cliente.js?v=mesa-32';
-import { porId } from '../core/dom.js?v=mesa-32';
-import { executar, mostrarAviso } from '../core/feedback.js?v=mesa-32';
-import { criarRepositorioCampanhas } from '../services/campanhas.js?v=mesa-32';
-import { criarRepositorioCampanhasLocal } from '../services/campanhasLocal.js?v=mesa-32';
+import { comProcessamento } from '../core/processamento.js?v=mesa-34';
+import { entrarComGoogle, iniciarAutenticacao, obterCliente, sairDaConta } from '../core/cliente.js?v=mesa-34';
+import { porId } from '../core/dom.js?v=mesa-34';
+import { executar, mostrarAviso } from '../core/feedback.js?v=mesa-34';
+import { criarRepositorioCampanhas } from '../services/campanhas.js?v=mesa-34';
+import { criarRepositorioCampanhasLocal } from '../services/campanhasLocal.js?v=mesa-34';
 
 export function iniciarSessao(contexto, conta, armazenamento, conectarCliente = obterCliente) {
     const { estado } = contexto;

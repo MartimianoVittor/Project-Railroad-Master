@@ -1,5 +1,103 @@
 <section id="pagina-combate" class="pagina-mestre combate-pagina" data-pagina-container="combate" aria-label="Combate" hidden>
- <header class="combate-barra cartao-campanha"><div class="combate-acao"><small>AÇÃO</small><div id="combate-atual">Aguardando combatentes</div></div><div id="combate-trilho" class="combate-trilho" aria-label="Ordem de iniciativa"></div><div class="combate-barra-botoes"><button id="combate-passar" class="botao" type="button">Passar</button><button id="combate-encerrar" class="botao botao-discreto" type="button">Encerrar combate</button></div></header>
- <div class="combate-grade"><aside class="cartao-campanha combate-lateral"><header class="combate-cabecalho"><h2>Combatentes</h2><button id="combate-adicionar" class="botao" type="button">+ Adicionar</button></header><div id="combate-lista" class="combate-lista"></div></aside><article id="combate-detalhe" class="cartao-campanha combate-detalhe" aria-live="polite"><p>Adicione um personagem ou NPC para começar.</p></article></div>
- <dialog id="combate-modal" class="combate-modal"><header class="combate-cabecalho"><h2>Adicionar combatentes</h2><button id="combate-fechar" class="botao" type="button">Fechar</button></header><label>Buscar por nome ou função<input id="combate-busca" type="search" placeholder="Nome, jogador ou função"></label><div id="combate-disponiveis" class="combate-disponiveis"></div></dialog>
+    <header class="combate-barra cartao-campanha">
+        <div class="combate-acao">
+            <small>AÇÃO</small>
+            <div id="combate-atual">Aguardando combatentes</div>
+        </div>
+        <div id="combate-trilho" class="combate-trilho" aria-label="Ordem de iniciativa"></div>
+        <div class="combate-barra-botoes">
+            <button id="combate-sincronizar" class="botao botao-discreto" type="button" hidden>Tentar sincronizar</button>
+            <button id="combate-passar" class="botao" type="button">Passar</button>
+            <button id="combate-encerrar" class="botao botao-discreto" type="button">Encerrar combate</button>
+        </div>
+    </header>
+    <div class="combate-grade">
+        <aside class="cartao-campanha combate-lateral">
+            <header class="combate-cabecalho">
+                <h2>Combatentes</h2>
+                <button id="combate-adicionar" class="botao" type="button">+ Adicionar</button>
+            </header>
+            <div id="combate-lista" class="combate-lista"></div>
+        </aside>
+        <article id="combate-detalhe" class="cartao-campanha combate-detalhe" aria-live="polite">
+            <p class="rr-estado-vazio">Adicione um personagem ou NPC para começar.</p>
+        </article>
+    </div>
+    <dialog id="combate-modal" class="combate-modal">
+        <header class="combate-cabecalho">
+            <h2>Adicionar combatentes</h2>
+            <button id="combate-fechar" class="botao" type="button">Fechar</button>
+        </header>
+        <label>Buscar por nome ou função<input id="combate-busca" type="search" placeholder="Nome, jogador ou função">
+        </label>
+        <div id="combate-disponiveis" class="combate-disponiveis"></div>
+    </dialog>
+    <template id="modelo-combate-rolagem">
+        <div class="cartao-rolagem">
+            <label for="combate-rolagem-traco">Traço</label>
+            <select class="campo-inventario" id="combate-rolagem-traco">
+                <option value="">Selecione um traço</option>
+            </select>
+            <label for="combate-rolagem-bonus">Bônus / penalidade</label>
+            <select class="campo-inventario" id="combate-rolagem-bonus">
+                <option value="-3">-3</option>
+                <option value="-2">-2</option>
+                <option value="-1">-1</option>
+                <option selected value="0">+0</option>
+                <option value="1">+1</option>
+                <option value="2">+2</option>
+                <option value="3">+3</option>
+            </select>
+            <button class="botao-rolar" data-rolagem="traco" type="button">🎲 Rolar traço</button>
+            <output aria-live="polite" class="resultado-rolagem" id="combate-resultado-traco">
+</output>
+        </div>
+    </template>
+    <template id="modelo-combate-ferimentos">
+        <div class="linha-check">
+            <label>Ferimentos:</label>
+            <div class="caveiras-box">
+                <input aria-label="Ferimentos 1" class="check-caveira" data-grupo="ferimentos" type="checkbox">
+                <input aria-label="Ferimentos 2" class="check-caveira" data-grupo="ferimentos" type="checkbox">
+                <input aria-label="Ferimentos 3" class="check-caveira" data-grupo="ferimentos" type="checkbox">
+            </div>
+        </div>
+    </template>
+    <template id="modelo-combate-arma">
+        <fieldset class="cartao-arma">
+            <h3 class="combate-arma-titulo"></h3>
+            <div class="arma-linha-nome">
+                <label class="arma-nome">
+                    <input aria-label="Nome" class="campo-inventario" placeholder="Nome da arma" type="text">
+                </label>
+                <div aria-label="Munição" class="arma-municao" role="group">
+                    <span class="arma-municao-titulo">Munição</span>
+                    <div class="arma-municao-controles">
+                        <button aria-label="Diminuir munição" class="municao-botao" data-direcao="-1" type="button">−</button>
+                        <input aria-label="Quantidade de munição" class="municao-valor" max="99" min="0" step="1" type="number" value="0">
+                        <button aria-label="Aumentar munição" class="municao-botao" data-direcao="1" type="button">+</button>
+                    </div>
+                </div>
+            </div>
+            <div class="bonus-distancias">
+                <label class="bonus-distancia">
+                    <span>Corpo a corpo</span>
+                    <input aria-label="Bônus de Corpo a corpo" class="campo-inventario" max="3" min="-3" step="1" type="number" value="0" data-distancia="corpo">
+                </label>
+                <label class="bonus-distancia">
+                    <span>Curta</span>
+                    <input aria-label="Bônus de Curta" class="campo-inventario" max="3" min="-3" step="1" type="number" value="0" data-distancia="curta">
+                </label>
+                <label class="bonus-distancia">
+                    <span>Média</span>
+                    <input aria-label="Bônus de Média" class="campo-inventario" max="3" min="-3" step="1" type="number" value="0" data-distancia="media">
+                </label>
+                <label class="bonus-distancia">
+                    <span>Longa</span>
+                    <input aria-label="Bônus de Longa" class="campo-inventario" max="3" min="-3" step="1" type="number" value="0" data-distancia="longa">
+                </label>
+            </div>
+        </fieldset>
+    </template>
 </section>
+

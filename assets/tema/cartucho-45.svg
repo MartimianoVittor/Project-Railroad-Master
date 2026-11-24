@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 64" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+  <defs>
+    <pattern id="hachura-mestre-campanhas" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)">
+      <path d="M0 0V7" stroke="#28170d" stroke-width="2" stroke-opacity=".32"/>
+    </pattern>
+    <pattern id="hachura-mestre-campanhas-ativa-jogador" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)">
+      <path d="M0 0V7" stroke="#f5d376" stroke-width="2" stroke-opacity=".23"/>
+    </pattern>
+    <clipPath id="recorte-mestre-campanhas">
+      <path d="M7 2 H129 C151 2 178 17 178 32 C178 47 151 62 129 62 H7 Q2 62 2 57 V7 Q2 2 7 2Z"/>
+    </clipPath>
+  </defs>
+  <g transform="translate(180 0) scale(-1 1)">
+    <path fill="#20120b" d="M7 2 H129 C151 2 178 17 178 32 C178 47 151 62 129 62 H7 Q2 62 2 57 V7 Q2 2 7 2Z" transform="translate(0 2)"/>
+    <g class="cartucho-corpo" clip-path="url(#recorte-mestre-campanhas)">
+      <path fill="#deb043" d="M0 0H129V64H0Z"/>
+      <path fill="#bd5a2b" d="M129 0H180V64H129Z"/>
+      <path fill="#edd074" d="M0 0H129V16H0Z"/>
+      <path fill="#d67849" d="M129 0H180V16H129Z"/>
+      <path fill="url(#hachura-mestre-campanhas)" d="M2 36 C8 43 15 43 22 43 H129 C153 43 175 36 178 34 V64 H2Z"/>
+      <path fill="none" stroke="#1f140c" stroke-width="3" d="M129 0V64"/>
+      <path fill="#1f140c" d="M12 0H18V64H12Z"/>
+    </g>
+    <path fill="none" stroke="#1f140c" stroke-width="3" stroke-linejoin="round" d="M7 2 H129 C151 2 178 17 178 32 C178 47 151 62 129 62 H7 Q2 62 2 57 V7 Q2 2 7 2Z"/>
+  </g>
+</svg>

@@ -1,25 +1,111 @@
 <section id="pagina-viagem" class="pagina-mestre" data-pagina-container="viagem" hidden>
- <div class="vg-app">
-  <header class="cartao-campanha vg-top"><div class="vg-top-contexto"><h2>Viagens</h2><div class="vg-seletores" role="group" aria-label="Selecionar viagem e grupo"><label for="vg-viagem">Viagem<select id="vg-viagem" aria-label="Viagem atual"></select></label><label for="vg-grupo">Grupo<select id="vg-grupo" aria-label="Grupo atual"></select></label></div></div><div class="vg-progresso" aria-label="Progresso da viagem"><div id="vg-resumo" aria-live="polite">0 km percorridos · 0 km restantes · 0 km totais</div><progress id="vg-barra" value="0" max="1" aria-label="Quilômetros percorridos na viagem"></progress></div><div class="vg-top-acoes" role="group" aria-label="Ações da viagem e dos grupos"><button id="vg-criar" class="botao">+ Criar viagem</button><button id="vg-adicionar-grupo" class="botao">+ Adicionar grupo</button><button id="vg-editar" class="botao">Modificar viagem</button><button id="vg-excluir-grupo" class="botao">Excluir grupo</button></div></header>
-  <div class="vg-grade"><section class="cartao-campanha vg-viajantes"><header><h3>Viajantes</h3><button id="vg-adicionar" class="botao">+ Adicionar viajante</button></header><div id="vg-lista"></div></section>
-  <div class="cartao-campanha vg-painel"><section class="vg-geral"><h3>Dados gerais</h3><div class="vg-estatisticas"><div>Integrantes<strong id="vg-qtd">0</strong></div><div>Velocidade do grupo<strong id="vg-vel">0 km/dia</strong></div><div>Distância máxima até descanso<strong id="vg-max">Não informada</strong></div><div>Desde o descanso<strong id="vg-descanso">0 km</strong></div></div><div class="vg-geral-seletores"><label>Ritmo<select id="vg-ritmo"><option value="cauteloso">Cauteloso</option><option value="normal">Normal</option><option value="acelerado">Acelerado</option></select></label><label>Busca<select id="vg-busca"><option value="nenhuma">Nenhuma</option><option value="rapida">Rápida (−25%)</option><option value="dedicada">Dedicada (−50%)</option></select></label></div><div class="vg-botoes"><button id="vg-descansar" class="botao">Descansar</button><button id="vg-viajar" class="botao">Viajar um dia</button></div></section>
-  <section class="vg-consulta"><h3>Consulta individual</h3><div id="vg-detalhe">Selecione um viajante.</div></section></div></div>
- </div>
- <dialog id="vg-dialog" class="vg-dialog"><form id="vg-form"><h3 id="vg-dialog-titulo"></h3><label id="vg-nome-linha" for="vg-nome" hidden>Nome da viagem<input id="vg-nome" type="text" maxlength="80" autocomplete="off"></label><label id="vg-dialog-label" for="vg-campo"></label><input id="vg-campo" required><footer><button id="vg-excluir-viagem" type="button" class="botao vg-perigo" hidden>Excluir viagem</button><button id="vg-cancelar" type="button" class="botao">Cancelar</button><button type="submit" class="botao">Confirmar</button></footer></form></dialog>
- <dialog id="vg-dialog-viajante" class="combate-modal vg-dialog-viajante" aria-labelledby="vg-viajante-titulo">
-  <form id="vg-form-viajante">
-   <header class="combate-cabecalho vg-viajante-cabecalho"><h2 id="vg-viajante-titulo">Adicionar viajante</h2><button id="vg-cancelar-viajante" type="button" class="botao">Fechar</button></header>
-   <label class="vg-viajante-busca-label" for="vg-busca-viajante">Buscar por nome, jogador ou função
+    <div class="vg-app">
+        <header class="cartao-campanha vg-top">
+            <div class="vg-top-contexto">
+                <h2>Viagens</h2>
+                <div class="vg-seletores" role="group" aria-label="Selecionar viagem e grupo">
+                    <label for="vg-viagem">Viagem<select id="vg-viagem" aria-label="Viagem atual"></select>
+                    </label>
+                    <label for="vg-grupo">Grupo<select id="vg-grupo" aria-label="Grupo atual"></select>
+                    </label>
+                </div>
+            </div>
+            <div class="vg-progresso" aria-label="Progresso da viagem">
+                <div id="vg-resumo" aria-live="polite">0 km percorridos · 0 km restantes · 0 km totais</div>
+                <progress id="vg-barra" value="0" max="1" aria-label="Quilômetros percorridos na viagem"></progress>
+            </div>
+            <div class="vg-top-acoes" role="group" aria-label="Ações da viagem e dos grupos">
+                <button id="vg-sincronizar" class="botao botao-discreto" type="button" hidden>Tentar sincronizar</button>
+                <button id="vg-criar" class="botao">+ Criar viagem</button>
+                <button id="vg-adicionar-grupo" class="botao">+ Adicionar grupo</button>
+                <button id="vg-editar" class="botao">Modificar viagem</button>
+                <button id="vg-excluir-grupo" class="botao">Excluir grupo</button>
+            </div>
+        </header>
+        <div class="vg-grade">
+            <section class="cartao-campanha vg-viajantes">
+                <header>
+                    <h3>Viajantes</h3>
+                    <button id="vg-adicionar" class="botao">+ Adicionar viajante</button>
+                </header>
+                <div id="vg-lista"></div>
+            </section>
+            <div class="cartao-campanha vg-painel">
+                <section class="vg-geral">
+                    <h3>Dados gerais</h3>
+                    <div class="vg-estatisticas">
+                        <div>Integrantes<strong id="vg-qtd">0</strong>
+                        </div>
+                        <div>Velocidade do grupo<strong id="vg-vel">0 km/dia</strong>
+                        </div>
+                        <div>Distância máxima até descanso<strong id="vg-max">Não informada</strong>
+                        </div>
+                        <div>Desde o descanso<strong id="vg-descanso">0 km</strong>
+                        </div>
+                    </div>
+                    <div class="vg-geral-seletores">
+                        <label>Ritmo<select id="vg-ritmo">
+                                <option value="cauteloso">Cauteloso</option>
+                                <option value="normal">Normal</option>
+                                <option value="acelerado">Acelerado</option>
+                            </select>
+                        </label>
+                        <label>Busca<select id="vg-busca">
+                                <option value="nenhuma">Nenhuma</option>
+                                <option value="rapida">Rápida (−25%)</option>
+                                <option value="dedicada">Dedicada (−50%)</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="vg-botoes">
+                        <button id="vg-descansar" class="botao">Descansar</button>
+                        <button id="vg-viajar" class="botao">Viajar um dia</button>
+                    </div>
+                </section>
+                <section class="vg-consulta">
+                    
+                    <div id="vg-detalhe"><p class="rr-estado-vazio">Selecione um viajante.</p></div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <dialog id="vg-dialog" class="vg-dialog">
+        <form id="vg-form">
+            <h3 id="vg-dialog-titulo"></h3>
+            <label id="vg-nome-linha" for="vg-nome" hidden>Nome da viagem<input id="vg-nome" type="text" maxlength="80" autocomplete="off">
+            </label>
+            <label id="vg-dialog-label" for="vg-campo"></label>
+            <input id="vg-campo" required>
+            <footer>
+                <button id="vg-excluir-viagem" type="button" class="botao vg-perigo" hidden>Excluir viagem</button>
+                <button id="vg-cancelar" type="button" class="botao">Cancelar</button>
+                <button type="submit" class="botao">Confirmar</button>
+            </footer>
+        </form>
+    </dialog>
+    <dialog id="vg-dialog-viajante" class="combate-modal vg-dialog-viajante" aria-labelledby="vg-viajante-titulo">
+        <form id="vg-form-viajante">
+            <header class="combate-cabecalho vg-viajante-cabecalho">
+                <h2 id="vg-viajante-titulo">Adicionar viajante</h2>
+                <button id="vg-cancelar-viajante" type="button" class="botao">Fechar</button>
+            </header>
+            <label class="vg-viajante-busca-label" for="vg-busca-viajante">Buscar por nome, jogador ou função
     <input id="vg-busca-viajante" type="search" placeholder="Nome, jogador ou função" autocomplete="off">
-   </label>
-   <div id="vg-disponiveis" class="combate-disponiveis vg-disponiveis" role="group" aria-label="Personagens disponíveis"></div>
-   <div class="vg-viajante-campos">
-    <div id="vg-escolhido" class="vg-viajante-escolhido" aria-live="polite">Selecione um personagem na lista.</div>
-    <label for="vg-montaria">Montaria<input id="vg-montaria" maxlength="100" placeholder="Ex.: Cavalo"></label>
-    <label for="vg-km">Velocidade (km/dia)<input id="vg-km" type="number" min="1" step="any" value="30" required></label>
-    <label for="vg-km-descanso">Distância máxima até descanso (km)<input id="vg-km-descanso" type="number" min="1" step="any" placeholder="Ex.: 60" required></label>
-   </div>
-   <footer><button type="submit" class="botao" id="vg-confirmar-viajante" disabled>Adicionar viajante</button></footer>
-  </form>
- </dialog>
+            </label>
+            <div id="vg-disponiveis" class="combate-disponiveis vg-disponiveis" role="group" aria-label="Personagens disponíveis"></div>
+            <div class="vg-viajante-campos">
+                <div id="vg-escolhido" class="vg-viajante-escolhido" aria-live="polite">Selecione um personagem na lista.</div>
+                <label for="vg-montaria">Montaria<input id="vg-montaria" maxlength="100" placeholder="Ex.: Cavalo">
+                </label>
+                <label for="vg-km">Velocidade (km/dia)<input id="vg-km" type="number" min="1" step="any" value="30" required>
+                </label>
+                <label for="vg-km-descanso">Distância máxima até descanso (km)<input id="vg-km-descanso" type="number" min="1" step="any" placeholder="Ex.: 60" required>
+                </label>
+            </div>
+            <footer>
+                <button type="submit" class="botao" id="vg-confirmar-viajante" disabled>Adicionar viajante</button>
+            </footer>
+        </form>
+    </dialog>
 </section>
+

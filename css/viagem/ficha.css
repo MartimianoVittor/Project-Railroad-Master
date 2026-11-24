@@ -1,0 +1,563 @@
+/* Consulta individual como cartões da ficha, com rolagem interna. */
+#pagina-viagem .vg-geral .vg-botoes {
+    align-self: stretch;
+}
+
+#pagina-viagem #vg-detalhe {
+    flex-direction: column;
+}
+
+#pagina-viagem .vg-ficha-cartao {
+    border: 1px solid #b99a70;
+    border-radius: 5px;
+    padding: 10px;
+    min-width: 0;
+    box-shadow: inset 0 1px #fff5df;
+}
+
+#pagina-viagem .vg-ficha-cartao h4 {
+    margin: 0 0 9px;
+    font-size: .95rem;
+    border-bottom: 1px solid #b99a70;
+    padding-bottom: 5px;
+}
+
+#pagina-viagem .vg-ficha-identificacao {
+    display: flex;
+}
+
+#pagina-viagem .vg-ficha-identificacao img {
+    width: 90px;
+    height: 112px;
+    flex: 0 0 90px;
+    object-fit: cover;
+    border: 2px solid #86613c;
+    background: #e4cda6;
+}
+
+#pagina-viagem .vg-ficha-identidade {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+#pagina-viagem .vg-ficha-identidade strong {
+    display: block;
+    font-size: 1.12rem;
+}
+
+#pagina-viagem .vg-ficha-identidade small {
+    display: block;
+    margin-top: 4px;
+}
+
+#pagina-viagem .vg-ficha-grade {
+    display: grid;
+    grid-template-columns: minmax(0,1.25fr) minmax(0,1fr);
+    gap: 9px;
+}
+
+#pagina-viagem .vg-ficha-marca {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 0;
+    border-bottom: 1px solid #d1b891;
+}
+
+#pagina-viagem .vg-ficha-marca:last-child {
+    border: 0;
+}
+
+#pagina-viagem .vg-ficha-marcadores {
+    display: flex;
+    gap: 5px;
+}
+
+#pagina-viagem .vg-ficha-marcador {
+    position: relative;
+    display: block;
+    cursor: pointer;
+}
+
+#pagina-viagem .vg-ficha-marcador input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+}
+
+#pagina-viagem .vg-ficha-marcador span {
+    display: grid;
+    place-items: center;
+    width: 23px;
+    height: 24px;
+    border: 1px solid #95764f;
+    border-radius: 3px;
+    color: #ad9474;
+    font-size: 16px;
+}
+
+#pagina-viagem .vg-ficha-marcador input:checked+span {
+    background: #79372d;
+    color: #fff0d3;
+    border-color: #5b271e;
+}
+
+#pagina-viagem .vg-ficha-marcador input:focus-visible+span {
+    outline: 2px solid #315e8c;
+    outline-offset: 2px;
+}
+
+#pagina-viagem .vg-ficha-recurso {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    padding: 6px 0;
+    border-bottom: 1px solid #d1b891;
+}
+
+#pagina-viagem .vg-ficha-recurso:last-child {
+    border: 0;
+}
+
+#pagina-viagem .vg-ficha-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 8px 3px;
+    border-bottom: 1px solid #d1b891;
+}
+
+#pagina-viagem .vg-ficha-item:last-child {
+    border: 0;
+}
+
+#pagina-viagem .vg-ficha-item small {
+    display: block;
+    margin-top: 3px;
+    overflow-wrap: anywhere;
+}
+
+#pagina-viagem .vg-ficha-item>span {
+    white-space: nowrap;
+}
+
+@media(max-width:1350px) {
+    #pagina-viagem .vg-ficha-grade {
+        grid-template-columns: minmax(0,1fr);
+    }
+}
+
+/* Fotografia na moldura original da ficha de personagem (Jogador). */
+#pagina-viagem .vg-ficha-identificacao {
+    align-items: flex-start;
+    gap: 12px;
+}
+
+#pagina-viagem .vg-ficha-poster {
+    position: relative;
+    flex: 0 0 clamp(100px,38%,190px);
+    width: clamp(100px,38%,190px);
+    aspect-ratio: 1/1;
+    background: url('../../assets/imgs/imagemPersonagemPlaceholder.webp') center / 100% 100% no-repeat;
+    overflow: hidden;
+}
+
+#pagina-viagem .vg-ficha-poster-foto {
+    position: absolute;
+    top: 28%;
+    left: 11%;
+    width: 78%;
+    height: 65%;
+    overflow: hidden;
+}
+
+#pagina-viagem .vg-ficha-poster-foto img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border: 0;
+    background: transparent;
+    border-radius: 0;
+}
+
+#pagina-viagem .vg-ficha-poster-foto img[src="assets/imgs/imagemPersonagemPlaceholder.webp"] {
+    opacity: 0;
+}
+
+#pagina-viagem .vg-ficha-cartao {
+    border-color: #a88a63;
+    background: #f2e2c2;
+    color: #2b180d;
+}
+
+#pagina-viagem .vg-ficha-cartao h4 {
+    font-family: 'Rye',Georgia,serif;
+    color: #2b180d;
+    letter-spacing: .3px;
+}
+
+#pagina-viagem .vg-ficha-identidade strong {
+    font-family: 'Rye',Georgia,serif;
+}
+
+#pagina-viagem .vg-ficha-marcador span {
+    background: #f4eccf;
+    border-color: #876b48;
+}
+
+@media(max-width:500px) {
+    #pagina-viagem .vg-ficha-identificacao {
+        flex-wrap: wrap;
+    }
+
+    #pagina-viagem .vg-ficha-poster {
+        flex-basis: 150px;
+        width: 150px;
+    }
+}
+
+/* Marcações e tabela da ficha original do Jogador. */
+#pagina-viagem .vg-ficha-marcas .linha-check {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+    min-width: 0;
+}
+
+#pagina-viagem .vg-ficha-marcas .linha-check>label {
+    font-family: 'Rye',serif;
+    font-size: clamp(14px,1.25vw,20px);
+    font-weight: bold;
+    letter-spacing: .4px;
+}
+
+#pagina-viagem .vg-ficha-marcas .caveiras-box {
+    display: flex;
+    align-items: center;
+    gap: clamp(3px,.55vw,10px);
+    flex: 0 0 auto;
+}
+
+#pagina-viagem .vg-ficha-marcas .check-caveira {
+    appearance: none;
+    -webkit-appearance: none;
+    display: block;
+    flex: 0 0 auto;
+    width: clamp(22px,2.05vw,34px);
+    height: clamp(22px,2.05vw,34px);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background-color: #3d2314;
+    -webkit-mask: var(--icone-vazio) center/contain no-repeat;
+    mask: var(--icone-vazio) center/contain no-repeat;
+    cursor: pointer;
+    transition: background-color .15s ease,transform .15s ease;
+}
+
+#pagina-viagem .vg-ficha-marcas .check-caveira[data-grupo="ferimentos"] {
+    --icone-vazio: url('../../assets/icons/caveira-contorno.svg');
+    --icone-cheio: url('../../assets/icons/caveira-preenchida.svg');
+}
+
+#pagina-viagem .vg-ficha-marcas .check-caveira:not([data-grupo="ferimentos"]) {
+    --icone-vazio: url('../../assets/icons/gota-contorno.svg');
+    --icone-cheio: url('../../assets/icons/gota-preenchida.svg');
+}
+
+#pagina-viagem .vg-ficha-marcas .check-caveira:checked {
+    -webkit-mask-image: var(--icone-cheio);
+    mask-image: var(--icone-cheio);
+}
+
+#pagina-viagem .vg-ficha-marcas .check-caveira:hover {
+    transform: scale(1.09);
+}
+
+#pagina-viagem .vg-ficha-marcas .check-caveira:focus-visible {
+    outline: 3px solid #a56a42;
+    outline-offset: 3px;
+}
+
+#pagina-viagem .vg-ficha-inventario .tabela-itens-rolagem {
+    width: 100%;
+    overflow: auto;
+}
+
+#pagina-viagem .vg-ficha-inventario .tabela-itens {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font: 13px Georgia,serif;
+}
+
+#pagina-viagem .vg-ficha-inventario .tabela-itens th {
+    text-align: left;
+    background: #6b4630;
+    color: #fff2d9;
+    padding: 9px 6px;
+}
+
+#pagina-viagem .vg-ficha-inventario .tabela-itens td {
+    padding: 6px 4px;
+    border-bottom: 1px solid #a98763;
+    vertical-align: top;
+    overflow-wrap: anywhere;
+}
+
+#pagina-viagem .vg-ficha-inventario .tabela-itens th:nth-child(3),#pagina-viagem .vg-ficha-inventario .tabela-itens th:nth-child(4) {
+    width: 12%;
+}
+
+/* Mais largura à consulta, preservando os mínimos dos painéis. */
+@media(min-width:1100px) {
+    #pagina-viagem .vg-grade {
+        grid-template-columns: minmax(175px,21%) minmax(0,1fr);
+    }
+
+    #pagina-viagem .vg-painel {
+        grid-template-columns: minmax(185px,33%) minmax(0,1fr);
+    }
+}
+
+@media(min-width:651px) and (max-width:1099px) {
+    #pagina-viagem .vg-grade {
+        grid-template-columns: minmax(170px,24%) minmax(0,1fr);
+    }
+
+    #pagina-viagem .vg-painel {
+        grid-template-columns: minmax(0,1fr);
+    }
+}
+
+/* Todos os indicadores de sobrevivência utilizam caveiras, como ferimentos. */
+#pagina-viagem .vg-ficha-marcas .check-caveira,
+#pagina-viagem .vg-ficha-marcas .check-caveira:not([data-grupo="ferimentos"]) {
+    --icone-vazio: url('../../assets/icons/caveira-contorno.svg');
+    --icone-cheio: url('../../assets/icons/caveira-preenchida.svg');
+}
+
+/* As quatro ações ficam juntas no canto superior direito. */
+#pagina-viagem .vg-top {
+    grid-template-columns: max-content minmax(0,1fr) minmax(265px,310px);
+}
+
+#pagina-viagem .vg-top-acoes {
+    display: grid;
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    gap: 5px 7px;
+    align-content: center;
+    justify-content: end;
+    justify-self: end;
+    width: 100%;
+}
+
+#pagina-viagem .vg-top-acoes .botao {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    padding: 7px 6px;
+    font-size: clamp(10px,.8vw,12px);
+    line-height: 1.2;
+    text-align: center;
+    white-space: normal;
+}
+
+#pagina-viagem .vg-selecao {
+    padding: 7px 12px;
+    gap: 6px;
+}
+
+#pagina-viagem .vg-selecao label {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+#pagina-viagem .vg-selecao select {
+    max-width: 560px;
+}
+
+/* Consulta: identificação ampla, estados e suprimentos lado a lado, inventário em linha integral. Reage à largura da própria consulta. */
+#pagina-viagem .vg-consulta {
+    container-type: inline-size;
+}
+
+#pagina-viagem #vg-detalhe {
+    grid-template-columns: minmax(0,1.25fr) minmax(0,.85fr);
+}
+
+#pagina-viagem #vg-detalhe > .vg-ficha-grade {
+    display: contents;
+}
+
+#pagina-viagem #vg-detalhe .vg-ficha-suprimentos {
+    min-width: 0;
+}
+
+#pagina-viagem #vg-detalhe > .vg-ficha-inventario {
+    min-width: 0;
+}
+
+#pagina-viagem #vg-detalhe .vg-ficha-cartao {
+    box-sizing: border-box;
+    padding: 9px;
+}
+
+#pagina-viagem #vg-detalhe .vg-ficha-cartao h4 {
+    margin-bottom: 7px;
+    padding-bottom: 4px;
+}
+
+#pagina-viagem #vg-detalhe .vg-ficha-marcas .linha-check {
+    margin-bottom: 8px;
+}
+
+#pagina-viagem #vg-detalhe .vg-ficha-inventario .tabela-itens-rolagem {
+    max-width: 100%;
+}
+
+@container (max-width:380px) {
+    #pagina-viagem #vg-detalhe .vg-ficha-poster {
+        flex-basis: 100px;
+        width: 100px;
+    }
+}
+
+@media(max-width:1080px) {
+    #pagina-viagem .vg-top {
+        grid-template-columns: max-content minmax(0,1fr);
+    }
+
+    #pagina-viagem .vg-top-acoes {
+        grid-column: 1/-1;
+        width: min(100%,350px);
+        justify-self: end;
+    }
+}
+
+@media(max-width:480px) {
+    #pagina-viagem .vg-top {
+        grid-template-columns: minmax(0,1fr);
+    }
+
+    #pagina-viagem .vg-top-acoes {
+        grid-column: 1;
+        justify-self: stretch;
+        width: 100%;
+    }
+
+    #pagina-viagem .vg-top-acoes .botao {
+        font-size: 12px;
+    }
+}
+
+/* Corrige a sobreposição comprovada na consulta individual. Alturas intrínsecas impedem que o retrato invada o cartão de ferimentos. */
+#pagina-viagem #vg-detalhe {
+    align-content: start;
+    padding: 0 5px 14px 0;
+}
+
+#pagina-viagem #vg-detalhe > .vg-ficha-identificacao {
+    min-height: max-content;
+    height: auto;
+    align-self: start;
+    box-sizing: border-box;
+}
+
+#pagina-viagem #vg-detalhe .vg-ficha-poster {
+    width: clamp(122px,25%,158px);
+    max-width: 100%;
+}
+
+#pagina-viagem #vg-detalhe .vg-ficha-marcas, #pagina-viagem #vg-detalhe .vg-ficha-suprimentos {
+    align-self: stretch;
+    min-width: 0;
+}
+
+#pagina-viagem #vg-detalhe .vg-ficha-inventario {
+    align-self: start;
+    min-width: 0;
+}
+
+#pagina-viagem #vg-detalhe .vg-ficha-marcas .linha-check {
+    flex-wrap: nowrap;
+}
+
+#pagina-viagem #vg-detalhe .vg-ficha-cartao h4 {
+    overflow-wrap: anywhere;
+}
+
+@container (max-width:610px) {
+    #pagina-viagem #vg-detalhe {
+        grid-template-columns: minmax(0,1fr);
+    }
+
+    #pagina-viagem #vg-detalhe .vg-ficha-marcas,
+    #pagina-viagem #vg-detalhe .vg-ficha-suprimentos,
+    #pagina-viagem #vg-detalhe > .vg-ficha-inventario {
+        grid-column: 1;
+    }
+}
+
+/* Em telas intermediárias/mobile, não comprimir a seção Dados gerais. A altura acompanha o conteúdo e a página recebe a rolagem, evitando cortes. */
+@media(max-width:1099px) {
+    #pagina-viagem:not([hidden]) {
+        height: auto;
+        max-height: none;
+        overflow: visible;
+    }
+
+    #pagina-viagem .vg-app {
+        height: auto;
+        min-height: 0;
+        overflow: visible;
+    }
+
+    #pagina-viagem .vg-grade {
+        flex: 0 0 auto;
+        height: auto;
+        min-height: 0;
+        align-items: start;
+    }
+
+    #pagina-viagem .vg-painel {
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        min-height: 0;
+        overflow: visible;
+    }
+
+    #pagina-viagem .vg-geral {
+        flex: 0 0 auto;
+        min-height: max-content;
+        height: auto;
+        overflow: visible;
+    }
+
+    #pagina-viagem .vg-consulta {
+        flex: 0 0 auto;
+        min-height: 0;
+        height: auto;
+        overflow: visible;
+    }
+
+    #pagina-viagem #vg-detalhe {
+        flex: 0 0 auto;
+        max-height: none;
+        height: auto;
+        overflow-y: visible;
+    }
+
+    #pagina-viagem #vg-lista {
+        max-height: 480px;
+        overflow-y: auto;
+    }
+}

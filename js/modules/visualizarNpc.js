@@ -1,5 +1,5 @@
-import { elemento } from '../core/dom.js';
-import { ARMAS_NPC, CONDICOES_NPC, DISTANCIAS_NPC, TRACOS_NPC, rotuloNivelNpc } from './npcs.js';
+import { elemento } from '../core/dom.js?v=mesa-31';
+import { ARMAS_NPC, CONDICOES_NPC, DISTANCIAS_NPC, TRACOS_NPC, rotuloNivelNpc } from './npcs.js?v=mesa-31';
 
 /** Consulta somente leitura: usa textContent para todos os dados de NPCs. */
 const texto = (valorCampo, padrao = '—') => String(valorCampo ?? '').trim() || padrao;
@@ -62,7 +62,7 @@ export function renderizarFichaNpc(npc, conteudo) {
     conteudo.replaceChildren();
     const retrato = elemento('div', 'npc-retrato-consulta');
     const foto = elemento('img');
-    foto.src = npc.imagem || 'assets/imgs/imagemPersonagemPlaceholder.png';
+    foto.src = npc.imagem || 'assets/imgs/imagemPersonagemPlaceholder.webp';
     foto.alt = `Retrato de ${npc.nome}`;
     retrato.append(foto);
     conteudo.append(retrato);

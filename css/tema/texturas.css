@@ -1,0 +1,287 @@
+.rr-fundo--pergaminho {
+  background-color: #dfd0b4;
+  background-image:
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 7px,
+      rgba(31, 20, 12, 0.06) 7px,
+      rgba(31, 20, 12, 0.06) 8.5px
+    ),
+    radial-gradient(circle at 50% 50%, transparent 55%, rgba(122, 92, 54, 0.28) 100%);
+}
+
+#painel [data-rr-papel].rr-fundo--pergaminho, dialog[data-rr-papel].rr-fundo--pergaminho, dialog [data-rr-papel].rr-fundo--pergaminho, body.rr-tema-pagina:not(.modo-entrada).rr-fundo--pergaminho, .personalizacao-amostra.rr-fundo--pergaminho, .rr-previa-cartao.rr-fundo--pergaminho {
+  background-color: #dfd0b4 !important;
+  background-image:
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 7px,
+      rgba(31, 20, 12, 0.06) 7px,
+      rgba(31, 20, 12, 0.06) 8.5px
+    ),
+    radial-gradient(circle at 50% 50%, transparent 55%, rgba(122, 92, 54, 0.28) 100%) !important;
+}
+
+.rr-fundo--tabua {
+  background-color: #6b472b;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      #1f140c 0px,
+      #1f140c 3px,
+      #7d5434 3px,
+      #7d5434 7px,
+      #6b472b 7px,
+      #6b472b 44px,
+      #593a22 44px,
+      #593a22 48px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 6px,
+      rgba(31, 20, 12, 0.14) 6px,
+      rgba(31, 20, 12, 0.14) 7.5px
+    );
+}
+
+#painel [data-rr-papel].rr-fundo--tabua, dialog[data-rr-papel].rr-fundo--tabua, dialog [data-rr-papel].rr-fundo--tabua, body.rr-tema-pagina:not(.modo-entrada).rr-fundo--tabua, .personalizacao-amostra.rr-fundo--tabua, .rr-previa-cartao.rr-fundo--tabua {
+  background-color: #6b472b !important;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      #1f140c 0px,
+      #1f140c 3px,
+      #7d5434 3px,
+      #7d5434 7px,
+      #6b472b 7px,
+      #6b472b 44px,
+      #593a22 44px,
+      #593a22 48px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 6px,
+      rgba(31, 20, 12, 0.14) 6px,
+      rgba(31, 20, 12, 0.14) 7.5px
+    ) !important;
+}
+
+.rr-fundo--couro {
+  background-color: #382518;
+  background-image:
+    radial-gradient(rgba(217, 167, 56, 0.14) 1.5px, transparent 1.5px),
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 8px,
+      rgba(20, 12, 7, 0.35) 8px,
+      rgba(20, 12, 7, 0.35) 10px
+    );
+  background-size: 16px 16px, 100% 100%;
+}
+
+#painel [data-rr-papel].rr-fundo--couro, dialog[data-rr-papel].rr-fundo--couro, dialog [data-rr-papel].rr-fundo--couro, body.rr-tema-pagina:not(.modo-entrada).rr-fundo--couro, .personalizacao-amostra.rr-fundo--couro, .rr-previa-cartao.rr-fundo--couro {
+  background-color: #382518 !important;
+  background-image:
+    radial-gradient(rgba(217, 167, 56, 0.14) 1.5px, transparent 1.5px),
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 8px,
+      rgba(20, 12, 7, 0.35) 8px,
+      rgba(20, 12, 7, 0.35) 10px
+    ) !important;
+  background-size: 16px 16px, 100% 100% !important;
+}
+
+.rr-fundo--mapa-topografico {
+  background-color: #d6c39c;
+  background-image:
+    repeating-radial-gradient(
+      circle at 20% 30%,
+      transparent 0,
+      transparent 18px,
+      rgba(74, 52, 31, 0.16) 18px,
+      rgba(74, 52, 31, 0.16) 19.5px
+    ),
+    repeating-radial-gradient(
+      circle at 80% 75%,
+      transparent 0,
+      transparent 22px,
+      rgba(74, 52, 31, 0.14) 22px,
+      rgba(74, 52, 31, 0.14) 23.5px
+    );
+}
+
+#painel [data-rr-papel].rr-fundo--mapa-topografico, dialog[data-rr-papel].rr-fundo--mapa-topografico, dialog [data-rr-papel].rr-fundo--mapa-topografico, body.rr-tema-pagina:not(.modo-entrada).rr-fundo--mapa-topografico, .personalizacao-amostra.rr-fundo--mapa-topografico, .rr-previa-cartao.rr-fundo--mapa-topografico {
+  background-color: #d6c39c !important;
+  background-image:
+    repeating-radial-gradient(
+      circle at 20% 30%,
+      transparent 0,
+      transparent 18px,
+      rgba(74, 52, 31, 0.16) 18px,
+      rgba(74, 52, 31, 0.16) 19.5px
+    ),
+    repeating-radial-gradient(
+      circle at 80% 75%,
+      transparent 0,
+      transparent 22px,
+      rgba(74, 52, 31, 0.14) 22px,
+      rgba(74, 52, 31, 0.14) 23.5px
+    ) !important;
+}
+
+.rr-fundo--latao {
+  background-color: #d9a738;
+  background-image:
+    linear-gradient(180deg, rgba(242, 212, 121, 0.45) 0%, transparent 30%, rgba(166, 118, 24, 0.4) 100%),
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 6px,
+      rgba(31, 20, 12, 0.14) 6px,
+      rgba(31, 20, 12, 0.14) 7.5px
+    );
+}
+
+#painel [data-rr-papel].rr-fundo--latao, dialog[data-rr-papel].rr-fundo--latao, dialog [data-rr-papel].rr-fundo--latao, body.rr-tema-pagina:not(.modo-entrada).rr-fundo--latao, .personalizacao-amostra.rr-fundo--latao, .rr-previa-cartao.rr-fundo--latao {
+  background-color: #d9a738 !important;
+  background-image:
+    linear-gradient(180deg, rgba(242, 212, 121, 0.45) 0%, transparent 30%, rgba(166, 118, 24, 0.4) 100%),
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 6px,
+      rgba(31, 20, 12, 0.14) 6px,
+      rgba(31, 20, 12, 0.14) 7.5px
+    ) !important;
+}
+
+.rr-fundo--terracota {
+  background-color: #9e4823;
+  background-image:
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 6px,
+      rgba(31, 20, 12, 0.2) 6px,
+      rgba(31, 20, 12, 0.2) 7.5px
+    ),
+    radial-gradient(circle at 50% 50%, rgba(217, 115, 67, 0.25) 0%, rgba(54, 21, 8, 0.35) 100%);
+}
+
+#painel [data-rr-papel].rr-fundo--terracota, dialog[data-rr-papel].rr-fundo--terracota, dialog [data-rr-papel].rr-fundo--terracota, body.rr-tema-pagina:not(.modo-entrada).rr-fundo--terracota, .personalizacao-amostra.rr-fundo--terracota, .rr-previa-cartao.rr-fundo--terracota {
+  background-color: #9e4823 !important;
+  background-image:
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 6px,
+      rgba(31, 20, 12, 0.2) 6px,
+      rgba(31, 20, 12, 0.2) 7.5px
+    ),
+    radial-gradient(circle at 50% 50%, rgba(217, 115, 67, 0.25) 0%, rgba(54, 21, 8, 0.35) 100%) !important;
+}
+
+.rr-fundo--ferrovia {
+  background-color: #453529;
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0px,
+      transparent 16px,
+      #261c14 16px,
+      #261c14 24px
+    ),
+    linear-gradient(
+      180deg,
+      transparent 22%,
+      #1f140c 22%,
+      #1f140c 25%,
+      #9c8d7d 25%,
+      #9c8d7d 29%,
+      #1f140c 29%,
+      #1f140c 32%,
+      transparent 32%,
+      transparent 68%,
+      #1f140c 68%,
+      #1f140c 71%,
+      #9c8d7d 71%,
+      #9c8d7d 75%,
+      #1f140c 75%,
+      #1f140c 78%,
+      transparent 78%
+    );
+}
+
+#painel [data-rr-papel].rr-fundo--ferrovia, dialog[data-rr-papel].rr-fundo--ferrovia, dialog [data-rr-papel].rr-fundo--ferrovia, body.rr-tema-pagina:not(.modo-entrada).rr-fundo--ferrovia, .personalizacao-amostra.rr-fundo--ferrovia, .rr-previa-cartao.rr-fundo--ferrovia {
+  background-color: #453529 !important;
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0px,
+      transparent 16px,
+      #261c14 16px,
+      #261c14 24px
+    ),
+    linear-gradient(
+      180deg,
+      transparent 22%,
+      #1f140c 22%,
+      #1f140c 25%,
+      #9c8d7d 25%,
+      #9c8d7d 29%,
+      #1f140c 29%,
+      #1f140c 32%,
+      transparent 32%,
+      transparent 68%,
+      #1f140c 68%,
+      #1f140c 71%,
+      #9c8d7d 71%,
+      #9c8d7d 75%,
+      #1f140c 75%,
+      #1f140c 78%,
+      transparent 78%
+    ) !important;
+}
+
+.rr-fundo--jornal {
+  background-color: #e6dac3;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 5px,
+      rgba(31, 20, 12, 0.08) 5px,
+      rgba(31, 20, 12, 0.08) 6px
+    ),
+    linear-gradient(90deg, transparent 49%, rgba(31, 20, 12, 0.14) 49%, rgba(31, 20, 12, 0.14) 51%, transparent 51%);
+}
+
+#painel [data-rr-papel].rr-fundo--jornal, dialog[data-rr-papel].rr-fundo--jornal, dialog [data-rr-papel].rr-fundo--jornal, body.rr-tema-pagina:not(.modo-entrada).rr-fundo--jornal, .personalizacao-amostra.rr-fundo--jornal, .rr-previa-cartao.rr-fundo--jornal {
+  background-color: #e6dac3 !important;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 5px,
+      rgba(31, 20, 12, 0.08) 5px,
+      rgba(31, 20, 12, 0.08) 6px
+    ),
+    linear-gradient(90deg, transparent 49%, rgba(31, 20, 12, 0.14) 49%, rgba(31, 20, 12, 0.14) 51%, transparent 51%) !important;
+}
+
+.rr-fundo--aco-envelhecido {
+  background-color: #444743;
+  background-image: repeating-linear-gradient(0deg, transparent 0 5px, rgba(255,255,255,.07) 5px 6px), linear-gradient(135deg, #737570, #444743);
+}
+
+#painel [data-rr-papel].rr-fundo--aco-envelhecido, dialog[data-rr-papel].rr-fundo--aco-envelhecido, dialog [data-rr-papel].rr-fundo--aco-envelhecido, body.rr-tema-pagina:not(.modo-entrada).rr-fundo--aco-envelhecido, .personalizacao-amostra.rr-fundo--aco-envelhecido, .rr-previa-cartao.rr-fundo--aco-envelhecido {
+  background-color: #444743 !important;
+  background-image: repeating-linear-gradient(0deg, transparent 0 5px, rgba(255,255,255,.07) 5px 6px), linear-gradient(135deg, #737570, #444743) !important;
+}

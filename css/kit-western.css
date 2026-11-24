@@ -1,0 +1,7 @@
+/* Vocabulário visual do kit, usado tanto pela mesa como pelo seletor de temas. */
+@import url('./tema/botoes.css?v=mesa-31');
+@import url('./tema/texturas.css?v=mesa-31');
+@import url('./tema/molduras.css?v=mesa-31');
+
+/* Botões de recuperação são mostrados somente quando a sincronização falha. */
+#combate-sincronizar[hidden], #vg-sincronizar[hidden] { display: none !important; }

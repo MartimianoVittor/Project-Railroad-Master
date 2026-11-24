@@ -4,7 +4,7 @@ import { readFileSync, statSync } from 'node:fs';
 
 const ler = (arquivo) => readFileSync(new URL(`../${arquivo}`, import.meta.url), 'utf8');
 const paginas = ['campanhas', 'diario', 'fichas', 'npcs', 'combate', 'viagem', 'utilitarios'];
-const dialogos = ['criar-sessao', 'gerenciar-sessoes'];
+const dialogos = ['criar-sessao', 'gerenciar-sessoes', 'personalizacao'];
 const arquivos = [
     'index.html',
     ...paginas.map((pagina) => `views/pages/${pagina}.html`),

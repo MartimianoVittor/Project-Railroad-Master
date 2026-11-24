@@ -1,23 +1,10 @@
 /** Modelo das fichas privadas de NPCs, sem dependências de interface ou banco. */
-export const TRACOS_NPC = Object.freeze([
-    'Sangue Quente', 'Mira Afiada', 'Guerreiro Ancestral', 'Amigo Kaboom',
-    'Orelha Em Pé', 'Passos Na Sombra', 'Poeira e Ossos', 'Rédea e Sela',
-    'Língua de Trapo', 'Agourento e Carrancudo', 'Cachola Cheia', 'Grande Maioral',
-]);
+import {
+    ARMAS as ARMAS_NPC, CONDICOES as CONDICOES_NPC,
+    DISTANCIAS as DISTANCIAS_NPC, TRACOS as TRACOS_NPC,
+} from './ficha/campos.js?v=mesa-31';
 
-export const CONDICOES_NPC = Object.freeze([
-    ['ferimentos', 'Ferimentos'], ['sede', 'Sede'],
-    ['fome', 'Fome'], ['cansaco', 'Cansaço'],
-]);
-
-export const ARMAS_NPC = Object.freeze([
-    ['primaria', 'Primária'], ['secundaria', 'Secundária'],
-]);
-
-export const DISTANCIAS_NPC = Object.freeze([
-    ['corpo', 'Corpo a corpo'], ['curta', 'Curta'],
-    ['media', 'Média'], ['longa', 'Longa'],
-]);
+export { ARMAS_NPC, CONDICOES_NPC, DISTANCIAS_NPC, TRACOS_NPC };
 
 export const NIVEIS_NPC = Object.freeze([
     '0 · Incapaz', '1 · Incompetente (d4)', '2 · Mundano (d6)',
@@ -35,20 +22,39 @@ const inteiro = (valor, minimo, maximo, padrao) => {
 const novoId = () => globalThis.crypto?.randomUUID?.()
     ?? `npc-${Date.now()}-${Math.random().toString(36).slice(2)}`;
 
-function normalizarArma(dados = {}) {
+function normalizarArma(dados) {
     const bonus = {};
     for (const [chave] of DISTANCIAS_NPC) {
-        bonus[chave] = inteiro(dados.bonus?.[chave], -3, 3, 0);
+        bonus[chave] = inteiro(dados?.bonus?.[chave], -3, 3, 0);
     }
     return {
-        nome: limitar(dados.nome, 100),
-        municao: inteiro(dados.municao, 0, 9999, 0),
+        nome: limitar(dados?.nome, 100),
+        municao: inteiro(dados?.municao, 0, 9999, 0),
         bonus,
     };
 }
 
+function normalizarItens(itens) {
+    if (!Array.isArray(itens)) return [];
+    return itens.slice(0, 200)
+        .filter((item) => item && typeof item === 'object')
+        .map((item) => ({
+            local: item.local === 'montaria' ? 'montaria' : 'personagem',
+            nome: limitar(item.nome, 120),
+            quantidade: inteiro(item.quantidade, 0, 9999, 0),
+            tamanho: inteiro(item.tamanho, 0, 9999, 0),
+            descricao: limitar(item.descricao, 1000),
+        }));
+}
+
+const IMAGEM_EMBUTIDA = /^data:image\/(?:png|jpeg|webp);base64,[a-zA-Z0-9+/=]+$/;
+function normalizarImagem(imagem) {
+    return typeof imagem === 'string' && imagem.length <= 500000 && IMAGEM_EMBUTIDA.test(imagem) ? imagem : '';
+}
+
 /** Valida e limita todos os campos, inclusive registros recuperados do navegador. */
-export function normalizarNpc(dados = {}) {
+export function normalizarNpc(origem) {
+    const dados = origem ?? {};
     const tracos = {};
     for (const nome of TRACOS_NPC) {
         tracos[nome] = inteiro(dados.tracos?.[nome], 0, 4, 2);
@@ -73,17 +79,11 @@ export function normalizarNpc(dados = {}) {
         nomeJogador: limitar(dados.nomeJogador, 100),
         apelidoJogador: limitar(dados.apelidoJogador, 80),
         bioJogador: limitar(dados.bioJogador, 1000),
-        imagemJogador: typeof dados.imagemJogador === 'string' && /^data:image\/(?:png|jpeg|webp);base64,[a-zA-Z0-9+/=]+$/.test(dados.imagemJogador) && dados.imagemJogador.length <= 500000 ? dados.imagemJogador : '',
+        imagemJogador: normalizarImagem(dados.imagemJogador),
         capacidadePersonagem: inteiro(dados.capacidadePersonagem, 0, 99999, 0),
         capacidadeMontaria: inteiro(dados.capacidadeMontaria, 0, 99999, 0),
-        itens: Array.isArray(dados.itens) ? dados.itens.slice(0, 200).map(item => ({
-            local: item.local === 'montaria' ? 'montaria' : 'personagem',
-            nome: limitar(item.nome, 120),
-            quantidade: inteiro(item.quantidade, 0, 9999, 0),
-            tamanho: inteiro(item.tamanho, 0, 9999, 0),
-            descricao: limitar(item.descricao, 1000),
-        })) : [],
-        imagem: typeof dados.imagem === 'string' && /^data:image\/(?:png|jpeg|webp);base64,[a-zA-Z0-9+/=]+$/.test(dados.imagem) && dados.imagem.length <= 500000 ? dados.imagem : '',
+        itens: normalizarItens(dados.itens),
+        imagem: normalizarImagem(dados.imagem),
         papel: limitar(dados.papel, 100),
         descricao: limitar(dados.descricao, 1000),
         notas: limitar(dados.notas, 8000),
@@ -98,6 +98,7 @@ export function normalizarNpc(dados = {}) {
         condicoes,
         armas,
         inventario: limitar(dados.inventario, 8000),
+        revisao: inteiro(dados.revisao, 0, Number.MAX_SAFE_INTEGER, 0),
         atualizadoEm: typeof dados.atualizadoEm === 'string' ? dados.atualizadoEm : null,
     };
 }

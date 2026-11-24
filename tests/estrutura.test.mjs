@@ -1,4 +1,5 @@
 import test from 'node:test';
+import { codigoDaArea } from './apoio/fontes.mjs';
 import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -12,20 +13,17 @@ const htmlCompleto = () => [
     ...paginas.map((pagina) => ler(`views/pages/${pagina}.html`)),
     ler('views/dialogs/criar-sessao.html'),
     ler('views/dialogs/gerenciar-sessoes.html'),
+    ler('views/dialogs/personalizacao.html'),
 ].join('\n');
-const codigoControladores = () => [
-    ler('js/mesa.js'), ler('js/controllers/diario.js'),
-    ler('js/controllers/campanhas.js'), ler('js/controllers/fichas.js'),
-    ler('js/controllers/npcs.js'),
-].join('\n');
+const codigoControladores = () => codigoDaArea('js/mesa.js', (arquivo) => arquivo.endsWith('.js'));
 
-test('todos os campos utilizados pelo controlador existem no HTML', () => {
+test('todos os campos acessados por ID existem no HTML ou são criados pela interface', () => {
     const html = htmlCompleto();
     const js = codigoControladores();
-    const ids = [...js.matchAll(/porId\('([^']+)'\)/g)].map((encontrado) => encontrado[1]);
-
-    for (const id of new Set(ids)) {
-        assert.ok(html.includes(`id="${id}"`), `Campo ausente no HTML: #${id}`);
+    const ids = new Set([...html.matchAll(/\bid="([^"]+)"/g)].map((item) => item[1]));
+    for (const [, id] of js.matchAll(/\.id\s*=\s*['"]([\w-]+)['"]/g)) ids.add(id);
+    for (const [, id] of js.matchAll(/(?:porId|getElementById)\(['"]([^'"]+)['"]\)/g)) {
+        assert.ok(ids.has(id), `Campo ausente no HTML: #${id}`);
     }
 });
 
@@ -53,10 +51,9 @@ test('não restaram dependências funcionais do compartilhamento antigo SQL 003'
     }
 });
 
-test('as RPCs chamadas pelo Mestre existem nas migrações 004 a 007', () => {
+test('as RPCs chamadas pelo Mestre existem nas migrações 003 a 006', () => {
     const servico = ler('js/services/campanhas.js');
-    const migracao = ['004_campanhas_convites.sql', '005_escudo_campanhas.sql',
-        '006_fichas_leitura_privada.sql', '007_excluir_campanha_mestre.sql'].map((nome) => ler(`supabase/${nome}`)).join('\n');
+    const migracao = ['003.sql', '004.sql', '005.sql', '006.sql'].map((nome) => ler(`supabase/${nome}`)).join('\n');
     const funcoes = [...servico.matchAll(/chamar\('([^']+)'/g)].map((encontrado) => encontrado[1]);
     assert.equal(funcoes.length, 10);
 
@@ -81,8 +78,8 @@ test('aba Campanhas apresenta os campos, textos e ações solicitados', () => {
     }
 });
 
-test('SQL 005 é aditivo, protege a lista de jogadores e preserva fichas pessoais', () => {
-    const sql = ler('supabase/005_escudo_campanhas.sql');
+test('SQL 004 é aditivo, protege a lista de jogadores e preserva fichas pessoais', () => {
+    const sql = ler('supabase/004.sql');
     assert.match(sql, /add column if not exists descricao/);
     assert.match(sql, /campanha\.mestre_id = \(select auth\.uid\(\)\)/);
     assert.match(sql, /delete from public\.campanha_convites/);

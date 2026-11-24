@@ -3,7 +3,7 @@
  * As migrações 007, 008 e 009 devem estar aplicadas no Supabase.
  * Não se escrevem fichas pertencentes aos jogadores.
  */
-import { obterCliente, exigir } from '../core/cliente.js';
+import { obterCliente, exigir } from '../core/cliente.js?v=mesa-31';
 
 const TIPOS = new Set(['combate', 'viagens']);
 function validar(tipo, campanhaId) {
@@ -36,111 +36,176 @@ export function criarSincronizadorEstadoMesa({
     avisar = (mensagem) => console.warn(mensagem),
     confirmar = (mensagem) => window.confirm(mensagem),
     armazenamento = () => window.localStorage,
+    aoBloqueio = () => {},
 }) {
     validar(tipo, 'modelo');
-    let escopo = '', token = 0, revisao = 0, carregado = false;
-    let emGravacao = false, pendente = null, alteracoes = 0, temporizador = null;
-    let bloqueado = false;
-    const podeUsarBanco = () => Boolean(!estado.modoLocal && estado.cliente && estado.usuario?.id && estado.campanhaId);
-    const escopoAtual = () => podeUsarBanco() ? `${estado.usuario.id}:${estado.campanhaId}` : '';
-    const chavePendente = (chave) => `railroad-mestre:sync-pendente:${tipo}:${chave}`;
-    const chaveBackup = (chave) => `railroad-mestre:backup-pre-nuvem:${tipo}:${chave}`;
-    function pendencia(chave, valor) {
-        try {
-            const storage = armazenamento();
-            if (valor) storage.setItem(chavePendente(chave), '1');
-            else storage.removeItem(chavePendente(chave));
-        } catch { /* O armazenamento de origem do controlador ainda preserva os dados. */ }
-    }
-    const temPendencia = chave => {
-        try { return armazenamento().getItem(chavePendente(chave)) === '1'; } catch { return false; }
+    let ativo = null;
+    const indicarBloqueio = (fila) => {
+        if (aindaAtivo(fila)) aoBloqueio(Boolean(fila.bloqueada));
     };
-    function guardarBackup(chave, dados) {
+
+    function chaveAtual() {
+        if (estado.modoLocal || !estado.cliente || !estado.usuario?.id || !estado.campanhaId) return null;
+        return `${estado.usuario.id}:${estado.campanhaId}`;
+    }
+
+    function aindaAtivo(fila) {
+        return fila === ativo && fila.chave === chaveAtual();
+    }
+
+    function chavePendente(fila) {
+        return `railroad-mestre:sync-pendente:${tipo}:${fila.chave}`;
+    }
+
+    function marcarPendencia(fila, valor) {
         try {
-            const storage = armazenamento();
-            if (!storage.getItem(chaveBackup(chave)))
-                storage.setItem(chaveBackup(chave), JSON.stringify(dados));
-        } catch { /* Não impede a consulta; a cópia de origem ainda permanece disponível. */ }
+            const local = armazenamento();
+            if (valor) local.setItem(chavePendente(fila), '1');
+            else local.removeItem(chavePendente(fila));
+        } catch { /* A cópia principal continua sob responsabilidade do controlador. */ }
     }
-    function limparTemporizador() {
-        if (temporizador !== null) { clearTimeout(temporizador); temporizador = null; }
+
+    function temPendencia(fila) {
+        try { return armazenamento().getItem(chavePendente(fila)) === '1'; }
+        catch { return false; }
     }
-    function agendar() {
-        if (!podeUsarBanco()) return;
-        alteracoes++;
-        const chave = escopoAtual();
-        if (chave !== escopo) return; // a tela pode estar trocando de campanha
-        pendencia(chave, true);
-        if (!carregado || bloqueado) return;
-        pendente = JSON.stringify(obterDados());
-        limparTemporizador();
-        temporizador = setTimeout(() => { temporizador = null; void enviar(); }, 600);
-    }
-    async function enviar() {
-        if (emGravacao || !carregado || bloqueado || !pendente || escopoAtual() !== escopo) return;
-        const chave = escopo, seq = token;
-        emGravacao = true;
+
+    function guardarBackup(fila, dados) {
+        const chave = `railroad-mestre:backup-pre-nuvem:${tipo}:${fila.chave}`;
         try {
-            while (pendente && token === seq && escopoAtual() === chave) {
-                const conteudo = JSON.parse(pendente);
-                pendente = null;
-                const resposta = await gravar(estado.campanhaId, tipo, conteudo, revisao);
-                if (token !== seq || escopoAtual() !== chave) return;
-                revisao = Number(resposta?.revisao ?? resposta?.[0]?.revisao ?? revisao + 1);
+            const local = armazenamento();
+            if (!local.getItem(chave)) local.setItem(chave, JSON.stringify(dados));
+        } catch { /* A ausência de espaço para outra cópia não impede a leitura do servidor. */ }
+    }
+
+    async function enviar(fila) {
+        if (fila.enviando || fila.bloqueada || !fila.carregada || !aindaAtivo(fila)) return false;
+        fila.enviando = true;
+        try {
+            while (fila.pendente && aindaAtivo(fila)) {
+                const conteudoEnviado = fila.pendente;
+                const dados = JSON.parse(conteudoEnviado);
+                const resposta = await gravar(fila.campanhaId, tipo, dados, fila.revisao);
+                if (!aindaAtivo(fila)) return false;
+                fila.revisao = Number(resposta?.revisao ?? resposta?.[0]?.revisao ?? fila.revisao + 1);
+                // Alterações realizadas durante o envio não devem ser descartadas.
+                if (fila.pendente === conteudoEnviado) fila.pendente = null;
             }
-            if (token === seq && !pendente && escopoAtual() === chave) pendencia(chave, false);
+            if (aindaAtivo(fila)) {
+                marcarPendencia(fila, false);
+                indicarBloqueio(fila);
+            }
+            return true;
         } catch (erro) {
-            if (token === seq && escopoAtual() === chave) {
-                // Retém o backup local; não substitui automaticamente o estado remoto.
-                bloqueado = true;
-                pendencia(chave, true);
-                avisar(`Não foi possível sincronizar ${tipo} com o Supabase: ${erro.message}. A cópia deste navegador foi preservada. Reabra a página para escolher como resolver.`);
-            }
+            if (!aindaAtivo(fila)) return;
+            fila.bloqueada = true;
+            marcarPendencia(fila, true);
+            indicarBloqueio(fila);
+            avisar(`Não foi possível sincronizar ${tipo} com o Supabase: ${erro.message}. A cópia local está preservada. Use "Tentar sincronizar" para verificar a revisão remota antes de reenviar.`);
+            return false;
         } finally {
-            emGravacao = false;
+            fila.enviando = false;
         }
     }
-    async function ativar() {
-        const chave = escopoAtual();
-        if (chave === escopo) return;
-        escopo = chave;token++;limparTemporizador();revisao = 0;
-        carregado = false;bloqueado = false;pendente = null;alteracoes = 0;
-        if (!chave) return;
-        const meuToken = token, inicio = alteracoes;
-        const campanhaId = estado.campanhaId;
-        const local = obterDados();
+
+    function agendar() {
+        const fila = ativo;
+        if (!fila || !aindaAtivo(fila)) return;
+        fila.editada = true;
+        marcarPendencia(fila, true);
+        // Sempre capture a versão mais recente, mesmo durante um bloqueio.
+        fila.pendente = JSON.stringify(obterDados());
+        if (!fila.carregada || fila.bloqueada) return;
+        clearTimeout(fila.temporizador);
+        fila.temporizador = setTimeout(() => void enviar(fila), 600);
+    }
+
+    async function ativar(forcar = false) {
+        const chave = chaveAtual();
+        if (!forcar && chave === (ativo?.chave ?? null)) return;
+        if (ativo) clearTimeout(ativo.temporizador);
+        ativo = null;
+        if (!chave) { aoBloqueio(false); return; }
+
+        // Cada campanha mantém sua própria revisão e gravação em andamento.
+        const fila = {
+            chave, campanhaId: estado.campanhaId, revisao: 0, carregada: false,
+            editada: false, bloqueada: false, enviando: false, pendente: null, temporizador: null,
+        };
+        ativo = fila;
+        indicarBloqueio(fila);
         try {
-            const remoto = await ler(campanhaId, tipo);
-            if (token !== meuToken || escopoAtual() !== chave) return;
-            revisao = Number(remoto?.revisao ?? 0);
-            const houveEdicoes = alteracoes !== inicio;
-            const localPendente = houveEdicoes || temPendencia(chave);
-            if (remoto && localPendente) {
-                const enviarLocal = confirmar(`Há modificações locais de ${tipo} não sincronizadas. Deseja enviar a cópia deste navegador ao Supabase? Cancelar mantém a versão remota.`);
-                if (enviarLocal) {
-                    carregado = true;pendente = JSON.stringify(obterDados());
-                    void enviar();return;
+            const remoto = await ler(fila.campanhaId, tipo);
+            if (!aindaAtivo(fila)) return;
+            fila.revisao = Number(remoto?.revisao ?? 0);
+            const local = obterDados();
+            const haPendencia = fila.editada || temPendencia(fila);
+            const enviarLocal = remoto && haPendencia && confirmar(
+                `Há modificações locais de ${tipo} não sincronizadas. Deseja enviar a cópia deste navegador ao Supabase? Cancelar mantém a versão remota.`
+            );
+            if (remoto && !enviarLocal) {
+                if (temConteudo(local) && JSON.stringify(local) !== JSON.stringify(remoto.dados)) {
+                    guardarBackup(fila, local);
                 }
-            }
-            if (remoto) {
-                if (temConteudo(local) && JSON.stringify(local) !== JSON.stringify(remoto.dados)) guardarBackup(chave, local);
                 aplicarDados(remoto.dados);
                 preservarLocal();
-                pendencia(chave, false);
-                carregado = true;
+                marcarPendencia(fila, false);
+                fila.carregada = true;
                 return;
             }
-            carregado = true;
-            if (temConteudo(obterDados())) {
-                // Importação aditiva: não existe registro remoto para substituir.
-                pendente = JSON.stringify(obterDados());
-                void enviar();
+            fila.carregada = true;
+            if (enviarLocal || temConteudo(local)) {
+                fila.pendente = JSON.stringify(local);
+                marcarPendencia(fila, true);
+                void enviar(fila);
+            } else {
+                marcarPendencia(fila, false);
             }
         } catch (erro) {
-            if (token !== meuToken || escopoAtual() !== chave) return;
-            bloqueado = true;
-            avisar(`Não foi possível carregar ${tipo} do Supabase: ${erro.message}. Continuando com a cópia local; os dados locais não foram apagados.`);
+            if (!aindaAtivo(fila)) return;
+            fila.bloqueada = true;
+            if (fila.editada || temConteudo(obterDados())) marcarPendencia(fila, true);
+            indicarBloqueio(fila);
+            avisar(`Não foi possível carregar ${tipo} do Supabase: ${erro.message}. A cópia local foi preservada. Use "Tentar sincronizar" quando a conexão voltar.`);
         }
     }
-    return { ativar, agendar };
+
+    /** Retenta após conferir a revisão remota, sem sobrescrever edições concorrentes. */
+    async function tentarNovamente() {
+        const fila = ativo;
+        if (!fila || !aindaAtivo(fila)) return false;
+        if (!fila.carregada) {
+            // A leitura inicial falhou: refazer a leitura e oferecer a escolha usual.
+            await ativar(true);
+            return Boolean(ativo?.carregada && !ativo?.bloqueada);
+        }
+        if (fila.enviando) return false;
+        if (!fila.bloqueada && !temPendencia(fila)) return true;
+        try {
+            const remoto = await ler(fila.campanhaId, tipo);
+            if (!aindaAtivo(fila)) return false;
+            const revisaoRemota = Number(remoto?.revisao ?? 0);
+            if (revisaoRemota !== fila.revisao) {
+                fila.bloqueada = true;
+                marcarPendencia(fila, true);
+                indicarBloqueio(fila);
+                avisar(`Conflito: ${tipo} foi alterado em outro dispositivo. O backup local foi preservado; recarregue a página para comparar as versões.`);
+                return false;
+            }
+            // Atualiza a pendência com os dados em memória mais recentes.
+            fila.pendente = JSON.stringify(obterDados());
+            fila.bloqueada = false;
+            indicarBloqueio(fila);
+            return await enviar(fila);
+        } catch (erro) {
+            if (!aindaAtivo(fila)) return false;
+            fila.bloqueada = true;
+            marcarPendencia(fila, true);
+            indicarBloqueio(fila);
+            avisar(`Não foi possível verificar a revisão de ${tipo}: ${erro.message}. O backup foi preservado.`);
+            return false;
+        }
+    }
+
+    return { ativar, agendar, tentarNovamente };
 }

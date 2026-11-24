@@ -220,10 +220,10 @@
     flex-shrink: 0;
 }
 .npc-form-reiniciado #npc-orig-jogador .label-retrato{
-    background-image: url("../assets/imgs/imagemJogadorPlaceholder.png");
+    background-image: url("../assets/imgs/imagemJogadorPlaceholder.webp");
 }
 .npc-form-reiniciado #npc-orig-personagem .label-retrato{
-    background-image: url("../assets/imgs/imagemPersonagemPlaceholder.png");
+    background-image: url("../assets/imgs/imagemPersonagemPlaceholder.webp");
 }
 .npc-form-reiniciado #npc-orig-jogador .circulo-interno, .npc-form-reiniciado #npc-orig-personagem .circulo-interno{
     width: 42%;
@@ -238,7 +238,7 @@
     display: block;
     width: 100%;
     aspect-ratio: 1 / 1;
-    background: url("../assets/imgs/imagemPersonagemPlaceholder.png") center / 100% 100% no-repeat;
+    background: url("../assets/imgs/imagemPersonagemPlaceholder.webp") center / 100% 100% no-repeat;
     overflow: hidden;
 }
 .npc-form-reiniciado #npc-orig-personagem .circulo-interno{
@@ -262,7 +262,7 @@
     object-position: center;
     border-radius: 0;
 }
-.npc-form-reiniciado #npc-orig-personagem .imagem-exibida[src="assets/imgs/imagemPersonagemPlaceholder.png"]{
+.npc-form-reiniciado #npc-orig-personagem .imagem-exibida[src="assets/imgs/imagemPersonagemPlaceholder.webp"]{
     opacity: 0;
 }
 .npc-form-reiniciado #npc-orig-personagem .texto-hover{
@@ -1086,6 +1086,10 @@
     width: 100%;
     min-width: 0;
     box-sizing: border-box;
+    /* Apenas rolagem vertical da ficha: a tabela controla a sua própria largura. */
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-gutter: auto;
 }
 .pagina-npcs .npc-form-reiniciado .npc-pagina-original {
     width: 100%;
@@ -1126,59 +1130,126 @@
     }
 }
 
-/* Ajustes de proporção e rolagem independente do inventário — NPC. */
+/* Proporção original da ficha do jogador, com inventário dimensionado em uma única regra abaixo. */
 @media (min-width: 1001px) {
     .pagina-npcs .npc-form-reiniciado #npc-orig-personagem {
-        grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr) minmax(0, 2fr);
+        grid-template-columns: minmax(0,1fr) minmax(0,1.35fr) minmax(0,2fr);
     }
-}
-@media (min-width: 769px) {
-    .pagina-npcs .npc-form-reiniciado #npc-orig-inventario > .inventario-itens {
-        height: 420px;
-        min-height: 0;
-        max-height: 420px;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-    }
-    .pagina-npcs .npc-form-reiniciado #npc-orig-inventario .tabela-itens-rolagem {
-        flex: 1 1 auto;
-        min-height: 0;
-        overflow-y: auto;
-        overflow-x: auto;
-        scrollbar-gutter: stable;
-    }
-}
-
-/* Alinha o resumo de carga ao rodapé do inventário sem esticar a lista de itens. */
-@media (min-width: 769px) {
-    .pagina-npcs .npc-form-reiniciado #npc-orig-inventario {
-        align-items: stretch;
-    }
-    .pagina-npcs .npc-form-reiniciado #npc-orig-inventario > .inventario-itens {
-        display: flex;
-        flex-direction: column;
-    }
-    .pagina-npcs .npc-form-reiniciado #npc-orig-inventario .inventario-resumo {
-        margin-top: auto;
-    }
-}
-
-/* Inventário NPC: alinhamento do rodapé e botão à direita em consulta e edição. */
-@media (min-width: 769px) {
- .pagina-npcs .npc-form-reiniciado #npc-orig-inventario > .inventario-itens {
-   display:flex; flex-direction:column; min-height:0; height:100%;
- }
- .pagina-npcs .npc-form-reiniciado #npc-orig-inventario .tabela-itens-rolagem {
-   flex:1 1 auto; min-height:0; overflow:auto;
- }
- .pagina-npcs .npc-form-reiniciado #npc-orig-inventario .inventario-resumo {
-   margin-top:auto; flex-shrink:0;
- }
 }
 .pagina-npcs .npc-form-reiniciado #npc-orig-inventario .inventario-cabecalho {
- display:flex; align-items:center; justify-content:space-between; width:100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
 }
 .pagina-npcs .npc-form-reiniciado #npc-orig-inventario #npc-adicionar-item {
- margin-left:auto; flex-shrink:0;
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+/* Resumo de carga abaixo de ARMAS e ITENS, sem ocupar a área da tabela.
+   A área direita cresce junto da coluna de armas, mas tem rolagem própria quando necessário. */
+.pagina-npcs .npc-form-reiniciado #npc-orig-inventario {
+    grid-template-rows: minmax(0, auto) auto;
+    align-items: stretch;
+    gap: 12px;
+}
+.pagina-npcs .npc-form-reiniciado #npc-orig-inventario > .inventario-itens {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    height: auto;
+    min-height: 290px;
+    max-height: none;
+    overflow: hidden;
+    /* Não reservar uma segunda faixa lateral para barras não existentes. */
+    scrollbar-gutter: auto;
+    padding-right: 0;
+}
+.pagina-npcs .npc-form-reiniciado #npc-orig-inventario .inventario-cabecalho {
+    flex: 0 0 auto;
+}
+.pagina-npcs .npc-form-reiniciado #npc-orig-inventario .tabela-itens-rolagem {
+    box-sizing: border-box;
+    flex: 1 1 auto;
+    min-height: 155px;
+    max-height: 390px; /* Limite apenas para telas estreitas; no desktop a coluna acompanha as armas. */
+    overflow: auto;
+    scrollbar-gutter: auto;
+    /* A superfície da tabela continua até a linha dos indicadores de carga. */
+    border: 1px solid var(--rr-leitura-borda, #a98763);
+    background: var(--rr-leitura-painel, #f4e6ce);
+}
+.pagina-npcs .npc-form-reiniciado #npc-orig-inventario > .inventario-resumo {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 9px;
+    align-self: end;
+    margin: 0;
+    padding: 11px 3px 2px;
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+    border-top: 2px solid var(--rr-leitura-borda, #8b6746);
+    background: var(--rr-leitura-painel, transparent);
+    color: var(--rr-leitura-texto, #392718);
+}
+.pagina-npcs .npc-form-reiniciado #npc-orig-inventario > .inventario-resumo .inventario-resumo-campo {
+    min-width: 0;
+    color: inherit;
+    font: 11px/1.3 Georgia, serif;
+}
+.pagina-npcs .npc-form-reiniciado #npc-orig-inventario > .inventario-resumo .inventario-resumo-campo input {
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 6px 3px;
+    color: var(--rr-leitura-campo-texto, #392718);
+    background: var(--rr-leitura-campo, #fff7e9);
+    border-color: var(--rr-leitura-borda, #8b6746);
+}
+/* Desktop: a altura da área de itens deve acompanhar a coluna de armas.
+   O antigo max-height: 390px cortava o painel antes do resumo de carga,
+   deixando um vazio visível entre a tabela e o rodapé do Inventário. */
+@media (min-width: 1001px) {
+    .pagina-npcs .npc-form-reiniciado #npc-orig-inventario > .inventario-itens {
+        min-height: 0;
+        align-self: stretch;
+    }
+    .pagina-npcs .npc-form-reiniciado #npc-orig-inventario .tabela-itens-rolagem {
+        flex: 1 1 0;
+        min-height: 0;
+        max-height: none;
+        overflow: auto;
+    }
+}
+@media (max-width: 1000px) {
+    .pagina-npcs .npc-form-reiniciado #npc-orig-inventario {
+        grid-template-columns: minmax(0,1fr);
+    }
+    .pagina-npcs .npc-form-reiniciado #npc-orig-inventario > .inventario-itens {
+        min-height: 250px;
+    }
+}
+@media (max-width: 540px) {
+    .pagina-npcs .npc-form-reiniciado #npc-orig-inventario > .inventario-resumo {
+        grid-template-columns: repeat(2,minmax(0,1fr));
+    }
+}
+
+/* Campos longos da ficha de NPC nunca redimensionam os cartões.
+   Rolagem do próprio textarea, inclusive na consulta em modo somente leitura. */
+.pagina-npcs .npc-form-reiniciado .campos-form-npc textarea {
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    height: 100px;
+    min-height: 100px;
+    max-height: 100px;
+    resize: none;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
 }

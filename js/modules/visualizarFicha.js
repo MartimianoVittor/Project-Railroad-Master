@@ -3,30 +3,9 @@
  * Não cria controles editáveis nem interpreta HTML recebido dos jogadores.
  * O quadro de ideias não faz parte dos dados solicitados pela RPC do Mestre.
  */
-const TRACOS = [
-    'Sangue Quente', 'Mira Afiada', 'Guerreiro Ancestral', 'Amigo Kaboom',
-    'Orelha Em Pé', 'Passos Na Sombra', 'Poeira e Ossos', 'Rédea e Sela',
-    'Língua de Trapo', 'Agourento e Carrancudo', 'Cachola Cheia', 'Grande Maioral',
-];
+import { ARMAS, CONDICOES, DISTANCIAS, TRACOS, nivelTraco } from './ficha/campos.js?v=mesa-31';
 
-const CONDICOES = [
-    ['ferimentos', 'Ferimentos'],
-    ['sede', 'Sede'],
-    ['fome', 'Fome'],
-    ['cansaco', 'Cansaço'],
-];
-
-const ARMAS = [
-    ['primaria', 'Primária'],
-    ['secundaria', 'Secundária'],
-];
-
-const DISTANCIAS = [
-    ['corpo', 'Corpo a corpo'],
-    ['curta', 'Curta'],
-    ['media', 'Média'],
-    ['longa', 'Longa'],
-];
+export { nivelTraco };
 
 export const PARTES_FICHA = Object.freeze({
     jogador: 'Jogador',
@@ -67,7 +46,7 @@ function retrato(src, nome, tipo = 'personagem') {
     const imagem = criar('img');
     const padrao = tipo === 'jogador'
         ? 'assets/imgs/fundoCinza.jpg'
-        : 'assets/imgs/imagemPersonagemPlaceholder.png';
+        : 'assets/imgs/imagemPersonagemPlaceholder.webp';
     const permitido = typeof src === 'string' && (
         /^data:image\/(?:png|jpe?g|webp|gif);base64,[a-z0-9+/=]+$/i.test(src)
         || /^assets\/imgs\/[\w.-]+\.(?:png|jpe?g|webp|gif)$/i.test(src)
@@ -76,7 +55,7 @@ function retrato(src, nome, tipo = 'personagem') {
     // No Jogador o placeholder de personagem já é o próprio cartaz.
     // Exibi-lo como fotografia duplicaria a moldura.
     const cartazPadrao = tipo === 'personagem' && (
-        !permitido || origem.endsWith('/imagemPersonagemPlaceholder.png')
+        !permitido || origem.endsWith('/imagemPersonagemPlaceholder.webp')
     );
     if (!cartazPadrao) {
         imagem.src = origem;
@@ -150,11 +129,6 @@ function condicoes(marcadores) {
         grade.append(linha);
     }
     return grade;
-}
-
-export function nivelTraco(marcadores) {
-    if (!Array.isArray(marcadores)) return 0;
-    return Math.max(0, Math.min(4, marcadores.lastIndexOf(true) + 1));
 }
 
 function tracos(marcadores) {
@@ -258,7 +232,7 @@ function armas(rolagens) {
 }
 
 function tabelaItens(itens) {
-    if (!itens.length) return criar('p', 'ficha-texto', 'Nenhum item registrado.');
+    if (!itens.length) return criar('p', 'ficha-texto rr-estado-vazio rr-estado-vazio--compacto', 'Nenhum item registrado.');
 
     const rolagem = criar('div', 'ficha-tabela-scroll');
     const tabela = criar('table', 'ficha-tabela tabela-itens');

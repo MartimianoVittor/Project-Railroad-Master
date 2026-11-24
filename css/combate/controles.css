@@ -1,0 +1,402 @@
+/* Componentes e controles reorganizados. */
+.combate-pagina .combate-cartao-retrato > h3, .combate-pagina .combate-cartao-ferimentos > h3 {
+    display: none;
+}
+
+.combate-pagina .combate-cartao-retrato .combate-retrato {
+    margin-top: 0;
+}
+
+.combate-pagina .combate-modificador {
+    margin: 0;
+    font: 700 16px Georgia,serif;
+}
+
+.combate-pagina .combate-modificador span {
+    font-size: 16px;
+}
+
+.combate-pagina .combate-modificador input {
+    flex: 0 0 48px;
+    width: 48px;
+    height: 42px;
+    min-width: 48px;
+    max-width: 48px;
+    padding: 4px;
+    text-align: center;
+    font-size: 18px;
+    border-radius: 3px;
+}
+
+.combate-pagina .combate-condicoes-cabecalho, .combate-pagina .combate-preparar-cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 9px;
+}
+
+.combate-pagina .combate-condicoes-cabecalho h3, .combate-pagina .combate-preparar-cabecalho h3 {
+    margin: 0;
+}
+
+.combate-pagina .combate-adicionar-condicao {
+    flex: none;
+    white-space: nowrap;
+    padding: 5px 7px;
+    font-size: 11px;
+}
+
+.combate-pagina .combate-preparar-cabecalho .combate-estrela {
+    flex: 0 0 28px;
+    min-width: 28px;
+    min-height: 28px;
+}
+
+.combate-pagina .combate-preparar-cartao > textarea {
+    margin-top: 4px;
+}
+
+.combate-pagina .combate-linha.combate-fora {
+    background: #3d332e;
+    color: #ddd0b9;
+    border-color: #29211d;
+    opacity: .85;
+}
+
+.combate-pagina .combate-linha.combate-fora .combate-nome {
+    color: #ddd0b9;
+}
+
+.combate-pagina .combate-linha.combate-fora input {
+    background: #b7ada1;
+}
+
+.combate-pagina .combate-turno {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.combate-pagina .combate-turno-identificacao {
+    display: grid;
+    align-content: center;
+    flex: 1;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    text-align: left;
+    color: inherit;
+    cursor: pointer;
+}
+
+.combate-pagina .combate-turno-identificacao strong,.combate-pagina .combate-turno-identificacao small {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.combate-pagina .combate-turno .combate-estrela {
+    grid-column: auto;
+    grid-row: auto;
+    flex: none;
+}
+
+.combate-pagina .combate-modificador-botao {
+    width: 28px;
+    height: 38px;
+    border: 2px solid #6b4630;
+    border-radius: 3px;
+    background: #e8d4ad;
+    color: #3d2314;
+    cursor: pointer;
+    font: bold 17px Georgia,serif;
+}
+
+.combate-pagina .combate-arma-titulo {
+    font: bold 14px 'Rye',Georgia,serif;
+    color: #3d2314;
+    border-bottom: 1px solid #9a7b58;
+    padding-bottom: 7px;
+    margin-bottom: 7px;
+}
+
+.combate-pagina .combate-arma {
+    border: 2px solid #6b4630;
+}
+
+.combate-pagina .combate-condicao {
+    display: block;
+    border: 1px solid #a58b6b;
+    border-radius: 3px;
+    padding: 7px;
+    background: #fff7e980;
+}
+
+.combate-pagina .combate-condicao-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+}
+
+.combate-pagina .combate-condicao-descricao {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    font: 13px/1.45 Georgia,serif;
+    margin: 7px 0 0;
+}
+
+.combate-modal-condicoes {
+    width: min(650px,92vw);
+    padding: 15px;
+}
+
+.combate-modal-condicoes .combate-condicoes-cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.combate-modal-condicoes input,.combate-modal-condicoes textarea {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #6b4630;
+    background: #fff7e9;
+    color: #3d2314;
+}
+
+.combate-condicoes-opcoes {
+    max-height: 35vh;
+    overflow: auto;
+    display: grid;
+    gap: 6px;
+    margin: 10px 0;
+}
+
+.combate-condicao-opcao {
+    display: grid;
+    gap: 4px;
+    text-align: left;
+    padding: 9px;
+    border: 1px solid #8a684c;
+    background: #f1e1c4;
+    color: #3d2314;
+    cursor: pointer;
+}
+
+.combate-condicao-opcao span {
+    font: 12px/1.4 Georgia,serif;
+    white-space: normal;
+}
+
+.combate-condicao-personalizada {
+    border-top: 1px solid #8a684c;
+    padding-top: 10px;
+    display: grid;
+    gap: 5px;
+}
+
+.combate-condicao-personalizada h4 {
+    margin: 0;
+}
+
+/* Fundo opaco para a janela de condições, acima dos demais painéis. */
+dialog#combate-modal-condicoes {
+    background-color: #f2e2c2 !important;
+    background-image: none !important;
+    color: #352315 !important;
+    opacity: 1 !important;
+    border: 3px solid #6b4630 !important;
+    box-shadow: 0 18px 55px rgba(20, 10, 5, .55) !important;
+    z-index: 10000;
+}
+
+dialog#combate-modal-condicoes::backdrop {
+    background: rgba(18, 10, 7, .76) !important;
+}
+
+/* Busca e seletores com a identidade visual Railroad. */
+#combate-modal {
+    background: #f2e2c2;
+    color: #352315;
+    border: 3px solid #6b4630;
+    box-shadow: 0 18px 50px #21140e80;
+    box-sizing: border-box;
+}
+
+#combate-modal > label {
+    display: grid;
+    gap: 9px;
+    margin: 16px 0 12px;
+    font: 700 15px Georgia,serif;
+    color: #3d2314;
+}
+
+#combate-modal #combate-busca {
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    height: 52px;
+    min-height: 52px;
+    padding: 10px 14px;
+    border: 2px solid #6b4630;
+    border-radius: 4px;
+    background: #fff7e9;
+    color: #3d2314;
+    font: 17px Georgia,serif;
+    box-shadow: inset 0 1px 3px #6b463022;
+}
+
+#combate-modal #combate-busca:focus-visible {
+    outline: 2px solid #8b252d;
+    outline-offset: 2px;
+}
+
+#combate-modal #combate-busca::placeholder {
+    color: #8b7159;
+    opacity: 1;
+}
+
+.combate-pagina .combate-personagem-funcao {
+    margin: 2px 0 0;
+    font: italic 13px Georgia,serif;
+    color: #65452f;
+    overflow-wrap: anywhere;
+}
+
+/* O formulário de criação fica fixo e somente a lista de condições rola. */
+dialog#combate-modal-condicoes[open] {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    width: min(650px,92vw);
+    max-height: min(90dvh,850px);
+    overflow: hidden;
+    padding: 14px 16px;
+    gap: 8px;
+}
+
+dialog#combate-modal-condicoes > .combate-condicoes-cabecalho {
+    flex: 0 0 auto;
+    margin: 0;
+}
+
+dialog#combate-modal-condicoes > input[type=search] {
+    flex: 0 0 auto;
+    margin: 0;
+}
+
+dialog#combate-modal-condicoes .combate-condicoes-opcoes {
+    overscroll-behavior: contain;
+    margin: 0;
+    padding: 3px 2px;
+    align-content: start;
+}
+
+dialog#combate-modal-condicoes .combate-condicao-personalizada {
+    display: grid;
+    gap: 5px;
+    margin: 0;
+    padding-top: 8px;
+}
+
+dialog#combate-modal-condicoes .combate-condicao-personalizada h4 {
+    margin: 0;
+    font-size: 13px;
+}
+
+dialog#combate-modal-condicoes .combate-condicao-personalizada input {
+    height: 32px;
+    margin: 0;
+    padding: 5px 8px;
+}
+
+dialog#combate-modal-condicoes .combate-condicao-personalizada textarea {
+    height: 55px;
+    min-height: 45px;
+    margin: 0;
+    padding: 5px 8px;
+    resize: vertical;
+    max-height: 90px;
+}
+
+dialog#combate-modal-condicoes .combate-condicao-personalizada .botao {
+    justify-self: end;
+    min-height: 33px;
+    padding: 5px 10px;
+}
+
+@media(max-height:560px) {
+    dialog#combate-modal-condicoes[open] {
+        padding: 8px 12px;
+        gap: 4px;
+    }
+
+    dialog#combate-modal-condicoes .combate-condicao-personalizada textarea {
+        height: 40px;
+        min-height: 36px;
+    }
+
+    dialog#combate-modal-condicoes .combate-condicao-personalizada {
+        gap: 3px;
+        padding-top: 4px;
+    }
+}
+
+/* Exclusão à esquerda, lista de condições mais baixa e botão amarelo. */
+.combate-pagina .combate-linha {
+    grid-template-columns: 25px minmax(0,1fr) 65px 32px;
+}
+
+.combate-pagina .combate-linha .combate-excluir {
+    grid-column: 1;
+    justify-self: start;
+}
+
+/* A janela reserva espaço para criar a condição; só as opções rolam. */
+dialog#combate-modal-condicoes[open] {
+    max-height: min(82dvh,720px);
+}
+
+dialog#combate-modal-condicoes .combate-condicoes-opcoes {
+    flex: 0 1 170px;
+    max-height: 170px;
+    min-height: 55px;
+    overflow-y: auto;
+}
+
+dialog#combate-modal-condicoes .combate-condicao-personalizada {
+    flex: 0 0 auto;
+    min-height: 0;
+}
+
+dialog#combate-modal-condicoes .combate-condicao-personalizada .combate-botao-amarelo {
+    background: #e6bc62;
+    color: #352315;
+    border: 2px solid #78512b;
+    border-radius: 4px;
+    box-shadow: inset 0 1px rgba(255,246,207,.55);
+    font-weight: 700;
+    cursor: pointer;
+}
+
+dialog#combate-modal-condicoes .combate-condicao-personalizada .combate-botao-amarelo:hover,
+dialog#combate-modal-condicoes .combate-condicao-personalizada .combate-botao-amarelo:focus-visible {
+    background: #f0cc7a;
+}
+
+@media(max-height:560px) {
+    dialog#combate-modal-condicoes[open] {
+        max-height: 96dvh;
+    }
+
+    dialog#combate-modal-condicoes .combate-condicoes-opcoes {
+        flex-basis: 85px;
+        max-height: 85px;
+        min-height: 32px;
+    }
+}

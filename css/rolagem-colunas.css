@@ -60,3 +60,22 @@
   }
   .lista-campanhas > .item-campanha { flex-shrink: 0; }
 }
+
+/* As grades ocupam o restante da página, não 100% mais as barras superiores. */
+@media (min-width: 1100px) {
+  #painel .pagina-mestre:not([hidden]) { flex: 1 1 0; min-height: 0; }
+  #painel :is(.grade-gerenciamento,.grade-diario,.grade-npcs,.grade-ferramentas,.grade-utilitarios) {
+    flex: 1 1 0; height: auto; min-height: 0; grid-template-rows: minmax(0,1fr);
+  }
+  #painel :is(.grade-gerenciamento,.grade-diario,.grade-npcs,.grade-ferramentas) > * {
+    height: auto; min-height: 0; min-width: 0; box-sizing: border-box;
+  }
+  #painel .grade-diario > :is(.cartao-marcos,.cartao-quadro) { overflow: auto; }
+  #painel .cartao-marcos textarea, #painel .zona-quadro { flex: 1 1 0; min-height: 80px; }
+  #painel .grade-npcs > :is(.painel-lista-npcs,.painel-ficha-npc) { overflow: hidden; }
+  #painel .painel-lista-npcs > .lista-npcs { flex: 1 1 0; min-height: 0; overflow-y: auto; }
+  #painel .painel-ficha-npc > .npc-consulta:not([hidden]) { flex: 0 0 auto; min-height: 0; }
+  #painel .painel-ficha-npc > .formulario-npc:not([hidden]) { flex: 1 1 0; min-height: 0; }
+  #painel .painel-ficha-npc :is(.npc-detalhes,.campos-form-npc) { flex: 1 1 0; min-height: 0; max-height: none; overflow-y: auto; }
+  #painel .quadro-fichas { flex: 1 1 0; min-height: 0; overflow: auto; }
+}

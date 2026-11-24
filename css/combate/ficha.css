@@ -1,0 +1,280 @@
+/* Regras originais dos cartões da ficha do Jogador, escopadas ao Combate. */
+.combate-pagina .cartao-rolagem {
+    display: grid;
+    gap: 5px;
+    padding: 10px;
+    border: 2px solid #6b4630;
+    border-radius: 5px;
+    background: rgba(244,220,179,.4);
+}
+
+.combate-pagina .cartao-rolagem h3 {
+    font: clamp(13px,1.1vw,17px) 'Rye',serif;
+    margin: 0 0 3px;
+}
+
+.combate-pagina .cartao-rolagem label {
+    font: 12px 'Rye',serif;
+}
+
+.combate-pagina .campo-inventario {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    min-height: 30px;
+    padding: 5px 7px;
+    border: 2px solid #6b4630;
+    border-radius: 3px;
+    background: #fff7e9;
+    color: #3d2314;
+    font: 13px Georgia,serif;
+}
+
+.combate-pagina .botao-rolar {
+    padding: 8px 10px;
+    margin-top: 4px;
+    border: 2px solid #27170f;
+    border-radius: 4px;
+    background: linear-gradient(#805032,#422515);
+    color: #fff0d3;
+    font: bold 13px 'Rye',serif;
+    cursor: pointer;
+    box-shadow: 2px 3px 0 #24170f;
+}
+
+.combate-pagina .botao-rolar:hover {
+    filter: brightness(1.15);
+}
+
+.combate-pagina .botao-rolar:focus-visible,.combate-pagina .campo-inventario:focus-visible {
+    outline: 3px solid #c58c42;
+    outline-offset: 2px;
+}
+
+.combate-pagina .resultado-rolagem {
+    display: block;
+    min-height: 16px;
+    color: #70251d;
+    font: bold 13px Georgia,serif;
+    overflow-wrap: anywhere;
+}
+
+.combate-pagina .cartao-arma {
+    margin: 0;
+    border: 2px solid #6b4630;
+    border-radius: 5px;
+    background: rgba(244,220,179,.4);
+}
+
+.combate-pagina .cartao-arma legend {
+    font: bold 14px 'Rye',Georgia,serif;
+    color: #3d2314;
+    padding: 0 5px;
+}
+
+.combate-pagina .cartao-arma > label {
+    font-size: 12px;
+}
+
+.combate-pagina .bonus-distancias {
+    display: grid;
+    grid-template-columns: repeat(4,minmax(0,1fr));
+    gap: 5px;
+}
+
+.combate-pagina .bonus-distancia {
+    display: grid;
+    gap: 4px;
+    min-width: 0;
+    text-align: center;
+    font: 11px Georgia,serif;
+}
+
+.combate-pagina .bonus-distancia span {
+    min-height: 25px;
+    display: flex;
+    align-items: end;
+    justify-content: center;
+}
+
+.combate-pagina .bonus-distancia input {
+    text-align: center;
+    padding: 4px 2px;
+}
+
+.combate-pagina .inventario-cabecalho .botao-rolar {
+    margin: 0;
+}
+
+/* Nome e contador de munição compartilham a largura já existente da arma. */
+.combate-pagina .arma-linha-nome, .combate-pagina .arma-linha-nome {
+    display: grid;
+    grid-template-columns: minmax(0,1fr) auto;
+    gap: 8px;
+    align-items: end;
+    min-width: 0;
+}
+
+.combate-pagina .arma-nome, .combate-pagina .arma-nome {
+    display: grid;
+    gap: 4px;
+    min-width: 0;
+}
+
+.combate-pagina .arma-nome input, .combate-pagina .arma-nome input {
+    min-width: 0;
+    width: 100%;
+}
+
+.combate-pagina .arma-municao, .combate-pagina .arma-municao {
+    display: grid;
+    gap: 4px;
+    min-width: 0;
+}
+
+.combate-pagina .arma-municao-titulo, .combate-pagina .arma-municao-titulo {
+    font: 11px Georgia,serif;
+    text-align: center;
+}
+
+.combate-pagina .arma-municao-controles, .combate-pagina .arma-municao-controles {
+    display: flex;
+    align-items: stretch;
+    gap: 2px;
+}
+
+.combate-pagina .municao-botao, .combate-pagina .municao-botao {
+    width: 26px;
+    min-width: 26px;
+    padding: 0;
+    border: 1px solid #442818;
+    border-radius: 3px;
+    background: #70452c;
+    color: #fff3dc;
+    font: bold 17px Georgia,serif;
+    cursor: pointer;
+}
+
+.combate-pagina .municao-valor, .combate-pagina .municao-valor {
+    width: 35px;
+    min-width: 0;
+    height: 32px;
+    padding: 2px;
+    border: 2px solid #6b4630;
+    border-radius: 3px;
+    background: #fff7e9;
+    color: #3d2314;
+    font: 14px Georgia,serif;
+    text-align: center;
+    box-sizing: border-box;
+    appearance: textfield;
+    -moz-appearance: textfield;
+}
+
+.combate-pagina .municao-valor::-webkit-inner-spin-button,
+.combate-pagina .municao-valor::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.combate-pagina .municao-botao:focus-visible, .combate-pagina .municao-botao:focus-visible {
+    outline: 3px solid #c58c42;
+    outline-offset: 2px;
+}
+
+.combate-pagina .municao-botao {
+    min-height: 40px;
+    min-width: 30px;
+    width: 30px;
+}
+
+.combate-pagina .municao-valor {
+    height: 40px;
+    width: 38px;
+}
+
+.combate-pagina .grupo-caveiras {
+    padding-block: 16px;
+}
+
+.combate-pagina .linha-check {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+    min-width: 0;
+}
+
+.combate-pagina .linha-check > label {
+    font-family: 'Rye', serif;
+    font-weight: bold;
+    letter-spacing: .4px;
+}
+
+.combate-pagina .caveiras-box, .combate-pagina .tracos-box {
+    display: flex;
+    align-items: center;
+    gap: clamp(3px, .55vw, 10px);
+    flex: 0 0 auto;
+}
+
+/* A própria caixa de seleção é clicável, acessível e salva pelo JS. */
+.combate-pagina .check-caveira, .combate-pagina .check-tracos {
+    appearance: none;
+    -webkit-appearance: none;
+    display: block;
+    flex: 0 0 auto;
+    width: clamp(22px, 2.05vw, 34px);
+    height: clamp(22px, 2.05vw, 34px);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background-color: #3d2314;
+    -webkit-mask: var(--icone-vazio) center / contain no-repeat;
+    mask: var(--icone-vazio) center / contain no-repeat;
+    cursor: pointer;
+    transition: background-color .15s ease, transform .15s ease;
+}
+
+.combate-pagina .check-caveira:checked, .combate-pagina .check-tracos:checked {
+    -webkit-mask-image: var(--icone-cheio);
+    mask-image: var(--icone-cheio);
+    background-color: #3d2314;
+}
+
+.combate-pagina .check-caveira:hover, .combate-pagina .check-tracos:hover {
+    transform: scale(1.09);
+}
+
+.combate-pagina .check-caveira:focus-visible, .combate-pagina .check-tracos:focus-visible {
+    outline: 3px solid #a56a42;
+    outline-offset: 3px;
+    border-radius: 3px;
+}
+
+.combate-pagina .linha-check > label {
+    font-size: 14px;
+}
+
+.combate-pagina .grupo-caveiras .linha-check {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.combate-pagina .check-caveira {
+    --icone-vazio: url('../../assets/icons/caveira-contorno.svg');
+    --icone-cheio: url('../../assets/icons/caveira-preenchida.svg');
+}
+
+.combate-pagina .cartao-rolagem {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.combate-pagina .cartao-arma {
+    width: 100%;
+    box-sizing: border-box;
+}

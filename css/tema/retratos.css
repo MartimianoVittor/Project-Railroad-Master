@@ -1,0 +1,83 @@
+/* Modelos compartilhados com a versão Jogador. */
+.rr-retrato {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  box-sizing: border-box;
+  width: var(--rr-tamanho, 240px);
+  max-width: 100%;
+  aspect-ratio: 1;
+  border: 0;
+  padding: 0;
+  background: var(--rr-desenho) center / 100% 100% no-repeat;
+  filter: drop-shadow(0 3px 0 #301e1159);
+}
+
+.rr-retrato > .rr-retrato__foto {
+  position: absolute;
+  display: block;
+  inset: var(--rr-janela);
+  width: var(--rr-foto-largura);
+  height: var(--rr-foto-altura);
+  max-width: none;
+  margin: 0;
+  border: 0;
+  padding: 0;
+  border-radius: var(--rr-raio, 0);
+  clip-path: var(--rr-recorte, none);
+  background-color: var(--rr-papel, #dfd0b4);
+  object-fit: cover;
+  object-position: var(--rr-foco, 50% 50%);
+}
+
+.rr-retrato--estrela-de-xerife {
+  --rr-janela: 23.95833% auto auto 23.95833%;
+  --rr-foto-largura: 52.08333%;
+  --rr-foto-altura: 52.08333%;
+  --rr-raio: 50%;
+  --rr-desenho: url("data:image/svg+xml,%3Csvg xmlns%3D%22http://www.w3.org/2000/svg%22 viewBox%3D%220 0 240 240%22%3E%0A  %3Cdefs%3E%0A    %3Cpattern id%3D%22hachura-estrela%22 width%3D%227%22 height%3D%227%22 patternUnits%3D%22userSpaceOnUse%22 patternTransform%3D%22rotate(-45)%22%3E%0A      %3Cline x1%3D%220%22 y1%3D%220%22 x2%3D%220%22 y2%3D%227%22 stroke%3D%22%231f140c%22 stroke-width%3D%221.6%22 stroke-opacity%3D%220.28%22/%3E%0A    %3C/pattern%3E%0A    %3Cpolygon id%3D%22estrela-6%22 points%3D%22120,12 146,68 208,68 176,120 208,172 146,172 120,228 94,172 32,172 64,120 32,68 94,68%22/%3E%0A    %3CclipPath id%3D%22clip-estrela-sombra%22%3E%0A      %3Crect x%3D%220%22 y%3D%22132%22 width%3D%22240%22 height%3D%22108%22/%3E%0A    %3C/clipPath%3E%0A  %3C/defs%3E%0A  %3Cuse href%3D%22%23estrela-6%22 fill%3D%22%23e0b246%22 stroke%3D%22%231f140c%22 stroke-width%3D%224%22 stroke-linejoin%3D%22round%22/%3E%0A  %3Cg clip-path%3D%22url(%23clip-estrela-sombra)%22%3E%0A    %3Cuse href%3D%22%23estrela-6%22 fill%3D%22%23b88725%22/%3E%0A    %3Cuse href%3D%22%23estrela-6%22 fill%3D%22url(%23hachura-estrela)%22/%3E%0A  %3C/g%3E%0A  %3Cuse href%3D%22%23estrela-6%22 fill%3D%22none%22 stroke%3D%22%231f140c%22 stroke-width%3D%224%22 stroke-linejoin%3D%22round%22/%3E%0A  %3Ccircle cx%3D%22120%22 cy%3D%2212%22 r%3D%227%22 fill%3D%22%23f2d479%22 stroke%3D%22%231f140c%22 stroke-width%3D%223%22/%3E%0A  %3Ccircle cx%3D%22208%22 cy%3D%2268%22 r%3D%227%22 fill%3D%22%23f2d479%22 stroke%3D%22%231f140c%22 stroke-width%3D%223%22/%3E%0A  %3Ccircle cx%3D%22208%22 cy%3D%22172%22 r%3D%227%22 fill%3D%22%23b88725%22 stroke%3D%22%231f140c%22 stroke-width%3D%223%22/%3E%0A  %3Ccircle cx%3D%22120%22 cy%3D%22228%22 r%3D%227%22 fill%3D%22%23b88725%22 stroke%3D%22%231f140c%22 stroke-width%3D%223%22/%3E%0A  %3Ccircle cx%3D%2232%22 cy%3D%22172%22 r%3D%227%22 fill%3D%22%23b88725%22 stroke%3D%22%231f140c%22 stroke-width%3D%223%22/%3E%0A  %3Ccircle cx%3D%2232%22 cy%3D%2268%22 r%3D%227%22 fill%3D%22%23f2d479%22 stroke%3D%22%231f140c%22 stroke-width%3D%223%22/%3E%0A  %3Ccircle cx%3D%22120%22 cy%3D%22120%22 r%3D%2272%22 fill%3D%22%23bd5a2b%22 stroke%3D%22%231f140c%22 stroke-width%3D%223.5%22/%3E%0A  %3Ccircle cx%3D%22120%22 cy%3D%22120%22 r%3D%2272%22 fill%3D%22url(%23hachura-estrela)%22/%3E%0A  %3Ccircle cx%3D%22120%22 cy%3D%22120%22 r%3D%2264%22 fill%3D%22%23dfd0b4%22 stroke%3D%22%231f140c%22 stroke-width%3D%223%22/%3E%0A  %3Ccircle cx%3D%22120%22 cy%3D%22120%22 r%3D%2258%22 fill%3D%22none%22 stroke%3D%22%231f140c%22 stroke-width%3D%221.8%22 stroke-dasharray%3D%225 4%22/%3E%0A  %3Ctext x%3D%22120%22 y%3D%22116%22 text-anchor%3D%22middle%22 font-family%3D%22Rye, Georgia, serif%22 font-size%3D%2211%22 fill%3D%22%231f140c%22%3ESUA IMAGEM%3C/text%3E%0A  %3Ctext x%3D%22120%22 y%3D%22132%22 text-anchor%3D%22middle%22 font-family%3D%22Rye, Georgia, serif%22 font-size%3D%2211%22 fill%3D%22%231f140c%22%3EAQUI%3C/text%3E%0A%3C/svg%3E");
+}
+
+.rr-retrato--cartaz-de-procurado {
+  --rr-janela: 26.45833% auto auto 15.62500%;
+  --rr-foto-largura: 68.75000%;
+  --rr-foto-altura: 48.75000%;
+  --rr-raio: 0;
+  --rr-recorte: polygon(9% 0, 91% 0, 100% 12.7%, 100% 87.3%, 91% 100%, 9% 100%, 0 87.3%, 0 12.7%);
+  --rr-papel: #cbb794;
+  --rr-desenho: url("data:image/svg+xml,%3Csvg xmlns%3D%22http://www.w3.org/2000/svg%22 viewBox%3D%220 0 240 240%22%3E%0A  %3Cdefs%3E%0A    %3Cpattern id%3D%22hachura-cartaz%22 width%3D%226%22 height%3D%226%22 patternUnits%3D%22userSpaceOnUse%22 patternTransform%3D%22rotate(-45)%22%3E%0A      %3Cline x1%3D%220%22 y1%3D%220%22 x2%3D%220%22 y2%3D%226%22 stroke%3D%22%231f140c%22 stroke-width%3D%221.4%22 stroke-opacity%3D%220.22%22/%3E%0A    %3C/pattern%3E%0A  %3C/defs%3E%0A  %3Crect x%3D%2218%22 y%3D%2210%22 width%3D%22204%22 height%3D%22220%22 rx%3D%226%22 fill%3D%22%23dfd0b4%22 stroke%3D%22%231f140c%22 stroke-width%3D%224%22/%3E%0A  %3Crect x%3D%2218%22 y%3D%22196%22 width%3D%22204%22 height%3D%2234%22 rx%3D%224%22 fill%3D%22url(%23hachura-cartaz)%22/%3E%0A  %3Crect x%3D%2226%22 y%3D%2218%22 width%3D%22188%22 height%3D%22204%22 rx%3D%223%22 fill%3D%22none%22 stroke%3D%22%231f140c%22 stroke-width%3D%221.8%22/%3E%0A  %3Ccircle cx%3D%2231%22 cy%3D%2223%22 r%3D%223.5%22 fill%3D%22%23d9a738%22 stroke%3D%22%231f140c%22 stroke-width%3D%222%22/%3E%0A  %3Ccircle cx%3D%22209%22 cy%3D%2223%22 r%3D%223.5%22 fill%3D%22%23d9a738%22 stroke%3D%22%231f140c%22 stroke-width%3D%222%22/%3E%0A  %3Ctext x%3D%22120%22 y%3D%2245%22 text-anchor%3D%22middle%22 font-family%3D%22Rye, Georgia, serif%22 font-size%3D%2218%22 letter-spacing%3D%221.5%22 fill%3D%22%231f140c%22%3EPROCURADO%3C/text%3E%0A  %3Cline x1%3D%2236%22 y1%3D%2253%22 x2%3D%22204%22 y2%3D%2253%22 stroke%3D%22%231f140c%22 stroke-width%3D%222.5%22/%3E%0A  %3Crect x%3D%2236%22 y%3D%2262%22 width%3D%22168%22 height%3D%22120%22 fill%3D%22%23cbb794%22 stroke%3D%22%231f140c%22 stroke-width%3D%223%22/%3E%0A  %3Crect x%3D%2242%22 y%3D%2268%22 width%3D%22156%22 height%3D%22108%22 fill%3D%22none%22 stroke%3D%22%231f140c%22 stroke-width%3D%221.6%22 stroke-dasharray%3D%225 4%22/%3E%0A  %3Cpolygon points%3D%2236,62 52,62 36,78%22 fill%3D%22%23bd5a2b%22 stroke%3D%22%231f140c%22 stroke-width%3D%222%22/%3E%0A  %3Cpolygon points%3D%22204,62 188,62 204,78%22 fill%3D%22%23bd5a2b%22 stroke%3D%22%231f140c%22 stroke-width%3D%222%22/%3E%0A  %3Cpolygon points%3D%2236,182 52,182 36,166%22 fill%3D%22%23bd5a2b%22 stroke%3D%22%231f140c%22 stroke-width%3D%222%22/%3E%0A  %3Cpolygon points%3D%22204,182 188,182 204,166%22 fill%3D%22%23bd5a2b%22 stroke%3D%22%231f140c%22 stroke-width%3D%222%22/%3E%0A  %3Ctext x%3D%22120%22 y%3D%22118%22 text-anchor%3D%22middle%22 font-family%3D%22Rye, Georgia, serif%22 font-size%3D%2212%22 fill%3D%22%231f140c%22%3ESUA IMAGEM%3C/text%3E%0A  %3Ctext x%3D%22120%22 y%3D%22135%22 text-anchor%3D%22middle%22 font-family%3D%22Rye, Georgia, serif%22 font-size%3D%2212%22 fill%3D%22%231f140c%22%3EAQUI%3C/text%3E%0A  %3Cline x1%3D%2236%22 y1%3D%22191%22 x2%3D%22204%22 y2%3D%22191%22 stroke%3D%22%231f140c%22 stroke-width%3D%222.5%22/%3E%0A  %3Ctext x%3D%22120%22 y%3D%22211%22 text-anchor%3D%22middle%22 font-family%3D%22Rye, Georgia, serif%22 font-size%3D%2212%22 letter-spacing%3D%221.2%22 fill%3D%22%231f140c%22%3EVIVO OU MORTO%3C/text%3E%0A%3C/svg%3E");
+}
+
+.rr-retrato--camafeu-de-latao {
+  --rr-janela: 22.29167% auto auto 22.29167%;
+  --rr-foto-largura: 55.41667%;
+  --rr-foto-altura: 55.41667%;
+  --rr-raio: 50%;
+  --rr-desenho: url("data:image/svg+xml,%3Csvg xmlns%3D%22http://www.w3.org/2000/svg%22 viewBox%3D%220 0 240 240%22%3E%0A  %3Cdefs%3E%0A    %3Cpattern id%3D%22hachura-camafeu%22 width%3D%227%22 height%3D%227%22 patternUnits%3D%22userSpaceOnUse%22 patternTransform%3D%22rotate(-45)%22%3E%0A      %3Cline x1%3D%220%22 y1%3D%220%22 x2%3D%220%22 y2%3D%227%22 stroke%3D%22%231f140c%22 stroke-width%3D%221.6%22 stroke-opacity%3D%220.28%22/%3E%0A    %3C/pattern%3E%0A    %3CclipPath id%3D%22clip-camafeu-sombra%22%3E%0A      %3Crect x%3D%220%22 y%3D%22135%22 width%3D%22240%22 height%3D%22105%22/%3E%0A    %3C/clipPath%3E%0A  %3C/defs%3E%0A  %3Crect x%3D%2216%22 y%3D%2216%22 width%3D%22208%22 height%3D%22208%22 rx%3D%2216%22 fill%3D%22%23382518%22 stroke%3D%22%231f140c%22 stroke-width%3D%224%22/%3E%0A  %3Crect x%3D%22104%22 y%3D%226%22 width%3D%2232%22 height%3D%2216%22 rx%3D%226%22 fill%3D%22%23d9a738%22 stroke%3D%22%231f140c%22 stroke-width%3D%223%22/%3E%0A  %3Ccircle cx%3D%22120%22 cy%3D%22120%22 r%3D%2294%22 fill%3D%22%23e0b246%22 stroke%3D%22%231f140c%22 stroke-width%3D%224%22/%3E%0A  %3Cg clip-path%3D%22url(%23clip-camafeu-sombra)%22%3E%0A    %3Ccircle cx%3D%22120%22 cy%3D%22120%22 r%3D%2294%22 fill%3D%22%23b88725%22/%3E%0A    %3Ccircle cx%3D%22120%22 cy%3D%22120%22 r%3D%2294%22 fill%3D%22url(%23hachura-camafeu)%22/%3E%0A  %3C/g%3E%0A  %3Ccircle cx%3D%22120%22 cy%3D%22120%22 r%3D%2294%22 fill%3D%22none%22 stroke%3D%22%231f140c%22 stroke-width%3D%224%22/%3E%0A  %3Ccircle cx%3D%22120%22 cy%3D%22120%22 r%3D%2278%22 fill%3D%22%23bd5a2b%22 stroke%3D%22%231f140c%22 stroke-width%3D%223%22/%3E%0A  %3Ccircle cx%3D%22120%22 cy%3D%2234%22 r%3D%223.5%22 fill%3D%22%23f2d479%22 stroke%3D%22%231f140c%22 stroke-width%3D%222%22/%3E%0A  %3Ccircle cx%3D%22206%22 cy%3D%22120%22 r%3D%223.5%22 fill%3D%22%23f2d479%22 stroke%3D%22%231f140c%22 stroke-width%3D%222%22/%3E%0A  %3Ccircle cx%3D%2234%22 cy%3D%22120%22 r%3D%223.5%22 fill%3D%22%23f2d479%22 stroke%3D%22%231f140c%22 stroke-width%3D%222%22/%3E%0A  %3Ccircle cx%3D%22120%22 cy%3D%22120%22 r%3D%2268%22 fill%3D%22%23dfd0b4%22 stroke%3D%22%231f140c%22 stroke-width%3D%223%22/%3E%0A  %3Ccircle cx%3D%22120%22 cy%3D%22120%22 r%3D%2261%22 fill%3D%22none%22 stroke%3D%22%231f140c%22 stroke-width%3D%221.8%22 stroke-dasharray%3D%225 4%22/%3E%0A  %3Crect x%3D%2268%22 y%3D%22194%22 width%3D%22104%22 height%3D%2222%22 rx%3D%225%22 fill%3D%22%23d9a738%22 stroke%3D%22%231f140c%22 stroke-width%3D%223%22/%3E%0A  %3Cline x1%3D%2278%22 y1%3D%22205%22 x2%3D%22162%22 y2%3D%22205%22 stroke%3D%22%231f140c%22 stroke-width%3D%222%22/%3E%0A  %3Ctext x%3D%22120%22 y%3D%22116%22 text-anchor%3D%22middle%22 font-family%3D%22Rye, Georgia, serif%22 font-size%3D%2211%22 fill%3D%22%231f140c%22%3ESUA IMAGEM%3C/text%3E%0A  %3Ctext x%3D%22120%22 y%3D%22132%22 text-anchor%3D%22middle%22 font-family%3D%22Rye, Georgia, serif%22 font-size%3D%2211%22 fill%3D%22%231f140c%22%3EAQUI%3C/text%3E%0A%3C/svg%3E");
+}
+
+.rr-retrato--moldura-de-latao {
+  --rr-janela: 14.89583% auto auto 14.89583%;
+  --rr-foto-largura: 70.20833%;
+  --rr-foto-altura: 70.20833%;
+  --rr-raio: 2.6%;
+  --rr-desenho: url("data:image/svg+xml,%3Csvg xmlns%3D%22http://www.w3.org/2000/svg%22 viewBox%3D%220 0 240 240%22%3E%0A  %3Cdefs%3E%0A    %3Cpattern id%3D%22hachura-moldura%22 width%3D%227%22 height%3D%227%22 patternUnits%3D%22userSpaceOnUse%22 patternTransform%3D%22rotate(-45)%22%3E%0A      %3Cline x1%3D%220%22 y1%3D%220%22 x2%3D%220%22 y2%3D%227%22 stroke%3D%22%231f140c%22 stroke-width%3D%221.6%22 stroke-opacity%3D%220.26%22/%3E%0A    %3C/pattern%3E%0A  %3C/defs%3E%0A  %3Crect x%3D%2212%22 y%3D%2212%22 width%3D%22216%22 height%3D%22216%22 rx%3D%2212%22 fill%3D%22%23bd5a2b%22 stroke%3D%22%231f140c%22 stroke-width%3D%224%22/%3E%0A  %3Crect x%3D%2212%22 y%3D%22145%22 width%3D%22216%22 height%3D%2283%22 rx%3D%228%22 fill%3D%22%23913d18%22/%3E%0A  %3Crect x%3D%2212%22 y%3D%22145%22 width%3D%22216%22 height%3D%2283%22 rx%3D%228%22 fill%3D%22url(%23hachura-moldura)%22/%3E%0A  %3Crect x%3D%2212%22 y%3D%2212%22 width%3D%22216%22 height%3D%22216%22 rx%3D%2212%22 fill%3D%22none%22 stroke%3D%22%231f140c%22 stroke-width%3D%224%22/%3E%0A  %3Cpath d%3D%22M12,48 L12,24 Q12,12 24,12 L48,12 L48,30 L30,30 L30,48 Z%22 fill%3D%22%23e0b246%22 stroke%3D%22%231f140c%22 stroke-width%3D%223%22/%3E%0A  %3Cpath d%3D%22M228,48 L228,24 Q228,12 216,12 L192,12 L192,30 L210,30 L210,48 Z%22 fill%3D%22%23e0b246%22 stroke%3D%22%231f140c%22 stroke-width%3D%223%22/%3E%0A  %3Cpath d%3D%22M12,192 L12,216 Q12,228 24,228 L48,228 L48,210 L30,210 L30,192 Z%22 fill%3D%22%23b88725%22 stroke%3D%22%231f140c%22 stroke-width%3D%223%22/%3E%0A  %3Cpath d%3D%22M228,192 L228,216 Q228,228 216,228 L192,228 L192,210 L210,210 L210,192 Z%22 fill%3D%22%23b88725%22 stroke%3D%22%231f140c%22 stroke-width%3D%223%22/%3E%0A  %3Crect x%3D%2234%22 y%3D%2234%22 width%3D%22172%22 height%3D%22172%22 rx%3D%226%22 fill%3D%22%23dfd0b4%22 stroke%3D%22%231f140c%22 stroke-width%3D%223.5%22/%3E%0A  %3Crect x%3D%2242%22 y%3D%2242%22 width%3D%22156%22 height%3D%22156%22 rx%3D%224%22 fill%3D%22none%22 stroke%3D%22%231f140c%22 stroke-width%3D%221.8%22 stroke-dasharray%3D%225 4%22/%3E%0A  %3Ctext x%3D%22120%22 y%3D%22116%22 text-anchor%3D%22middle%22 font-family%3D%22Rye, Georgia, serif%22 font-size%3D%2212%22 fill%3D%22%231f140c%22%3ESUA IMAGEM%3C/text%3E%0A  %3Ctext x%3D%22120%22 y%3D%22133%22 text-anchor%3D%22middle%22 font-family%3D%22Rye, Georgia, serif%22 font-size%3D%2212%22 fill%3D%22%231f140c%22%3EAQUI%3C/text%3E%0A%3C/svg%3E");
+}
+
+.rr-retrato--tambor-de-revolver {
+  --rr-janela: 25.52083% auto auto 25.52083%;
+  --rr-foto-largura: 48.95833%;
+  --rr-foto-altura: 48.95833%;
+  --rr-raio: 50%;
+  --rr-papel: #e8d6b3;
+  --rr-desenho: url("data:image/svg+xml,%3Csvg xmlns%3D%22http://www.w3.org/2000/svg%22 viewBox%3D%220 0 240 240%22%3E%0A  %3Ccircle cx%3D%22120%22 cy%3D%22120%22 r%3D%22102%22 fill%3D%22%23594a3e%22 stroke%3D%22%231f140c%22 stroke-width%3D%223.5%22/%3E%0A  %3Ccircle cx%3D%22120%22 cy%3D%22120%22 r%3D%2292%22 fill%3D%22none%22 stroke%3D%22%23d9a738%22 stroke-width%3D%222%22 stroke-dasharray%3D%228 6%22/%3E%0A  %3Cg fill%3D%22%232b211a%22 stroke%3D%22%231f140c%22 stroke-width%3D%222.5%22%3E%0A    %3Ccircle cx%3D%22120%22 cy%3D%2230%22 r%3D%2210%22/%3E%0A    %3Ccircle cx%3D%22198%22 cy%3D%2275%22 r%3D%2210%22/%3E%0A    %3Ccircle cx%3D%22198%22 cy%3D%22165%22 r%3D%2210%22/%3E%0A    %3Ccircle cx%3D%22120%22 cy%3D%22210%22 r%3D%2210%22/%3E%0A    %3Ccircle cx%3D%2242%22 cy%3D%22165%22 r%3D%2210%22/%3E%0A    %3Ccircle cx%3D%2242%22 cy%3D%2275%22 r%3D%2210%22/%3E%0A  %3C/g%3E%0A  %3Ccircle cx%3D%22120%22 cy%3D%22120%22 r%3D%2268%22 fill%3D%22%23d9a738%22 stroke%3D%22%231f140c%22 stroke-width%3D%223%22/%3E%0A  %3Ccircle cx%3D%22120%22 cy%3D%22120%22 r%3D%2260%22 fill%3D%22%23e8d6b3%22 stroke%3D%22%231f140c%22 stroke-width%3D%222.5%22/%3E%0A  %3Ccircle cx%3D%22120%22 cy%3D%22120%22 r%3D%2255%22 fill%3D%22none%22 stroke%3D%22%23785328%22 stroke-width%3D%221.5%22 stroke-dasharray%3D%224 3%22/%3E%0A  %3Ctext x%3D%22120%22 y%3D%22116%22 text-anchor%3D%22middle%22 font-family%3D%22Rye, Georgia, serif%22 font-size%3D%2211%22 fill%3D%22%233b2614%22%3ESUA IMAGEM%3C/text%3E%0A  %3Ctext x%3D%22120%22 y%3D%22131%22 text-anchor%3D%22middle%22 font-family%3D%22Rye, Georgia, serif%22 font-size%3D%2211%22 fill%3D%22%233b2614%22%3EAQUI%3C/text%3E%0A%3C/svg%3E");
+}
+
+.rr-retrato--placa-de-ferrovia {
+  --rr-janela: 18.95833% auto auto 18.95833%;
+  --rr-foto-largura: 62.08333%;
+  --rr-foto-altura: 62.08333%;
+  --rr-raio: 3.1%;
+  --rr-papel: #e8d6b3;
+  --rr-desenho: url("data:image/svg+xml,%3Csvg xmlns%3D%22http://www.w3.org/2000/svg%22 viewBox%3D%220 0 240 240%22%3E%0A  %3Cpath d%3D%22M 36 18 L 204 18 L 222 36 L 222 204 L 204 222 L 36 222 L 18 204 L 18 36 Z%22 fill%3D%22%233b281c%22 stroke%3D%22%231f140c%22 stroke-width%3D%223.5%22/%3E%0A  %3Cpath d%3D%22M 42 26 L 198 26 L 214 42 L 214 198 L 198 214 L 42 214 L 26 198 L 26 42 Z%22 fill%3D%22none%22 stroke%3D%22%23d9a738%22 stroke-width%3D%222.5%22/%3E%0A  %3Crect x%3D%2244%22 y%3D%2244%22 width%3D%22152%22 height%3D%22152%22 rx%3D%226%22 fill%3D%22%23e8d6b3%22 stroke%3D%22%231f140c%22 stroke-width%3D%223%22/%3E%0A  %3Crect x%3D%2250%22 y%3D%2250%22 width%3D%22140%22 height%3D%22140%22 fill%3D%22none%22 stroke%3D%22%23785328%22 stroke-width%3D%221.5%22 stroke-dasharray%3D%224 3%22/%3E%0A  %3Ctext x%3D%22120%22 y%3D%22116%22 text-anchor%3D%22middle%22 font-family%3D%22Rye, Georgia, serif%22 font-size%3D%2211%22 fill%3D%22%233b2614%22%3ESUA IMAGEM%3C/text%3E%0A  %3Ctext x%3D%22120%22 y%3D%22131%22 text-anchor%3D%22middle%22 font-family%3D%22Rye, Georgia, serif%22 font-size%3D%2211%22 fill%3D%22%233b2614%22%3EAQUI%3C/text%3E%0A%3C/svg%3E");
+}

@@ -1,0 +1,73 @@
+/* Diálogos nativos: acabamento compartilhado, sem alterar abertura ou foco. */
+dialog[data-rr-papel] {
+    position: fixed !important;
+    box-sizing: border-box;
+    max-inline-size: calc(100vw - 24px);
+    max-block-size: calc(100dvh - 24px);
+    margin: auto;
+    color: var(--rr-leitura-texto);
+    scrollbar-color: var(--rr-leitura-borda) var(--rr-leitura-campo);
+    color-scheme: light;
+}
+dialog[data-rr-papel].rr-tema-escuro { color-scheme: dark; }
+dialog[data-rr-papel] :is(.npc-gerador-cabecalho,.npc-gerador-acoes,.personalizacao-cabecalho) {
+    background: var(--rr-leitura-campo);
+    color: var(--rr-leitura-campo-texto);
+    border-color: var(--rr-leitura-borda);
+}
+dialog[data-rr-papel] :is(.modal-rodape,.combate-condicao-personalizada) { border-color: var(--rr-leitura-borda); }
+dialog[data-rr-papel] :is(.npc-gerador-sobretitulo,.npc-gerador-nota,.personalizacao-estado,.numero-sessao-gerenciar,.descricao-sessao-gerenciar,.rotulo-com-contador output) { color: var(--rr-leitura-suave) !important; }
+dialog [data-rr-papel] { box-sizing: border-box; min-width: 0; color: var(--rr-leitura-texto) !important; }
+dialog [data-rr-papel]:is(button,.personalizacao-opcao):is(:hover,:focus-visible,.selecionado,:has(input:checked)) {
+    outline: 2px solid var(--rr-leitura-borda) !important;
+    outline-offset: -6px !important;
+}
+dialog [data-rr-papel]:is(button.selecionado,.personalizacao-opcao:has(input:checked)) { outline-width: 3px !important; }
+dialog [data-rr-papel].rr-estado-vazio {
+    border: 1px dashed var(--rr-leitura-borda) !important;
+    outline: none !important;
+    box-shadow: none !important;
+    padding: 12px;
+    text-align: center;
+}
+dialog [data-rr-papel].rr-estado-vazio::after { content: none !important; }
+dialog[data-rr-papel] :is(input[type=checkbox],input[type=radio]) { accent-color: var(--rr-leitura-borda); }
+/* As amostras continuam mostrando o estilo candidato, não o estilo atual. */
+dialog.modal-personalizacao .personalizacao-grupo {
+    background: var(--rr-leitura-campo);
+    color: var(--rr-leitura-campo-texto);
+    border: 1px solid var(--rr-leitura-borda);
+    padding: 12px;
+}
+dialog.modal-personalizacao .personalizacao-grupo legend,
+dialog.modal-personalizacao .personalizacao-grupo-descricao {
+    color: var(--rr-leitura-campo-texto);
+}
+dialog.modal-personalizacao .personalizacao-opcao {
+    background: var(--rr-leitura-campo);
+    color: var(--rr-leitura-campo-texto);
+    border: 1px solid var(--rr-leitura-borda);
+    padding: 8px;
+}
+dialog.modal-personalizacao .personalizacao-opcao input {
+    position: static;
+    align-self: flex-start;
+    flex: none;
+    margin: 0;
+}
+dialog.modal-personalizacao .personalizacao-opcao-nome { color: inherit; }
+dialog.modal-personalizacao .personalizacao-opcao:has(input:checked) {
+    outline: 2px solid var(--rr-leitura-campo-texto);
+    outline-offset: -3px;
+    box-shadow: none;
+}
+dialog.modal-personalizacao .personalizacao-opcao:focus-within {
+    outline: 2px solid var(--rr-leitura-campo-texto);
+    outline-offset: 2px;
+}
+dialog.modal-personalizacao .personalizacao-sobretitulo { color: var(--rr-leitura-campo-texto); }
+dialog.modal-personalizacao .personalizacao-opcoes { padding: 14px 16px 20px; }
+
+@media (max-width:720px) {
+    dialog.modal-personalizacao[open] { max-inline-size: 100%; max-block-size: 100dvh; }
+}

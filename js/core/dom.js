@@ -1,4 +1,4 @@
-import { executar } from './feedback.js';
+import { executar } from './feedback.js?v=mesa-31';
 
 export const porId = (id) => document.getElementById(id);
 
@@ -10,7 +10,7 @@ export function elemento(tag, classe, texto) {
 }
 
 export function mensagemLista(lista, mensagem) {
-    lista.append(elemento('li', 'sem-resultados', mensagem));
+    lista.append(elemento('li', 'sem-resultados rr-estado-vazio rr-estado-vazio--compacto', mensagem));
 }
 
 export function dataBreve(valor) {
@@ -26,3 +26,10 @@ export function botaoAcao(rotulo, tarefa, classe = 'botao botao-pequeno') {
     return botao;
 }
 
+/** Botão de interface com ação imediata, como selecionar um cartão ou fechar um diálogo. */
+export function botao(rotulo, aoClicar, classe = 'botao') {
+    const controle = elemento('button', classe, rotulo);
+    controle.type = 'button';
+    controle.addEventListener('click', aoClicar);
+    return controle;
+}

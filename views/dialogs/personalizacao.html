@@ -1,0 +1,10 @@
+<dialog aria-labelledby="titulo-personalizacao" class="modal-personalizacao" id="modal-personalizacao">
+ <div class="personalizacao-cabecalho"><h2 id="titulo-personalizacao">Personalização visual</h2><div class="personalizacao-acoes">
+ <button class="botao botao-discreto" id="restaurar-personalizacao" type="button">Restaurar padrão</button>
+ <button class="botao rr-botao-marrom" id="salvar-personalizacao" type="submit" form="form-personalizacao">Salvar escolhas</button>
+ <button class="botao botao-discreto" id="fechar-personalizacao" type="button" aria-label="Cancelar e fechar">×</button>
+ <button id="cancelar-personalizacao" type="button" hidden>Cancelar</button></div></div>
+ <span aria-live="polite" class="personalizacao-estado" id="estado-personalizacao"></span>
+ <form class="personalizacao-form" id="form-personalizacao">
+ <div id="previa-mestre" aria-label="Prévia em tempo real"><span class="rr-previa-botao"><span class="cartucho-texto">Campanhas</span></span><section class="rr-previa-cartao" data-rr-papel="principal"><h3>Campanha</h3><div class="rr-previa-retratos"><span data-previa-retrato="jogador" aria-label="Moldura do jogador"></span><span data-previa-retrato="personagem" aria-label="Moldura do personagem"></span></div><label>Nome<input type="text" value="Railroad" readonly></label><section class="rr-previa-cartao" data-rr-papel="interno"><h4>Notas da sessão</h4><textarea readonly>Exemplo de cartão interno</textarea></section></section></div>
+ <div class="personalizacao-opcoes" id="personalizacao-opcoes"></div></form></dialog>

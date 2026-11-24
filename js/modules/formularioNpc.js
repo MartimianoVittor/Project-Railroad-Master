@@ -1,112 +1,101 @@
-import { porId, elemento } from '../core/dom.js';
-import { ARMAS_NPC, CONDICOES_NPC, DISTANCIAS_NPC, NIVEIS_NPC, TRACOS_NPC } from './npcs.js';
+import { elemento, porId } from '../core/dom.js?v=mesa-31';
+import { ARMAS_NPC, CONDICOES_NPC, DISTANCIAS_NPC, TRACOS_NPC } from './npcs.js?v=mesa-31';
+import { DADOS_DE_TRACO } from './rolagem.js?v=mesa-31';
+import { iniciarInventario, lerItens, preencherItens } from './npcs/inventario.js?v=mesa-31';
 
-/** Monta controles repetitivos sem ampliar o fragmento HTML da página. */
-function criarOpcao(valorOpcao, rotulo) {
-    const opcao = elemento('option', '', rotulo);
-    opcao.value = String(valorOpcao);
-    return opcao;
+const CAMPOS = {
+    'nome-personagem': 'nome', 'apelido-personagem': 'apelido',
+    'profissao-personagem': 'profissao', 'lingua-personagem': 'linguas',
+    fama: 'fama', palavra: 'palavra', dinheiro: 'dinheiro',
+    'bio-personagem': 'descricao', papel: 'papel', notas: 'notas',
+    'espaco-maximo-jogador': 'capacidadePersonagem',
+    'espaco-maximo-montaria': 'capacidadeMontaria',
+};
+const RETRATO_PADRAO = 'assets/imgs/imagemPersonagemPlaceholder.webp';
+
+function campoNpc(id) {
+    return porId(`npc-orig-${id}`);
 }
 
-function preencherOpcoes(seletor, opcoes) {
-    seletor.replaceChildren(...opcoes.map(([valorOpcao, rotulo]) => criarOpcao(valorOpcao, rotulo)));
+function marcadores(grupo) {
+    return porId('form-npc').querySelectorAll(`[data-grupo="${grupo}"]`);
 }
 
-function criarCampo(rotulo, id, opcoes) {
-    const label = elemento('label', '', rotulo);
-    const select = elemento('select');
-    select.id = id;
-    preencherOpcoes(select, opcoes);
-    label.append(select);
-    return label;
+function marcarAte(grupo, quantidade) {
+    marcadores(grupo).forEach((campo, indice) => { campo.checked = indice < quantidade; });
 }
 
-export function montarCamposDinamicosNpc() {
-    const opcoesNivel = NIVEIS_NPC.map((rotulo, indice) => [indice, rotulo]);
-    const opcoesMarcas = Array.from({ length: 4 }, (_, indice) => [indice, String(indice)]);
+function contarMarcas(grupo) {
+    return Array.from(marcadores(grupo)).filter((campo) => campo.checked).length;
+}
 
-    preencherOpcoes(porId('npc-traco-principal'), TRACOS_NPC.map((nome) => [nome, nome]));
-    preencherOpcoes(porId('npc-nivel-principal'), opcoesNivel);
-    preencherOpcoes(porId('npc-ferimentos-simples'), opcoesMarcas);
+export function nivelNoFormulario(traco) {
+    return contarMarcas(`traco-${TRACOS_NPC.indexOf(traco) + 1}`);
+}
 
-    const tracos = porId('npc-grade-tracos');
-    const condicoes = porId('npc-grade-condicoes');
-    const armas = porId('npc-grade-armas');
-    const tracosSimples = porId('npc-grade-tracos-simples');
-    for (const grade of [tracos, tracosSimples]) {
-        const cabecalho = elemento('div', 'npc-tracos-cabecalho');
-        for (const titulo of ['TRAÇOS', 'd4', 'd6', 'd8', 'd12']) cabecalho.append(elemento('span', '', titulo));
-        grade.append(cabecalho);
-        for (const [indice, nome] of TRACOS_NPC.entries()) {
-            const linha = elemento('div', 'npc-traco-editor linha-check linha-traco');
-            linha.append(elemento('strong', 'nome-traco', `${nome}:`));
-            const gotas = elemento('div', 'npc-gotas-editor tracos-box');
-            for (let nivel = 1; nivel <= 4; nivel++) {
-                const gota = elemento('button', 'npc-gota check-tracos');
-                gota.type = 'button';
-                gota.dataset.nivel = String(nivel);
-                gota.setAttribute('aria-label', `${nome}: nível ${nivel}`);
-                gota.addEventListener('click', () => {
-                    const input = porId(`npc-traco-${indice}`);
-                    input.value = String(Number(input.value) === nivel ? 0 : nivel);
-                    atualizarGotasNpc();
-                    input.dispatchEvent(new Event('change', { bubbles: true }));
-                });
-                gotas.append(gota);
-            }
-            linha.append(gotas);
-            grade.append(linha);
+function criarLinhaTraco(nome, indice) {
+    const linha = elemento('div', 'linha-check linha-traco');
+    const grupo = `traco-${indice + 1}`;
+    const dados = elemento('div', 'tracos-box');
+    for (const [nivel, faces] of DADOS_DE_TRACO.entries()) {
+        const rotulo = elemento('label', 'marcador-dado');
+        rotulo.title = `${nome} — d${faces}`;
+        const campo = elemento('input', 'check-tracos');
+        campo.type = 'checkbox';
+        campo.dataset.grupo = grupo;
+        campo.setAttribute('aria-label', `${nome}, d${faces}`);
+        campo.addEventListener('change', () => marcarAte(grupo, nivel + Number(campo.checked)));
+        const icone = elemento('span', 'marcador-dado-visual');
+        icone.setAttribute('aria-hidden', 'true');
+        rotulo.append(campo, icone);
+        dados.append(rotulo);
+    }
+    linha.append(elemento('label', 'nome-traco', `${nome}:`), dados);
+    return linha;
+}
+
+export function iniciarFormularioNpc() {
+    porId('npc-grade-tracos').append(...TRACOS_NPC.map(criarLinhaTraco));
+    iniciarInventario();
+}
+
+export function mostrarRetrato(imagem) {
+    campoNpc('foto-personagem').src = imagem || RETRATO_PADRAO;
+}
+
+export function preencherFormulario(npc) {
+    for (const [id, chave] of Object.entries(CAMPOS)) campoNpc(id).value = npc[chave] ?? '';
+    TRACOS_NPC.forEach((traco, indice) => marcarAte(`traco-${indice + 1}`, npc.tracos[traco]));
+    for (const [chave] of CONDICOES_NPC) marcarAte(chave, npc.condicoes[chave]);
+    for (const [chave] of ARMAS_NPC) {
+        const arma = npc.armas[chave];
+        campoNpc(`arma-${chave}`).value = arma.nome;
+        campoNpc(`municao-${chave}`).value = arma.municao;
+        for (const [distancia] of DISTANCIAS_NPC) {
+            campoNpc(`bonus-${chave}-${distancia}`).value = arma.bonus[distancia];
         }
     }
-    // Mantém os selects para compatibilidade com o modelo e os registros antigos.
-    const selects = elemento('div', 'npc-legado-oculto');
-    selects.hidden = true;
-    for (const [indice, nome] of TRACOS_NPC.entries()) {
-        selects.append(criarCampo(nome, `npc-traco-${indice}`, opcoesNivel));
-    }
-    tracos.after(selects);
-    for (const [chave, rotulo] of CONDICOES_NPC) {
-        condicoes.append(criarCampo(`${rotulo} (0–3)`, `npc-condicao-${chave}`, opcoesMarcas));
-    }
-    for (const [chave, rotulo] of ARMAS_NPC) {
-        const secao = elemento('fieldset', 'npc-arma-form cartao-arma');
-        secao.append(elemento('legend', '', `Arma ${rotulo.toLowerCase()}`));
-        const dados = elemento('div', 'grade-campos-npc');
-        const nomeLabel = elemento('label', '', 'Nome da arma');
-        const nome = elemento('input');
-        nome.id = `npc-arma-${chave}-nome`;
-        nome.type = 'text';
-        nome.maxLength = 100;
-        nomeLabel.append(nome);
-        const municaoLabel = elemento('label', '', 'Munição');
-        const municao = elemento('input');
-        municao.id = `npc-arma-${chave}-municao`;
-        municao.type = 'number';
-        municao.min = '0';
-        municao.max = '9999';
-        municaoLabel.append(municao);
-        dados.append(nomeLabel, municaoLabel);
-        for (const [distancia, titulo] of DISTANCIAS_NPC) {
-            dados.append(criarCampo(`Bônus · ${titulo}`, `npc-arma-${chave}-${distancia}`,
-                Array.from({ length: 7 }, (_, indice) => [indice - 3, String(indice - 3)])));
-        }
-        secao.append(dados);
-        armas.append(secao);
-        // Uma só fonte de dados: os mesmos campos de arma são deslocados entre os modos.
-
-    }
+    campoNpc('escolher-foto-personagem').value = '';
+    mostrarRetrato(npc.imagem);
+    preencherItens(npc.itens);
 }
 
-
-export function atualizarGotasNpc() {
-    for (const grade of [porId('npc-grade-tracos'), porId('npc-grade-tracos-simples')]) {
-        for (const [indice, linha] of [...grade.querySelectorAll('.npc-traco-editor')].entries()) {
-            const nivel = Number(porId(`npc-traco-${indice}`).value);
-            for (const gota of linha.querySelectorAll('.npc-gota')) {
-                const ativa = Number(gota.dataset.nivel) <= nivel;
-                gota.classList.toggle('marcada', ativa);
-                gota.setAttribute('aria-pressed', String(ativa));
-            }
+// Parte da ficha carregada para conservar campos de versões anteriores sem editor visual.
+export function lerFormulario(ficha) {
+    const npc = structuredClone(ficha);
+    for (const [id, chave] of Object.entries(CAMPOS)) npc[chave] = campoNpc(id).value;
+    for (const traco of TRACOS_NPC) npc.tracos[traco] = nivelNoFormulario(traco);
+    for (const [chave] of CONDICOES_NPC) npc.condicoes[chave] = contarMarcas(chave);
+    for (const [chave] of ARMAS_NPC) {
+        const arma = npc.armas[chave];
+        arma.nome = campoNpc(`arma-${chave}`).value;
+        arma.municao = campoNpc(`municao-${chave}`).value;
+        for (const [distancia] of DISTANCIAS_NPC) {
+            arma.bonus[distancia] = campoNpc(`bonus-${chave}-${distancia}`).value;
         }
     }
+    npc.itens = lerItens();
+    npc.nivelPrincipal = npc.tracos[npc.tracoPrincipal];
+    npc.tipo = 'completa';
+    return npc;
 }

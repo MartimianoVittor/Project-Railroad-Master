@@ -1,0 +1,550 @@
+/* Viagens simultâneas e seletores no cartão superior. */
+#pagina-viagem .vg-top {
+    grid-template-columns: minmax(255px,320px) minmax(150px,1fr) minmax(265px,310px);
+    align-items: center;
+    gap: 9px 15px;
+}
+
+#pagina-viagem .vg-top-contexto {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+}
+
+#pagina-viagem .vg-top-contexto h2 {
+    margin: 0!important;
+}
+
+#pagina-viagem .vg-seletores {
+    display: grid;
+    grid-template-columns: minmax(0,1.15fr) minmax(0,1fr);
+    gap: 8px;
+    min-width: 0;
+}
+
+#pagina-viagem .vg-seletores label {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 3px;
+    min-width: 0;
+    color: #5b3724;
+    font: 700 12px Georgia,serif;
+}
+
+#pagina-viagem .vg-seletores select {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: none;
+    height: 34px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font: 13px Georgia,serif;
+    background: #fff7e6;
+    border: 1px solid #866341;
+}
+
+#pagina-viagem .vg-seletores select:disabled {
+    opacity: .6;
+}
+
+#pagina-viagem .vg-top-acoes {
+    align-self: center;
+}
+
+#pagina-viagem .vg-dialog #vg-nome-linha {
+    display: grid;
+    gap: 5px;
+}
+
+#pagina-viagem .vg-dialog #vg-nome-linha[hidden],#pagina-viagem .vg-dialog #vg-excluir-viagem[hidden] {
+    display: none!important;
+}
+
+#pagina-viagem .vg-dialog #vg-nome {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#pagina-viagem .vg-dialog footer {
+    flex-wrap: wrap;
+}
+
+#pagina-viagem .vg-dialog .vg-perigo {
+    margin-right: auto;
+    background: #703027;
+    color: #fff2dc;
+}
+
+@media(max-width:1150px) {
+    #pagina-viagem .vg-top {
+        grid-template-columns: minmax(235px,330px) minmax(0,1fr);
+    }
+
+    #pagina-viagem .vg-top-acoes {
+        grid-column: 1/-1;
+        justify-self: end;
+        width: min(100%,350px);
+    }
+}
+
+@media(max-width:640px) {
+    #pagina-viagem .vg-top {
+        grid-template-columns: minmax(0,1fr);
+    }
+
+    #pagina-viagem .vg-top-contexto {
+        gap: 7px;
+    }
+
+    #pagina-viagem .vg-top-acoes {
+        grid-column: 1;
+        justify-self: stretch;
+        width: 100%;
+    }
+
+    #pagina-viagem .vg-seletores {
+        gap: 7px;
+    }
+}
+
+/* Retrato, sobrevivência e suprimentos na mesma faixa; inventário completo logo abaixo, sem rolagem interna da consulta. */
+#pagina-viagem .vg-painel {
+    grid-template-columns: minmax(170px,27%) minmax(0,1fr);
+    gap: 8px;
+}
+
+#pagina-viagem .vg-geral {
+    padding-right: 8px;
+}
+
+#pagina-viagem .vg-geral .vg-estatisticas div {
+    padding: 6px 5px;
+    font-size: 11px;
+}
+
+#pagina-viagem .vg-geral .vg-estatisticas strong {
+    font-size: 15px;
+}
+
+#pagina-viagem .vg-geral label {
+    gap: 3px;
+    font-size: 13px;
+}
+
+#pagina-viagem .vg-geral .vg-botoes .botao {
+    font-size: 12px;
+}
+
+#pagina-viagem #vg-detalhe {
+    display: grid;
+    grid-template-columns: minmax(105px,.82fr) minmax(175px,1.4fr) minmax(135px,1fr);
+    gap: 7px;
+    align-items: stretch;
+    grid-auto-rows: max-content;
+}
+
+#pagina-viagem #vg-detalhe > .vg-ficha-identificacao {
+    grid-column: 1;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 5px;
+    padding: 7px 5px;
+}
+
+#pagina-viagem #vg-detalhe .vg-ficha-poster {
+    width: min(100%,122px);
+    flex: 0 0 auto;
+    aspect-ratio: 1/1;
+}
+
+#pagina-viagem #vg-detalhe .vg-ficha-identidade {
+    text-align: center;
+}
+
+#pagina-viagem #vg-detalhe .vg-ficha-identidade strong {
+    font-size: 13px;
+}
+
+#pagina-viagem #vg-detalhe .vg-ficha-identidade small {
+    font-size: 11px;
+    margin-top: 2px;
+}
+
+#pagina-viagem #vg-detalhe .vg-ficha-marcas {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+#pagina-viagem #vg-detalhe .vg-ficha-suprimentos {
+    grid-column: 3;
+    grid-row: 1;
+}
+
+#pagina-viagem #vg-detalhe > .vg-ficha-inventario {
+    grid-column: 1/-1;
+    grid-row: 2;
+}
+
+#pagina-viagem #vg-detalhe .vg-ficha-marcas .linha-check {
+    justify-content: space-between;
+}
+
+#pagina-viagem #vg-detalhe .vg-ficha-marcas .linha-check>label {
+    font-size: 12px;
+    line-height: 1.1;
+    letter-spacing: 0;
+}
+
+#pagina-viagem #vg-detalhe .vg-ficha-marcas .check-caveira {
+    width: 22px;
+    height: 22px;
+}
+
+#pagina-viagem #vg-detalhe .vg-ficha-suprimentos h4 {
+    margin-bottom: 4px;
+}
+
+#pagina-viagem #vg-detalhe .vg-ficha-recurso {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 3px;
+    padding: 4px 0;
+}
+
+#pagina-viagem #vg-detalhe .vg-controles {
+    justify-content: space-between;
+    gap: 3px;
+}
+
+#pagina-viagem #vg-detalhe .vg-recurso-valor {
+    box-sizing: border-box;
+    min-width: 0;
+    width: 100%;
+    flex: 1 1 40px;
+    max-width: 70px;
+    height: 30px;
+    padding: 3px;
+    text-align: center;
+    font: 700 14px Georgia,serif;
+}
+
+#pagina-viagem #vg-detalhe .vg-controles button {
+    flex: 0 0 27px;
+}
+
+#pagina-viagem #vg-detalhe .vg-ficha-inventario .tabela-itens {
+    min-width: 0;
+    table-layout: auto;
+}
+
+@container (max-width:520px) {
+    #pagina-viagem #vg-detalhe {
+        grid-template-columns: minmax(100px,.85fr) minmax(165px,1.5fr);
+    }
+
+    #pagina-viagem #vg-detalhe > .vg-ficha-identificacao {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    #pagina-viagem #vg-detalhe .vg-ficha-marcas {
+        grid-column: 2;
+        grid-row: 1;
+    }
+
+    #pagina-viagem #vg-detalhe .vg-ficha-suprimentos {
+        grid-column: 1/-1;
+        grid-row: 2;
+    }
+
+    #pagina-viagem #vg-detalhe .vg-ficha-recurso {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    #pagina-viagem #vg-detalhe > .vg-ficha-inventario {
+        grid-column: 1/-1;
+        grid-row: 3;
+    }
+}
+
+@container (max-width:310px) {
+    #pagina-viagem #vg-detalhe {
+        grid-template-columns: minmax(0,1fr);
+    }
+
+    #pagina-viagem #vg-detalhe > .vg-ficha-identificacao,
+    #pagina-viagem #vg-detalhe .vg-ficha-marcas,
+    #pagina-viagem #vg-detalhe .vg-ficha-suprimentos,
+    #pagina-viagem #vg-detalhe > .vg-ficha-inventario {
+        grid-column: 1;
+        grid-row: auto;
+    }
+}
+
+@media(min-width:1100px) {
+    #pagina-viagem:not([hidden]) {
+        height: auto;
+        min-height: calc(100dvh - 72px);
+        overflow: visible;
+    }
+
+    #pagina-viagem .vg-app {
+        height: auto;
+        min-height: calc(100dvh - 96px);
+    }
+
+    #pagina-viagem .vg-grade {
+        min-height: 0;
+    }
+
+    #pagina-viagem .vg-painel {
+        overflow: visible;
+    }
+
+    #pagina-viagem .vg-consulta {
+        overflow: visible;
+    }
+
+    #pagina-viagem #vg-detalhe {
+        flex: 0 0 auto;
+        height: auto;
+        overflow: visible;
+        max-height: none;
+    }
+}
+
+/* Inventário com rolagem restrita ao cartão. */
+#pagina-viagem #vg-detalhe > .vg-ficha-inventario {
+    min-height: 0;
+    max-height: clamp(180px,35vh,350px);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#pagina-viagem #vg-detalhe .vg-ficha-inventario .tabela-itens-rolagem {
+    flex: 1 1 auto;
+    min-height: 0;
+    max-height: 100%;
+    overflow-y: auto;
+    overflow-x: auto;
+    overscroll-behavior: contain;
+}
+
+#pagina-viagem #vg-detalhe .vg-ficha-inventario .tabela-itens thead {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+#pagina-viagem .vg-geral select {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 100%;
+    border: 1px solid #9a754a;
+    border-radius: 5px;
+    background-color: #f1e1bf;
+    background-image: linear-gradient(45deg,transparent 50%,#694329 50%),linear-gradient(135deg,#694329 50%,transparent 50%);
+    background-position: calc(100% - 16px) 50%,calc(100% - 11px) 50%;
+    background-size: 5px 5px;
+    background-repeat: no-repeat;
+    color: #442a1b;
+    font: 700 13px Georgia,serif;
+    padding: 9px 25px 9px 10px;
+    box-shadow: inset 0 1px 2px rgba(76,43,21,.12);
+}
+
+#pagina-viagem .vg-geral select:focus-visible {
+    outline: 2px solid #87332a;
+    outline-offset: 2px;
+}
+
+#pagina-viagem .vg-geral label {
+    font-weight: 700;
+}
+
+/* Distâncias independentes, edição dos viajantes e inventário contido. */
+#pagina-viagem .vg-item .vg-editar-viajante {
+    flex: 0 0 27px;
+    width: 27px;
+    height: 28px;
+    padding: 1px;
+    color: #57341e;
+    background: #e5c68e;
+    border: 1px solid #997345;
+    border-radius: 3px;
+    font: 700 17px Georgia,serif;
+    cursor: pointer;
+}
+
+#pagina-viagem .vg-item .vg-editar-viajante:hover,
+#pagina-viagem .vg-item .vg-editar-viajante:focus-visible {
+    background: #d7aa69;
+    outline-offset: 2px;
+}
+
+#vg-dialog-viajante [hidden] {
+    display: none!important;
+}
+
+#vg-dialog-viajante .vg-viajante-campos {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    gap: 8px;
+}
+
+#vg-dialog-viajante .vg-viajante-campos label[for="vg-montaria"] {
+    grid-column: 1/-1;
+}
+
+#vg-dialog-viajante .vg-viajante-campos label {
+    font-size: 13px;
+}
+
+#pagina-viagem #vg-detalhe > .vg-ficha-inventario {
+    box-sizing: border-box;
+    max-height: min(30dvh,260px);
+}
+
+#pagina-viagem #vg-detalhe > .vg-ficha-inventario .tabela-itens-rolagem {
+    overflow: auto;
+    min-height: 0;
+    flex: 1 1 auto;
+    overscroll-behavior: contain;
+}
+
+@media(min-width:1100px) and (min-height:620px) {
+    /* Uma tela: os cartões superiores têm altura natural; o inventário usa o restante. */
+    #pagina-viagem:not([hidden]) {
+        height: calc(100dvh - 72px);
+        min-height: 0;
+        overflow: hidden;
+    }
+
+    #pagina-viagem .vg-app {
+        height: 100%;
+        min-height: 0;
+        overflow: hidden;
+    }
+
+    #pagina-viagem .vg-grade {
+        flex: 1 1 0;
+        height: auto;
+        min-height: 0;
+        overflow: hidden;
+    }
+
+    #pagina-viagem .vg-painel {
+        overflow: hidden;
+        min-height: 0;
+    }
+
+    #pagina-viagem .vg-consulta {
+        overflow: hidden;
+        min-height: 0;
+    }
+
+    #pagina-viagem #vg-detalhe {
+        flex: 1 1 0;
+        min-height: 0;
+        height: auto;
+        max-height: 100%;
+        grid-template-rows: max-content minmax(0,1fr);
+        align-content: stretch;
+        overflow: hidden;
+        padding-bottom: 0;
+    }
+
+    #pagina-viagem #vg-detalhe > .vg-ficha-inventario {
+        grid-row: 2;
+        height: 100%;
+        min-height: 0;
+        max-height: none;
+        align-self: stretch;
+    }
+}
+
+@media(max-width:530px) {
+    #vg-dialog-viajante .vg-viajante-campos {
+        grid-template-columns: minmax(0,1fr);
+    }
+
+    #vg-dialog-viajante .vg-viajante-campos label[for="vg-montaria"] {
+        grid-column: 1;
+    }
+}
+
+/* Ajustes para larguras intermediárias sem controles cortados. */
+#pagina-viagem .vg-geral .vg-botoes {
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+}
+
+#pagina-viagem .vg-geral .vg-botoes .botao {
+    box-sizing: border-box;
+    flex: 0 1 auto;
+    font-size: clamp(10px,.86vw,12px);
+}
+
+@media(min-width:1100px) {
+    #pagina-viagem .vg-geral {
+        overflow-y: auto;
+        scrollbar-width: thin;
+    }
+}
+
+/* Abaixo de 520px de painel, a grade antiga empilhava suprimentos; com 440–520px ainda cabem três cartões compactos lado a lado. */
+@container (min-width:440px) and (max-width:520px) {
+    #pagina-viagem #vg-detalhe {
+        grid-template-columns: minmax(86px,.75fr) minmax(155px,1.4fr) minmax(104px,1fr);
+        grid-template-rows: max-content minmax(0,1fr);
+    }
+
+    #pagina-viagem #vg-detalhe > .vg-ficha-identificacao {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    #pagina-viagem #vg-detalhe .vg-ficha-marcas {
+        grid-column: 2;
+        grid-row: 1;
+    }
+
+    #pagina-viagem #vg-detalhe .vg-ficha-suprimentos {
+        grid-column: 3;
+        grid-row: 1;
+    }
+
+    #pagina-viagem #vg-detalhe .vg-ficha-recurso {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    #pagina-viagem #vg-detalhe > .vg-ficha-inventario {
+        grid-column: 1/-1;
+        grid-row: 2;
+    }
+}
+
+@media(min-width:1100px) and (min-height:620px) {
+    /* Em consultas mais estreitas, os suprimentos devem aparecer antes do inventário. */
+    @container (max-width:439px) {
+        #pagina-viagem #vg-detalhe {
+            grid-template-rows: max-content max-content minmax(0,1fr);
+        }
+
+        #pagina-viagem #vg-detalhe .vg-ficha-suprimentos {
+            grid-row: 2;
+        }
+
+        #pagina-viagem #vg-detalhe > .vg-ficha-inventario {
+            grid-row: 3;
+        }
+    }
+}

@@ -1,31 +1,32 @@
 <section id="pagina-utilitarios" class="pagina-mestre" data-pagina-container="utilitarios" aria-label="Utilitários" hidden>
-    <div class="grade-ferramentas grade-utilitarios">
-        <section class="cartao-campanha">
-            <p class="sobretitulo">NÍVEIS DOS TRAÇOS</p>
-            <h2>Dados</h2>
-            <div class="dados-referencia">
-                <span>d4</span>
-                <span>d6</span>
-                <span>d8</span>
-                <span>d12</span>
+    <header class="util-barra-consultas" aria-label="Gerenciar consultas">
+        <div class="util-form-campo util-form-select">
+            <label for="util-consulta-salva">Consulta predefinida ou salva</label>
+            <select id="util-consulta-salva" aria-label="Selecionar uma consulta"></select>
+        </div>
+        <div class="util-form-campo util-form-nome">
+            <label for="util-consulta-nome">Nome da consulta</label>
+            <input id="util-consulta-nome" type="text" maxlength="70" autocomplete="off" placeholder="Ex.: Encontro na fronteira">
+        </div>
+        <div class="util-barra-acoes">
+            <button id="util-salvar" class="botao rr-botao-marrom" type="button">Salvar consulta</button>
+            <button id="util-limpar" class="botao rr-botao-vermelho" type="button">Limpar quadro</button>
+            <button id="util-excluir" class="botao rr-botao-vermelho" type="button" disabled>Excluir consulta</button>
+        </div>
+    </header>
+
+    <div class="util-area-principal">
+        <aside class="util-catalogo" aria-labelledby="util-titulo-catalogo">
+            <div class="util-catalogo-topo">
+                <h3 id="util-titulo-catalogo">Mecânicas</h3>
+                <label for="util-busca" class="sr-only">Buscar mecânicas</label>
+                <input id="util-busca" type="search" placeholder="Buscar regra ou palavra-chave…" autocomplete="off">
             </div>
-            <p class="instrucao">Dado máximo: nova rolagem explosiva. Traço incapaz: falha automática.</p>
-        </section>
-        <section class="cartao-campanha">
-            <p class="sobretitulo">MODIFICADORES</p>
-            <h2>Vantagem e desvantagem</h2>
-            <p class="numero-destaque">−3 <span>até</span> +3</p>
-            <p class="instrucao">O modificador é somado ao resultado da rolagem.</p>
-        </section>
-        <section class="cartao-campanha">
-            <p class="sobretitulo">TESTES</p>
-            <h2>Dificuldades de referência</h2>
-            <dl class="referencia-dificuldade">
-                <div><dt>Comum</dt><dd>5</dd></div>
-                <div><dt>Difícil</dt><dd>10</dd></div>
-                <div><dt>Extremamente difícil</dt><dd>15</dd></div>
-            </dl>
+            <div id="util-lista-mecanicas" class="util-lista-mecanicas" aria-label="Mecânicas disponíveis"></div>
+        </aside>
+        <section class="util-consultas" aria-label="Quadro de consultas">
+            <div id="util-grade" class="util-grade" aria-label="Grade personalizável de consultas"></div>
+            <p id="util-status" class="util-status" role="status" aria-live="polite"></p>
         </section>
     </div>
-    <p class="nota-escopo">Estes valores são um lembrete inicial, não substituem o livro de regras completo do Railroad.</p>
 </section>

@@ -20,10 +20,10 @@
     background-repeat: no-repeat;
 }
 .rr-ficha-mobile.rr-ficha-jogador .ficha-retrato {
-    background-image: url('../assets/imgs/imagemJogadorPlaceholder.png');
+    background-image: url('../assets/imgs/imagemJogadorPlaceholder.webp');
 }
 .rr-ficha-mobile.rr-ficha-personagem .ficha-retrato {
-    background-image: url('../assets/imgs/imagemPersonagemPlaceholder.png');
+    background-image: url('../assets/imgs/imagemPersonagemPlaceholder.webp');
 }
 .rr-ficha-mobile .ficha-retrato .rr-retrato-foto {
     position: absolute;

@@ -1,0 +1,615 @@
+/* Utilitários — escudo personalizável de consultas do livro Railroad 1.0.
+   Estilos isolados: não redefinir .botao ou cartões das demais páginas. */
+#pagina-utilitarios { min-width:0; }
+#pagina-utilitarios :is(button,select,input) { font-family:Georgia,serif; }
+#pagina-utilitarios .sobretitulo { margin:0 0 5px; }
+#pagina-utilitarios h2,#pagina-utilitarios h3 { margin:0; color:#522b20; }
+#pagina-utilitarios h2 { font-size:1.38rem; }
+#pagina-utilitarios h3 { font-size:1.16rem; }
+#pagina-utilitarios .util-barra-consultas {
+  display:grid; grid-template-columns:auto minmax(185px,1fr) minmax(145px,.7fr) auto;
+  gap:12px; align-items:end; margin:0 0 15px; padding:14px 16px;
+  border:2px solid #795338; border-radius:5px; background:#f2e2c2;
+  box-shadow:inset 0 1px 0 #fff8e9,0 3px 0 #32200e15;
+}
+#pagina-utilitarios .util-barra-titulo { align-self:center; min-width:140px; }
+#pagina-utilitarios .util-form-campo { display:flex; flex-direction:column; min-width:0; gap:5px; }
+#pagina-utilitarios .util-form-campo label { color:#67422d; font-size:.73rem; font-weight:bold; }
+#pagina-utilitarios .util-form-campo :is(select,input),
+#pagina-utilitarios #util-busca {
+  box-sizing:border-box; display:block; width:100%; min-height:36px; min-width:0;
+  padding:7px 10px; color:#382518; background:#fff9ed;
+  border:1px solid #8b6747; border-radius:4px; font-size:.86rem;
+}
+#pagina-utilitarios .util-form-campo :is(select,input):focus-visible,
+#pagina-utilitarios #util-busca:focus-visible { outline:3px solid #d4af37;outline-offset:2px; }
+#pagina-utilitarios .util-barra-acoes { display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:7px; }
+#pagina-utilitarios .util-barra-acoes .botao { min-height:36px;padding:7px 10px;white-space:nowrap;font-size:.78rem; }
+#pagina-utilitarios .util-barra-acoes .botao:disabled { opacity:.54;cursor:not-allowed; }
+#pagina-utilitarios .util-area-principal { display:grid;grid-template-columns:minmax(240px,290px) minmax(0,1fr);gap:14px;align-items:start;min-height:0; }
+#pagina-utilitarios :is(.util-catalogo,.util-consultas) { box-sizing:border-box;min-width:0;border:2px solid #75492e;border-radius:5px;background:#eaddbf;box-shadow:0 4px 10px #27160e23; }
+#pagina-utilitarios .util-catalogo { display:flex;flex-direction:column;height:auto;min-height:0;overflow:hidden; }
+#pagina-utilitarios .util-catalogo-topo { flex:0 0 auto;padding:14px 12px 11px;border-bottom:2px solid #a48260;background:#efddba; }
+#pagina-utilitarios .util-catalogo-topo h3 { margin-bottom:10px; }
+#pagina-utilitarios .util-contador { margin:8px 0 0;color:#6e4d38;font-size:.76rem; }
+#pagina-utilitarios .util-lista-mecanicas { flex:1 1 auto;overflow-y:auto;min-height:0;padding:9px;scrollbar-color:#94704c #eaddbf; }
+/* Os títulos pertencem ao fluxo da lista: quando fixos (sticky), cobrem
+   a primeira mecânica durante a rolagem e tornam o texto ilegível. */
+#pagina-utilitarios .util-categoria-titulo {
+  position: static;
+  margin: 12px 0 7px;
+  padding: 6px 7px;
+  color: #f9eccc;
+  background: #663126;
+  border-radius: 3px;
+  font-size: .74rem;
+  letter-spacing: .01em;
+}
+#pagina-utilitarios .util-categoria-titulo:first-child { margin-top:0; }
+#pagina-utilitarios .util-mecanica { display:grid;grid-template-columns:minmax(0,1fr) 33px;gap:6px;align-items:center;margin:0 0 7px;padding:9px 7px 9px 10px;border:1px solid #bb986f;border-left:4px solid #946a44;border-radius:4px;background:#f9edcf; }
+#pagina-utilitarios .util-mecanica.adicionada { border-color:#af8543;border-left-color:#d4af37;background:#fff2ce; }
+#pagina-utilitarios .util-mecanica h4 { margin:0 0 4px;font-size:.83rem;color:#482b1d;line-height:1.2; }
+#pagina-utilitarios .util-mecanica p { margin:0;font-size:.68rem;line-height:1.4;color:#75543d; }
+#pagina-utilitarios .util-mecanica .util-mecanica-marcar { width:31px;height:32px;min-width:31px;padding:0;border:2px solid #6b4630;border-radius:4px;background:#e1c990;color:#56351e;font:bold 1.15rem Georgia,serif;cursor:pointer; }
+#pagina-utilitarios .util-mecanica .util-mecanica-marcar:hover { background:#f5dfa7; }
+#pagina-utilitarios .util-mecanica.adicionada .util-mecanica-marcar { background:#d4af37;border-color:#87621d;color:#3d2314; }
+#pagina-utilitarios .util-mecanica .util-mecanica-marcar:focus-visible { outline:3px solid #a76520;outline-offset:2px; }
+#pagina-utilitarios .util-consultas { padding:14px;min-height:0;background:#f1e3c6; }
+#pagina-utilitarios .util-quadro-cabecalho { display:flex;align-items:end;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:0 1px 10px;border-bottom:1px solid #b99470; }
+#pagina-utilitarios .util-quadro-cabecalho .util-contador { margin:0; }
+#pagina-utilitarios .util-ajuda { margin:10px 1px 12px;color:#75543c;font-size:.78rem;line-height:1.55; }
+#pagina-utilitarios .util-grade { position:relative;display:grid;grid-template-columns:repeat(var(--util-colunas,6),minmax(0,1fr));grid-auto-rows:22px;gap:8px;align-content:start;min-height:560px;padding:10px;box-sizing:border-box;border:1px dashed #a98763;border-radius:4px;background-color:#f7ecd6;background-image:linear-gradient(to right,#99755017 1px,transparent 1px),linear-gradient(to bottom,#99755017 1px,transparent 1px);background-size:calc((100% - 20px) / var(--util-colunas,6)) 30px; }
+#pagina-utilitarios .util-cartao { box-sizing:border-box;position:relative;z-index:0;display:flex;flex-direction:column;min-width:0;min-height:0;overflow:hidden;border:2px solid #815436;border-radius:5px;background:#fff7e8;box-shadow:2px 3px 0 #74523334; }
+#pagina-utilitarios .util-cartao.arrastando { z-index:6;opacity:.83;box-shadow:0 9px 24px #27160e55;pointer-events:none; }
+#pagina-utilitarios .util-cartao-cabecalho { flex:0 0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px;padding:7px 8px;background:#663126;color:#fff2d2;border-bottom:1px solid #3d2314; }
+#pagina-utilitarios .util-cartao-cabecalho h4 { margin:0;flex:1 1 120px;min-width:0;font:bold .86rem Georgia,serif;color:#fff2d2;line-height:1.25; }
+#pagina-utilitarios .util-cartao-arrastar { display:flex;gap:5px;align-items:center;flex:0 0 auto;padding:4px 5px;background:#8f5740;color:#fff2d2;border:1px solid #d2a27c;border-radius:3px;font:bold .68rem Georgia,serif;touch-action:none;cursor:grab;user-select:none; }
+#pagina-utilitarios .util-cartao-arrastar:active { cursor:grabbing; }
+#pagina-utilitarios .util-cartao-corpo { flex:1 1 auto;min-height:0;overflow:hidden;padding:9px 10px 4px; }
+#pagina-utilitarios .util-cartao-corpo p { margin:0 0 7px;color:#422c1e;font-size:.77rem;line-height:1.45; }
+#pagina-utilitarios .util-cartao-corpo ul { list-style:disc;margin:4px 0 0;padding-left:17px; }
+#pagina-utilitarios .util-cartao-corpo li { margin:0 0 4px;color:#533928;font-size:.75rem;line-height:1.34;overflow-wrap:anywhere; }
+#pagina-utilitarios .util-cartao-rodape { flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:7px;flex-wrap:wrap;padding:6px 7px;border-top:1px solid #d8bd9c;background:#efe1c7; }
+#pagina-utilitarios .util-pagina-livro { color:#755037;font-size:.65rem; }
+#pagina-utilitarios .util-ajustes { display:flex;align-items:center;gap:3px;flex-wrap:wrap;justify-content:flex-end; }
+#pagina-utilitarios .util-ajustes button { box-sizing:border-box;min-width:26px;min-height:25px;padding:1px 4px;border:1px solid #836044;border-radius:3px;background:#e1c990;color:#3d2314;font:bold .85rem Georgia,serif;cursor:pointer; }
+#pagina-utilitarios .util-ajustes button:hover:not(:disabled) { background:#d4af37; }
+#pagina-utilitarios .util-ajustes button:focus-visible { outline:2px solid #9b5725;outline-offset:1px; }
+#pagina-utilitarios .util-ajustes .util-remover { background:#8b252d;color:#fff4e2;border-color:#632027; }
+#pagina-utilitarios .util-ajustes .util-remover:hover:not(:disabled) { background:#a23139; }
+#pagina-utilitarios .util-vazio { grid-column:1/-1;align-self:start;justify-self:center;max-width:490px;margin:48px 14px;padding:25px 20px;color:#7a5840;background:#f2e2c2dd;border:2px dashed #ad8969;border-radius:6px;text-align:center;line-height:1.6; }
+#pagina-utilitarios .util-vazio strong { display:block;color:#8b252d;margin-bottom:8px; }
+#pagina-utilitarios .util-status { margin:12px 2px 0;color:#75543c;font-size:.73rem;line-height:1.4; }
+#pagina-utilitarios .util-resultado-vazio { margin:16px 8px;color:#68452c;font-size:.85rem;line-height:1.4; }
+@media(max-width:1420px) {
+  #pagina-utilitarios .util-barra-consultas { grid-template-columns:180px minmax(170px,1fr) minmax(150px,1fr); }
+  #pagina-utilitarios .util-barra-acoes { grid-column:1/-1;justify-content:flex-end; }
+}
+@media(max-width:1040px) {
+  #pagina-utilitarios .util-area-principal { grid-template-columns:minmax(225px,260px) minmax(0,1fr); }
+  #pagina-utilitarios .util-barra-consultas { grid-template-columns:minmax(160px,1fr) minmax(190px,1.5fr); }
+  #pagina-utilitarios .util-barra-acoes { grid-column:1/-1; }
+  #pagina-utilitarios .util-catalogo { height:clamp(320px,65dvh,650px); }
+}
+@media(max-width:740px) {
+  #pagina-utilitarios .util-barra-consultas { grid-template-columns:minmax(0,1fr); }
+  #pagina-utilitarios .util-barra-acoes { grid-column:auto;justify-content:flex-start; }
+  #pagina-utilitarios .util-barra-acoes .botao { flex:1 1 auto; }
+  #pagina-utilitarios .util-area-principal { grid-template-columns:minmax(0,1fr); }
+  #pagina-utilitarios .util-catalogo { height:340px; }
+  #pagina-utilitarios .util-consultas { padding:10px;min-height:640px; }
+  #pagina-utilitarios .util-grade { padding:7px;min-height:520px; }
+  #pagina-utilitarios .util-cartao-cabecalho { padding:5px; }
+  #pagina-utilitarios .util-cartao-cabecalho h4 { font-size:.8rem; }
+}
+@media(prefers-reduced-motion:reduce) {
+  #pagina-utilitarios .util-cartao { transition:none; }
+}
+
+
+/* A área de consultas acompanha o fluxo normal em tablet;
+   a distribuição exata da altura no desktop fica no bloco final deste arquivo. */
+@media (min-width:741px) {
+  #pagina-utilitarios .util-area-principal {
+    min-height:0;
+    align-items:stretch;
+  }
+  #pagina-utilitarios .util-catalogo,
+  #pagina-utilitarios .util-consultas {
+    min-height:0;
+    overflow:hidden;
+  }
+  #pagina-utilitarios .util-catalogo { display:flex;flex-direction:column; }
+  #pagina-utilitarios .util-consultas { display:flex;flex-direction:column; }
+  #pagina-utilitarios .util-grade {
+    flex:1 1 auto;
+    min-height:0;
+    height:auto;
+    overflow-y:auto;
+    overflow-x:hidden;
+    scrollbar-color:#94704c #f7ecd6;
+    overscroll-behavior:contain;
+  }
+}
+#pagina-utilitarios .util-lista-mecanicas {
+  overflow-y:auto;
+  min-height:0;
+  overscroll-behavior:contain;
+}
+#pagina-utilitarios .util-quadro-cabecalho,
+#pagina-utilitarios .util-ajuda,
+#pagina-utilitarios .util-status { flex-shrink:0; }
+#pagina-utilitarios .util-cartao-corpo p,
+#pagina-utilitarios .util-cartao-corpo li {
+  text-align:justify;
+  text-justify:inter-word;
+  hyphens:auto;
+  overflow-wrap:break-word;
+}
+#pagina-utilitarios .util-tabela-rolagem {
+  width:100%;
+  max-width:100%;
+  overflow-x:auto;
+  margin:7px 0 9px;
+  scrollbar-width:thin;
+}
+#pagina-utilitarios .util-tabela-regras {
+  width:100%;
+  border-collapse:collapse;
+  font:normal .72rem/1.35 Georgia,serif;
+  color:#422c1e;
+}
+#pagina-utilitarios .util-tabela-regras th {
+  padding:5px 6px;
+  background:#663126;
+  border:1px solid #663126;
+  color:#fff3d9;
+  font-weight:700;
+  font-size:.69rem;
+  text-align:left;
+  vertical-align:top;
+}
+#pagina-utilitarios .util-tabela-regras td {
+  padding:5px 6px;
+  border:1px solid #c6a982;
+  background:#fff7e8;
+  vertical-align:top;
+  overflow-wrap:anywhere;
+}
+#pagina-utilitarios .util-tabela-regras tbody tr:nth-child(even) td { background:#f2e4c9; }
+#pagina-utilitarios .util-tabela-regras td:first-child { font-weight:bold; }
+#pagina-utilitarios .util-cartao-corpo .util-tabela-regras { text-align:left; }
+#pagina-utilitarios .util-cartao-corpo .util-tabela-regras td { text-align:left; }
+#pagina-utilitarios .util-cartao-corpo .util-tabela-regras td:not(:first-child) { text-align:justify; }
+@media (max-width:740px) {
+  /* Em telas estreitas os quadros são empilhados, com alturas controladas;
+     a barra superior continua acessível por rolagem natural da página. */
+  #pagina-utilitarios .util-area-principal { min-height:0;align-items:stretch; }
+  #pagina-utilitarios .util-catalogo {
+    height:clamp(220px,34dvh,320px);
+    min-height:0;
+    max-height:clamp(220px,34dvh,320px);
+    overflow:hidden;
+  }
+  #pagina-utilitarios .util-consultas {
+    display:flex;
+    flex-direction:column;
+    height:clamp(360px,65dvh,660px);
+    min-height:0;
+    max-height:clamp(360px,65dvh,660px);
+    overflow:hidden;
+  }
+  #pagina-utilitarios .util-grade {
+    flex:1 1 auto;
+    min-height:0;
+    overflow-y:auto;
+    overflow-x:hidden;
+    overscroll-behavior:contain;
+  }
+}
+/* Em tablets, duas colunas estreitas deixariam a grade quase sem altura.
+   Empilhar os quadros mantém uma área utilizável para consulta, sem transbordar
+   o cartão e sem ocultar conteúdo. */
+@media (min-width:741px) and (max-width:920px) {
+  #pagina-utilitarios .util-area-principal {
+    grid-template-columns:minmax(0,1fr);
+    height:auto;
+    max-height:none;
+    min-height:0;
+    overflow:visible;
+  }
+  #pagina-utilitarios .util-catalogo {
+    height:clamp(220px,34dvh,310px);
+    max-height:clamp(220px,34dvh,310px);
+  }
+  #pagina-utilitarios .util-consultas {
+    height:clamp(370px,70dvh,600px);
+    max-height:clamp(370px,70dvh,600px);
+  }
+}
+
+/* Atualização 44 — barra sem o bloco de título; campos aproveitam o espaço. */
+@media (min-width:1421px) {
+  #pagina-utilitarios .util-barra-consultas { grid-template-columns:minmax(185px,1fr) minmax(145px,.7fr) auto; }
+}
+@media (min-width:1041px) and (max-width:1420px) {
+  #pagina-utilitarios .util-barra-consultas { grid-template-columns:minmax(170px,1fr) minmax(150px,1fr); }
+}
+
+/* Atualização 47 — subdivisões menores, proporções mínimas e lados pares. */
+#pagina-utilitarios .util-grade {
+    --util-celula:30px;
+    grid-auto-rows:var(--util-celula);
+    grid-template-columns:repeat(var(--util-colunas, 6), minmax(0, 1fr));
+    scrollbar-gutter:stable;
+    background-size:calc(var(--util-celula) + 8px) calc(var(--util-celula) + 8px);
+    background-origin:content-box;
+    background-clip:content-box;
+    background-position:0 0;
+}
+#pagina-utilitarios .util-mecanica-metadados {
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:5px 8px;
+}
+#pagina-utilitarios .util-mecanica-tamanho {
+    display:inline-block;
+    padding:2px 6px;
+    border:1px solid #a67d54;
+    border-radius:3px;
+    color:#54351e;
+    background:#e8d3a7;
+    white-space:nowrap;
+    font:bold .7rem Georgia,serif;
+}
+#pagina-utilitarios .util-cartao.util-medicao {
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:-1;
+    height:max-content;
+    min-height:0;
+    max-height:none;
+    visibility:hidden;
+    pointer-events:none;
+    box-shadow:none;
+}
+#pagina-utilitarios .util-medicao .util-cartao-corpo {
+    flex:0 0 auto;
+    min-height:0;
+    overflow:visible;
+}
+
+/* Conteúdo mais compacto para minimizar a área ocupada sem ocultar regras. */
+#pagina-utilitarios .util-cartao-cabecalho { padding:5px 7px;gap:3px; }
+#pagina-utilitarios .util-cartao-arrastar { padding:3px 4px; }
+#pagina-utilitarios .util-cartao-corpo { padding:6px 8px 3px; }
+#pagina-utilitarios .util-cartao-corpo p { margin-bottom:5px;line-height:1.35; }
+#pagina-utilitarios .util-cartao-corpo li { margin-bottom:3px;line-height:1.28; }
+#pagina-utilitarios .util-tabela-rolagem { margin:4px 0 5px; }
+#pagina-utilitarios .util-tabela-regras { line-height:1.25; }
+#pagina-utilitarios .util-tabela-regras th,
+#pagina-utilitarios .util-tabela-regras td { padding:3px 5px; }
+#pagina-utilitarios .util-cartao-rodape { padding:4px 6px;gap:4px; }
+#pagina-utilitarios .util-ajustes button { min-width:24px;min-height:23px; }
+
+/* Atualização 48 — menos espaços em branco, mantendo a grade quadrada e os lados pares. */
+#pagina-utilitarios .util-cartao-cabecalho { flex-wrap:nowrap;gap:5px; }
+#pagina-utilitarios .util-cartao-cabecalho h4 { flex:1 1 auto;min-width:0;overflow-wrap:break-word; }
+#pagina-utilitarios .util-cartao-arrastar { flex:0 0 auto;min-width:24px;justify-content:center; }
+#pagina-utilitarios .util-cartao-rodape { flex-wrap:nowrap;gap:3px;padding:3px 5px; }
+#pagina-utilitarios .util-pagina-livro { white-space:nowrap;font-size:.64rem; }
+#pagina-utilitarios .util-ajustes { flex:0 0 auto;gap:2px;flex-wrap:nowrap; }
+#pagina-utilitarios .util-ajustes button { min-width:22px;min-height:22px;padding:0 3px; }
+#pagina-utilitarios .util-cartao-corpo { padding:5px 7px 2px; }
+#pagina-utilitarios .util-cartao-corpo p { line-height:1.3;margin-bottom:4px; }
+#pagina-utilitarios .util-tabela-rolagem { margin:3px 0 3px; }
+#pagina-utilitarios .util-tabela-regras th,
+#pagina-utilitarios .util-tabela-regras td { padding:3px 4px; }
+
+
+/* Atualização 53 — alças de arraste nas bordas, sem quatro botões de +/-.
+   A própria barra de título move o cartão; as alças ajustam largura e altura. */
+#pagina-utilitarios .util-cartao-cabecalho {
+    cursor:grab;
+    touch-action:none;
+    user-select:none;
+}
+#pagina-utilitarios .util-cartao-cabecalho:active { cursor:grabbing; }
+#pagina-utilitarios .util-cartao.redimensionando {
+    z-index:7;
+    overflow:visible;
+    outline:2px dashed #b88331;
+    outline-offset:1px;
+    box-shadow:0 8px 20px #28160f36;
+}
+#pagina-utilitarios .util-alca {
+    position:absolute;
+    z-index:5;
+    display:block;
+    box-sizing:border-box;
+    border:1px solid #94683e;
+    border-radius:4px;
+    background:#d9b87b;
+    box-shadow:inset 0 1px 0 #f9e7b5;
+    touch-action:none;
+    user-select:none;
+}
+#pagina-utilitarios .util-alca:hover,
+#pagina-utilitarios .util-alca:focus-visible {
+    background:#e7c45c;
+    outline:2px solid #754321;
+    outline-offset:1px;
+}
+#pagina-utilitarios .util-alca-largura {
+    right:0; top:50%; transform:translateY(-50%);
+    width:12px; height:44px;
+    cursor:ew-resize;
+    background-image:repeating-linear-gradient(90deg,transparent 0 3px,#7e562f 3px 4px,transparent 4px 6px);
+}
+#pagina-utilitarios .util-alca-altura {
+    left:50%; bottom:0; transform:translateX(-50%);
+    width:48px; height:12px;
+    cursor:ns-resize;
+    background-image:repeating-linear-gradient(0deg,transparent 0 3px,#7e562f 3px 4px,transparent 4px 6px);
+}
+#pagina-utilitarios .util-alca-ambos {
+    bottom:0;right:0;
+    width:21px;height:21px;
+    border-radius:4px 0 3px 0;
+    cursor:nwse-resize;
+    background-image:repeating-linear-gradient(135deg,transparent 0 4px,#815a34 4px 5px,transparent 5px 8px);
+}
+#pagina-utilitarios .util-tamanho-durante-ajuste {
+    display:none;
+    position:absolute;
+    right:24px;
+    bottom:25px;
+    z-index:6;
+    background:#663126;
+    border:1px solid #a97c44;
+    border-radius:3px;
+    padding:4px 7px;
+    font:700 .74rem Georgia,serif;
+    color:#fff4dc;
+    pointer-events:none;
+}
+#pagina-utilitarios .util-cartao.redimensionando .util-tamanho-durante-ajuste { display:block; }
+#pagina-utilitarios .util-ajustes { margin-right:14px; }
+@media (pointer:coarse) {
+    /* Alças maiores para permitir o arraste com o dedo. */
+    #pagina-utilitarios .util-alca-largura { width:20px;height:56px; }
+    #pagina-utilitarios .util-alca-altura { width:56px;height:20px; }
+    #pagina-utilitarios .util-alca-ambos { width:30px;height:30px; }
+}
+
+
+/* Atualização 54 — células menores, passos de 1 célula e remoção no cabeçalho. */
+#pagina-utilitarios .util-grade {
+    --util-celula:20px;
+    --util-gap:6px;
+    gap:var(--util-gap);
+    background-size:calc(var(--util-celula) + var(--util-gap)) calc(var(--util-celula) + var(--util-gap));
+}
+#pagina-utilitarios .util-cartao-cabecalho .util-remover {
+    flex:0 0 auto;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-width:23px;
+    width:23px;
+    height:23px;
+    padding:0;
+    border:1px solid #551d24;
+    border-radius:3px;
+    background:#8b252d;
+    color:#fff4e2;
+    font:bold 1rem Georgia,serif;
+    line-height:1;
+    cursor:pointer;
+    touch-action:manipulation;
+}
+#pagina-utilitarios .util-cartao-cabecalho .util-remover:hover { background:#a23139; }
+#pagina-utilitarios .util-cartao-cabecalho .util-remover:focus-visible {
+    outline:2px solid #f1c869;
+    outline-offset:2px;
+}
+#pagina-utilitarios .util-cartao-cabecalho .util-remover:active { cursor:pointer; }
+#pagina-utilitarios .util-cartao-rodape { justify-content:flex-start; }
+
+
+/* Atualização 55 — tipografia fluida dos cartões redimensionados manualmente.
+   A escala calculada pelo controlador amplia textos e valores das tabelas,
+   preservando as alças, o botão de excluir e a grade. */
+#pagina-utilitarios .util-cartao {
+    --util-escala-conteudo:1;
+}
+#pagina-utilitarios .util-cartao-cabecalho h4 {
+    /* O título não participa da escala: preserva o padrão da interface. */
+    font-size:.86rem;
+}
+#pagina-utilitarios .util-cartao-corpo {
+    padding:calc(5px * var(--util-escala-conteudo))
+            calc(7px * var(--util-escala-conteudo))
+            calc(2px * var(--util-escala-conteudo));
+}
+#pagina-utilitarios .util-cartao-corpo p {
+    font-size:calc(.77rem * var(--util-escala-conteudo));
+    margin-bottom:calc(4px * var(--util-escala-conteudo));
+}
+#pagina-utilitarios .util-cartao-corpo ul {
+    padding-left:calc(17px * var(--util-escala-conteudo));
+    margin-top:calc(4px * var(--util-escala-conteudo));
+}
+#pagina-utilitarios .util-cartao-corpo li {
+    font-size:calc(.75rem * var(--util-escala-conteudo));
+    margin-bottom:calc(3px * var(--util-escala-conteudo));
+}
+#pagina-utilitarios .util-tabela-rolagem {
+    margin:calc(3px * var(--util-escala-conteudo)) 0;
+}
+#pagina-utilitarios .util-tabela-regras {
+    font-size:calc(.72rem * var(--util-escala-conteudo));
+}
+#pagina-utilitarios .util-tabela-regras th {
+    font-size:calc(.69rem * var(--util-escala-conteudo));
+}
+#pagina-utilitarios .util-tabela-regras :is(th,td) {
+    padding:calc(3px * var(--util-escala-conteudo))
+            calc(4px * var(--util-escala-conteudo));
+}
+#pagina-utilitarios .util-pagina-livro {
+    font-size:calc(.64rem * var(--util-escala-conteudo));
+}
+
+
+/* Atualização 56 — títulos fixos e corpo distribuído pela altura real.
+   O texto continua escalando dentro da caixa; tabelas ocupam o restante com
+   linhas mais altas, em vez de formar uma faixa vazia no rodapé do cartão. */
+#pagina-utilitarios .util-cartao-corpo {
+    display:flex;
+    flex-direction:column;
+    align-items:stretch;
+}
+#pagina-utilitarios .util-cartao-corpo > p,
+#pagina-utilitarios .util-cartao-corpo > ul {
+    flex:0 0 auto;
+}
+#pagina-utilitarios .util-cartao-corpo > .util-tabela-rolagem {
+    display:flex;
+    flex:1 1 auto;
+    flex-direction:column;
+    min-height:0;
+    margin-bottom:calc(3px * var(--util-escala-conteudo));
+}
+#pagina-utilitarios .util-cartao-corpo > .util-tabela-rolagem > .util-tabela-regras {
+    flex:1 1 auto;
+    height:100%;
+}
+/* Na ausência de tabela, distribui o bloco textual em vez de concentrá-lo
+   apenas no topo. Não adiciona espaços artificiais ao conteúdo. */
+#pagina-utilitarios .util-cartao-corpo:not(:has(.util-tabela-rolagem)) {
+    justify-content:space-evenly;
+}
+@media (max-width:740px) {
+    #pagina-utilitarios .util-cartao-cabecalho h4 { font-size:.8rem; }
+}
+
+/* Atualização 57 — caso excepcional: se o quadro não comportar a altura
+   mínima natural do texto, ele permanece acessível sem ampliar o cartão. */
+#pagina-utilitarios .util-cartao.util-conteudo-limitado .util-cartao-corpo {
+    overflow-y:auto;
+    overscroll-behavior:contain;
+}
+
+/* Distribuição desktop da consulta: a barra cabe em uma linha, deixando
+   altura útil para as mecânicas. O catálogo tem apenas um eixo de rolagem.
+   Esta seção é a fonte única para o layout de Utilitários no desktop. */
+@media (min-width: 1100px) {
+  #painel #pagina-utilitarios:not([hidden]) {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+  }
+  #painel #pagina-utilitarios .util-barra-consultas {
+    flex: 0 0 auto;
+    display: grid;
+    grid-template-columns: minmax(180px, 1.1fr) minmax(170px, 1fr) max-content;
+    column-gap: 10px;
+    row-gap: 6px;
+    align-items: end;
+    padding: 10px 12px;
+    margin-bottom: 12px;
+  }
+  #painel #pagina-utilitarios .util-barra-acoes {
+    grid-column: 3;
+    grid-row: 1;
+    flex-wrap: nowrap;
+    gap: 6px;
+  }
+  #painel #pagina-utilitarios .util-barra-acoes .botao {
+    min-height: 35px;
+    padding: 6px 8px;
+    font-size: .73rem;
+  }
+  #painel #pagina-utilitarios .util-area-principal {
+    flex: 1 1 0;
+    display: grid;
+    grid-template-rows: minmax(0, 1fr);
+    min-height: 0;
+    height: auto;
+    overflow: hidden;
+    align-items: stretch;
+  }
+  #painel #pagina-utilitarios :is(.util-catalogo, .util-consultas) {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    min-width: 0;
+    min-height: 0;
+    height: auto;
+    max-height: 100%;
+    overflow: hidden;
+    align-self: stretch;
+  }
+  /* A área rolável deve terminar ANTES do acabamento inferior do cartão
+     primário: padding na lista só aumenta o conteúdo rolável e não protege
+     a borda externa. Reservar espaço no pai mantém o recorte correto. */
+  #painel #pagina-utilitarios .util-catalogo {
+    box-sizing: border-box;
+    padding-bottom: 15px;
+  }
+  #painel #pagina-utilitarios .util-catalogo-topo {
+    flex: 0 0 auto;
+    padding: 10px 10px 9px;
+  }
+  #painel #pagina-utilitarios .util-catalogo-topo h3 { margin-bottom: 7px; }
+  #painel #pagina-utilitarios .util-lista-mecanicas {
+    flex: 1 1 0;
+    min-height: 0;
+    height: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+    /* A margem final precisa apenas proteger o acabamento da moldura.
+       O preenchimento anterior somado à margem do último cartão deixava
+       uma faixa vazia excessiva depois da última mecânica. */
+    padding: 10px 10px 8px;
+    scroll-padding-block: 8px;
+    /* Ao encerrar a rolagem perto de um cartão, priorizar a visualização
+       de seu limite inferior em vez de parar com a moldura parcialmente
+       escondida. Não travar a rolagem do mouse. */
+    scroll-snap-type: y proximity;
+    overscroll-behavior-y: contain;
+  }
+  #painel #pagina-utilitarios .util-lista-mecanicas > .util-mecanica {
+    scroll-snap-align: end;
+  }
+  #painel #pagina-utilitarios .util-lista-mecanicas > .util-mecanica:last-child {
+    margin-bottom: 0;
+  }
+  #painel #pagina-utilitarios .util-grade {
+    flex: 1 1 0;
+    min-height: 0;
+  }
+  #painel #pagina-utilitarios .util-status {
+    flex: 0 0 auto;
+  }
+}
+
+
+/* Recuo externo da área rolável: protege a moldura também nas laterais.
+   Padding interno da lista não desloca a barra de rolagem nativa. */
+#painel #pagina-utilitarios .util-catalogo > .util-lista-mecanicas {
+    margin-inline: 10px;
+    margin-block-start: 5px;
+    min-width: 0;
+    width: auto;
+    align-self: stretch;
+    padding-inline: 4px;
+}
+@media (max-width: 1099px) {
+    #painel #pagina-utilitarios .util-catalogo { padding-bottom: 15px; }
+}

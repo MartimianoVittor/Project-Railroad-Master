@@ -12,7 +12,7 @@ test('a tela inicial habilita modo de entrada antes de carregar o JavaScript', (
 });
 
 test('a autenticação troca o modo de rolagem conforme o usuário', () => {
-    const js = ler('js/mesa.js');
+    const js = ler('js/app/sessao.js');
     assert.match(js, /document\.documentElement\.classList\.toggle\('modo-entrada', !usuario\)/);
     assert.match(js, /document\.body\.classList\.toggle\('modo-entrada', !usuario\)/);
 });

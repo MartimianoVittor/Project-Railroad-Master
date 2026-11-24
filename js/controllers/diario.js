@@ -1,18 +1,33 @@
-import { listarSessoesRemotas, salvarSessoesRemotas } from '../services/conteudoCampanha.js';
-import { criarSessao, duplicarSessao, moverSessao } from '../modules/sessoes.js';
-import { mostrarAviso } from '../core/feedback.js';
-import { porId, elemento } from '../core/dom.js';
+import { listarSessoesRemotas, salvarSessoesRemotas } from '../services/conteudoCampanha.js?v=mesa-31';
+import {
+    criarSessao, duplicarSessao, moverSessao,
+    LIMITE_DESCRICAO_SESSAO, LIMITE_NOME_SESSAO, LIMITE_SESSOES,
+} from '../modules/diario/sessoes.js?v=mesa-31';
+import { executar, mostrarAviso } from '../core/feedback.js?v=mesa-31';
+import { porId, elemento } from '../core/dom.js?v=mesa-31';
 
-/** Sessões, edição, reordenação e persistência local do diário. */
-export function criarControladorDiario({ estado }) {
+/** Coordena as sessões do Diário e suas cópias local e remota. */
+export function criarControladorDiario({ estado }, { listar = listarSessoesRemotas, salvar = salvarSessoesRemotas } = {}) {
     let idsRemotos = new Set();
+    let revisaoRemota = 0;
     let escopoCarregado = null;
+    let versaoEdicao = 0;
+    let numeroCarga = 0;
+    let falhouAoCarregar = false;
+    let filaDeGravacao = Promise.resolve();
+    const escopoAtual = () => `${estado.usuario?.id}:${estado.campanhaId}`;
+    const disponivel = () => estado.campanhaId && (estado.modoLocal || escopoCarregado === escopoAtual());
+
     function atualizarStatusRascunho() {
         const indicador = porId('status-rascunho');
         indicador.classList.toggle('pendente', estado.rascunhoSujo);
 
         if (!estado.campanhaId) {
             indicador.textContent = 'Selecione uma campanha para editar o diário.';
+        } else if (!disponivel()) {
+            indicador.textContent = falhouAoCarregar
+                ? 'Falha ao carregar as sessões do Supabase.'
+                : 'Carregando as sessões do Supabase…';
         } else if (estado.rascunhoSujo) {
             indicador.textContent = (estado.modoLocal ? 'Sessão alterada — salve neste navegador.' : 'Sessão alterada — salve no Supabase.');
         } else if (estado.salvoEm) {
@@ -48,7 +63,7 @@ export function criarControladorDiario({ estado }) {
     }
 
     function atualizarHabilitacaoSessoes() {
-        const temCampanha = Boolean(estado.campanhaId);
+        const temCampanha = Boolean(disponivel());
         const temSessao = temCampanha && estado.sessoes.some((item) => item.id === estado.sessaoId);
         for (const id of ['seletor-sessoes', 'gerenciar-sessoes']) porId(id).disabled = !temSessao;
         porId('adicionar-sessao').disabled = !temCampanha;
@@ -70,46 +85,54 @@ export function criarControladorDiario({ estado }) {
     }
 
     async function carregarRascunho() {
-        const dados = estado.sessoesRepo.carregar(estado.usuario?.id, estado.campanhaId);
+        const carga = ++numeroCarga;
+        const { campanhaId } = estado;
+        const usuarioId = estado.usuario?.id;
+        const escopo = escopoAtual();
+        const aindaAtual = () => carga === numeroCarga && escopo === escopoAtual();
+        escopoCarregado = null;
+        falhouAoCarregar = false;
+        idsRemotos = new Set();
+        revisaoRemota = 0;
+
+        const dados = estado.sessoesRepo.carregar(usuarioId, campanhaId);
         estado.sessoes = dados.sessoes;
         estado.sessaoId = dados.ativaId;
         estado.rascunhoSujo = false;
         estado.salvoEm = dados.salvoEm;
         mostrarSessao();
         atualizarStatusRascunho();
-        idsRemotos = new Set();
-        const escopo = `${estado.usuario?.id}:${estado.campanhaId}`;
-        escopoCarregado = null;
-        if (!estado.modoLocal && estado.campanhaId && estado.usuario?.id) {
-            try {
-                const remoto = await listarSessoesRemotas(estado.campanhaId);
-                if (escopo !== `${estado.usuario?.id}:${estado.campanhaId}`) return;
-                const ids = new Set(remoto.sessoes.map(s=>s.id));
-                const locaisAusentes = dados.sessoes.filter(s=>!ids.has(s.id));
-                if (locaisAusentes.length && confirm(`Há ${locaisAusentes.length} sessão(ões) guardada(s) apenas neste navegador. Importar para o Supabase?`)) {
-                    remoto.sessoes.push(...locaisAusentes);
-                    remoto.ativaId ||= dados.ativaId;
-                    // A importação não apaga nem substitui sessões remotas.
-                    await salvarSessoesRemotas(estado.campanhaId,remoto,new Set());
-                    if (escopo !== `${estado.usuario?.id}:${estado.campanhaId}`) return;
-                }
-                estado.sessoes=remoto.sessoes;
-                estado.sessaoId=remoto.ativaId;
-                estado.salvoEm=remoto.salvoEm;
-                idsRemotos=new Set(remoto.sessoes.map(s=>s.id));
-                escopoCarregado=escopo;
-                mostrarSessao();atualizarStatusRascunho();
-            } catch(erro) {
-                if (escopo !== `${estado.usuario?.id}:${estado.campanhaId}`) return;
-                estado.sessoes=[];estado.sessaoId=null;
-                mostrarSessao();
-                mostrarAviso(`Não foi possível carregar as sessões do Supabase: ${erro.message}`,true);
+        if (estado.modoLocal || !campanhaId || !usuarioId) return;
+
+        try {
+            const remoto = await listar(campanhaId);
+            if (!aindaAtual()) return;
+            const existentes = new Set(remoto.sessoes.map((sessao) => sessao.id));
+            const ausentes = dados.sessoes.filter((sessao) => !existentes.has(sessao.id));
+            if (ausentes.length && confirm(`Há ${ausentes.length} sessão(ões) guardada(s) apenas neste navegador. Importar para o Supabase?`)) {
+                remoto.sessoes.push(...ausentes);
+                remoto.ativaId ||= dados.ativaId;
+                remoto.revisao = await salvar(campanhaId, remoto, new Set(), remoto.revisao ?? 0);
+                if (!aindaAtual()) return;
             }
+            estado.sessoes = remoto.sessoes;
+            estado.sessaoId = remoto.ativaId;
+            estado.salvoEm = remoto.salvoEm;
+            idsRemotos = new Set(remoto.sessoes.map((sessao) => sessao.id));
+            revisaoRemota = Number(remoto.revisao ?? 0);
+            escopoCarregado = escopo;
+        } catch (erro) {
+            if (!aindaAtual()) return;
+            falhouAoCarregar = true;
+            mostrarAviso(`Não foi possível carregar as sessões do Supabase: ${erro.message}`, true);
         }
+        mostrarSessao();
+        atualizarStatusRascunho();
     }
 
     function marcarRascunhoAlterado() {
-        if (!estado.campanhaId || !estado.sessaoId) return;
+        if (!estado.campanhaId) return;
+        versaoEdicao++;
         estado.rascunhoSujo = true;
         atualizarStatusRascunho();
     }
@@ -124,13 +147,13 @@ export function criarControladorDiario({ estado }) {
     function atualizarContadorDescricao() {
         const campo = porId('descricao-nova-sessao');
         const caracteres = Array.from(campo.value);
-        if (caracteres.length > 25) campo.value = caracteres.slice(0, 25).join('');
-        porId('contador-descricao-sessao').textContent = `${Array.from(campo.value).length}/25`;
+        if (caracteres.length > LIMITE_DESCRICAO_SESSAO) campo.value = caracteres.slice(0, LIMITE_DESCRICAO_SESSAO).join('');
+        porId('contador-descricao-sessao').textContent = `${Array.from(campo.value).length}/${LIMITE_DESCRICAO_SESSAO}`;
     }
 
     function abrirFormularioSessao(id = null) {
         if (!estado.campanhaId) throw new Error('Selecione uma campanha antes de criar sessões.');
-        if (!id && estado.sessoes.length >= 200) throw new Error('Limite de 200 sessões por campanha.');
+        if (!id && estado.sessoes.length >= LIMITE_SESSOES) throw new Error(`Limite de ${LIMITE_SESSOES} sessões por campanha.`);
         const sessao = id ? estado.sessoes.find((item) => item.id === id) : null;
         if (id && !sessao) return;
         estado.sessaoEmEdicaoId = id;
@@ -146,8 +169,8 @@ export function criarControladorDiario({ estado }) {
 
     function confirmarFormularioSessao() {
         if (!estado.campanhaId) throw new Error('Selecione uma campanha antes de criar sessões.');
-        const nome = Array.from(porId('nome-nova-sessao').value.trim()).slice(0, 80).join('');
-        const descricao = Array.from(porId('descricao-nova-sessao').value.trim()).slice(0, 25).join('');
+        const nome = Array.from(porId('nome-nova-sessao').value.trim()).slice(0, LIMITE_NOME_SESSAO).join('');
+        const descricao = Array.from(porId('descricao-nova-sessao').value.trim()).slice(0, LIMITE_DESCRICAO_SESSAO).join('');
         if (!nome) throw new Error('Informe um nome para a sessão.');
         guardarSessaoAtual();
 
@@ -158,7 +181,7 @@ export function criarControladorDiario({ estado }) {
             sessao.descricao = descricao;
             mostrarAviso('Dados da sessão alterados. Clique em Salvar para guardar.');
         } else {
-            if (estado.sessoes.length >= 200) throw new Error('Limite de 200 sessões por campanha.');
+            if (estado.sessoes.length >= LIMITE_SESSOES) throw new Error(`Limite de ${LIMITE_SESSOES} sessões por campanha.`);
             const sessao = criarSessao({ nome, descricao });
             estado.sessoes.push(sessao);
             estado.sessaoId = sessao.id;
@@ -282,25 +305,74 @@ export function criarControladorDiario({ estado }) {
         porId('modal-gerenciar-sessoes').showModal();
     }
 
-    async function salvarCampanhaAtual() {
+    function salvarCampanhaAtual() {
         if (!estado.usuario || !estado.campanhaId) throw new Error('Selecione uma campanha antes de salvar.');
-        guardarSessaoAtual();
-        const dados = {sessoes:estado.sessoes,ativaId:estado.sessaoId};
-        if (!estado.modoLocal) {
-            if (escopoCarregado !== `${estado.usuario.id}:${estado.campanhaId}`)
-                throw new Error('As sessões ainda não foram carregadas do Supabase. Aguarde e tente novamente.');
-            await salvarSessoesRemotas(estado.campanhaId,dados,idsRemotos);
-            idsRemotos = new Set(estado.sessoes.map(s=>s.id));
+        const { campanhaId, modoLocal, versaoSessao } = estado;
+        const usuarioId = estado.usuario.id;
+        const carga = numeroCarga;
+        const aindaAtual = () => carga === numeroCarga && estado.campanhaId === campanhaId && estado.versaoSessao === versaoSessao;
+        if (!modoLocal && escopoCarregado !== `${usuarioId}:${campanhaId}`) {
+            throw new Error('As sessões ainda não foram carregadas do Supabase. Aguarde e tente novamente.');
         }
-        const resultado = estado.sessoesRepo.salvar(estado.usuario.id, estado.campanhaId, dados);
-        estado.sessoes = resultado.sessoes;
-        estado.rascunhoSujo = false;
-        estado.salvoEm = resultado.salvoEm;
-        atualizarStatusRascunho();
-        mostrarAviso(estado.modoLocal ? 'Sessões salvas neste navegador.' : 'Sessões salvas no Supabase e neste navegador.');
+        guardarSessaoAtual();
+        const dados = structuredClone({ sessoes: estado.sessoes, ativaId: estado.sessaoId });
+        const edicaoSalva = versaoEdicao;
+
+        async function gravar() {
+            if (!aindaAtual()) return;
+            if (!modoLocal) {
+                const revisaoNova = await salvar(campanhaId, dados, idsRemotos, revisaoRemota);
+                if (!aindaAtual()) return;
+                revisaoRemota = revisaoNova ?? revisaoRemota + 1;
+                idsRemotos = new Set(dados.sessoes.map((sessao) => sessao.id));
+            }
+            const resultado = estado.sessoesRepo.salvar(usuarioId, campanhaId, dados);
+            estado.salvoEm = resultado.salvoEm;
+            if (edicaoSalva === versaoEdicao) {
+                estado.sessoes = resultado.sessoes;
+                estado.rascunhoSujo = false;
+            }
+            atualizarStatusRascunho();
+            mostrarAviso(modoLocal ? 'Sessões salvas neste navegador.' : 'Sessões salvas no Supabase e neste navegador.');
+        }
+
+        // Salvar pelo Diário e pela Conta usa a mesma fila; cada clique conserva sua própria cópia.
+        const gravacao = filaDeGravacao.then(gravar);
+        filaDeGravacao = gravacao.catch(() => {});
+        return gravacao;
+    }
+
+    function iniciarEventos() {
+        porId('diario-anotacoes').addEventListener('input', marcarRascunhoAlterado);
+        porId('seletor-sessoes').addEventListener('change', (evento) => selecionarSessao(evento.target.value));
+        porId('adicionar-sessao').addEventListener('click', () =>
+            void executar(porId('adicionar-sessao'), () => abrirFormularioSessao()));
+        porId('descricao-nova-sessao').addEventListener('input', atualizarContadorDescricao);
+        porId('form-nova-sessao').addEventListener('submit', (evento) => {
+            evento.preventDefault();
+            void executar(porId('confirmar-sessao'), confirmarFormularioSessao);
+        });
+        for (const id of ['cancelar-sessao', 'cancelar-sessao-topo']) {
+            porId(id).addEventListener('click', () => porId('modal-criar-sessao').close());
+        }
+        porId('modal-criar-sessao').addEventListener('close', () => {
+            estado.sessaoEmEdicaoId = null;
+            porId('form-nova-sessao').reset();
+        });
+        porId('limpar-marcos').addEventListener('click', limparMarcos);
+        porId('gerenciar-sessoes').addEventListener('click', abrirGerenciador);
+        porId('fechar-gerenciador').addEventListener('click', () => porId('modal-gerenciar-sessoes').close());
+        porId('salvar-gerenciador').addEventListener('click', () =>
+            void executar(porId('salvar-gerenciador'), async () => {
+                await salvarCampanhaAtual();
+                porId('modal-gerenciar-sessoes').close();
+            }));
+        porId('salvar-sessao').addEventListener('click', () =>
+            void executar(porId('salvar-sessao'), salvarCampanhaAtual));
     }
 
     return {
+        iniciarEventos,
         atualizarStatusRascunho, guardarSessaoAtual, renderizarSeletorSessoes,
         atualizarHabilitacaoSessoes, mostrarSessao, carregarRascunho,
         marcarRascunhoAlterado, selecionarSessao, atualizarContadorDescricao,

@@ -23,8 +23,8 @@ test('o excesso fica no quadro e nas colunas, sem aumentar a página', () => {
     assert.match(css, /\.quadro-fichas\s*\{[^}]*overflow: hidden/s);
 });
 
-test('SQL 006 impede a leitura integral da ficha e não expõe o quadro de ideias', () => {
-    const sql = ler('supabase/006_fichas_leitura_privada.sql');
+test('SQL 005 impede a leitura integral da ficha e não expõe o quadro de ideias', () => {
+    const sql = ler('supabase/005.sql');
     assert.match(sql, /drop policy if exists fichas_ler_em_campanhas/);
     assert.match(sql, /campanha\.mestre_id = \(select auth\.uid\(\)\)/);
     assert.match(sql, /convite\.status = 'aceito'/);

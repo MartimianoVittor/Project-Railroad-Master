@@ -3,10 +3,10 @@
  * Os arquivos são locais ao projeto e funcionam em Live Server e GitHub Pages.
  */
 const PAGINAS = ['campanhas', 'diario', 'fichas', 'npcs', 'combate', 'viagem', 'utilitarios'];
-const DIALOGOS = ['criar-sessao', 'gerenciar-sessoes'];
+const DIALOGOS = ['criar-sessao', 'gerenciar-sessoes', 'personalizacao'];
 
 async function lerVista(caminho) {
-    const resposta = await fetch(new URL(caminho, document.baseURI));
+    const resposta = await fetch(new URL(caminho, document.baseURI), { cache: 'no-cache' });
     if (!resposta.ok) throw new Error(`Não foi possível carregar ${caminho} (HTTP ${resposta.status}).`);
     return resposta.text();
 }

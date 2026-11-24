@@ -10,6 +10,6 @@ export const estado = {
     versaoSessao: 0, versaoCampanha: 0, versaoFicha: 0, versaoLista: 0,
     navegacao: null, sessoesRepo: null, quadro: null, sessoes: [], sessaoId: null,
     rascunhoSujo: false, salvoEm: null, sessaoEmEdicaoId: null,
-    npcsRepo: null, npcs: [],
+    npcsRepo: null, npcs: [], npcsSincronizados: false,
 };
 

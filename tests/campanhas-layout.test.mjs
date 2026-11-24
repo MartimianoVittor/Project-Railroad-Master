@@ -13,7 +13,7 @@ test('botão Atualizar aparece ao lado do título e descrição da campanha sele
         assert.ok(cabecalho.includes(`id="${id}"`), `Elemento ausente: ${id}`);
     }
 
-    const mesa = ler('js/mesa.js');
+    const mesa = ler('js/controllers/campanhas.js');
     assert.match(mesa, /porId\('atualizar-campanha'\)\.addEventListener\('click'/);
     assert.match(mesa, /await atualizarCampanhas\(estado\.campanhaId\)/);
 });
@@ -33,4 +33,10 @@ test('lista compacta coloca jogador e personagens em colunas, com ações próxi
 test('telas estreitas empilham jogador e personagens sem exigir rolagem horizontal da página', () => {
     const css = ler('css/responsivo.css');
     assert.match(css, /@media \(max-width: 640px\)[\s\S]*?\.participante\s*\{\s*grid-template-columns:\s*minmax\(0, 1fr\)/);
+});
+
+test('decisão de entrada usa os estilos marrom e vermelho compartilhados', () => {
+    const controlador = ler('js/controllers/campanhas.js');
+    assert.match(controlador, /botaoAcao\('Aceitar entrada', \(\) => contexto\.fichas\.decidirFicha\(envio, true\),\s*'botao botao-pequeno rr-botao-marrom'\)/);
+    assert.match(controlador, /botaoAcao\('Negar entrada', \(\) => contexto\.fichas\.decidirFicha\(envio, false\),\s*'botao botao-pequeno rr-botao-vermelho'\)/);
 });

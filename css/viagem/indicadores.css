@@ -1,0 +1,200 @@
+/* Dados gerais sem espaço ocioso e sobrevivência legível. */
+#pagina-viagem .vg-geral {
+    gap: 8px;
+    container-type: inline-size;
+    overflow-x: hidden;
+}
+
+#pagina-viagem .vg-geral > h3 {
+    margin: 0 0 2px;
+    font-size: clamp(14px,1.25vw,18px);
+}
+
+#pagina-viagem .vg-geral .vg-estatisticas {
+    display: grid;
+    grid-template-columns: minmax(0,1fr);
+    gap: 5px;
+    align-content: start;
+}
+
+#pagina-viagem .vg-geral .vg-estatisticas > div {
+    display: grid;
+    grid-template-columns: minmax(0,1fr) auto;
+    align-items: center;
+    min-width: 0;
+}
+
+#pagina-viagem .vg-geral .vg-estatisticas strong {
+    display: block;
+    min-width: 0;
+    text-align: right;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    font: 700 clamp(12px,1vw,15px)/1.15 Georgia,serif;
+}
+
+#pagina-viagem .vg-geral .vg-geral-seletores {
+    display: grid;
+    grid-template-columns: minmax(0,1fr);
+    gap: 8px;
+    border-top: 1px solid #c5a47a;
+    padding-top: 8px;
+}
+
+#pagina-viagem .vg-geral .vg-geral-seletores label {
+    display: grid;
+    grid-template-columns: minmax(0,1fr);
+    gap: 4px;
+    min-width: 0;
+    margin: 0;
+    color: #4c2f20;
+    font: 700 12px Georgia,serif;
+}
+
+#pagina-viagem .vg-geral .vg-geral-seletores select {
+    min-height: 36px;
+    width: 100%;
+    padding: 7px 24px 7px 9px;
+    background-color: #f4e6c8;
+    border: 1.5px solid #916c45;
+    box-shadow: inset 0 1px 2px #67492a13;
+    font: 700 12px Georgia,serif;
+}
+
+#pagina-viagem .vg-geral .vg-botoes {
+    display: grid;
+    grid-template-columns: minmax(0,1fr) minmax(0,1fr);
+    align-items: stretch;
+    gap: 6px;
+    width: 100%;
+    margin-top: auto;
+    padding-top: 8px;
+    border-top: 1px solid #c5a47a;
+}
+
+#pagina-viagem .vg-geral .vg-botoes .botao {
+    min-width: 0;
+    width: 100%;
+    min-height: 35px;
+    padding: 6px 4px;
+    white-space: normal;
+    font: 700 11px/1.2 Georgia,serif;
+}
+
+@container (min-width:340px) {
+    #pagina-viagem .vg-geral .vg-geral-seletores {
+        grid-template-columns: repeat(2,minmax(0,1fr));
+    }
+}
+
+/* Sobrevivência: quatro linhas com indicadores alinhados em uma coluna. */
+#pagina-viagem #vg-detalhe .vg-ficha-marcas {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    gap: 5px;
+}
+
+#pagina-viagem #vg-detalhe .vg-ficha-marcas h4 {
+    margin: 0 0 2px;
+    padding-bottom: 5px;
+    font: 14px 'Rye',Georgia,serif;
+}
+
+#pagina-viagem #vg-detalhe .vg-ficha-marcas .grupo-caveiras {
+    display: grid;
+    grid-template-columns: minmax(0,1fr);
+    gap: 2px;
+    min-width: 0;
+}
+
+#pagina-viagem #vg-detalhe .vg-ficha-marcas .linha-check {
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: minmax(0,1fr) auto;
+    align-items: center;
+    gap: 5px;
+    min-width: 0;
+    min-height: 30px;
+    margin: 0;
+    padding: 3px 5px;
+    border-bottom: 1px solid #d0b48f;
+}
+
+#pagina-viagem #vg-detalhe .vg-ficha-marcas .linha-check:nth-child(even) {
+    background: #e8d5b33b;
+}
+
+#pagina-viagem #vg-detalhe .vg-ficha-marcas .linha-check:last-child {
+    border-bottom: 0;
+}
+
+#pagina-viagem #vg-detalhe .vg-ficha-marcas .linha-check > label {
+    min-width: 0;
+    font: 700 clamp(10px,.95vw,13px)/1.15 Georgia,serif;
+    letter-spacing: 0;
+    overflow-wrap: break-word;
+}
+
+#pagina-viagem #vg-detalhe .vg-ficha-marcas .caveiras-box {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 2px;
+    flex: none;
+}
+
+#pagina-viagem #vg-detalhe .vg-ficha-marcas .check-caveira {
+    box-sizing: border-box;
+    flex: 0 0 auto;
+    width: clamp(18px,1.5vw,23px);
+    height: clamp(18px,1.5vw,23px);
+    margin: 0;
+    padding: 0;
+}
+
+@container (max-width:470px) {
+    #pagina-viagem #vg-detalhe .vg-ficha-marcas .linha-check {
+        padding-inline: 3px;
+        gap: 3px;
+    }
+
+    #pagina-viagem #vg-detalhe .vg-ficha-marcas .check-caveira {
+        width: 19px;
+        height: 19px;
+    }
+}
+
+@media(max-width:1099px) {
+    #pagina-viagem .vg-geral .vg-estatisticas {
+        grid-template-columns: repeat(2,minmax(0,1fr));
+    }
+
+    #pagina-viagem .vg-geral .vg-botoes {
+        margin-top: 3px;
+    }
+}
+
+@container (max-width:240px) {
+    #pagina-viagem .vg-geral .vg-estatisticas > div {
+        font-size: 11px;
+    }
+}
+
+/* Dados gerais com o mesmo acabamento dos seletores Ritmo/Busca. */
+#pagina-viagem .vg-geral .vg-estatisticas > div {
+    border: 1.5px solid #916c45;
+    border-radius: 5px;
+    background: #f4e6c8;
+    color: #4c2f20;
+    box-shadow: inset 0 1px 2px rgba(103,73,42,.08);
+    padding: 7px 9px;
+    gap: 7px;
+    min-height: 37px;
+    font: 700 12px/1.3 Georgia,serif;
+}
+
+#pagina-viagem .vg-geral .vg-estatisticas strong {
+    color: #4a2d1e;
+    font: 700 clamp(12px,1vw,15px)/1.2 Georgia,serif;
+}

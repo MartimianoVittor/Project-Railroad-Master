@@ -1,0 +1,229 @@
+.rr-borda--latonada {
+  border: 3px solid #1f140c;
+  outline: 3px solid #d9a738;
+  outline-offset: -6px;
+  border-radius: 8px;
+  box-shadow: 0 4px 0 #1f140c, inset 0 0 0 8px rgba(217, 167, 56, 0.14);
+}
+
+#painel [data-rr-papel].rr-borda--latonada, dialog[data-rr-papel].rr-borda--latonada, dialog [data-rr-papel].rr-borda--latonada, .personalizacao-amostra.rr-borda--latonada, .rr-previa-cartao.rr-borda--latonada {
+  border: 3px solid #1f140c !important;
+  outline: 3px solid #d9a738 !important;
+  outline-offset: -6px !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 0 #1f140c, inset 0 0 0 8px rgba(217, 167, 56, 0.14) !important;
+}
+
+.rr-borda--cartaz {
+  border: 4px double #d9a738;
+  outline: 2px solid #1f140c;
+  border-radius: 3px;
+  box-shadow: 0 4px 0 #1f140c;
+}
+
+#painel [data-rr-papel].rr-borda--cartaz, dialog[data-rr-papel].rr-borda--cartaz, dialog [data-rr-papel].rr-borda--cartaz, .personalizacao-amostra.rr-borda--cartaz, .rr-previa-cartao.rr-borda--cartaz {
+  border: 4px double #d9a738 !important;
+  outline: 2px solid #1f140c !important;
+  border-radius: 3px !important;
+  box-shadow: 0 4px 0 #1f140c !important;
+}
+
+.rr-borda--ferrovia {
+  border: 3px solid #b85628;
+  outline: 2px dashed #e6b84c;
+  outline-offset: -6px;
+  border-radius: 6px;
+  box-shadow: 0 4px 0 #1f140c;
+}
+
+#painel [data-rr-papel].rr-borda--ferrovia, dialog[data-rr-papel].rr-borda--ferrovia, dialog [data-rr-papel].rr-borda--ferrovia, .personalizacao-amostra.rr-borda--ferrovia, .rr-previa-cartao.rr-borda--ferrovia {
+  border: 3px solid #b85628 !important;
+  outline: 2px dashed #e6b84c !important;
+  outline-offset: -6px !important;
+  border-radius: 6px !important;
+  box-shadow: 0 4px 0 #1f140c !important;
+}
+
+.rr-borda--cantoneiras {
+  position: relative;
+  border: 2px solid #6e4e2e;
+  border-radius: 4px;
+  box-shadow: 0 4px 0 #1f140c;
+}
+
+#painel [data-rr-papel].rr-borda--cantoneiras, dialog[data-rr-papel].rr-borda--cantoneiras, dialog [data-rr-papel].rr-borda--cantoneiras, .personalizacao-amostra.rr-borda--cantoneiras, .rr-previa-cartao.rr-borda--cantoneiras {
+  position: relative !important;
+  border: 2px solid #6e4e2e !important;
+  border-radius: 4px !important;
+  box-shadow: 0 4px 0 #1f140c !important;
+}
+
+.rr-borda--cantoneiras::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background-image:
+    linear-gradient(135deg, #b85628 12px, transparent 12px),
+    linear-gradient(225deg, #b85628 12px, transparent 12px),
+    linear-gradient(45deg, #b85628 12px, transparent 12px),
+    linear-gradient(315deg, #b85628 12px, transparent 12px);
+  background-position: top left, top right, bottom left, bottom right;
+  background-size: 20px 20px;
+  background-repeat: no-repeat;
+}
+
+#painel [data-rr-papel].rr-borda--cantoneiras::after, dialog[data-rr-papel].rr-borda--cantoneiras::after, dialog [data-rr-papel].rr-borda--cantoneiras::after, .personalizacao-amostra.rr-borda--cantoneiras::after, .rr-previa-cartao.rr-borda--cantoneiras::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  border-radius: inherit !important;
+  pointer-events: none !important;
+  background-image:
+    linear-gradient(135deg, #b85628 12px, transparent 12px),
+    linear-gradient(225deg, #b85628 12px, transparent 12px),
+    linear-gradient(45deg, #b85628 12px, transparent 12px),
+    linear-gradient(315deg, #b85628 12px, transparent 12px) !important;
+  background-position: top left, top right, bottom left, bottom right !important;
+  background-size: 20px 20px !important;
+  background-repeat: no-repeat !important;
+}
+
+.rr-borda--costura {
+  border: 3px solid #4a2c16;
+  outline: 2px dashed #c99732;
+  outline-offset: -7px;
+  border-radius: 12px;
+  box-shadow: inset 0 0 0 4px #29180c, 0 4px 0 #1f140c;
+}
+
+#painel [data-rr-papel].rr-borda--costura, dialog[data-rr-papel].rr-borda--costura, dialog [data-rr-papel].rr-borda--costura, .personalizacao-amostra.rr-borda--costura, .rr-previa-cartao.rr-borda--costura {
+  border: 3px solid #4a2c16 !important;
+  outline: 2px dashed #c99732 !important;
+  outline-offset: -7px !important;
+  border-radius: 12px !important;
+  box-shadow: inset 0 0 0 4px #29180c, 0 4px 0 #1f140c !important;
+}
+
+.rr-borda--chanfrada {
+  border: 3px solid #d9a738;
+  clip-path: polygon(
+    12px 0%, calc(100% - 12px) 0%,
+    100% 12px, 100% calc(100% - 12px),
+    calc(100% - 12px) 100%, 12px 100%,
+    0% calc(100% - 12px), 0% 12px
+  );
+  box-shadow: inset 0 0 0 2px #1f140c;
+}
+
+#painel [data-rr-papel].rr-borda--chanfrada, dialog[data-rr-papel].rr-borda--chanfrada, dialog [data-rr-papel].rr-borda--chanfrada, .personalizacao-amostra.rr-borda--chanfrada, .rr-previa-cartao.rr-borda--chanfrada {
+  border: 3px solid #d9a738 !important;
+  clip-path: polygon(
+    12px 0%, calc(100% - 12px) 0%,
+    100% 12px, 100% calc(100% - 12px),
+    calc(100% - 12px) 100%, 12px 100%,
+    0% calc(100% - 12px), 0% 12px
+  ) !important;
+  box-shadow: inset 0 0 0 2px #1f140c !important;
+}
+
+.rr-borda--filete {
+  border: 1px solid #d9a738;
+  outline: 3px solid #1f140c;
+  outline-offset: -4px;
+  border-radius: 6px;
+  box-shadow: 0 3px 0 #1f140c;
+}
+
+#painel [data-rr-papel].rr-borda--filete, dialog[data-rr-papel].rr-borda--filete, dialog [data-rr-papel].rr-borda--filete, .personalizacao-amostra.rr-borda--filete, .rr-previa-cartao.rr-borda--filete {
+  border: 1px solid #d9a738 !important;
+  outline: 3px solid #1f140c !important;
+  outline-offset: -4px !important;
+  border-radius: 6px !important;
+  box-shadow: 0 3px 0 #1f140c !important;
+}
+
+.rr-borda--ornamental {
+  border: 3px solid #4a2c16;
+  outline: 1px solid #b58b39;
+  outline-offset: -7px;
+  border-radius: 3px;
+  box-shadow: 0 4px 0 #1f140c;
+  position: relative;
+}
+
+#painel [data-rr-papel].rr-borda--ornamental, dialog[data-rr-papel].rr-borda--ornamental, dialog [data-rr-papel].rr-borda--ornamental, .personalizacao-amostra.rr-borda--ornamental, .rr-previa-cartao.rr-borda--ornamental {
+  border: 3px solid #4a2c16 !important;
+  outline: 1px solid #b58b39 !important;
+  outline-offset: -7px !important;
+  border-radius: 3px !important;
+  box-shadow: 0 4px 0 #1f140c !important;
+  position: relative !important;
+}
+
+.rr-borda--ornamental::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(135deg, transparent 6px, #805329 6px 8px, transparent 8px 11px, #b58b39 11px 13px, transparent 13px) top left,
+    linear-gradient(225deg, transparent 6px, #805329 6px 8px, transparent 8px 11px, #b58b39 11px 13px, transparent 13px) top right,
+    linear-gradient(45deg, transparent 6px, #805329 6px 8px, transparent 8px 11px, #b58b39 11px 13px, transparent 13px) bottom left,
+    linear-gradient(315deg, transparent 6px, #805329 6px 8px, transparent 8px 11px, #b58b39 11px 13px, transparent 13px) bottom right;
+  background-size: 15px 15px;
+  background-repeat: no-repeat;
+}
+
+#painel [data-rr-papel].rr-borda--ornamental::after, dialog[data-rr-papel].rr-borda--ornamental::after, dialog [data-rr-papel].rr-borda--ornamental::after, .personalizacao-amostra.rr-borda--ornamental::after, .rr-previa-cartao.rr-borda--ornamental::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  pointer-events: none !important;
+  background: linear-gradient(135deg, transparent 6px, #805329 6px 8px, transparent 8px 11px, #b58b39 11px 13px, transparent 13px) top left,
+    linear-gradient(225deg, transparent 6px, #805329 6px 8px, transparent 8px 11px, #b58b39 11px 13px, transparent 13px) top right,
+    linear-gradient(45deg, transparent 6px, #805329 6px 8px, transparent 8px 11px, #b58b39 11px 13px, transparent 13px) bottom left,
+    linear-gradient(315deg, transparent 6px, #805329 6px 8px, transparent 8px 11px, #b58b39 11px 13px, transparent 13px) bottom right !important;
+  background-size: 15px 15px !important;
+  background-repeat: no-repeat !important;
+}
+
+.rr-borda--ferro-rebitado {
+  border: 8px solid #55504a;
+  outline: 1px solid #1f140c;
+  outline-offset: -9px;
+  border-radius: 4px;
+  box-shadow: 0 4px 0 #1f140c;
+  position: relative;
+}
+
+#painel [data-rr-papel].rr-borda--ferro-rebitado, dialog[data-rr-papel].rr-borda--ferro-rebitado, dialog [data-rr-papel].rr-borda--ferro-rebitado, .personalizacao-amostra.rr-borda--ferro-rebitado, .rr-previa-cartao.rr-borda--ferro-rebitado {
+  border: 8px solid #55504a !important;
+  outline: 1px solid #1f140c !important;
+  outline-offset: -9px !important;
+  border-radius: 4px !important;
+  box-shadow: 0 4px 0 #1f140c !important;
+  position: relative !important;
+}
+
+.rr-borda--ferro-rebitado::after {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  pointer-events: none;
+  background: radial-gradient(circle, #b5a38a 2px, transparent 2.5px) top left,
+    radial-gradient(circle, #b5a38a 2px, transparent 2.5px) bottom left;
+  background-size: 33.333% 8px;
+  background-repeat: repeat-x;
+}
+
+#painel [data-rr-papel].rr-borda--ferro-rebitado::after, dialog[data-rr-papel].rr-borda--ferro-rebitado::after, dialog [data-rr-papel].rr-borda--ferro-rebitado::after, .personalizacao-amostra.rr-borda--ferro-rebitado::after, .rr-previa-cartao.rr-borda--ferro-rebitado::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: -8px !important;
+  pointer-events: none !important;
+  background: radial-gradient(circle, #b5a38a 2px, transparent 2.5px) top left,
+    radial-gradient(circle, #b5a38a 2px, transparent 2.5px) bottom left !important;
+  background-size: 33.333% 8px !important;
+  background-repeat: repeat-x !important;
+}

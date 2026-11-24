@@ -115,7 +115,7 @@
     position: relative;
     width: min(250px, 100%);
     aspect-ratio: 1 / 1;
-    background: url('../assets/imgs/imagemPersonagemPlaceholder.png') center / contain no-repeat;
+    background: url('../assets/imgs/imagemPersonagemPlaceholder.webp') center / contain no-repeat;
 }
 .pagina-npcs .npc-retrato-moldura img {
     display: block;

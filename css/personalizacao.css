@@ -1,0 +1,942 @@
+/* Preferências globais do Kit Western. O tema padrão não recebe nenhuma alteração. */
+body.rr-tema-pagina:not(.modo-entrada) { background-attachment: fixed; }
+
+.modal-personalizacao {
+  box-sizing: border-box;
+  width: min(1020px, calc(100vw - 28px));
+  max-width: calc(100vw - 28px);
+  max-height: min(91dvh, 900px);
+  margin: auto;
+  padding: 0;
+  overflow-y: auto;
+  color: #392416;
+  background: #f1e3c6;
+  border: 3px solid #654228;
+  border-radius: 8px;
+  box-shadow: 0 20px 65px #1c1009a6;
+  font-family: Georgia, serif;
+}
+.modal-personalizacao::backdrop { background: #170d09c4; }
+.personalizacao-cabecalho {
+  position: sticky; top: 0; z-index: 4;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 17px 22px;
+  background: #4b291b; color: #fff1d0;
+  border-bottom: 3px double #b88d52;
+}
+.personalizacao-cabecalho h2 { margin: 0; font-size: clamp(1.1rem,2.4vw,1.55rem); }
+.personalizacao-sobretitulo { margin: 0 0 3px; color: #e9c884; font-size:.7rem; letter-spacing: .16em; }
+.personalizacao-intro { margin: 0; padding: 14px 22px 4px; font-size:.87rem; line-height:1.5; }
+.personalizacao-opcoes { padding: 10px 16px 20px; display: grid; gap: 16px; }
+.personalizacao-grupo { min-width: 0; margin: 0; padding: 12px; border: 2px solid #ac8b60; border-radius: 6px; background: #fbf3e3; }
+.personalizacao-grupo legend { padding: 0 8px; color: #5e3021; font: 16px 'Rye',Georgia,serif; }
+.personalizacao-grupo-descricao { margin: 0 0 10px; color: #755b45; font-size:.83rem; }
+.personalizacao-amostras { display: grid; grid-template-columns: repeat(auto-fill,minmax(138px,1fr)); gap: 10px; }
+.personalizacao-opcao { display:flex; flex-direction:column; align-items:stretch; position:relative; min-width:0; gap:6px; padding:10px 8px 9px; background:#ead9b8; border:2px solid #b19774; border-radius:5px; cursor:pointer; }
+.personalizacao-opcao:has(input:checked) { border-color:#862d24; box-shadow:0 0 0 2px #d7ae57; background:#f9ecd2; }
+.personalizacao-opcao:focus-within { outline:3px solid #b27a3b; outline-offset:2px; }
+.personalizacao-opcao input { position:absolute; left:8px; top:8px; margin:0; z-index:2; accent-color:#822b22; }
+.personalizacao-opcao-nome { display:block; min-height:30px; text-align:center; font-size:.8rem; font-weight:700; }
+.personalizacao-amostra {
+  box-sizing:border-box; display:grid; place-items:center; min-height:63px; width:100%;
+  padding:8px; border-radius:4px; color:#4b2d20; background:#f4eccf; font:bold 16px Georgia,serif;
+}
+.personalizacao-amostra--borda { background-color:#f1e4c8; margin:4px auto; width:calc(100% - 8px); }
+.personalizacao-amostra--botao { min-height:45px; height:45px; margin:6px auto; width:100%; font-size:11px; }
+.personalizacao-amostra--botao.rr-botao { --rr-altura:39px; max-inline-size:none; min-inline-size:100%; }
+.personalizacao-amostra--botao.rr-botao.rr-botao--cartucho-12 { padding: 4px 15% 4px 29%; font-size: 11px; }
+.personalizacao-amostra--botao.rr-botao.rr-botao--faca-bowie { --rr-altura: 34px; min-height: 40px; height: 40px; padding: 4px 8px; font-size: 9px; letter-spacing: .01em; }
+
+.personalizacao-amostra--fundo.rr-fundo--tabua,
+.personalizacao-amostra--fundo.rr-fundo--couro,
+.personalizacao-amostra--fundo.rr-fundo--terracota,
+.personalizacao-amostra--fundo.rr-fundo--ferrovia { color:#fff0cf; }
+.personalizacao-acoes {
+  position:sticky; bottom:0; z-index:4; display:flex; flex-wrap:wrap; align-items:center; gap:8px;
+  padding:13px 18px; border-top:3px double #ba986f; background:#f1e3c6;
+}
+.personalizacao-estado { margin-right:auto; font-size:.75rem; color:#714f32; }
+.personalizacao-acoes .botao { min-height:39px; padding:.5rem .85rem; }
+@media(max-width:650px) {
+  .personalizacao-cabecalho { padding:12px; }
+  .personalizacao-intro { padding:12px; }
+  .personalizacao-opcoes { padding:8px; }
+  .personalizacao-amostras { grid-template-columns:repeat(2,minmax(0,1fr)); gap:7px; }
+  .personalizacao-opcao { padding:8px 4px; }
+  .personalizacao-acoes { padding:10px; }
+  .personalizacao-estado { flex:1 0 100%; order:-1; }
+}
+
+/* Cartucho .45 do Mestre, com a ogiva apontada para a esquerda.
+   A amostra usa o mesmo desenho da navegação principal. */
+:root {
+  --rr-imagem-cartucho-45: url("../assets/tema/cartucho-45.svg");
+}
+/* Prévia do kit: manter proporção e texto inteiramente sobre a lâmina/estojo. */
+.personalizacao-amostra--botao.personalizacao-cartucho-45,
+.personalizacao-amostra--botao.rr-botao--faca-bowie,
+.personalizacao-amostra--botao.rr-botao--cartucho-12 {
+  display: grid;
+  box-sizing: border-box;
+  place-items: center;
+  width: 132px;
+  max-width: 132px;
+  height: 38px;
+  min-height: 38px;
+  max-height: 38px;
+  padding: 0 !important;
+  border: 0;
+  background: transparent;
+  font-size: 10px;
+  white-space: nowrap;
+  isolation: isolate;
+  position: relative;
+}
+.personalizacao-amostra--botao.rr-botao--faca-bowie::before,
+.personalizacao-amostra--botao.rr-botao--cartucho-12::before,
+.personalizacao-amostra--botao.personalizacao-cartucho-45::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  box-shadow: none;
+  z-index: -1;
+  border: 0 !important;
+  border-image: none !important;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  filter: drop-shadow(0 2px 1px #26190f88);
+}
+.personalizacao-amostra--botao.rr-botao--faca-bowie::before,
+.personalizacao-amostra--botao.rr-botao--cartucho-12::before {
+  background-image: var(--rr-desenho) !important;
+  transform: scaleX(-1);
+}
+.personalizacao-amostra--botao.personalizacao-cartucho-45::before {
+  background-image: var(--rr-imagem-cartucho-45) !important;
+}
+.personalizacao-amostra--botao.personalizacao-cartucho-45,
+.personalizacao-amostra--botao.rr-botao--cartucho-12 {
+  justify-content: center;
+  padding-right: 12% !important;
+}
+.personalizacao-amostra--botao.rr-botao--faca-bowie {
+  justify-content: center;
+  padding-right: 20% !important;
+}
+
+
+/* Paletas compartilhadas com a versão Jogador. */
+[data-rr-papel].rr-fundo--pergaminho {
+    --rr-gota-vazia: url("../assets/icons/gota-contorno.svg");
+    --rr-gota-cheia: url("../assets/icons/gota-preenchida.svg");
+    --rr-gota-numero-cheio: #fff4e1;
+    --rr-leitura-placeholder: #685647;
+    --rr-leitura-texto: #342519;
+    --rr-leitura-titulo: #512b16;
+    --rr-leitura-suave: #5f422d;
+    --rr-leitura-campo: #fffaf0;
+    --rr-leitura-campo-texto: #2c2016;
+    --rr-leitura-borda: #71533a;
+    --rr-leitura-painel: rgba(255, 251, 238, .43);
+}
+[data-rr-papel].rr-fundo--tabua {
+    --rr-leitura-texto: #fff2d9;
+    --rr-leitura-titulo: #ffe1a6;
+    --rr-leitura-suave: #f4dec0;
+    --rr-leitura-campo: #38271c;
+    --rr-leitura-campo-texto: #fff4e1;
+    --rr-leitura-placeholder: #e1c7a8;
+    --rr-gota-vazia: url('../assets/icons/gota-contorno-clara.svg');
+    --rr-gota-cheia: url('../assets/icons/gota-preenchida-clara.svg');
+    --rr-gota-numero-cheio: #302014;
+    --rr-leitura-borda: #d3a46f;
+    --rr-leitura-painel: rgba(33, 20, 12, .65);
+}
+[data-rr-papel].rr-fundo--couro {
+    --rr-leitura-texto: #fff1d4;
+    --rr-leitura-titulo: #f5d18e;
+    --rr-leitura-suave: #e7cdac;
+    --rr-leitura-campo: #241a13;
+    --rr-leitura-campo-texto: #fff2dc;
+    --rr-leitura-placeholder: #dec5a5;
+    --rr-gota-vazia: url('../assets/icons/gota-contorno-clara.svg');
+    --rr-gota-cheia: url('../assets/icons/gota-preenchida-clara.svg');
+    --rr-gota-numero-cheio: #302014;
+    --rr-leitura-borda: #c79a5d;
+    --rr-leitura-painel: rgba(17, 12, 9, .54);
+}
+[data-rr-papel].rr-fundo--mapa-topografico {
+    --rr-gota-vazia: url("../assets/icons/gota-contorno.svg");
+    --rr-gota-cheia: url("../assets/icons/gota-preenchida.svg");
+    --rr-gota-numero-cheio: #fff4e1;
+    --rr-leitura-placeholder: #685647;
+    --rr-leitura-texto: #34291b;
+    --rr-leitura-titulo: #49301b;
+    --rr-leitura-suave: #59462c;
+    --rr-leitura-campo: #fcf6e6;
+    --rr-leitura-campo-texto: #2e2318;
+    --rr-leitura-borda: #685338;
+    --rr-leitura-painel: rgba(255, 250, 232, .45);
+}
+[data-rr-papel].rr-fundo--latao {
+    --rr-gota-vazia: url("../assets/icons/gota-contorno.svg");
+    --rr-gota-cheia: url("../assets/icons/gota-preenchida.svg");
+    --rr-gota-numero-cheio: #fff4e1;
+    --rr-leitura-placeholder: #685647;
+    --rr-leitura-texto: #291e0e;
+    --rr-leitura-titulo: #44250d;
+    --rr-leitura-suave: #51371a;
+    --rr-leitura-campo: #fff8df;
+    --rr-leitura-campo-texto: #2b2016;
+    --rr-leitura-borda: #5f4018;
+    --rr-leitura-painel: rgba(255, 247, 213, .43);
+}
+[data-rr-papel].rr-fundo--terracota {
+    --rr-leitura-texto: #fff7e9;
+    --rr-leitura-titulo: #ffebc1;
+    --rr-leitura-suave: #ffe0c9;
+    --rr-leitura-campo: #542619;
+    --rr-leitura-campo-texto: #fff3e7;
+    --rr-leitura-placeholder: #f1c7ad;
+    --rr-gota-vazia: url('../assets/icons/gota-contorno-clara.svg');
+    --rr-gota-cheia: url('../assets/icons/gota-preenchida-clara.svg');
+    --rr-gota-numero-cheio: #302014;
+    --rr-leitura-borda: #edc0a3;
+    --rr-leitura-painel: rgba(46, 17, 10, .55);
+}
+[data-rr-papel].rr-fundo--ferrovia {
+    --rr-leitura-texto: #fff2dd;
+    --rr-leitura-titulo: #ffe0a4;
+    --rr-leitura-suave: #eee0cb;
+    --rr-leitura-campo: #29221b;
+    --rr-leitura-campo-texto: #fff6e6;
+    --rr-leitura-placeholder: #d8c5ad;
+    --rr-gota-vazia: url('../assets/icons/gota-contorno-clara.svg');
+    --rr-gota-cheia: url('../assets/icons/gota-preenchida-clara.svg');
+    --rr-gota-numero-cheio: #302014;
+    --rr-leitura-borda: #d2ab77;
+    --rr-leitura-painel: rgba(22, 15, 10, .72);
+}
+[data-rr-papel].rr-fundo--jornal {
+    --rr-gota-vazia: url("../assets/icons/gota-contorno.svg");
+    --rr-gota-cheia: url("../assets/icons/gota-preenchida.svg");
+    --rr-gota-numero-cheio: #fff4e1;
+    --rr-leitura-placeholder: #685647;
+    --rr-leitura-texto: #2b241b;
+    --rr-leitura-titulo: #382319;
+    --rr-leitura-suave: #534233;
+    --rr-leitura-campo: #fffaf0;
+    --rr-leitura-campo-texto: #2a2018;
+    --rr-leitura-borda: #6e5140;
+    --rr-leitura-painel: rgba(255, 251, 239, .60);
+}
+[data-rr-papel].rr-fundo--aco-envelhecido {
+    --rr-leitura-texto: #fff3db;
+    --rr-leitura-titulo: #fff3db;
+    --rr-leitura-suave: #f5e8ce;
+    --rr-leitura-campo: #292e2d;
+    --rr-leitura-campo-texto: #fff3db;
+    --rr-leitura-placeholder: #d5d2c7;
+    --rr-gota-vazia: url('../assets/icons/gota-contorno-clara.svg');
+    --rr-gota-cheia: url('../assets/icons/gota-preenchida-clara.svg');
+    --rr-gota-numero-cheio: #302014;
+    --rr-leitura-borda: #b5b8ae;
+    --rr-leitura-painel: rgba(30, 34, 32, .60);
+}
+
+[data-rr-papel] { color: var(--rr-leitura-texto); }
+[data-rr-papel] :is(h1,h2,h3,h4,h5,h6,legend) {color:var(--rr-leitura-titulo) !important;}
+[data-rr-papel] :is(p,label,small,dt,dd,li,th,td) {color:var(--rr-leitura-texto) !important;}
+[data-rr-papel] :is(input:not([type]),input[type=text],input[type=number],input[type=search],textarea,select) {background:var(--rr-leitura-campo) !important;color:var(--rr-leitura-campo-texto) !important;border-color:var(--rr-leitura-borda) !important;}
+[data-rr-papel] :is(input,textarea)::placeholder {color:var(--rr-leitura-placeholder) !important;opacity:1;}
+[data-rr-papel] :is(.ferramentas-quadro,.inventario-resumo) {background:var(--rr-leitura-painel) !important;color:var(--rr-leitura-texto);}
+[data-rr-papel] .zona-quadro {background:var(--rr-leitura-campo) !important;}
+[data-rr-papel] .util-tabela-regras :is(th,td) {background:var(--rr-leitura-campo);color:var(--rr-leitura-campo-texto) !important;}
+.personalizacao-amostra--botao.rr-botao::before {content:'';position:absolute;inset:0;z-index:-1;border:0 !important;border-image:none !important;background:var(--rr-desenho) center / 100% 100% no-repeat !important;transform:scaleX(-1);filter:none !important;}
+.personalizacao-amostra--botao.rr-botao {width:100%;min-width:0;max-width:132px;height:38px;min-height:38px;padding:0 20% 0 0 !important;}
+.personalizacao-amostra--fundo.rr-fundo--aco-envelhecido {color:#fff3db;}
+.modal-personalizacao[open] {display:flex;flex-direction:column;width:min(1100px,96vw);height:min(850px,94dvh);max-height:94dvh;overflow:hidden;}
+.personalizacao-form {display:grid;grid-template-columns:minmax(0, .85fr) minmax(0,1.15fr);flex:1;min-height:0;overflow:hidden;}
+.personalizacao-opcoes {overflow:auto;min-height:0;align-content:start;}
+.personalizacao-cabecalho {flex:none;flex-wrap:wrap;gap:8px;}
+.personalizacao-cabecalho .personalizacao-acoes {padding:0;background:none;border:0;position:static;display:flex;flex-wrap:wrap;}
+#previa-mestre {margin:12px;padding:16px;min-width:0;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:14px;border-radius:6px;}
+#previa-mestre [data-rr-papel] {padding:18px;min-width:0;}
+#previa-mestre input,#previa-mestre textarea {width:100%;box-sizing:border-box;}
+@media(max-width:720px){.modal-personalizacao[open]{width:100%;height:100dvh;max-height:100dvh;max-width:100%;margin:0;}.personalizacao-form{grid-template-columns:minmax(0,1fr);}#previa-mestre{display:none;}.personalizacao-amostras{grid-template-columns:repeat(2,minmax(0,1fr));}.personalizacao-cabecalho .botao{min-height:44px;}}
+.rr-tema-escuro .botao-local-item.icone-chapeu {background-image:url("../assets/icons/chapeu-contorno-claro.svg") !important;}
+.rr-tema-escuro .botao-local-item.icone-chapeu[aria-pressed="true"] {background-image:url("../assets/icons/chapeu-preenchido-claro.svg") !important;}
+.rr-tema-escuro .botao-local-item.icone-alforge {background-image:url("../assets/icons/alforge-contorno-claro.svg") !important;}
+.rr-tema-escuro .botao-local-item.icone-alforge[aria-pressed="true"] {background-image:url("../assets/icons/alforge-preenchido-claro.svg") !important;}
+
+#painel [data-rr-papel].rr-tema-borda-ativa {box-sizing:border-box !important;min-width:0;}
+#painel [data-rr-papel] .marcador-dado-visual {background-image:var(--rr-gota-vazia,url('../assets/icons/gota-contorno.svg')) !important;color:var(--rr-leitura-texto) !important;}
+#painel [data-rr-papel] .check-tracos:checked + .marcador-dado-visual {background-image:var(--rr-gota-cheia,url('../assets/icons/gota-preenchida.svg')) !important;color:var(--rr-gota-numero-cheio,#fff4e1) !important;}
+#painel [data-rr-papel] .check-caveira {background-color:var(--rr-leitura-texto) !important;}
+body.rr-tema-pagina:is(.rr-fundo--tabua,.rr-fundo--couro,.rr-fundo--terracota,.rr-fundo--ferrovia,.rr-fundo--aco-envelhecido) :is(.marca strong,.marca small,.usuario-email,.nota-escopo) {color:#fff3db;}
+
+#previa-mestre .rr-previa-botao {align-self:center;}
+#painel [data-rr-papel] .botao-local-item.icone-chapeu {background-image:var(--rr-chapeu-vazio) !important;}
+#painel [data-rr-papel] .botao-local-item.icone-chapeu[aria-pressed="true"] {background-image:var(--rr-chapeu-cheio) !important;}
+#painel [data-rr-papel] .botao-local-item.icone-alforge {background-image:var(--rr-alforge-vazio) !important;}
+#painel [data-rr-papel] .botao-local-item.icone-alforge[aria-pressed="true"] {background-image:var(--rr-alforge-cheio) !important;}
+[data-rr-papel] {
+--rr-chapeu-vazio:url("../assets/icons/chapeu-contorno.svg");
+--rr-chapeu-cheio:url("../assets/icons/chapeu-preenchido.svg");
+--rr-alforge-vazio:url("../assets/icons/alforge-contorno.svg");
+--rr-alforge-cheio:url("../assets/icons/alforge-preenchido.svg");
+}
+[data-rr-papel].rr-tema-escuro {
+--rr-chapeu-vazio:url("../assets/icons/chapeu-contorno-claro.svg");
+--rr-chapeu-cheio:url("../assets/icons/chapeu-preenchido-claro.svg");
+--rr-alforge-vazio:url("../assets/icons/alforge-contorno-claro.svg");
+--rr-alforge-cheio:url("../assets/icons/alforge-preenchido-claro.svg");
+}
+
+/* Navegação: o estado de sessão prevalece sobre qualquer tema. */
+#navegacao-mestre[hidden], body.modo-entrada #navegacao-mestre {
+  display: none !important;
+}
+.barra-superior { flex-wrap: wrap; justify-content: space-between; gap: 4px; }
+.barra-superior .barra-acoes { min-width: 0; }
+:root #navegacao-mestre:not([hidden]) {
+  display: flex;
+  flex: 1 1 100%;
+  order: 3;
+  min-width: 0;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
+  padding: 5px 2px 8px;
+  margin: 0;
+  overflow: visible;
+  --rr-nav-largura: 116px;
+  --rr-nav-altura: 38px;
+}
+
+:root #navegacao-mestre .aba-navegacao.aba-cartucho,
+:root #navegacao-mestre .aba-navegacao.aba-cartucho:hover:not(:disabled),
+:root #navegacao-mestre .aba-navegacao.aba-cartucho.ativa {
+  box-sizing: border-box;
+  display: block;
+  position: relative;
+  isolation: isolate;
+  flex: 0 1 var(--rr-nav-largura);
+  width: var(--rr-nav-largura);
+  height: var(--rr-nav-altura);
+  min-width: 0;
+  min-height: 0;
+  max-width: none;
+  max-inline-size: none;
+  min-inline-size: 0;
+  min-block-size: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: transparent !important;
+  box-shadow: none !important;
+  filter: none !important;
+  transform: none;
+  color: #1f140c;
+  text-shadow: none;
+  --rr-filtro: brightness(1);
+}
+:root #navegacao-mestre .aba-navegacao.aba-cartucho::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  box-shadow: none;
+  z-index: -1;
+  border: 0 !important;
+  border-image: none !important;
+  background: var(--rr-desenho, var(--rr-imagem-cartucho-45)) center / 100% 100% no-repeat;
+  transform: scaleX(-1);
+  filter: drop-shadow(0 2px 0 #26190f);
+  pointer-events: none;
+}
+:root #navegacao-mestre .aba-cartucho:not(.rr-botao)::before { transform: none; }
+:root #navegacao-mestre .cartucho-svg { display: none; }
+:root #navegacao-mestre .aba-cartucho .cartucho-texto {
+  position: absolute;
+  top: 50%;
+  left: 32%;
+  width: 58%;
+  transform: translateY(-50%);
+  font: 600 12px/1.1 Georgia, serif;
+  letter-spacing: 0;
+  text-align: center;
+  white-space: nowrap;
+  color: inherit;
+  text-shadow: none;
+  pointer-events: none;
+}
+:root[data-rr-botoes="cartucho-12"] #navegacao-mestre .aba-cartucho { color: #fff4dc; }
+:root[data-rr-botoes="cartucho-12"] #navegacao-mestre .cartucho-texto { left: 8%; width: 64%; }
+:root[data-rr-botoes="faca-bowie"] #navegacao-mestre .cartucho-texto { left: 12%; width: 54%; }
+:root #navegacao-mestre .aba-navegacao.aba-cartucho.ativa,
+:root #navegacao-mestre .aba-navegacao.aba-cartucho.ativa:hover { transform: translate(2px,-2px); }
+:root #navegacao-mestre .aba-cartucho:focus-visible { outline: 2px solid #f5d376; outline-offset: 2px; }
+@media (min-width: 1100px) {
+  .barra-superior { flex-wrap: nowrap; }
+  .barra-superior .marca, .barra-superior .barra-acoes { flex: 0 0 auto; }
+  :root #navegacao-mestre:not([hidden]) {
+    order: 1;
+    flex: 1 1 0;
+    flex-wrap: nowrap;
+    gap: 2px;
+    container-type: inline-size;
+  }
+  :root #navegacao-mestre .aba-navegacao.aba-cartucho {
+    --rr-nav-largura: calc((100cqw - 12px) / 7);
+    --rr-nav-altura: calc(var(--rr-nav-largura) * .328);
+  }
+  :root #navegacao-mestre .aba-cartucho .cartucho-texto {
+    font-size: clamp(7px, 1.35cqw, 14px);
+  }
+}
+@media (max-width: 700px) {
+  :root #navegacao-mestre:not([hidden]) { --rr-nav-largura: 116px; --rr-nav-altura: 38px; gap: 3px; }
+  :root #navegacao-mestre .aba-cartucho .cartucho-texto { font-size: 11px; }
+}
+
+/* Hierarquia de cartões: áreas de organização não recebem molduras decorativas. */
+#painel #pagina-combate .combate-colunas,
+#painel #pagina-combate .combate-coluna,
+#painel #pagina-combate .combate-identificacao-rolagem {
+  gap: 14px;
+  min-width: 0;
+}
+#painel #pagina-combate .combate-coluna { padding: 5px 6px 10px; }
+#painel #pagina-combate :is(.combate-cartao, .combate-coluna > .cartao-arma)[data-rr-papel] {
+  padding: 14px;
+  min-width: 0;
+}
+/* A rolagem é um controle do cartão, não uma segunda moldura. */
+#painel #pagina-combate .combate-rolagem-compacta > .cartao-rolagem {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+#painel #pagina-combate .combate-condicao {
+  background: var(--rr-leitura-painel, transparent);
+  border: 0;
+  border-bottom: 1px solid var(--rr-leitura-borda, #98724d);
+  border-radius: 0;
+  box-shadow: none;
+}
+/* A grade é uma superfície de organização; a moldura pertence ao quadro. */
+#painel #pagina-utilitarios .util-grade {
+  border: 0;
+  background-color: transparent;
+  background-image: none;
+  padding: 10px;
+}
+#painel #pagina-utilitarios .util-cartao[data-rr-papel] {
+  padding: 9px;
+  outline-offset: -6px !important;
+  box-shadow: none !important;
+  isolation: isolate;
+}
+#painel #pagina-utilitarios .util-cartao[data-rr-papel]::after { z-index: -1; }
+#painel #pagina-utilitarios .util-cartao[data-rr-papel] :is(.util-cartao-cabecalho,.util-cartao-rodape) {
+  background: var(--rr-leitura-painel);
+  color: var(--rr-leitura-texto);
+  border-color: var(--rr-leitura-borda);
+  min-width: 0;
+  flex-wrap: wrap;
+}
+#painel #pagina-utilitarios .util-cartao[data-rr-papel] .util-cartao-corpo {
+  min-width: 0;
+  overflow: auto;
+  justify-content: flex-start;
+}
+#painel #pagina-utilitarios .util-cartao[data-rr-papel] .util-tabela-rolagem { flex: 0 0 auto; overflow-x: auto; }
+#painel #pagina-utilitarios .util-cartao[data-rr-papel] .util-tabela-regras { height: auto; }
+
+/* A medição síncrona usa a maior espessura de moldura do kit, evitando
+   subestimar o espaço antes que o observador aplique o tema ao cartão. */
+#painel #pagina-utilitarios .util-cartao.util-medicao {
+  border-width: 8px;
+  padding: 9px;
+}
+#painel #pagina-utilitarios .util-medicao :is(.util-cartao-cabecalho,.util-cartao-rodape) { flex-wrap: wrap; }
+#painel #pagina-utilitarios .util-medicao .util-cartao-corpo { justify-content: flex-start; }
+
+/* Barra de fichas: mesma superfície de controle do Diário. */
+#pagina-fichas .barra-consulta-fichas {
+  box-sizing: border-box; width: 100%; min-width: 0;
+  padding: 12px 13px; border: 2px solid #6b4630; border-radius: 6px;
+  gap: 10px 16px; flex-wrap: wrap;
+}
+#pagina-fichas .modos-consulta-fichas { flex-wrap: wrap; min-width: 0; }
+/* Combate ocupa a área restante abaixo do cabeçalho real, inclusive quando ele quebra linhas. */
+@media (min-width: 851px) {
+  body.combate-ativo { height: 100dvh; min-height: 0; display: flex; flex-direction: column; overflow: hidden; }
+  body.combate-ativo > .barra-superior { flex: 0 0 auto; }
+  body.combate-ativo > main { display: flex; flex-direction: column; flex: 1 1 0; min-height: 0; overflow: hidden; }
+  body.combate-ativo #painel { display: flex; flex-direction: column; flex: 1 1 0; height: auto; min-height: 0; padding-bottom: 0; overflow: hidden; }
+  #painel #pagina-combate:not([hidden]) { flex: 1 1 0; height: auto; min-height: 0; overflow: hidden; padding: 8px; gap: 8px; }
+  #painel #pagina-combate .combate-barra { flex: 0 0 auto; }
+  #painel #pagina-combate .combate-grade { flex: 1 1 0; min-height: 0; overflow: hidden; grid-template-columns: clamp(195px, 18vw, 255px) minmax(0,1fr); }
+  #painel #pagina-combate .combate-detalhe { min-height: 0; overflow: auto; }
+  #painel #pagina-combate .combate-colunas { flex: 1 1 0; height: 100%; min-height: 0; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; }
+  #painel #pagina-combate .combate-coluna { grid-column: auto; min-height: 0; max-height: 100%; overflow: auto; padding: 6px; gap: 14px; }
+  #painel #pagina-combate .combate-coluna > * { flex-shrink: 0; }
+  #painel #pagina-combate .combate-identificacao-rolagem { gap: 8px; grid-template-columns: minmax(0,1fr); }
+  #painel #pagina-combate :is(.combate-cartao,.combate-coluna > .cartao-arma)[data-rr-papel] { padding: 14px; }
+  #painel #pagina-combate .combate-retrato { max-height: 105px; }
+}
+@media (min-width: 851px) and (max-width: 1180px) {
+  #painel #pagina-combate .combate-colunas { grid-template-columns: repeat(2,minmax(0,1fr)); height: auto; flex: none; }
+  #painel #pagina-combate .combate-coluna { max-height: none; overflow: visible; }
+  #painel #pagina-combate .combate-coluna:last-child { grid-column: 1 / -1; }
+}
+
+/* Cartões de consulta: o acabamento pertence à superfície externa. */
+#painel #pagina-campanhas .participante[data-rr-papel] { padding: 14px; gap: 12px; }
+#painel #pagina-campanhas .personagens-participante { gap: 10px; }
+#painel #pagina-campanhas .personagem-participante[data-rr-papel] { padding: 12px; }
+#painel #pagina-campanhas :is(.nome-jogador,.nome-personagem-lista,.rotulo-campo) { color: var(--rr-leitura-titulo); }
+#painel #pagina-fichas .ficha-parte[data-rr-papel] { padding: 10px; }
+#painel #pagina-fichas .ficha-parte-cabecalho { background: var(--rr-leitura-painel); border-color: var(--rr-leitura-borda); }
+#painel #pagina-npcs .lista-npcs { gap: 12px; padding: 6px; }
+#painel #pagina-npcs .item-npc[data-rr-papel] { padding: 8px; border: 1px solid var(--rr-leitura-borda); border-radius: 4px; background-color: #f4e6ce; }
+#painel #pagina-npcs .item-npc[data-rr-papel] button { background: transparent; border: 0; color: var(--rr-leitura-texto); }
+#painel #pagina-npcs .item-npc[data-rr-papel] .npc-tipo-lista { color: var(--rr-leitura-suave); }
+#painel #pagina-npcs .item-npc.ativo button { box-shadow: inset 3px 0 var(--rr-leitura-titulo); }
+#painel #pagina-npcs .npc-form-reiniciado { background: transparent; }
+#painel #pagina-npcs .npc-consulta .npc-detalhes { display: none; }
+/* Moldura externa do combate com folga para as molduras internas. */
+#painel #pagina-combate #combate-detalhe { padding: 16px; min-width: 0; }
+#painel #pagina-combate .combate-lateral { padding: 12px; }
+#painel #pagina-combate .combate-lista { gap: 12px; padding: 6px; }
+#painel #pagina-combate .combate-linha { width: 100%; min-width: 0; box-sizing: border-box; padding: 9px; }
+#painel #pagina-combate .combate-linha .combate-nome { color: var(--rr-leitura-texto); }
+#painel #pagina-combate .combate-linha.ativa .combate-nome { text-decoration: underline; }
+@media (min-width: 851px) {
+  #painel #pagina-combate .combate-linha { grid-template-columns: 20px minmax(0,1fr) 38px 23px; gap: 3px; }
+}
+/* Catálogo: texto e metadados seguem a paleta do próprio cartão. */
+#painel #pagina-utilitarios .util-mecanica[data-rr-papel] { padding: 12px; gap: 8px; margin-bottom: 12px; }
+#painel #pagina-utilitarios .util-mecanica h4 { font-size: .94rem; line-height: 1.35; overflow-wrap: anywhere; }
+#painel #pagina-utilitarios .util-mecanica p { font-size: .8rem; line-height: 1.45; }
+#painel #pagina-utilitarios .util-mecanica-tamanho { background: var(--rr-leitura-campo); color: var(--rr-leitura-campo-texto); border-color: var(--rr-leitura-borda); }
+
+/* Retratos: o desenho do kit substitui os fundos e recortes antigos. */
+#painel .rr-retrato, #previa-mestre .rr-retrato, .personalizacao-amostra--retrato.rr-retrato {
+    position: relative; display: block; box-sizing: border-box;
+    height: auto; aspect-ratio: 1; padding: 0; border: 0; border-radius: 0;
+    background: var(--rr-desenho) center / 100% 100% no-repeat !important;
+    overflow: hidden;
+}
+#painel .rr-retrato > .rr-retrato__foto {
+    position: absolute !important; inset: var(--rr-janela) !important;
+    width: var(--rr-foto-largura) !important; height: var(--rr-foto-altura) !important;
+    max-width: none !important; max-height: none !important; aspect-ratio: auto;
+    margin: 0; padding: 0; border: 0 !important; border-radius: var(--rr-raio, 0) !important;
+    clip-path: var(--rr-recorte, none); overflow: hidden; background: transparent;
+    object-fit: cover;
+}
+#painel .rr-retrato > .rr-retrato__foto img {
+    display: block; width: 100% !important; height: 100% !important;
+    max-width: none !important; max-height: none !important; border: 0 !important;
+    border-radius: 0 !important; object-fit: cover; object-position: center;
+}
+#painel .rr-retrato img:is([src$="Placeholder.webp"], [src$="fundoCinza.jpg"]) { opacity: 0 !important; }
+#painel .npc-retrato-consulta.rr-retrato { width: min(100%, 220px); margin: 0 auto; }
+#painel #pagina-combate .combate-poster.rr-retrato { width: min(100%, 150px); margin-inline: auto; }
+.personalizacao-amostra--retrato.rr-retrato { width: min(100%, 110px); min-height: 0; margin-inline: auto; }
+#previa-mestre .rr-previa-retratos { display: flex; gap: 8px; justify-content: center; }
+#previa-mestre .rr-previa-retratos .rr-retrato { width: min(45%, 100px); }
+
+/* Uma única geometria de legenda para navegação e amostras. */
+:root #navegacao-mestre .aba-cartucho,
+.personalizacao-amostra--botao.rr-botao {
+  --rr-legenda-inicio: 32%; --rr-legenda-largura: 58%;
+}
+:root #navegacao-mestre .rr-botao--cartucho-12,
+.personalizacao-amostra--botao.rr-botao--cartucho-12 {
+  --rr-legenda-inicio: 8%; --rr-legenda-largura: 64%;
+}
+:root #navegacao-mestre .rr-botao--faca-bowie,
+.personalizacao-amostra--botao.rr-botao--faca-bowie {
+  --rr-legenda-inicio: 15%; --rr-legenda-largura: 53%;
+}
+:root #navegacao-mestre .aba-cartucho .cartucho-texto,
+.personalizacao-amostra--botao.rr-botao .cartucho-texto {
+  position: absolute; top: 50%; left: var(--rr-legenda-inicio);
+  width: var(--rr-legenda-largura); transform: translateY(-50%);
+  text-align: center; white-space: normal; overflow-wrap: anywhere;
+  line-height: 1.05; max-height: none; overflow: visible;
+  text-overflow: clip; color: inherit; letter-spacing: 0;
+}
+.personalizacao-amostra--botao.rr-botao {
+  display: block; position: relative; isolation: isolate;
+  width: min(100%, 156px); min-inline-size: 0; max-width: 156px;
+  height: auto; aspect-ratio: 3.05; min-height: 0; max-height: none; min-block-size: 0;
+  padding: 0 !important; background: transparent; color: var(--rr-legenda);
+  font: 600 11px/1.05 Georgia, serif;
+}
+.personalizacao-amostra--botao.rr-botao::before { width: 100%; height: 100%; }
+/* SVGs preserve their intrinsic aspect ratio; the label follows the same area. */
+:root #navegacao-mestre .aba-navegacao.aba-cartucho::before,
+.personalizacao-amostra--botao.rr-botao::before { background-size: 100% 100%; }
+@media (min-width: 1100px) {
+  .barra-superior { padding-inline: clamp(8px, 1vw, 20px); }
+  .barra-superior .barra-acoes { gap: 5px; }
+  .barra-superior .identidade-sessao { max-width: clamp(100px, 11vw, 190px); }
+  :root #navegacao-mestre:not([hidden]) { padding-inline: 0; }
+  :root #navegacao-mestre .aba-cartucho .cartucho-texto { font-size: clamp(7px, 1.35cqw, 14px); }
+}
+/* Superfícies internas que antes mantinham cores fixas. */
+#painel [data-rr-papel] :is(.ficha-arma,.ficha-capacidade,.vg-estatisticas,.combate-rolagem-compacta,.util-categoria-titulo) {
+  background: var(--rr-leitura-painel); color: var(--rr-leitura-texto); border-color: var(--rr-leitura-borda);
+}
+#painel [data-rr-papel] :is(.ficha-traco span,.npc-tracos-consulta span,.ficha-condicao strong,.arma-municao-titulo,.vg-estatisticas strong,.util-pagina-livro,.combate-arma-titulo) {
+  color: var(--rr-leitura-titulo) !important;
+}
+#painel [data-rr-papel] :is(.ficha-tabela th,.util-categoria-titulo) {
+  background: var(--rr-leitura-campo); color: var(--rr-leitura-campo-texto) !important;
+}
+#painel [data-rr-papel] :is(.ficha-arma,.ficha-capacidade) { box-shadow: none; }
+#painel [data-rr-papel] :is(.util-vazio,.util-resultado-vazio) { background: var(--rr-leitura-painel); color: var(--rr-leitura-texto); }
+#painel [data-rr-papel] .util-vazio strong { color: var(--rr-leitura-titulo); }
+/* Cartões compactos, sem rolagem própria; o painel externo permanece acessível. */
+#painel #pagina-combate .combate-coluna > .cartao-arma {
+  flex: 0 0 auto; height: auto; min-height: 0; max-height: none;
+  overflow: visible; padding: 10px; gap: 3px;
+}
+#painel #pagina-combate .cartao-arma .arma-linha-nome { gap: 4px; }
+#painel #pagina-combate .cartao-arma .bonus-distancias { gap: 3px; }
+#painel #pagina-combate .cartao-arma .bonus-distancia { gap: 2px; }
+#painel #pagina-combate .cartao-arma .bonus-distancia span { min-height: 0; line-height: 1.1; }
+#painel #pagina-combate .cartao-arma input { height: 26px; min-height: 0; padding: 2px; }
+#painel #pagina-combate .cartao-arma .municao-botao { height: 26px; min-height: 0; }
+@media (min-width: 851px) {
+  #painel #pagina-combate .combate-colunas { height: auto; min-height: 100%; align-items: start; }
+  #painel #pagina-combate .combate-coluna { max-height: none; overflow: visible; }
+}
+
+/* A legenda deve acompanhar a largura efetiva, inclusive em monitores amplos. */
+@media (min-width: 1100px) {
+  :root #navegacao-mestre .aba-navegacao.aba-cartucho { flex: 1 1 0; max-width: 180px; height: auto; aspect-ratio: 3.05; }
+}
+
+/* Acabamento da mesa: contraste, legendas e distribuição dos painéis. */
+#painel #pagina-viagem #vg-resumo { color: var(--rr-leitura-texto, #342519); }
+#painel #pagina-combate .combate-turno { background: var(--rr-leitura-campo, #fff4df); color: var(--rr-leitura-campo-texto, #342519); opacity: 1; }
+#painel #pagina-combate .combate-trilho.combate-avancando .combate-turno { animation-name: rr-turno-deslizar; }
+@keyframes rr-turno-deslizar { from { transform: translateX(24px); } to { transform: translateX(0); } }
+:root #navegacao-mestre #aba-campanhas.rr-botao--cartucho-45,
+#previa-mestre .rr-previa-botao.rr-botao--cartucho-45 { --rr-legenda-inicio: 27%; --rr-legenda-largura: 61%; }
+:root #navegacao-mestre .rr-botao--faca-bowie,
+.personalizacao-amostra--botao.rr-botao--faca-bowie { --rr-legenda-inicio: 10%; --rr-legenda-largura: 60%; }
+:root #navegacao-mestre .rr-botao--faca-bowie .cartucho-texto,
+.personalizacao-amostra--botao.rr-botao--faca-bowie .cartucho-texto { white-space: nowrap; overflow-wrap: normal; font-size: clamp(6px, .78vw, 11px); }
+#previa-mestre .rr-previa-retratos { margin-block: 8px 12px; align-items: center; }
+#previa-mestre .rr-previa-cartao { display: grid; gap: 8px; }
+#painel #pagina-combate .combate-cartao-condicoes { display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
+#painel #pagina-combate .combate-condicoes-lista { flex: 1 1 0; min-height: 0; overflow-y: auto; overflow-x: hidden; }
+@media (min-width: 851px) and (min-height: 700px) {
+  #painel #pagina-combate #combate-detalhe { overflow: hidden; display: flex; flex-direction: column; }
+  #painel #pagina-combate .combate-colunas { flex: 1 1 0; height: 100%; min-height: 0; align-items: stretch; gap: 10px; }
+  #painel #pagina-combate .combate-coluna { display: flex; flex-direction: column; min-height: 0; max-height: 100%; overflow: visible; gap: 8px; padding: 2px; }
+  #painel #pagina-combate .combate-coluna > * { flex: 1 1 auto; min-height: 0; }
+  #painel #pagina-combate .combate-identificacao-rolagem { flex: 1 1 auto; }
+  #painel #pagina-combate .combate-identificacao-rolagem > .combate-cartao-retrato { flex: 1 1 auto; min-height: 0; }
+  #painel #pagina-combate .combate-coluna > .cartao-arma { flex: 1 1 auto; }
+  #painel #pagina-combate .combate-coluna > .combate-cartao-condicoes { flex: 1 1 0; min-height: 0; }
+  #painel #pagina-combate .combate-coluna > .combate-preparar-cartao { flex: 0 0 auto; height: clamp(100px, 18dvh, 165px); min-height: 0; }
+  #painel #pagina-combate .combate-preparar-cartao textarea { min-height: 0; flex: 1 1 0; resize: none; }
+}
+@media (max-width: 850px), (max-height: 699px) {
+  #painel #pagina-combate .combate-condicoes-lista { flex: 0 1 auto; max-height: 220px; }
+}
+
+/* Acabamento: a moldura rebitada é pintada dentro da caixa, não aumenta a grade. */
+#painel [data-rr-papel].rr-borda--ferro-rebitado,
+dialog[data-rr-papel].rr-borda--ferro-rebitado,
+dialog [data-rr-papel].rr-borda--ferro-rebitado,
+#previa-mestre .rr-borda--ferro-rebitado,
+.personalizacao-amostra.rr-borda--ferro-rebitado {
+  box-sizing: border-box;
+  border: 3px solid #55504a !important;
+  outline: 1px solid #1f140c !important;
+  outline-offset: -3px !important;
+  box-shadow: inset 0 0 0 4px #55504a !important;
+}
+#painel [data-rr-papel].rr-borda--ferro-rebitado::after,
+dialog[data-rr-papel].rr-borda--ferro-rebitado::after,
+dialog [data-rr-papel].rr-borda--ferro-rebitado::after,
+#previa-mestre .rr-borda--ferro-rebitado::after,
+.personalizacao-amostra.rr-borda--ferro-rebitado::after {
+  inset: 0 !important;
+  background-size: 33.333% 4px !important;
+  background-image: radial-gradient(circle, #b5a38a 1px, transparent 1.5px), radial-gradient(circle, #b5a38a 1px, transparent 1.5px) !important;
+  background-position: top left, bottom left !important;
+}
+/* Estados vazios: a moldura externa permanece visível e personalizada. */
+#painel :is(#sem-campanha, #npc-vazio, .estado-consulta-fichas) {
+  box-sizing: border-box;
+  min-height: 180px;
+  flex: 1 1 auto;
+  align-content: center;
+  justify-items: center;
+  padding: 1.5rem;
+  border: 1px dashed var(--rr-leitura-borda, #b89a74);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--rr-leitura-texto, #77573d);
+  text-align: center;
+}
+#painel :is(#sem-campanha, #npc-vazio) p {
+  color: var(--rr-leitura-texto, #77573d) !important;
+}
+#painel #sem-campanha h2 { color: var(--rr-leitura-titulo, #43291b) !important; }
+#painel #pagina-npcs .painel-ficha-npc:has(#npc-vazio:not([hidden])) {
+  visibility: visible;
+  pointer-events: auto;
+}
+.personalizacao-estado:empty { display: none; }
+/* Superfícies auxiliares usam a paleta do cartão mais próximo. */
+#painel #pagina-viagem [data-rr-papel] :is(.vg-estatisticas > div,.vg-marca,.vg-ficha-marcador span,.vg-ficha-recurso,.vg-ficha-marcas .linha-check:nth-child(even),.tabela-itens th,.tabela-itens td) {
+  background: var(--rr-leitura-campo) !important;
+  color: var(--rr-leitura-campo-texto) !important;
+  border-color: var(--rr-leitura-borda);
+}
+#painel #pagina-viagem [data-rr-papel] :is(.vg-estatisticas > div,.vg-ficha-recurso) :is(strong,span,label,small) {
+  color: var(--rr-leitura-campo-texto) !important;
+}
+#painel #pagina-viagem [data-rr-papel] :is(.vg-ficha-identidade strong,.vg-ficha-identidade small,.vg-recurso-valor,.vg-item strong,.vg-item small) { color: var(--rr-leitura-texto) !important; }
+#painel #pagina-viagem [data-rr-papel] .vg-ficha-marcador input:checked + span { background: #79372d !important; color: #fff0d3 !important; }
+#painel #pagina-utilitarios [data-rr-papel] :is(.util-catalogo-topo,.util-lista-mecanicas) {
+  background: var(--rr-leitura-painel); color: var(--rr-leitura-texto);
+  border-color: var(--rr-leitura-borda);
+  scrollbar-color: var(--rr-leitura-borda) var(--rr-leitura-campo);
+}
+#painel #pagina-utilitarios .util-cartao[data-rr-papel] .util-tabela-regras :is(th,td) {
+  background: var(--rr-leitura-campo) !important;
+  color: var(--rr-leitura-campo-texto) !important;
+  border-color: var(--rr-leitura-borda);
+}
+#painel #pagina-utilitarios .util-cartao[data-rr-papel] .util-tabela-regras tbody tr:nth-child(even) td { background: var(--rr-leitura-painel) !important; color: var(--rr-leitura-texto) !important; }
+#painel #pagina-utilitarios .util-cartao[data-rr-papel] .util-cartao-corpo { scrollbar-color: var(--rr-leitura-borda) var(--rr-leitura-campo); }
+@media (min-width: 1181px) and (min-height: 700px) {
+  #painel #pagina-combate .combate-colunas { grid-template-rows: minmax(0,1fr); }
+  #painel #pagina-combate .combate-coluna { min-width: 0; gap: 6px; }
+  #painel #pagina-combate :is(.combate-cartao,.combate-coluna > .cartao-arma)[data-rr-papel] { box-sizing: border-box; min-width: 0; padding: 9px; }
+  #painel #pagina-combate .combate-coluna > .combate-cartao-condicoes { overflow: hidden; }
+  #painel #pagina-combate .combate-condicoes-lista { overflow-y: auto; min-height: 0; }
+}
+/* Em duas colunas, a terceira coluna precisa de espaço real, não de recorte. */
+@media (min-width: 851px) and (max-width: 1180px) {
+  #painel #pagina-combate #combate-detalhe { overflow-y: auto; }
+  #painel #pagina-combate .combate-colunas { flex: 0 0 auto; height: auto; }
+  #painel #pagina-combate .combate-condicoes-lista { flex: 0 1 auto; max-height: 220px; }
+}
+
+/* A coluna de ações reserva espaço para a ação preparada antes das condições. */
+@media (min-width: 1181px) and (min-height: 700px) {
+  #painel #pagina-combate .combate-colunas { height: auto; max-height: 100%; }
+  #painel #pagina-combate .combate-coluna:nth-child(3) {
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) clamp(100px, 18dvh, 165px);
+    box-sizing: border-box;
+    overflow: hidden;
+    align-items: stretch;
+  }
+  #painel #pagina-combate .combate-coluna:nth-child(3) > .combate-cartao-condicoes {
+    height: auto;
+    min-height: 0;
+    max-height: 100%;
+    box-sizing: border-box;
+    margin: 0;
+  }
+  #painel #pagina-combate .combate-coluna:nth-child(3) > .combate-preparar-cartao {
+    height: auto;
+    min-height: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+}
+
+/* Fichas consultadas usam elementos de leitura, não inputs reais. */
+#painel :is(#pagina-fichas,#pagina-npcs) [data-rr-papel] :is(.rr-ficha-mobile,.rr-secao-original,.ficha-parte-corpo,.rr-campos-npc,.rr-tracos,.rr-condicoes) {
+  color: var(--rr-leitura-texto);
+  background: transparent;
+  border-color: var(--rr-leitura-borda);
+}
+#painel :is(#pagina-fichas,#pagina-npcs) [data-rr-papel] :is(.rr-valor-campo,.campo-inventario,.municao-valor,.inventario-resumo-campo output,.tabela-itens td,.tabela-itens th) {
+  background: var(--rr-leitura-campo) !important;
+  color: var(--rr-leitura-campo-texto) !important;
+  border-color: var(--rr-leitura-borda) !important;
+}
+#painel :is(#pagina-fichas,#pagina-npcs) [data-rr-papel] :is(.label-campo,.rr-traco-linha strong,.rr-linha-marcadores strong,.rr-tracos-cabecalho span,.inventario-resumo-campo span,.bonus-distancia > span,.arma-municao-titulo,.ficha-identidade strong) {
+  color: var(--rr-leitura-texto) !important;
+}
+#painel :is(#pagina-fichas,#pagina-npcs) [data-rr-papel] :is(.rr-cartao-arma,.inventario-resumo,.ficha-parte-cabecalho) {
+  background: var(--rr-leitura-painel) !important;
+  border-color: var(--rr-leitura-borda);
+  color: var(--rr-leitura-texto);
+}
+#painel :is(#pagina-fichas,#pagina-npcs) [data-rr-papel] .rr-marcador {
+  background-color: var(--rr-leitura-texto) !important;
+}
+/* O preenchimento e o contorno continuam distintos pelas máscaras originais. */
+#painel :is(#pagina-fichas,#pagina-npcs) [data-rr-papel] .botao-local-item.icone-chapeu.marcado { background-image: var(--rr-chapeu-cheio) !important; }
+#painel :is(#pagina-fichas,#pagina-npcs) [data-rr-papel] .botao-local-item.icone-alforge.marcado { background-image: var(--rr-alforge-cheio) !important; }
+
+/* Condições: limitar a caixa, sem limitar o número de condições. */
+#painel #pagina-combate .combate-cartao-condicoes {
+  box-sizing: border-box;
+  min-height: 0;
+  max-height: 300px;
+  padding-block: 8px;
+}
+#painel #pagina-combate .combate-condicoes-cabecalho { flex: 0 0 auto; }
+#painel #pagina-combate .combate-condicoes-lista { min-height: 0; overflow-y: auto; }
+@media (min-width: 1181px) and (min-height: 700px) {
+  #painel #pagina-combate .combate-coluna:nth-child(3) {
+    grid-template-rows: minmax(0, 1fr) minmax(120px, 36%);
+  }
+  #painel #pagina-combate .combate-coluna:nth-child(3) > .combate-cartao-condicoes { max-height: 300px; }
+  #painel #pagina-combate .combate-coluna:nth-child(3) > .combate-preparar-cartao { max-height: none; }
+}
+/* Realce consistente para cartões de seleção; sem deslocar a grade. */
+@media (hover: hover) and (pointer: fine) {
+  #painel :is(.item-campanha,.item-npc,.combate-linha,.vg-item,.util-mecanica)[data-rr-papel]:has(button:not(:disabled)):hover {
+    outline: 2px solid var(--rr-leitura-borda, #71533a);
+    outline-offset: -5px;
+  }
+  #painel .item-npc[data-rr-papel] button:hover { background: transparent; color: var(--rr-leitura-texto); }
+}
+#painel :is(.item-campanha,.item-npc,.combate-linha,.vg-item,.util-mecanica)[data-rr-papel]:focus-within {
+  outline: 2px solid var(--rr-leitura-borda, #71533a);
+  outline-offset: -5px;
+}
+
+/* Seleção lateral compartilhada: preservar a textura e a moldura escolhidas. */
+#painel :is(#pagina-npcs,#pagina-combate,#pagina-viagem) :is(.item-npc,.combate-linha,.vg-item)[data-rr-papel] {
+  cursor: pointer;
+  transition: outline-color .15s ease;
+}
+#painel #pagina-npcs .item-npc[data-rr-papel] button,
+#painel #pagina-combate .combate-linha[data-rr-papel] .combate-nome,
+#painel #pagina-viagem .vg-item[data-rr-papel] button:first-child {
+  background: transparent !important;
+  box-shadow: none !important;
+  text-decoration: none;
+  color: var(--rr-leitura-texto) !important;
+}
+#painel :is(#pagina-npcs,#pagina-combate,#pagina-viagem) :is(.item-npc,.combate-linha,.vg-item)[data-rr-papel]:is(.ativo,.ativa) {
+  outline: 3px solid var(--rr-leitura-titulo) !important;
+  outline-offset: -5px !important;
+}
+@media (hover: hover) and (pointer: fine) {
+  #painel :is(#pagina-npcs,#pagina-combate,#pagina-viagem) :is(.item-npc,.combate-linha,.vg-item)[data-rr-papel]:not(.ativo,.ativa):hover {
+    outline: 2px solid var(--rr-leitura-texto) !important;
+    outline-offset: -5px !important;
+  }
+}
+#painel :is(#pagina-npcs,#pagina-combate,#pagina-viagem) :is(.item-npc,.combate-linha,.vg-item)[data-rr-papel]:has(:focus-visible):not(.ativo,.ativa) {
+  outline: 2px dashed var(--rr-leitura-texto) !important;
+  outline-offset: -5px !important;
+}
+#painel #pagina-combate .combate-estrela {
+  background: var(--rr-leitura-texto, #711a19) !important;
+}
+#painel #pagina-combate .combate-estrela:hover { filter: none; opacity: .8; }
+@media (min-width: 1181px) and (min-height: 700px) {
+  #painel #pagina-combate .combate-coluna:nth-child(3) > .combate-cartao-condicoes { max-height: none; }
+  #painel #pagina-combate .combate-coluna:nth-child(3) > .combate-preparar-cartao { display: flex; flex-direction: column; overflow: hidden; }
+  #painel #pagina-combate .combate-preparar-cartao > textarea { flex: 1 1 0; min-height: 0; height: auto; box-sizing: border-box; }
+}
+
+/* A altura da grade vem do painel, não da altura intrínseca das condições.
+   Também vale para janelas desktop baixas (ex.: 1362 × 596). */
+@media (min-width: 1181px) {
+  #painel #pagina-combate #combate-detalhe:has(> .combate-colunas) {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    padding: 12px;
+    box-sizing: border-box;
+  }
+  #painel #pagina-combate .combate-colunas {
+    flex: 1 1 0;
+    height: 0;
+    min-height: 0;
+    max-height: 100%;
+    grid-template-rows: minmax(0, 1fr);
+    align-items: stretch;
+    gap: 10px;
+  }
+  #painel #pagina-combate .combate-coluna {
+    min-height: 0;
+    max-height: 100%;
+    box-sizing: border-box;
+    padding: 2px;
+    gap: 8px;
+    scrollbar-gutter: auto;
+  }
+  #painel #pagina-combate .combate-coluna:nth-child(3) {
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) minmax(0, 34%);
+    overflow: visible;
+    align-items: stretch;
+  }
+  #painel #pagina-combate .combate-coluna:nth-child(3) > :is(.combate-cartao-condicoes,.combate-preparar-cartao) {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    height: auto;
+    min-height: 0;
+    max-height: 100%;
+    margin: 0;
+    padding: 9px;
+    overflow: hidden;
+  }
+  #painel #pagina-combate .combate-condicoes-lista {
+    flex: 1 1 0;
+    min-height: 0;
+    max-height: none;
+    overflow-y: auto;
+  }
+  #painel #pagina-combate .combate-preparar-cartao > textarea {
+    flex: 1 1 0;
+    height: 0;
+    min-height: 0;
+    max-height: 100%;
+    margin: 0;
+    resize: none;
+    box-sizing: border-box;
+  }
+}
+
+/* Limites das colunas: a moldura integra a caixa e a rolagem pertence ao conteúdo. */
+@media (min-width: 1100px) {
+  #painel #pagina-viagem:not([hidden]) { flex: 1 1 0; height: auto; min-height: 0; overflow: hidden; }
+  #painel #pagina-viagem .vg-app { flex: 1 1 0; height: auto; min-height: 0; overflow: hidden; }
+  #painel #pagina-viagem .vg-grade { flex: 1 1 0; height: auto; min-height: 0; grid-template-rows: minmax(0,1fr); }
+  #painel #pagina-viagem .vg-grade > *, #painel #pagina-viagem .vg-painel > * { min-height: 0; min-width: 0; box-sizing: border-box; }
+  #painel #pagina-viagem .vg-geral { overflow-y: auto; }
+  #painel #pagina-viagem #vg-detalhe { min-height: 0; height: auto; overflow-y: auto; }
+}
+@media (min-width: 1181px) {
+  #painel #pagina-combate .combate-coluna:nth-child(-n+2) { display: flex; flex-direction: column; overflow-y: auto; }
+  #painel #pagina-combate .combate-coluna:nth-child(-n+2) > * { flex: 1 0 auto; min-width: 0; box-sizing: border-box; }
+}
+
+/* Convite: o texto destacado acompanha a paleta do cartão secundário. */
+#painel #pagina-campanhas .painel-adicionar-jogador[data-rr-papel] .instrucao strong {
+  color: var(--rr-leitura-titulo, #4f301e);
+}

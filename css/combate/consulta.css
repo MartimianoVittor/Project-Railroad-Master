@@ -1,0 +1,227 @@
+/* Consulta direta da ficha do combatente em ação (Mestre 27). */
+#combate-atual .combate-ficha-em-acao {
+    display: flex;
+    flex: 1 1 auto;
+    min-width: 0;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 3px;
+    padding: 3px 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+#combate-atual .combate-ficha-em-acao:hover strong {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+#combate-atual .combate-ficha-em-acao:focus-visible {
+    outline: 2px solid #8b252d;
+    outline-offset: 3px;
+    border-radius: 3px;
+}
+
+#combate-atual .combate-estrela {
+    flex: 0 0 26px;
+}
+
+.combate-acao:has(.combate-ficha-em-acao) {
+    cursor: pointer;
+}
+
+.combate-acao:has(.combate-ficha-em-acao):hover {
+    border-color: #9b463e;
+}
+
+/* Reduzir a folga sob Rolar traço sem comprimir seletores. */
+.combate-pagina .combate-rolagem-compacta {
+    padding-bottom: 4px;
+}
+
+.combate-pagina .combate-rolagem-compacta .botao-rolar {
+    height: 32px;
+    min-height: 32px;
+    padding-block: 3px;
+}
+
+.combate-pagina .combate-rolagem-compacta .resultado-rolagem:not(:empty) {
+    margin-top: 1px;
+    padding-bottom: 1px;
+}
+
+/* Ficha do combatente em ação no próprio cartão de consulta do Combate. */
+#pagina-combate #combate-detalhe.combate-consulta-ficha-ativa {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    padding: 9px;
+}
+
+#pagina-combate .combate-consulta-ficha-cabecalho {
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-width: 0;
+    padding: 3px 4px 9px;
+    border-bottom: 2px double #98724d;
+}
+
+#pagina-combate .combate-consulta-ficha-titulos {
+    min-width: 0;
+    overflow: hidden;
+}
+
+#pagina-combate .combate-consulta-ficha-titulos small {
+    display: block;
+    font: 10px/1.4 'Rye',Georgia,serif;
+    color: #805c3b;
+}
+
+#pagina-combate .combate-consulta-ficha-titulos h2 {
+    margin: 3px 0 0;
+    font: clamp(15px,1.4vw,20px)/1.2 'Rye',Georgia,serif;
+    color: #3d2314;
+    overflow-wrap: anywhere;
+}
+
+#pagina-combate .combate-consulta-ficha-voltar {
+    flex: none;
+    white-space: nowrap;
+    padding: 7px 10px;
+    font-size: 12px;
+}
+
+#pagina-combate .combate-consulta-ficha-conteudo {
+    flex: 1 1 auto;
+    min-width: 0;
+    min-height: 0;
+    overflow: auto;
+}
+
+#pagina-combate .combate-consulta-ficha-grade {
+    display: grid;
+    grid-template-columns: repeat(3,minmax(0,1fr));
+    gap: 8px;
+    align-items: stretch;
+    overflow: hidden;
+}
+
+#pagina-combate .combate-consulta-ficha-grade>.ficha-parte {
+    min-width: 0;
+    min-height: 0;
+    max-height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+#pagina-combate .combate-consulta-ficha-grade .ficha-parte-corpo {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    overscroll-behavior: contain;
+}
+
+#pagina-combate .combate-consulta-ficha-aviso {
+    display: grid;
+    place-items: center;
+    min-height: 130px;
+    margin: 0;
+    padding: 18px;
+    border: 1px dashed #b89a74;
+    border-radius: 4px;
+    color: #76533b;
+    text-align: center;
+}
+
+@media (min-width:701px) and (max-width:1150px) {
+    #pagina-combate .combate-consulta-ficha-grade {
+        grid-template-columns: repeat(3,minmax(235px,1fr));
+        overflow-x: auto;
+        scrollbar-width: thin;
+        scrollbar-gutter: stable;
+    }
+}
+
+@media(max-width:700px) {
+    #pagina-combate #combate-detalhe.combate-consulta-ficha-ativa {
+        min-height: 490px;
+        height: min(78vh,720px);
+        overflow: hidden;
+    }
+
+    #pagina-combate .combate-consulta-ficha-grade {
+        grid-template-columns: repeat(3,minmax(min(78vw,320px),1fr));
+        overflow-x: auto;
+        scroll-snap-type: x proximity;
+        overscroll-behavior-x: contain;
+    }
+
+    #pagina-combate .combate-consulta-ficha-grade>.ficha-parte {
+        scroll-snap-align: start;
+    }
+
+    #pagina-combate .combate-consulta-ficha-cabecalho {
+        gap: 6px;
+    }
+
+    #pagina-combate .combate-consulta-ficha-voltar {
+        white-space: normal;
+        text-align: center;
+        padding: 6px;
+        font-size: 11px;
+    }
+}
+
+/* Total alinhado à linha de controles de Desvantagem. */
+.combate-pagina .combate-vantagens-alinhadas {
+    display: grid;
+    grid-template-columns: minmax(0,1fr) minmax(0,1fr) auto;
+    column-gap: 8px;
+    align-items: end;
+}
+
+.combate-pagina .combate-vantagens-alinhadas .combate-modificadores {
+    display: contents;
+}
+
+.combate-pagina .combate-vantagens-alinhadas .combate-modificador {
+    min-width: 0;
+}
+
+.combate-pagina .combate-vantagens-alinhadas .combate-modificadores-total {
+    align-self: end;
+    margin: 0;
+    min-width: 90px;
+    white-space: nowrap;
+}
+
+@media(max-width:620px) {
+    .combate-pagina .combate-vantagens-alinhadas {
+        grid-template-columns: repeat(2,minmax(0,1fr));
+        row-gap: 8px;
+    }
+
+    .combate-pagina .combate-vantagens-alinhadas .combate-modificadores-total {
+        grid-column: 2;
+        justify-self: end;
+    }
+}
+
+/* Mais separação entre os seletores de traço/bônus e o botão Rolar traço. */
+.combate-pagina .combate-rolagem-compacta > .cartao-rolagem {
+    row-gap: 9px;
+}

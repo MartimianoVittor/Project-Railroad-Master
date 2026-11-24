@@ -74,9 +74,9 @@ test('nova aba possui consulta, edição e lista sem carregar quadro privado dos
     const css = ler('css/npcs.css');
     for (const id of [
         'pagina-npcs', 'novo-npc', 'lista-npcs', 'buscar-npc', 'npc-consulta',
-        'npc-detalhes', 'form-npc', 'npc-tipo', 'npc-nome', 'npc-papel',
-        'npc-campos-simples', 'npc-campos-completos', 'npc-grade-tracos',
-        'npc-grade-condicoes', 'npc-grade-armas', 'salvar-npc', 'excluir-npc',
+        'npc-detalhes', 'form-npc', 'npc-orig-nome-personagem', 'npc-orig-papel',
+        'npc-orig-personagem', 'npc-orig-inventario', 'npc-grade-tracos',
+        'npc-orig-arma-primaria', 'npc-orig-lista-itens', 'salvar-npc', 'excluir-npc',
     ]) assert.ok(html.includes(`id="${id}"`), `Ausente: #${id}`);
     assert.match(controlador, /criarNovo|editarSelecionado|salvarNpc|excluirSelecionado/);
     assert.match(css, /\.npc-detalhes, \.campos-form-npc\s*\{[^}]*overflow: auto/s);

@@ -1,0 +1,21 @@
+name: Testes — Railroad Mestre
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  testar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Obter código
+        uses: actions/checkout@v4
+      - name: Preparar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Preparar versão de publicação e executar testes
+        run: npm run preparar:publicacao
+      - name: Conferir que os recursos foram versionados no commit
+        run: git diff --exit-code

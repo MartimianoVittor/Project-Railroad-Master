@@ -1,10 +1,10 @@
-import { LIMITE_NPCS, normalizarNpc, validarNpc } from '../modules/npcs.js';
+import { LIMITE_NPCS, normalizarNpc, validarNpc } from '../modules/npcs.js?v=mesa-31';
 
 const PREFIXO = 'railroad_mestre_npcs:v1';
 
 /**
  * NPCs são privados do mestre neste navegador, separados por conta e campanha.
- * Não são publicados nas fichas dos jogadores nem sincronizados no Supabase.
+ * O controlador coordena a cópia local com as operações remotas de conteudoCampanha.
  */
 export function criarRepositorioNpcs(armazenamento) {
     const chave = (usuarioId, campanhaId) => `${PREFIXO}:${usuarioId}:${campanhaId}`;

@@ -1,6 +1,6 @@
-import { criarParteFicha, PARTES_FICHA } from '../modules/visualizarFicha.js';
-import { mostrarAviso } from '../core/feedback.js';
-import { porId, elemento } from '../core/dom.js';
+import { criarParteFicha, PARTES_FICHA } from '../modules/visualizarFicha.js?v=mesa-31';
+import { mostrarAviso } from '../core/feedback.js?v=mesa-31';
+import { porId, elemento } from '../core/dom.js?v=mesa-31';
 
 /**
  * Seleção individual (três colunas) e comparação horizontal (uma parte de cada ficha).
@@ -39,7 +39,7 @@ export function criarControladorFichas(contexto) {
     function mostrarMensagem(mensagem) {
         const area = porId('conteudo-fichas');
         area.className = 'conteudo-fichas';
-        area.replaceChildren(elemento('p', 'estado-consulta-fichas', mensagem));
+        area.replaceChildren(elemento('p', 'estado-consulta-fichas rr-estado-vazio', mensagem));
         porId('quadro-fichas').setAttribute('aria-busy', 'false');
     }
 
@@ -189,7 +189,7 @@ export function criarControladorFichas(contexto) {
         }
 
         area.className = `conteudo-fichas ${comparando ? 'modo-comparacao' : 'modo-completo'}`;
-        area.replaceChildren(elemento('p', 'estado-consulta-fichas', 'Carregando fichas compartilhadas…'));
+        area.replaceChildren(elemento('p', 'estado-consulta-fichas rr-estado-vazio', 'Carregando fichas compartilhadas…'));
         porId('quadro-fichas').setAttribute('aria-busy', 'true');
 
         // A RPC retorna apenas dados de Jogador, Personagem e Inventário.
@@ -205,7 +205,7 @@ export function criarControladorFichas(contexto) {
         for (const [indice, resultado] of resultados.entries()) {
             if (resultado.status === 'rejected') {
                 erros++;
-                const coluna = elemento('p', 'estado-consulta-fichas',
+                const coluna = elemento('p', 'estado-consulta-fichas rr-estado-vazio',
                     `Não foi possível consultar ${nomeDoPersonagem(selecionadas[indice])}.`);
                 colunas.append(coluna);
                 continue;

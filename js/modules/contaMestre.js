@@ -1,11 +1,14 @@
-import { porId } from '../core/dom.js';
-import { executar } from '../core/feedback.js';
+import { porId } from '../core/dom.js?v=mesa-31';
+import { criarPersonalizacaoMestre } from './personalizacaoMestre.js?v=mesa-31';
+import { executar } from '../core/feedback.js?v=mesa-31';
 
 // Opções da conta separadas da composição da Mesa.
 // Os elementos originais Salvar/Sair permanecem ocultos para preservar
 // seus fluxos de negócio, inclusive as verificações anteriores ao logout.
-export function criarMenuConta({ estado, contexto, salvarCampanhaAtual }) {
+export function criarMenuConta({ estado, salvarMesa }) {
+    const personalizacao = criarPersonalizacaoMestre(estado);
     function atualizarSessao(usuario) {
+        void personalizacao.carregarConta();
         porId('salvar-campanha').hidden = true;
         porId('sair').hidden = true;
         porId('abrir-conta').hidden = !usuario;
@@ -14,6 +17,7 @@ export function criarMenuConta({ estado, contexto, salvarCampanhaAtual }) {
     }
 
     function iniciarEventos() {
+        personalizacao.iniciar();
         const modal = porId('modal-conta');
         porId('abrir-conta').addEventListener('click', () => {
             porId('conta-identificacao').textContent = estado.modoLocal
@@ -28,8 +32,7 @@ export function criarMenuConta({ estado, contexto, salvarCampanhaAtual }) {
         });
         porId('conta-salvar').addEventListener('click', () =>
             void executar(porId('conta-salvar'), async () => {
-                await contexto.npcs.salvarEdicaoPendente();
-                await salvarCampanhaAtual();
+                await salvarMesa();
                 modal.close();
             }));
         porId('conta-sair').addEventListener('click', () => {

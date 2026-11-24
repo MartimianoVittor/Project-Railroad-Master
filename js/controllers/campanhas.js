@@ -1,7 +1,14 @@
-import { agruparParticipantes } from '../modules/participantes.js';
-import { mostrarAviso } from '../core/feedback.js';
-import { porId, elemento, mensagemLista, dataBreve, botaoAcao } from '../core/dom.js';
-import { UUID, ESTADOS_CONVITE, ESTADOS_FICHA } from '../app/estado.js';
+import { agruparParticipantes } from '../modules/participantes.js?v=mesa-31';
+import { executar, mostrarAviso } from '../core/feedback.js?v=mesa-31';
+import { porId, elemento, mensagemLista, dataBreve, botaoAcao } from '../core/dom.js?v=mesa-31';
+import { UUID, ESTADOS_CONVITE, ESTADOS_FICHA } from '../app/estado.js?v=mesa-31';
+
+/** Prioriza a campanha ativa sem modificar a ordem dos registros restantes. */
+export function ordenarCampanhas(campanhas, idAtivo) {
+    const indice = campanhas.findIndex(item => item.campanha_id === idAtivo);
+    if (indice <= 0) return [...campanhas];
+    return [campanhas[indice], ...campanhas.slice(0, indice), ...campanhas.slice(indice + 1)];
+}
 
 /** Campanhas, convites, participantes e sincronização com o Supabase. */
 export function criarControladorCampanhas(contexto) {
@@ -11,7 +18,7 @@ export function criarControladorCampanhas(contexto) {
         porId('sem-campanha').hidden = Boolean(campanha);
         porId('painel-campanha').hidden = !campanha;
 
-        porId('campanha-ativa').textContent = campanha?.nome ?? 'Nenhuma campanha selecionada';
+        porId('campanha-ativa').textContent = campanha?.nome ?? 'Nenhuma Selecionada';
         porId('salvar-campanha').disabled = !campanha;
         contexto.diario.atualizarHabilitacaoSessoes();
         contexto.diario.atualizarStatusRascunho();
@@ -28,11 +35,12 @@ export function criarControladorCampanhas(contexto) {
         const lista = porId('lista-campanhas');
         lista.replaceChildren();
         porId('total-campanhas').textContent = String(estado.campanhas.length);
-        porId('instrucao-campanhas').textContent = estado.campanhas.length
-            ? 'Selecione uma campanha'
-            : 'Crie sua primeira campanha';
+        // Mantém a orientação inicial, sem exibir um título redundante após criar campanhas.
+        const instrucao = porId('instrucao-campanhas');
+        instrucao.textContent = 'Crie sua primeira campanha';
+        instrucao.hidden = estado.campanhas.length > 0;
 
-        for (const campanha of estado.campanhas) {
+        for (const campanha of ordenarCampanhas(estado.campanhas, estado.campanhaId)) {
             const linha = elemento('li', 'item-campanha');
             const selecionada = campanha.campanha_id === estado.campanhaId;
             if (selecionada) linha.classList.add('selecionada');
@@ -55,6 +63,7 @@ export function criarControladorCampanhas(contexto) {
             lista.append(linha);
         }
 
+        if (estado.campanhaId) lista.scrollTop = 0;
         if (!estado.campanhas.length) mensagemLista(lista, 'Nenhuma campanha criada até o momento.');
     }
 
@@ -103,9 +112,9 @@ export function criarControladorCampanhas(contexto) {
                             const acoes = elemento('div', 'acoes-participante');
                             acoes.append(
                                 botaoAcao('Aceitar entrada', () => contexto.fichas.decidirFicha(envio, true),
-                                    'botao botao-pequeno botao-destaque'),
+                                    'botao botao-pequeno rr-botao-marrom'),
                                 botaoAcao('Negar entrada', () => contexto.fichas.decidirFicha(envio, false),
-                                    'botao botao-pequeno botao-discreto'),
+                                    'botao botao-pequeno rr-botao-vermelho'),
                             );
                             item.append(acoes);
                         }
@@ -118,7 +127,7 @@ export function criarControladorCampanhas(contexto) {
                     : participante.conviteStatus === 'recusado'
                         ? 'O jogador recusou o convite.'
                         : 'Nenhum personagem enviado até o momento.';
-                personagens.append(elemento('p', 'personagem-ausente', texto));
+                personagens.append(elemento('p', 'personagem-ausente rr-estado-vazio rr-estado-vazio--compacto', texto));
             }
 
             // A exclusão fica à direita, abaixo do último personagem.
@@ -278,7 +287,30 @@ export function criarControladorCampanhas(contexto) {
         mostrarAviso('Jogador excluído da mesa. Suas fichas pessoais foram preservadas.');
     }
 
+    function iniciarEventos() {
+        porId('form-campanha').addEventListener('submit', (evento) => {
+            evento.preventDefault();
+            const botao = evento.currentTarget.querySelector('button[type="submit"]');
+            void executar(botao, criarCampanha);
+        });
+        porId('atualizar-campanha').addEventListener('click', () =>
+            void executar(porId('atualizar-campanha'), async () => {
+                await atualizarCampanhas(estado.campanhaId);
+                mostrarAviso('Informações da campanha atualizadas.');
+            }));
+        porId('mostrar-convite').addEventListener('click', () => {
+            if (estado.modoLocal) return mostrarAviso('Convites exigem entrar com Google.', true);
+            mostrarFormularioConvite(porId('painel-adicionar-jogador').hidden);
+        });
+        porId('form-convite').addEventListener('submit', (evento) => {
+            evento.preventDefault();
+            const botao = evento.currentTarget.querySelector('button[type="submit"]');
+            void executar(botao, convidarJogador);
+        });
+    }
+
     return {
+        iniciarEventos,
         mostrarCampanha, listarCampanhas, listarParticipantes, mostrarFormularioConvite,
         atualizarConteudoCampanha, selecionarCampanha, atualizarCampanhas,
         criarCampanha, convidarJogador, excluirJogador, excluirCampanha,

@@ -1,375 +1,355 @@
 <section aria-label="NPCs" class="pagina-mestre pagina-npcs" data-pagina-container="npcs" hidden="" id="pagina-npcs">
-<div class="barra-npcs">
-<p aria-live="polite" class="instrucao-contextual" id="contexto-npcs">Selecione uma campanha para criar NPCs.</p>
-</div>
-<div class="grade-npcs">
-<aside aria-label="NPCs da campanha" class="cartao-campanha painel-lista-npcs">
-<div class="cabecalho-lista-npcs">
-<div class="npc-lista-titulo"><h2>NPCs <span class="quantidade" id="total-npcs">0</span></h2><button class="botao botao-destaque botao-pequeno" disabled="" id="novo-npc" type="button">+ Criar NPC</button></div>
-<label class="sr-only" for="buscar-npc">Buscar NPC pelo nome ou função</label>
-<input autocomplete="off" id="buscar-npc" placeholder="Buscar por nome ou função..." type="search"/>
-</div>
-<ul aria-label="Fichas de NPCs cadastradas" class="lista-npcs" id="lista-npcs"></ul>
-</aside>
-<section aria-label="Ficha do NPC selecionado" class="cartao-campanha painel-ficha-npc">
-<div class="estado-vazio npc-vazio" id="npc-vazio">
-<p>Crie um NPC ou selecione uma ficha na lista para consultá-la.</p>
-</div>
-<div class="npc-consulta" hidden="" id="npc-consulta">
-<div class="cabecalho-ficha-npc">
-<div class="npc-titulo-consulta">
-
-<h2 id="npc-nome-consulta">NPC</h2>
-</div>
-<div class="acoes-ficha-npc">
-<button class="botao botao-pequeno" id="editar-npc" type="button">Editar</button>
-<button class="botao botao-pequeno botao-discreto botao-remover" id="excluir-npc" type="button">Excluir</button>
-</div>
-</div>
-<div class="npc-detalhes" id="npc-detalhes"></div>
-</div>
-<form class="formulario-npc npc-ficha-jogador npc-form-reiniciado" hidden="" id="form-npc">
-<div class="cabecalho-ficha-npc cabecalho-form-npc">
-<h2 id="titulo-form-npc">Criar NPC</h2>
-<div class="acoes-ficha-npc">
-<button class="botao botao-pequeno" id="gerar-npc-aleatorio" type="button">Gerar aleatório</button>
-<button class="botao botao-pequeno botao-discreto" id="cancelar-npc" type="button">Cancelar</button>
-<button class="botao botao-pequeno botao-destaque" id="salvar-npc" type="submit">Salvar NPC</button>
-</div>
-</div>
-
-<div class="campos-form-npc npc-ficha-mobile"><div class="npc-legado-oculto" hidden=""><input id="npc-tipo" type="hidden"/><input id="npc-nome" type="hidden"/><input id="npc-papel" type="hidden"/><input id="npc-descricao" type="hidden"/><input id="npc-notas" type="hidden"/><input id="npc-apelido" type="hidden"/><input id="npc-profissao" type="hidden"/><input id="npc-linguas" type="hidden"/><input id="npc-fama" type="hidden"/><input id="npc-palavra" type="hidden"/><input id="npc-dinheiro" type="hidden"/><input id="npc-inventario" type="hidden"/><input id="npc-traco-principal" type="hidden"/><input id="npc-nivel-principal" type="hidden"/><input id="npc-ferimentos-simples" type="hidden"/><div id="npc-grade-tracos"></div><div id="npc-grade-tracos-simples"></div><div id="npc-grade-condicoes"></div><div id="npc-grade-armas"></div><div id="npc-grade-armas-simples"></div><div id="npc-campos-simples"></div><div id="npc-campos-completos"></div><img alt="" id="npc-imagem-preview"/><input accept="image/png,image/jpeg,image/webp" id="npc-imagem-arquivo" type="file"/><button id="npc-remover-imagem" type="button"></button><select id="npc-pontos"><option value="20">20</option><option selected="" value="25">25</option><option value="30">30</option></select><button id="npc-sortear-tracos" type="button"></button></div><section class="npc-pagina-original npc-extras"><h3 class="npc-pagina-titulo">Visão geral</h3><div class="campos-texto-container"><div class="grupo-campo"><label class="label-campo" for="npc-orig-papel">Função na história</label><input id="npc-orig-papel" maxlength="100" type="text"/></div><div class="grupo-campo"><label class="label-campo" for="npc-orig-notas">Notas privadas</label><textarea id="npc-orig-notas" maxlength="8000" rows="4"></textarea></div></div></section>
-<section class="npc-pagina-original" data-pagina-npc="personagem"><h3 class="npc-pagina-titulo">Personagem</h3><section class="flex" id="npc-orig-personagem">
-<div class="col coluna-retrato">
-
-<label class="label-retrato" for="npc-orig-escolher-foto-personagem">
-<div class="circulo-interno">
-<img alt="Clique para escolher a fotografia do personagem" class="imagem-exibida" id="npc-orig-foto-personagem" src="assets/imgs/imagemPersonagemPlaceholder.png"/>
-<span class="texto-hover">Trocar Imagem</span>
-</div>
-</label>
-<input accept="image/png,image/jpeg,image/webp" id="npc-orig-escolher-foto-personagem" style="display: none;" type="file"/>
-<div class="campos-texto-container">
-<div class="grupo-campo">
-<label class="label-campo" for="npc-orig-nome-personagem">Nome:</label>
-<input id="npc-orig-nome-personagem" name="nome-personagem" placeholder="Seu nome aqui." type="text"/>
-</div>
-<div class="grupo-campo">
-<label class="label-campo" for="npc-orig-apelido-personagem">Apelido:</label>
-<input id="npc-orig-apelido-personagem" name="apelido-personagem" placeholder="Seu apelido aqui." type="text"/>
-</div>
-<div class="grupo-campo">
-<label class="label-campo" for="npc-orig-profissao-personagem">Profissão:</label>
-<input id="npc-orig-profissao-personagem" name="profissao-personagem" placeholder="Suas profissões." type="text"/>
-</div>
-<div class="grupo-campo">
-<label class="label-campo" for="npc-orig-lingua-personagem">Lingua:</label>
-<input id="npc-orig-lingua-personagem" name="lingua-personagem" placeholder="Seus idiomas." type="text"/>
-</div>
-</div>
-
-</div>
-<div class="col">
-<div class="campos-texto-container">
-<div class="campo-inline">
-<label class="label-campo" for="npc-orig-fama">Fama:</label>
-<input id="npc-orig-fama" placeholder="Sua Fama." type="text"/>
-</div>
-<div class="campo-inline">
-<label class="label-campo" for="npc-orig-palavra">Palavra:</label>
-<input id="npc-orig-palavra" placeholder="Sua Palavra." type="text"/>
-</div>
-<div class="campo-inline">
-<label class="label-campo" for="npc-orig-dinheiro">Dinheiro:</label>
-<input id="npc-orig-dinheiro" placeholder="Seu Dinheiro." type="text"/>
-</div>
-</div>
-<div class="grupo-caveiras">
-<div class="linha-check">
-<label>Ferimentos:</label>
-<div class="caveiras-box">
-<input aria-label="Ferimentos 1" class="check-caveira" data-grupo="ferimentos" type="checkbox"/>
-<input aria-label="Ferimentos 2" class="check-caveira" data-grupo="ferimentos" type="checkbox"/>
-<input aria-label="Ferimentos 3" class="check-caveira" data-grupo="ferimentos" type="checkbox"/>
-</div>
-</div>
-<div class="linha-check">
-<label>Sede:</label>
-<div class="caveiras-box">
-<input aria-label="Sede 1" class="check-caveira" data-grupo="sede" type="checkbox"/>
-<input aria-label="Sede 2" class="check-caveira" data-grupo="sede" type="checkbox"/>
-<input aria-label="Sede 3" class="check-caveira" data-grupo="sede" type="checkbox"/>
-</div>
-</div>
-<div class="linha-check">
-<label>Fome:</label>
-<div class="caveiras-box">
-<input aria-label="Fome 1" class="check-caveira" data-grupo="fome" type="checkbox"/>
-<input aria-label="Fome 2" class="check-caveira" data-grupo="fome" type="checkbox"/>
-<input aria-label="Fome 3" class="check-caveira" data-grupo="fome" type="checkbox"/>
-</div>
-</div>
-<div class="linha-check">
-<label>Cansaço:</label>
-<div class="caveiras-box">
-<input aria-label="Cansaço 1" class="check-caveira" data-grupo="cansaco" type="checkbox"/>
-<input aria-label="Cansaço 2" class="check-caveira" data-grupo="cansaco" type="checkbox"/>
-<input aria-label="Cansaço 3" class="check-caveira" data-grupo="cansaco" type="checkbox"/>
-</div>
-</div>
-</div>
-<div class="campos-texto-container">
-<div class="grupo-campo">
-<label class="label-campo" for="npc-orig-bio-personagem">Sobre Você:</label>
-<textarea id="npc-orig-bio-personagem" name="bio-personagem" placeholder="Fale sobre você." rows="4"></textarea>
-</div>
-</div>
-</div>
-<div class="col double">
-<div class="grupo-tracos">
-<div aria-hidden="true" class="cabecalho-tracos"><span>TRAÇOS</span><span>d4</span><span>d6</span><span>d8</span><span>d12</span></div>
-<div class="linha-check linha-traco">
-<label class="nome-traco">Sangue Quente:</label>
-<div class="tracos-box">
-<label class="marcador-dado" title="Sangue Quente — d4"><input aria-label="Sangue Quente, d4" class="check-tracos" data-grupo="traco-1" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-<label class="marcador-dado" title="Sangue Quente — d6"><input aria-label="Sangue Quente, d6" class="check-tracos" data-grupo="traco-1" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-<label class="marcador-dado" title="Sangue Quente — d8"><input aria-label="Sangue Quente, d8" class="check-tracos" data-grupo="traco-1" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-<label class="marcador-dado" title="Sangue Quente — d12"><input aria-label="Sangue Quente, d12" class="check-tracos" data-grupo="traco-1" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-</div>
-</div>
-<div class="linha-check linha-traco">
-<label class="nome-traco">Mira Afiada:</label>
-<div class="tracos-box">
-<label class="marcador-dado" title="Mira Afiada — d4"><input aria-label="Mira Afiada, d4" class="check-tracos" data-grupo="traco-2" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-<label class="marcador-dado" title="Mira Afiada — d6"><input aria-label="Mira Afiada, d6" class="check-tracos" data-grupo="traco-2" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-<label class="marcador-dado" title="Mira Afiada — d8"><input aria-label="Mira Afiada, d8" class="check-tracos" data-grupo="traco-2" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-<label class="marcador-dado" title="Mira Afiada — d12"><input aria-label="Mira Afiada, d12" class="check-tracos" data-grupo="traco-2" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-</div>
-</div>
-<div class="linha-check linha-traco">
-<label class="nome-traco">Guerreiro Ancestral:</label>
-<div class="tracos-box">
-<label class="marcador-dado" title="Guerreiro Ancestral — d4"><input aria-label="Guerreiro Ancestral, d4" class="check-tracos" data-grupo="traco-3" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-<label class="marcador-dado" title="Guerreiro Ancestral — d6"><input aria-label="Guerreiro Ancestral, d6" class="check-tracos" data-grupo="traco-3" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-<label class="marcador-dado" title="Guerreiro Ancestral — d8"><input aria-label="Guerreiro Ancestral, d8" class="check-tracos" data-grupo="traco-3" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-<label class="marcador-dado" title="Guerreiro Ancestral — d12"><input aria-label="Guerreiro Ancestral, d12" class="check-tracos" data-grupo="traco-3" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-</div>
-</div>
-<div class="linha-check linha-traco">
-<label class="nome-traco">Amigo Kaboom:</label>
-<div class="tracos-box">
-<label class="marcador-dado" title="Amigo Kaboom — d4"><input aria-label="Amigo Kaboom, d4" class="check-tracos" data-grupo="traco-4" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-<label class="marcador-dado" title="Amigo Kaboom — d6"><input aria-label="Amigo Kaboom, d6" class="check-tracos" data-grupo="traco-4" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-<label class="marcador-dado" title="Amigo Kaboom — d8"><input aria-label="Amigo Kaboom, d8" class="check-tracos" data-grupo="traco-4" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-<label class="marcador-dado" title="Amigo Kaboom — d12"><input aria-label="Amigo Kaboom, d12" class="check-tracos" data-grupo="traco-4" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-</div>
-</div>
-<div class="linha-check linha-traco">
-<label class="nome-traco">Orelha Em Pé:</label>
-<div class="tracos-box">
-<label class="marcador-dado" title="Orelha Em Pé — d4"><input aria-label="Orelha Em Pé, d4" class="check-tracos" data-grupo="traco-5" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-<label class="marcador-dado" title="Orelha Em Pé — d6"><input aria-label="Orelha Em Pé, d6" class="check-tracos" data-grupo="traco-5" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-<label class="marcador-dado" title="Orelha Em Pé — d8"><input aria-label="Orelha Em Pé, d8" class="check-tracos" data-grupo="traco-5" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-<label class="marcador-dado" title="Orelha Em Pé — d12"><input aria-label="Orelha Em Pé, d12" class="check-tracos" data-grupo="traco-5" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-</div>
-</div>
-<div class="linha-check linha-traco">
-<label class="nome-traco">Passos Na Sombra:</label>
-<div class="tracos-box">
-<label class="marcador-dado" title="Passos Na Sombra — d4"><input aria-label="Passos Na Sombra, d4" class="check-tracos" data-grupo="traco-6" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-<label class="marcador-dado" title="Passos Na Sombra — d6"><input aria-label="Passos Na Sombra, d6" class="check-tracos" data-grupo="traco-6" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-<label class="marcador-dado" title="Passos Na Sombra — d8"><input aria-label="Passos Na Sombra, d8" class="check-tracos" data-grupo="traco-6" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-<label class="marcador-dado" title="Passos Na Sombra — d12"><input aria-label="Passos Na Sombra, d12" class="check-tracos" data-grupo="traco-6" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-</div>
-</div>
-<div class="linha-check linha-traco">
-<label class="nome-traco">Poeira e Ossos:</label>
-<div class="tracos-box">
-<label class="marcador-dado" title="Poeira e Ossos — d4"><input aria-label="Poeira e Ossos, d4" class="check-tracos" data-grupo="traco-7" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-<label class="marcador-dado" title="Poeira e Ossos — d6"><input aria-label="Poeira e Ossos, d6" class="check-tracos" data-grupo="traco-7" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-<label class="marcador-dado" title="Poeira e Ossos — d8"><input aria-label="Poeira e Ossos, d8" class="check-tracos" data-grupo="traco-7" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-<label class="marcador-dado" title="Poeira e Ossos — d12"><input aria-label="Poeira e Ossos, d12" class="check-tracos" data-grupo="traco-7" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-</div>
-</div>
-<div class="linha-check linha-traco">
-<label class="nome-traco">Rédea e Sela:</label>
-<div class="tracos-box">
-<label class="marcador-dado" title="Rédea e Sela — d4"><input aria-label="Rédea e Sela, d4" class="check-tracos" data-grupo="traco-8" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-<label class="marcador-dado" title="Rédea e Sela — d6"><input aria-label="Rédea e Sela, d6" class="check-tracos" data-grupo="traco-8" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-<label class="marcador-dado" title="Rédea e Sela — d8"><input aria-label="Rédea e Sela, d8" class="check-tracos" data-grupo="traco-8" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-<label class="marcador-dado" title="Rédea e Sela — d12"><input aria-label="Rédea e Sela, d12" class="check-tracos" data-grupo="traco-8" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-</div>
-</div>
-<div class="linha-check linha-traco">
-<label class="nome-traco">Língua de Trapo:</label>
-<div class="tracos-box">
-<label class="marcador-dado" title="Língua de Trapo — d4"><input aria-label="Língua de Trapo, d4" class="check-tracos" data-grupo="traco-9" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-<label class="marcador-dado" title="Língua de Trapo — d6"><input aria-label="Língua de Trapo, d6" class="check-tracos" data-grupo="traco-9" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-<label class="marcador-dado" title="Língua de Trapo — d8"><input aria-label="Língua de Trapo, d8" class="check-tracos" data-grupo="traco-9" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-<label class="marcador-dado" title="Língua de Trapo — d12"><input aria-label="Língua de Trapo, d12" class="check-tracos" data-grupo="traco-9" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-</div>
-</div>
-<div class="linha-check linha-traco">
-<label class="nome-traco">Agourento e Carrancudo:</label>
-<div class="tracos-box">
-<label class="marcador-dado" title="Agourento e Carrancudo — d4"><input aria-label="Agourento e Carrancudo, d4" class="check-tracos" data-grupo="traco-10" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-<label class="marcador-dado" title="Agourento e Carrancudo — d6"><input aria-label="Agourento e Carrancudo, d6" class="check-tracos" data-grupo="traco-10" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-<label class="marcador-dado" title="Agourento e Carrancudo — d8"><input aria-label="Agourento e Carrancudo, d8" class="check-tracos" data-grupo="traco-10" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-<label class="marcador-dado" title="Agourento e Carrancudo — d12"><input aria-label="Agourento e Carrancudo, d12" class="check-tracos" data-grupo="traco-10" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-</div>
-</div>
-<div class="linha-check linha-traco">
-<label class="nome-traco">Cachola Cheia:</label>
-<div class="tracos-box">
-<label class="marcador-dado" title="Cachola Cheia — d4"><input aria-label="Cachola Cheia, d4" class="check-tracos" data-grupo="traco-11" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-<label class="marcador-dado" title="Cachola Cheia — d6"><input aria-label="Cachola Cheia, d6" class="check-tracos" data-grupo="traco-11" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-<label class="marcador-dado" title="Cachola Cheia — d8"><input aria-label="Cachola Cheia, d8" class="check-tracos" data-grupo="traco-11" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-<label class="marcador-dado" title="Cachola Cheia — d12"><input aria-label="Cachola Cheia, d12" class="check-tracos" data-grupo="traco-11" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-</div>
-</div>
-<div class="linha-check linha-traco">
-<label class="nome-traco">Grande Maioral:</label>
-<div class="tracos-box">
-<label class="marcador-dado" title="Grande Maioral — d4"><input aria-label="Grande Maioral, d4" class="check-tracos" data-grupo="traco-12" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-<label class="marcador-dado" title="Grande Maioral — d6"><input aria-label="Grande Maioral, d6" class="check-tracos" data-grupo="traco-12" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-<label class="marcador-dado" title="Grande Maioral — d8"><input aria-label="Grande Maioral, d8" class="check-tracos" data-grupo="traco-12" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-<label class="marcador-dado" title="Grande Maioral — d12"><input aria-label="Grande Maioral, d12" class="check-tracos" data-grupo="traco-12" type="checkbox"/><span aria-hidden="true" class="marcador-dado-visual"></span></label>
-</div>
-</div>
-</div>
-</div>
-</section>
-</section><section class="npc-pagina-original" data-pagina-npc="inventario"><h3 class="npc-pagina-titulo">Inventário</h3><section class="flex" id="npc-orig-inventario">
-<div class="col inventario-rolagens">
-<h2>Rolagens</h2>
-<div class="npc-rolagem-consulta cartao-rolagem" id="npc-rolagem-consulta" hidden>
-<label for="npc-rolagem-traco">Traço</label><select class="campo-inventario" id="npc-rolagem-traco" aria-label="Traço para rolagem"></select>
-<label for="npc-rolagem-modificador">Bônus / penalidade</label><select class="campo-inventario" id="npc-rolagem-modificador" aria-label="Modificador da rolagem"><option value="-3">-3</option><option value="-2">-2</option><option value="-1">-1</option><option value="0" selected>0</option><option value="1">+1</option><option value="2">+2</option><option value="3">+3</option></select>
-<button type="button" class="botao-rolar" id="npc-rolar">🎲 Rolar traço</button>
-<output class="resultado-rolagem" id="npc-rolagem-resultado" aria-live="polite"></output>
-</div>
-
-<h2>Armas</h2>
-<fieldset class="cartao-arma">
-<legend>
-    Arma primária
-   </legend>
-<div class="arma-linha-nome">
-<label class="arma-nome">
-<input aria-label="Nome da arma primária" class="campo-inventario" id="npc-orig-arma-primaria" placeholder="Nome da arma" type="text"/>
-</label>
-<div aria-label="Munição da arma primária" class="arma-municao" role="group">
-<span class="arma-municao-titulo">Munição</span>
-<div class="arma-municao-controles">
-
-<button type="button" class="municao-botao" data-municao="primaria" data-variacao="-1" aria-label="Diminuir munição da arma primária">−</button>
-<input aria-label="Quantidade de munição da arma primária" class="municao-valor" id="npc-orig-municao-primaria" max="99" min="0" step="1" type="number" value="0"/>
-<button type="button" class="municao-botao" data-municao="primaria" data-variacao="1" aria-label="Aumentar munição da arma primária">+</button>
-
-</div>
-</div>
-</div>
-<div class="bonus-distancias">
-<label class="bonus-distancia">
-<span>Corpo a corpo</span>
-<input aria-label="Bônus de Corpo a corpo da arma primária" class="campo-inventario" id="npc-orig-bonus-primaria-corpo" max="3" min="-3" step="1" type="number" value="0"/>
-</label>
-<label class="bonus-distancia">
-<span>Curta</span>
-<input aria-label="Bônus de Curta da arma primária" class="campo-inventario" id="npc-orig-bonus-primaria-curta" max="3" min="-3" step="1" type="number" value="0"/>
-</label>
-<label class="bonus-distancia">
-<span>Média</span>
-<input aria-label="Bônus de Média da arma primária" class="campo-inventario" id="npc-orig-bonus-primaria-media" max="3" min="-3" step="1" type="number" value="0"/>
-</label>
-<label class="bonus-distancia">
-<span>Longa</span>
-<input aria-label="Bônus de Longa da arma primária" class="campo-inventario" id="npc-orig-bonus-primaria-longa" max="3" min="-3" step="1" type="number" value="0"/>
-</label>
-</div>
-</fieldset>
-<fieldset class="cartao-arma">
-<legend>
-    Arma secundária
-   </legend>
-<div class="arma-linha-nome">
-<label class="arma-nome">
-<input aria-label="Nome da arma secundária" class="campo-inventario" id="npc-orig-arma-secundaria" placeholder="Nome da arma" type="text"/>
-</label>
-<div aria-label="Munição da arma secundária" class="arma-municao" role="group">
-<span class="arma-municao-titulo">Munição</span>
-<div class="arma-municao-controles">
-
-<button type="button" class="municao-botao" data-municao="secundaria" data-variacao="-1" aria-label="Diminuir munição da arma secundária">−</button>
-<input aria-label="Quantidade de munição da arma secundária" class="municao-valor" id="npc-orig-municao-secundaria" max="99" min="0" step="1" type="number" value="0"/>
-<button type="button" class="municao-botao" data-municao="secundaria" data-variacao="1" aria-label="Aumentar munição da arma secundária">+</button>
-
-</div>
-</div>
-</div>
-<div class="bonus-distancias">
-<label class="bonus-distancia">
-<span>Corpo a corpo</span>
-<input aria-label="Bônus de Corpo a corpo da arma secundária" class="campo-inventario" id="npc-orig-bonus-secundaria-corpo" max="3" min="-3" step="1" type="number" value="0"/>
-</label>
-<label class="bonus-distancia">
-<span>Curta</span>
-<input aria-label="Bônus de Curta da arma secundária" class="campo-inventario" id="npc-orig-bonus-secundaria-curta" max="3" min="-3" step="1" type="number" value="0"/>
-</label>
-<label class="bonus-distancia">
-<span>Média</span>
-<input aria-label="Bônus de Média da arma secundária" class="campo-inventario" id="npc-orig-bonus-secundaria-media" max="3" min="-3" step="1" type="number" value="0"/>
-</label>
-<label class="bonus-distancia">
-<span>Longa</span>
-<input aria-label="Bônus de Longa da arma secundária" class="campo-inventario" id="npc-orig-bonus-secundaria-longa" max="3" min="-3" step="1" type="number" value="0"/>
-</label>
-</div>
-</fieldset>
-</div>
-<div class="col inventario-itens">
-<div class="inventario-cabecalho">
-<h2>Itens</h2>
-
-</div>
-<div class="tabela-itens-rolagem">
-<table class="tabela-itens">
-<thead>
-<tr>
-<th title="Escolha entre personagem e montaria">Local</th>
-<th>Item</th>
-<th>Qtd.</th>
-<th>Tam.</th>
-<th>Descrição</th>
-<th><span class="sr-only">Ações</span></th>
-</tr>
-</thead>
-<tbody id="npc-orig-lista-itens">
+    <div class="barra-npcs">
+        <p aria-live="polite" class="instrucao-contextual" id="contexto-npcs">Selecione uma campanha para criar NPCs.</p>
+    </div>
+    <div class="grade-npcs">
+        <aside aria-label="NPCs da campanha" class="cartao-campanha painel-lista-npcs">
+            <div class="cabecalho-lista-npcs">
+                <div class="npc-lista-titulo">
+                    <h2>NPCs <span class="quantidade" id="total-npcs">0</span>
+                    </h2>
+                    <button class="botao botao-destaque botao-pequeno" disabled id="novo-npc" type="button">+ Criar NPC</button>
+                </div>
+                <label class="sr-only" for="buscar-npc">Buscar NPC pelo nome ou função</label>
+                <input autocomplete="off" id="buscar-npc" placeholder="Buscar por nome ou função..." type="search">
+            </div>
+            <ul aria-label="Fichas de NPCs cadastradas" class="lista-npcs" id="lista-npcs"></ul>
+        </aside>
+        <section aria-label="Ficha do NPC selecionado" class="cartao-campanha painel-ficha-npc">
+            <div class="estado-vazio npc-vazio rr-estado-vazio" id="npc-vazio">
+                <p>Crie um NPC ou selecione uma ficha na lista para consultá-la.</p>
+            </div>
+            <div class="npc-consulta" hidden="" id="npc-consulta">
+                <div class="cabecalho-ficha-npc">
+                    <div class="npc-titulo-consulta">
+                        <h2 id="npc-nome-consulta">NPC</h2>
+                    </div>
+                    <div class="acoes-ficha-npc">
+                        <button class="botao botao-pequeno" id="editar-npc" type="button">Editar</button>
+                        <button class="botao botao-pequeno botao-discreto botao-remover" id="excluir-npc" type="button">Excluir</button>
+                    </div>
+                </div>
+                <div class="npc-detalhes" id="npc-detalhes"></div>
+            </div>
+            <form class="formulario-npc npc-ficha-jogador npc-form-reiniciado" hidden="" id="form-npc">
+                <div class="cabecalho-ficha-npc cabecalho-form-npc">
+                    <h2 id="titulo-form-npc">Criar NPC</h2>
+                    <div class="acoes-ficha-npc">
+                        <button class="botao botao-pequeno botao-discreto" id="cancelar-npc" type="button">Cancelar</button>
+                        <button class="botao botao-pequeno" id="abrir-gerador-npc" type="button" aria-haspopup="dialog" aria-controls="modal-gerador-npc">Gerar aleatório</button>
+                        <button class="botao botao-pequeno botao-destaque" id="salvar-npc" type="submit">Salvar NPC</button>
+                    </div>
+                </div>
+                <div class="campos-form-npc npc-ficha-mobile">
+                    <section class="npc-pagina-original npc-extras">
+                        <h3 class="npc-pagina-titulo">Visão geral</h3>
+                        <div class="campos-texto-container">
+                            <div class="grupo-campo">
+                                <label class="label-campo" for="npc-orig-papel">Função na história</label>
+                                <input id="npc-orig-papel" maxlength="100" type="text">
+                            </div>
+                            <div class="grupo-campo">
+                                <label class="label-campo" for="npc-orig-notas">Notas privadas</label>
+                                <textarea id="npc-orig-notas" maxlength="8000" rows="4"></textarea>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="npc-pagina-original" data-pagina-npc="personagem">
+                        <h3 class="npc-pagina-titulo">Personagem</h3>
+                        <section class="flex" id="npc-orig-personagem">
+                            <div class="col coluna-retrato">
+                                <label class="label-retrato" for="npc-orig-escolher-foto-personagem">
+                                    <div class="circulo-interno">
+                                        <img alt="Clique para escolher a fotografia do personagem" class="imagem-exibida" id="npc-orig-foto-personagem" src="assets/imgs/imagemPersonagemPlaceholder.webp">
+                                        <span class="texto-hover">Trocar Imagem</span>
+                                    </div>
+                                </label>
+                                <input accept="image/png,image/jpeg,image/webp" id="npc-orig-escolher-foto-personagem" style="display: none;" type="file">
+                                <div class="campos-texto-container">
+                                    <div class="grupo-campo">
+                                        <label class="label-campo" for="npc-orig-nome-personagem">Nome:</label>
+                                        <input id="npc-orig-nome-personagem" name="nome-personagem" placeholder="Seu nome aqui." type="text" required="" maxlength="100">
+                                    </div>
+                                    <div class="grupo-campo">
+                                        <label class="label-campo" for="npc-orig-apelido-personagem">Apelido:</label>
+                                        <input id="npc-orig-apelido-personagem" name="apelido-personagem" placeholder="Seu apelido aqui." type="text">
+                                    </div>
+                                    <div class="grupo-campo">
+                                        <label class="label-campo" for="npc-orig-profissao-personagem">Profissão:</label>
+                                        <input id="npc-orig-profissao-personagem" name="profissao-personagem" placeholder="Suas profissões." type="text">
+                                    </div>
+                                    <div class="grupo-campo">
+                                        <label class="label-campo" for="npc-orig-lingua-personagem">Lingua:</label>
+                                        <input id="npc-orig-lingua-personagem" name="lingua-personagem" placeholder="Seus idiomas." type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="campos-texto-container">
+                                    <div class="campo-inline">
+                                        <label class="label-campo" for="npc-orig-fama">Fama:</label>
+                                        <input id="npc-orig-fama" placeholder="Sua Fama." type="text">
+                                    </div>
+                                    <div class="campo-inline">
+                                        <label class="label-campo" for="npc-orig-palavra">Palavra:</label>
+                                        <input id="npc-orig-palavra" placeholder="Sua Palavra." type="text">
+                                    </div>
+                                    <div class="campo-inline">
+                                        <label class="label-campo" for="npc-orig-dinheiro">Dinheiro:</label>
+                                        <input id="npc-orig-dinheiro" placeholder="Seu Dinheiro." type="text">
+                                    </div>
+                                </div>
+                                <div class="grupo-caveiras">
+                                    <div class="linha-check">
+                                        <label>Ferimentos:</label>
+                                        <div class="caveiras-box">
+                                            <input aria-label="Ferimentos 1" class="check-caveira" data-grupo="ferimentos" type="checkbox">
+                                            <input aria-label="Ferimentos 2" class="check-caveira" data-grupo="ferimentos" type="checkbox">
+                                            <input aria-label="Ferimentos 3" class="check-caveira" data-grupo="ferimentos" type="checkbox">
+                                        </div>
+                                    </div>
+                                    <div class="linha-check">
+                                        <label>Sede:</label>
+                                        <div class="caveiras-box">
+                                            <input aria-label="Sede 1" class="check-caveira" data-grupo="sede" type="checkbox">
+                                            <input aria-label="Sede 2" class="check-caveira" data-grupo="sede" type="checkbox">
+                                            <input aria-label="Sede 3" class="check-caveira" data-grupo="sede" type="checkbox">
+                                        </div>
+                                    </div>
+                                    <div class="linha-check">
+                                        <label>Fome:</label>
+                                        <div class="caveiras-box">
+                                            <input aria-label="Fome 1" class="check-caveira" data-grupo="fome" type="checkbox">
+                                            <input aria-label="Fome 2" class="check-caveira" data-grupo="fome" type="checkbox">
+                                            <input aria-label="Fome 3" class="check-caveira" data-grupo="fome" type="checkbox">
+                                        </div>
+                                    </div>
+                                    <div class="linha-check">
+                                        <label>Cansaço:</label>
+                                        <div class="caveiras-box">
+                                            <input aria-label="Cansaço 1" class="check-caveira" data-grupo="cansaco" type="checkbox">
+                                            <input aria-label="Cansaço 2" class="check-caveira" data-grupo="cansaco" type="checkbox">
+                                            <input aria-label="Cansaço 3" class="check-caveira" data-grupo="cansaco" type="checkbox">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="campos-texto-container">
+                                    <div class="grupo-campo">
+                                        <label class="label-campo" for="npc-orig-bio-personagem">Sobre Você:</label>
+                                        <textarea id="npc-orig-bio-personagem" name="bio-personagem" placeholder="Fale sobre você." rows="4"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col double">
+                                <div class="grupo-tracos" id="npc-grade-tracos">
+                                    <div aria-hidden="true" class="cabecalho-tracos">
+                                        <span>TRAÇOS</span>
+                                        <span>d4</span>
+                                        <span>d6</span>
+                                        <span>d8</span>
+                                        <span>d12</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </section>
+                    <section class="npc-pagina-original" data-pagina-npc="inventario">
+                        <h3 class="npc-pagina-titulo">Inventário</h3>
+                        <section class="flex" id="npc-orig-inventario">
+                            <div class="col inventario-rolagens">
+                                <h2>Rolagens</h2>
+                                <div class="npc-rolagem-consulta cartao-rolagem" id="npc-rolagem-consulta" hidden>
+                                    <label for="npc-rolagem-traco">Traço</label>
+                                    <select class="campo-inventario" id="npc-rolagem-traco" aria-label="Traço para rolagem"></select>
+                                    <label for="npc-rolagem-modificador">Bônus / penalidade</label>
+                                    <select class="campo-inventario" id="npc-rolagem-modificador" aria-label="Modificador da rolagem">
+                                        <option value="-3">-3</option>
+                                        <option value="-2">-2</option>
+                                        <option value="-1">-1</option>
+                                        <option value="0" selected>0</option>
+                                        <option value="1">+1</option>
+                                        <option value="2">+2</option>
+                                        <option value="3">+3</option>
+                                    </select>
+                                    <button type="button" class="botao-rolar" id="npc-rolar">🎲 Rolar traço</button>
+                                    <output class="resultado-rolagem" id="npc-rolagem-resultado" aria-live="polite"></output>
+                                </div>
+                                <h2>Armas</h2>
+                                <fieldset class="cartao-arma">
+                                    <legend>Arma primária</legend>
+                                    <div class="arma-linha-nome">
+                                        <label class="arma-nome">
+                                            <input aria-label="Nome da arma primária" class="campo-inventario" id="npc-orig-arma-primaria" placeholder="Nome da arma" type="text">
+                                        </label>
+                                        <div aria-label="Munição da arma primária" class="arma-municao" role="group">
+                                            <span class="arma-municao-titulo">Munição</span>
+                                            <div class="arma-municao-controles">
+                                                <button type="button" class="municao-botao" data-municao="primaria" data-variacao="-1" aria-label="Diminuir munição da arma primária">−</button>
+                                                <input aria-label="Quantidade de munição da arma primária" class="municao-valor" id="npc-orig-municao-primaria" max="99" min="0" step="1" type="number" value="0">
+                                                <button type="button" class="municao-botao" data-municao="primaria" data-variacao="1" aria-label="Aumentar munição da arma primária">+</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bonus-distancias">
+                                        <label class="bonus-distancia">
+                                            <span>Corpo a corpo</span>
+                                            <input aria-label="Bônus de Corpo a corpo da arma primária" class="campo-inventario" id="npc-orig-bonus-primaria-corpo" max="3" min="-3" step="1" type="number" value="0">
+                                        </label>
+                                        <label class="bonus-distancia">
+                                            <span>Curta</span>
+                                            <input aria-label="Bônus de Curta da arma primária" class="campo-inventario" id="npc-orig-bonus-primaria-curta" max="3" min="-3" step="1" type="number" value="0">
+                                        </label>
+                                        <label class="bonus-distancia">
+                                            <span>Média</span>
+                                            <input aria-label="Bônus de Média da arma primária" class="campo-inventario" id="npc-orig-bonus-primaria-media" max="3" min="-3" step="1" type="number" value="0">
+                                        </label>
+                                        <label class="bonus-distancia">
+                                            <span>Longa</span>
+                                            <input aria-label="Bônus de Longa da arma primária" class="campo-inventario" id="npc-orig-bonus-primaria-longa" max="3" min="-3" step="1" type="number" value="0">
+                                        </label>
+                                    </div>
+                                </fieldset>
+                                <fieldset class="cartao-arma">
+                                    <legend>Arma secundária</legend>
+                                    <div class="arma-linha-nome">
+                                        <label class="arma-nome">
+                                            <input aria-label="Nome da arma secundária" class="campo-inventario" id="npc-orig-arma-secundaria" placeholder="Nome da arma" type="text">
+                                        </label>
+                                        <div aria-label="Munição da arma secundária" class="arma-municao" role="group">
+                                            <span class="arma-municao-titulo">Munição</span>
+                                            <div class="arma-municao-controles">
+                                                <button type="button" class="municao-botao" data-municao="secundaria" data-variacao="-1" aria-label="Diminuir munição da arma secundária">−</button>
+                                                <input aria-label="Quantidade de munição da arma secundária" class="municao-valor" id="npc-orig-municao-secundaria" max="99" min="0" step="1" type="number" value="0">
+                                                <button type="button" class="municao-botao" data-municao="secundaria" data-variacao="1" aria-label="Aumentar munição da arma secundária">+</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bonus-distancias">
+                                        <label class="bonus-distancia">
+                                            <span>Corpo a corpo</span>
+                                            <input aria-label="Bônus de Corpo a corpo da arma secundária" class="campo-inventario" id="npc-orig-bonus-secundaria-corpo" max="3" min="-3" step="1" type="number" value="0">
+                                        </label>
+                                        <label class="bonus-distancia">
+                                            <span>Curta</span>
+                                            <input aria-label="Bônus de Curta da arma secundária" class="campo-inventario" id="npc-orig-bonus-secundaria-curta" max="3" min="-3" step="1" type="number" value="0">
+                                        </label>
+                                        <label class="bonus-distancia">
+                                            <span>Média</span>
+                                            <input aria-label="Bônus de Média da arma secundária" class="campo-inventario" id="npc-orig-bonus-secundaria-media" max="3" min="-3" step="1" type="number" value="0">
+                                        </label>
+                                        <label class="bonus-distancia">
+                                            <span>Longa</span>
+                                            <input aria-label="Bônus de Longa da arma secundária" class="campo-inventario" id="npc-orig-bonus-secundaria-longa" max="3" min="-3" step="1" type="number" value="0">
+                                        </label>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="col inventario-itens">
+                                <div class="inventario-cabecalho">
+                                    <h2>Itens</h2>
+                                    <button id="npc-adicionar-item" class="botao botao-pequeno" type="button">+ Adicionar item</button>
+                                </div>
+                                <div class="tabela-itens-rolagem">
+                                    <table class="tabela-itens">
+                                        <thead>
+                                            <tr>
+                                                <th title="Escolha entre personagem e montaria">Local</th>
+                                                <th>Item</th>
+                                                <th>Qtd.</th>
+                                                <th>Tam.</th>
+                                                <th>Descrição</th>
+                                                <th>
+                                                    <span class="sr-only">Ações</span>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="npc-orig-lista-itens">
 </tbody>
-</table>
-</div>
-<div aria-label="Espaço de carga do jogador e da montaria" class="inventario-resumo" role="group">
-<label class="inventario-resumo-campo" for="npc-orig-espaco-ocupado-jogador">
-<span>Personagem · Ocupado</span>
-<input id="npc-orig-espaco-ocupado-jogador" readonly="" type="number" value="0"/>
-</label>
-<label class="inventario-resumo-campo" for="npc-orig-espaco-maximo-jogador">
-<span>Personagem · Capacidade</span>
-<input id="npc-orig-espaco-maximo-jogador" inputmode="numeric" min="0" step="1" type="number" value="0"/>
-</label>
-<label class="inventario-resumo-campo" for="npc-orig-espaco-ocupado-montaria">
-<span>Montaria · Ocupado</span>
-<input id="npc-orig-espaco-ocupado-montaria" readonly="" type="number" value="0"/>
-</label>
-<label class="inventario-resumo-campo" for="npc-orig-espaco-maximo-montaria">
-<span>Montaria · Capacidade</span>
-<input id="npc-orig-espaco-maximo-montaria" inputmode="numeric" min="0" step="1" type="number" value="0"/>
-</label>
-</div>
-</div>
+                                    </table>
+                                </div>
+                            </div>
+                                <div aria-label="Espaço de carga do jogador e da montaria" class="inventario-resumo" role="group">
+                                    <label class="inventario-resumo-campo" for="npc-orig-espaco-ocupado-jogador">
+                                        <span>Personagem · Ocupado</span>
+                                        <input id="npc-orig-espaco-ocupado-jogador" readonly type="number" value="0">
+                                    </label>
+                                    <label class="inventario-resumo-campo" for="npc-orig-espaco-maximo-jogador">
+                                        <span>Personagem · Capacidade</span>
+                                        <input id="npc-orig-espaco-maximo-jogador" inputmode="numeric" min="0" step="1" type="number" value="0">
+                                    </label>
+                                    <label class="inventario-resumo-campo" for="npc-orig-espaco-ocupado-montaria">
+                                        <span>Montaria · Ocupado</span>
+                                        <input id="npc-orig-espaco-ocupado-montaria" readonly type="number" value="0">
+                                    </label>
+                                    <label class="inventario-resumo-campo" for="npc-orig-espaco-maximo-montaria">
+                                        <span>Montaria · Capacidade</span>
+                                        <input id="npc-orig-espaco-maximo-montaria" inputmode="numeric" min="0" step="1" type="number" value="0">
+                                    </label>
+                                </div>
+                        </section>
+                    </section>
+                </div>
+            </form>
+        </section>
+    </div>
 </section>
-</section></div>
-</form>
-</section>
-</div>
-</section>
+
+    <dialog id="modal-gerador-npc" class="npc-gerador-modal" aria-labelledby="titulo-gerador-npc" aria-describedby="descricao-gerador-npc">
+        <div class="npc-gerador-cabecalho">
+            <div>
+                <p class="npc-gerador-sobretitulo">RAILROAD · ESCUDO DO MESTRE</p>
+                <h2 id="titulo-gerador-npc">Gerar NPC aleatório</h2>
+            </div>
+            <button type="button" class="botao botao-pequeno botao-discreto" id="fechar-gerador-npc" aria-label="Fechar gerador de NPCs">Fechar</button>
+        </div>
+        <p class="npc-gerador-descricao" id="descricao-gerador-npc">Escolha um perfil ou deixe o acaso decidir. A ficha poderá ser revisada antes de salvar.</p>
+        <div class="npc-gerador-opcoes">
+            <label for="npc-gerador-arquetipo">Arquétipo
+                <select id="npc-gerador-arquetipo">
+                    <option value="aleatorio">Surpresa — qualquer arquétipo</option>
+                </select>
+            </label>
+            <label for="npc-gerador-pontos">Experiência
+                <select id="npc-gerador-pontos">
+                    <option value="20" selected>Comum · 20 pontos</option>
+                    <option value="25">Herói · 25 pontos</option>
+                    <option value="30">Lenda · 30 pontos</option>
+                </select>
+            </label>
+            <label for="npc-gerador-personalidade">Comportamento
+                <select id="npc-gerador-personalidade">
+                    <option value="aleatorio">Aleatório</option>
+                    <option value="cordial">Cordial</option>
+                    <option value="reservado">Reservado</option>
+                    <option value="astuto">Astuto</option>
+                    <option value="impulsivo">Impulsivo</option>
+                </select>
+            </label>
+            <label for="npc-gerador-objetivo">Objetivo narrativo
+                <select id="npc-gerador-objetivo">
+                    <option value="aleatorio">Aleatório</option>
+                    <option value="protecao">Proteger alguém</option>
+                    <option value="busca">Encontrar alguém</option>
+                    <option value="negocio">Resolver uma dívida ou negócio</option>
+                    <option value="misterio">Investigar um segredo</option>
+                </select>
+            </label>
+            <label for="npc-gerador-equipamento">Equipamento inicial
+                <select id="npc-gerador-equipamento">
+                    <option value="padrao">Kit típico do arquétipo</option>
+                    <option value="leve">Kit de viagem leve</option>
+                    <option value="ampliado">Kit com suprimentos extras</option>
+                </select>
+            </label>
+            <label class="npc-gerador-check" for="npc-gerador-preservar-itens">
+                <input type="checkbox" id="npc-gerador-preservar-itens" checked>
+                <span>Manter itens que já estão na ficha</span>
+            </label>
+        </div>
+        <p class="npc-gerador-nota">A geração mantém o retrato e o identificador da ficha. Para usar um novo kit em uma ficha com itens, desmarque “Manter itens”. Alterações existentes só serão substituídas após confirmação.</p>
+        <div class="npc-gerador-acoes">
+            <button type="button" class="botao botao-pequeno botao-discreto" id="cancelar-gerador-npc">Cancelar</button>
+            <button type="button" class="botao botao-pequeno" id="gerar-npc-aleatorio">Gerar e revisar</button>
+            <button type="button" class="botao botao-pequeno botao-destaque" id="gerar-salvar-npc">Gerar e salvar</button>
+        </div>
+    </dialog>

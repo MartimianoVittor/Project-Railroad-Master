@@ -27,7 +27,7 @@ function simularDocumento() {
     return { documento, insercoes };
 }
 
-test('carrega sete abas e dois diálogos usando caminhos relativos ao GitHub Pages', async () => {
+test('carrega sete abas e três diálogos usando caminhos relativos ao GitHub Pages', async () => {
     const { documento, insercoes } = simularDocumento();
     const urls = [];
     globalThis.document = documento;
@@ -38,10 +38,10 @@ test('carrega sete abas e dois diálogos usando caminhos relativos ao GitHub Pag
 
     await carregarInterface();
 
-    assert.equal(urls.length, 9);
+    assert.equal(urls.length, 10);
     assert.ok(urls.every((url) => url.startsWith(documento.baseURI)));
     assert.equal(insercoes.get('marcador-paginas').length, 7);
-    assert.equal(insercoes.get('marcador-dialogos').length, 2);
+    assert.equal(insercoes.get('marcador-dialogos').length, 3);
     assert.match(insercoes.get('marcador-paginas')[1], /diario\.html/);
 });
 

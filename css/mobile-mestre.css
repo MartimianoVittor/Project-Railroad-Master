@@ -1,0 +1,324 @@
+/* Railroad Mestre · interface mobile (029)
+ * Carregado DEPOIS dos estilos desktop, sem afetar telas largas.
+ * Estrutura: rolagem natural da página, navegação inferior e cartões flexíveis.
+ */
+@media (max-width: 900px) {
+    :root { --rr-mobile-rodape: calc(74px + env(safe-area-inset-bottom, 0px)); }
+    html, body { width: 100%; height: auto; min-height: 100%; overflow-x: clip; overflow-y: auto; }
+    body, body.fichas-ativas { display: block; height: auto; min-height: 100dvh; overflow-x: clip; overflow-y: auto; }
+    body > main, .fichas-ativas main { display: block; min-width: 0; min-height: 0; overflow: visible; }
+    body:not(.modo-entrada) > main { padding-bottom: var(--rr-mobile-rodape); }
+    .painel:not([hidden]), .fichas-ativas .painel { display: block; height: auto; min-height: 0; width: 100%; overflow: visible; padding: 0; }
+    #painel .pagina-mestre:not([hidden]), .fichas-ativas .pagina-fichas:not([hidden]) {
+        width: 100%; max-width: 100%; height: auto; min-height: 0;
+        margin: 0; padding: clamp(8px, 2.4vw, 16px);
+        overflow: visible;
+    }
+    #painel .pagina-mestre :is(input, textarea, select, button),
+    dialog :is(input, textarea, select, button) { max-width: 100%; }
+    #painel .pagina-mestre :is(input, textarea, select), dialog :is(input, textarea, select) { min-width: 0; }
+    #painel .pagina-mestre :is(input, textarea, select) { font-size: max(16px, 1em); }
+    #painel :is(.grade-gerenciamento, .grade-diario, .grade-npcs, .grade-ferramentas, .grade-utilitarios,
+               .grade-npcs > *, .grade-diario > *, .grade-gerenciamento > *) {
+        height: auto; min-height: 0; max-height: none; overflow: visible;
+    }
+    #painel :is(.cartao-campanha, .pagina-mestre, .grade-npcs, .grade-diario, .grade-gerenciamento,
+               .vg-grade, .combate-grade, .util-area-principal) { min-width: 0; max-width: 100%; }
+
+    /* Identidade e ações permanecem no topo; abas em cartuchos no rodapé. */
+    body .barra-superior {
+        position: sticky; top: 0; z-index: 75;
+        display: flex; flex-wrap: nowrap; justify-content: space-between;
+        min-height: 56px; gap: 8px; padding: 7px 10px;
+        padding-top: max(7px, env(safe-area-inset-top, 0px));
+    }
+    .barra-superior .marca { min-width: 0; }
+    .barra-superior .marca strong { font-size: clamp(.98rem, 3.2vw, 1.2rem); }
+    .barra-superior .marca small { font-size: .68rem; letter-spacing: .05em; }
+    .barra-superior .marca-texto { min-width: 0; }
+    .barra-superior .barra-acoes { flex: 0 1 auto; min-width: 0; justify-content: flex-end; gap: 5px; }
+    .barra-superior .barra-acoes .botao { flex: none; min-height: 36px; padding: 6px 8px; font-size: 11px; }
+    .barra-superior .campanha-sessao, .barra-superior .identidade-sessao { max-width: 120px; }
+    .barra-superior .campanha-sessao span, .barra-superior .identidade-sessao .usuario-email { display: none !important; }
+    .barra-superior .campanha-sessao strong { font: 10px/1.3 Georgia,serif; }
+    :root body #navegacao-mobile-mestre:not([hidden]) {
+        position: fixed; inset: auto 0 0 0; z-index: 80;
+        order: initial; box-sizing: border-box; display: flex;
+        flex: none; justify-content: flex-start; align-items: center;
+        width: 100%; height: var(--rr-mobile-rodape);
+        min-width: 0; margin: 0; gap: 5px; flex-wrap: nowrap;
+        white-space: nowrap;
+        padding: 8px 10px calc(9px + env(safe-area-inset-bottom, 0px));
+        overflow-x: auto; overflow-y: hidden; overscroll-behavior-x: contain;
+        scroll-snap-type: x proximity; scrollbar-width: none;
+        border-top: 3px double #cba15e; border-bottom: 0;
+        background: linear-gradient(180deg,#472919,#25150e);
+        box-shadow: 0 -4px 18px #160d0a66;
+    }
+    :root #navegacao-mobile-mestre::-webkit-scrollbar { display: none; }
+    :root body #navegacao-mobile-mestre .aba-navegacao.aba-cartucho {
+        flex: 0 0 112px; width: 112px; min-width: 112px;
+        height: 43px; min-height: 43px; aspect-ratio: auto;
+        margin: 0; padding: 0;
+        scroll-snap-align: center;
+        transform: none;
+    }
+    :root body #navegacao-mobile-mestre .aba-navegacao.ativa {
+        outline: 2px solid #fff0bf; outline-offset: 1px;
+    }
+    :root body #navegacao-mobile-mestre .aba-cartucho .cartucho-texto {
+        font-size: 12px; line-height: 1.12;
+    }
+    :root body #navegacao-mobile-mestre .aba-navegacao.aba-cartucho:active { transform: translateY(1px); }
+    .aviso { bottom: calc(var(--rr-mobile-rodape) + 8px); }
+    .rr-aviso-processamento { bottom: calc(var(--rr-mobile-rodape) + 8px) !important; }
+
+    /* Campanhas: criação, lista e participantes em fluxo vertical. */
+    #pagina-campanhas .grade-gerenciamento { display: grid; grid-template-columns: minmax(0,1fr); gap: 12px; }
+    #pagina-campanhas .selecao-campanhas, #pagina-campanhas .quadro-jogadores,
+    #pagina-campanhas .divisao-lista-campanhas, #pagina-campanhas .painel-campanha {
+        max-height: none; height: auto; min-height: 0; overflow: visible;
+    }
+    #pagina-campanhas .lista-campanhas, #pagina-campanhas .lista-participantes {
+        max-height: none; height: auto; overflow: visible;
+    }
+    #pagina-campanhas .lista-campanhas { grid-template-columns: minmax(0,1fr); }
+    #pagina-campanhas .cartao-campanha { padding: 12px; }
+    #pagina-campanhas .cabecalho-jogadores, #pagina-campanhas .cabecalho-campanha { flex-wrap: wrap; }
+    #pagina-campanhas .participante { grid-template-columns: minmax(0,1fr); }
+    #pagina-campanhas .item-campanha, #pagina-campanhas .registro-campanha { flex-wrap: wrap; }
+
+    /* Sessões: notas com tamanho editável e quadro proporcional, sem cortar elementos. */
+    #pagina-diario .barra-sessoes { grid-template-columns: minmax(0,1fr); gap: 10px; }
+    #pagina-diario .grupo-seletor-sessoes { min-width: 0; width: 100%; }
+    #pagina-diario .acoes-barra-sessoes { justify-content: flex-start; }
+    #pagina-diario .grade-diario:not([hidden]) { display: grid; grid-template-columns: minmax(0,1fr); gap: 12px; }
+    #pagina-diario .cartao-marcos, #pagina-diario .cartao-quadro {
+        display: flex; flex-direction: column; height: auto; min-height: 0; max-height: none;
+        overflow: hidden; padding: 12px;
+    }
+    #pagina-diario #diario-anotacoes { flex: none; min-height: 185px; height: 235px; max-height: 65dvh; resize: vertical; }
+    #pagina-diario .cabecalho-quadro { display: flex; flex-wrap: wrap; gap: 9px; }
+    #pagina-diario .ferramentas-quadro { flex: 1 1 100%; width: 100%; justify-content: flex-start; margin: 0; gap: 6px; }
+    #pagina-diario .ferramentas-quadro .ferramenta-quadro { min-height: 38px; }
+    #pagina-diario .ferramenta-perigo { margin-left: auto; }
+    #pagina-diario .quadro-viewport-mobile {
+        display: block; flex: none; min-width: 0; width: 100%;
+        overflow-x: auto; overflow-y: hidden; overscroll-behavior-inline: contain;
+        scrollbar-width: thin; scrollbar-color: #966d46 transparent;
+        border-radius: 4px;
+    }
+    #pagina-diario .quadro-viewport-mobile .zona-quadro {
+        display: block; flex: none; box-sizing: border-box;
+        width: max(100%, 620px); min-width: 620px;
+        height: auto; min-height: 0; aspect-ratio: 1200 / 760;
+    }
+    #pagina-diario .quadro-viewport-mobile .zona-quadro canvas { width: 100%; height: 100%; }
+    #pagina-diario .quadro-mobile-instrucao { display: block; margin: 0; padding: 7px 2px; font-size: .81rem; line-height: 1.45; }
+    #pagina-diario .quadro-mobile-controles { display: flex; justify-content: space-between; gap: 8px; padding: 5px 0; }
+    #pagina-diario .quadro-mobile-controles .botao { flex: 1 1 0; min-height: 38px; }
+
+    /* Fichas compartilhadas: leitura por seções e comparação por deslize. */
+    body.fichas-ativas #pagina-fichas:not([hidden]) { display: flex; flex-direction: column; height: auto; min-height: 0; overflow: visible; }
+    #pagina-fichas .barra-consulta-fichas { flex-wrap: wrap; }
+    #pagina-fichas .grupo-seletor-ficha, #pagina-fichas .modos-consulta-fichas { flex: 1 1 100%; }
+    #pagina-fichas .quadro-fichas { min-height: 0; height: auto; overflow: hidden; }
+    #pagina-fichas .conteudo-fichas { height: auto; min-height: 0; max-height: none; }
+    #pagina-fichas .conteudo-fichas.modo-completo { display: flex; flex-direction: column; overflow: visible; }
+    #pagina-fichas .conteudo-fichas.modo-completo > .ficha-parte {
+        flex: none; width: 100%; min-width: 0; max-width: 100%; height: auto; overflow: visible;
+    }
+    #pagina-fichas .conteudo-fichas.modo-comparacao { display: flex; overflow-x: auto; overflow-y: hidden; }
+    #pagina-fichas .conteudo-fichas.modo-comparacao > .ficha-parte {
+        flex: 0 0 min(88%, 360px); min-width: min(250px, 88%); max-width: none;
+    }
+    #pagina-fichas .ficha-parte-corpo { overflow: visible; min-height: 0; height: auto; }
+    #pagina-fichas .ficha-tabela-scroll { max-width: 100%; overflow-x: auto; }
+
+    /* NPCs: lista primeiro, ficha/editoração com colunas empilhadas. */
+    #pagina-npcs .grade-npcs { display: grid; grid-template-columns: minmax(0,1fr); gap: 12px; }
+    #pagina-npcs .painel-lista-npcs {
+        display: flex; flex-direction: column; min-height: 0; max-height: 43dvh;
+        overflow: hidden; padding: 12px;
+    }
+    #pagina-npcs .lista-npcs { min-height: 0; max-height: 31dvh; overflow-y: auto; scrollbar-width: thin; }
+    #pagina-npcs .painel-ficha-npc { min-height: 0; height: auto; max-height: none; overflow: visible; padding: 12px; }
+    #pagina-npcs .npc-consulta, #pagina-npcs .formulario-npc { height: auto; max-height: none; min-height: 0; overflow: visible; }
+    #pagina-npcs :is(.npc-detalhes, .campos-form-npc) {
+        flex: none; display: flex; flex-direction: column; height: auto; max-height: none;
+        min-height: 0; overflow: visible; padding: 10px 0 0;
+    }
+    #pagina-npcs .npc-form-reiniciado { width: 100%; max-width: 100%; padding: 0; margin: 0; overflow: visible; }
+    #pagina-npcs .npc-ficha-mobile, #pagina-npcs .npc-pagina-original { width: 100%; max-width: 100%; height: auto; min-height: 0; overflow: visible; }
+    #pagina-npcs .npc-form-reiniciado :is(#npc-orig-jogador,#npc-orig-personagem,#npc-orig-inventario) {
+        display: flex; flex-direction: column; width: 100%; height: auto; min-height: 0; overflow: visible;
+    }
+    #pagina-npcs .npc-form-reiniciado :is(#npc-orig-jogador,#npc-orig-personagem,#npc-orig-inventario) > .col {
+        width: 100%; max-width: 100%; height: auto; min-height: 0; overflow: visible; padding: 10px 5px;
+        scrollbar-gutter: auto;
+    }
+    #pagina-npcs .npc-ficha-jogador :is(.npc-tracos-cabecalho,.npc-traco-editor) {
+        grid-template-columns: minmax(0,1fr) repeat(4, 22px); gap: 3px;
+    }
+    #pagina-npcs .npc-ficha-jogador .npc-gota { width: 22px; height: 25px; }
+    #pagina-npcs .npc-ficha-jogador .nome-traco { font-size: 11px; }
+    #pagina-npcs .npc-editor-desktop, #pagina-npcs .npc-editor-coluna { min-width: 0; max-width: 100%; }
+    #pagina-npcs .inventario-itens .tabela-itens-rolagem { max-width: 100%; overflow-x: auto; }
+
+    /* Combate: iniciativa em faixa rolável, lista de combatentes e detalhes abaixo. */
+    #pagina-combate.combate-pagina:not([hidden]) { display: flex; flex-direction: column; height: auto; min-height: 0; overflow: visible; }
+    #pagina-combate .combate-barra {
+        display: flex; flex-wrap: wrap; min-height: 0; max-height: none; height: auto;
+        gap: 9px; padding: 10px; overflow: visible;
+    }
+    #pagina-combate .combate-acao { width: auto; min-width: 0; flex: 1 1 130px; }
+    #pagina-combate .combate-trilho {
+        order: 3; flex: 1 1 100%; width: 100%; min-height: 66px;
+        overflow-x: auto; overflow-y: hidden;
+        scrollbar-width: thin; scroll-snap-type: x proximity;
+    }
+    #pagina-combate .combate-turno { flex: 0 0 180px; width: 180px; min-width: 180px; max-width: 180px; scroll-snap-align: start; }
+    #pagina-combate .combate-barra-botoes { flex: 0 1 auto; flex-wrap: wrap; justify-content: flex-end; }
+    #pagina-combate .combate-grade { display: grid; grid-template-columns: minmax(0,1fr); height: auto; min-height: 0; gap: 12px; }
+    #pagina-combate .combate-lateral {
+        min-width: 0; max-height: 42dvh; height: auto; min-height: 0;
+        display: flex; flex-direction: column; overflow: hidden; padding: 10px;
+    }
+    #pagina-combate .combate-lista { flex: none; max-height: 30dvh; overflow-y: auto; padding: 0; }
+    #pagina-combate .combate-detalhe { height: auto; min-height: 250px; max-height: none; overflow: visible; }
+    #pagina-combate .combate-detalhe:has(> .combate-colunas) { display: block; }
+    #pagina-combate .combate-colunas { display: grid; grid-template-columns: minmax(0,1fr); height: auto; max-height: none; }
+    #pagina-combate .combate-coluna { height: auto; min-height: 0; max-height: none; overflow: visible; }
+    #pagina-combate .combate-cartao { min-width: 0; }
+    #pagina-combate :is(.combate-linha,.combate-condicao) { max-width: 100%; }
+    #pagina-combate .combate-condicao { grid-template-columns: minmax(0,1fr) minmax(0,1fr) auto; }
+    #pagina-combate .combate-retrato { max-height: 240px; object-fit: contain; }
+
+    /* Viagens: cartões seguem ordem da interface desktop, sem recortes. */
+    #pagina-viagem { width: 100%; max-width: 100%; padding: 10px; }
+    #pagina-viagem .vg-app { display: flex; flex-direction: column; height: auto; min-height: 0; overflow: visible; }
+    #pagina-viagem .vg-top { display: grid; grid-template-columns: minmax(0,1fr); height: auto; }
+    #pagina-viagem .vg-top-contexto, #pagina-viagem .vg-top-acoes { width: 100%; grid-column: 1; }
+    #pagina-viagem .vg-top-acoes { display: flex; justify-content: flex-start; flex-wrap: wrap; }
+    #pagina-viagem .vg-grade, #pagina-viagem .vg-painel { display: grid; grid-template-columns: minmax(0,1fr); gap: 10px; height: auto; min-height: 0; overflow: visible; }
+    #pagina-viagem :is(.vg-viajantes,.vg-geral,.vg-consulta) { height: auto; min-height: 0; max-height: none; overflow: visible; }
+    #pagina-viagem #vg-lista { max-height: 270px; overflow-y: auto; }
+    #pagina-viagem #vg-detalhe { display: grid; grid-template-columns: minmax(0,1fr); height: auto; max-height: none; overflow: visible; }
+    #pagina-viagem #vg-detalhe > * { grid-column: 1; grid-row: auto; }
+    #pagina-viagem #vg-detalhe > .vg-ficha-inventario { max-height: none; height: auto; overflow: visible; }
+    #pagina-viagem #vg-detalhe .tabela-itens-rolagem { max-width: 100%; overflow-x: auto; }
+
+    /* Utilitários: catálogo empilhado. O quadro mantém sua grade de 6
+       colunas, com rolagem horizontal para não mudar as posições salvas. */
+    #pagina-utilitarios .util-barra-consultas { display: grid; grid-template-columns: minmax(0,1fr); gap: 10px; }
+    #pagina-utilitarios .util-barra-acoes { grid-column: auto; justify-content: flex-start; flex-wrap: wrap; }
+    #pagina-utilitarios .util-area-principal { display: grid; grid-template-columns: minmax(0,1fr); gap: 12px; }
+    #pagina-utilitarios .util-catalogo { width: 100%; height: auto; min-height: 0; max-height: none; overflow: visible; }
+    #pagina-utilitarios .util-lista-mecanicas { flex: none; max-height: 310px; min-height: 120px; overflow-y: auto; }
+    #pagina-utilitarios .util-consultas { display: block; width: 100%; min-width: 0; min-height: 0; max-height: none; padding: 10px; overflow-x: auto; overflow-y: visible; }
+    #pagina-utilitarios .util-grade { width: max(100%, 720px); min-width: 720px; min-height: 540px; height: auto; overflow: visible; }
+    #pagina-utilitarios .util-mobile-aviso { margin: 0 0 8px; padding: 7px 5px; font-size: .83rem; line-height: 1.5; }
+
+    /* Diálogos: todos os botões acessíveis, sem transbordar a viewport. */
+    dialog, dialog[open] { box-sizing: border-box; max-width: calc(100vw - 16px); max-height: calc(100dvh - 16px); }
+    dialog#modal-gerador-npc[open], dialog#modal-personalizacao[open] {
+        width: calc(100vw - 16px); max-width: calc(100vw - 16px);
+        max-height: calc(100dvh - 16px); margin: auto;
+    }
+    dialog#modal-personalizacao[open] .personalizacao-form { display: grid; grid-template-columns: minmax(0,1fr); }
+    dialog#modal-personalizacao[open] #previa-mestre { display: none; }
+    dialog#modal-personalizacao[open] .personalizacao-opcoes { min-height: 0; overflow-y: auto; }
+    dialog#modal-personalizacao[open] .personalizacao-amostras { grid-template-columns: repeat(2,minmax(0,1fr)); }
+    dialog#modal-gerador-npc[open] .npc-gerador-opcoes { grid-template-columns: minmax(0,1fr); }
+    dialog :is(.modal-cabecalho,.personalizacao-cabecalho,.npc-gerador-cabecalho) { flex-wrap: wrap; }
+    dialog :is(.modal-rodape,.personalizacao-acoes,.npc-gerador-acoes) { flex-wrap: wrap; gap: 6px; }
+    dialog :is(.modal-rodape,.personalizacao-acoes,.npc-gerador-acoes) .botao { min-height: 39px; }
+}
+
+@media (max-width: 520px) {
+    .barra-superior .marca strong { font-size: 1rem; }
+    .barra-superior .barra-acoes .identidade-sessao { display: none !important; }
+    .barra-superior .barra-acoes .botao { padding: 6px 7px; font-size: 10px; }
+    .pagina-mestre .cartao-campanha { padding: 10px; }
+    #pagina-campanhas .acoes-formulario, #pagina-campanhas .acoes-rodape-campanha { flex-wrap: wrap; }
+    #pagina-diario .acoes-barra-sessoes .botao { flex: 1 1 auto; }
+    #pagina-fichas .modos-consulta-fichas { flex-wrap: wrap; }
+    #pagina-fichas .modos-consulta-fichas .botao { min-height: 39px; }
+    #pagina-npcs .acoes-ficha-npc { display: flex; flex-wrap: wrap; width: 100%; }
+    #pagina-npcs .acoes-ficha-npc .botao { flex: 1 1 auto; }
+    #pagina-combate .combate-barra-botoes { width: 100%; }
+    #pagina-combate .combate-barra-botoes .botao { flex: 1 1 auto; }
+    #pagina-combate .combate-acao { width: 100%; flex: 1 1 100%; }
+    #pagina-viagem .vg-seletores { grid-template-columns: minmax(0,1fr); }
+    #pagina-viagem .vg-estatisticas { grid-template-columns: repeat(2,minmax(0,1fr)); }
+    #pagina-utilitarios .util-barra-acoes .botao { flex: 1 1 auto; }
+}
+
+@media (max-width: 900px) and (orientation: portrait) {
+    #pagina-diario .quadro-mobile-instrucao { font-weight: 700; }
+}
+
+@media (min-width: 901px) {
+    #pagina-diario .quadro-viewport-mobile { display: contents; }
+    #pagina-diario .quadro-mobile-instrucao, #pagina-diario .quadro-mobile-controles,
+    #pagina-utilitarios .util-mobile-aviso { display: none; }
+}
+
+
+/* Navegação móvel como na versão Jogador: ícone acima do rótulo.
+   Os cartuchos personalizados continuam exclusivos do desktop. */
+.rr-aba-icone { display: none; }
+@media (max-width: 900px) {
+    :root { --rr-mobile-rodape: calc(68px + env(safe-area-inset-bottom, 0px)); }
+    :root body #navegacao-mobile-mestre:not([hidden]) {
+        justify-content: space-between; gap: 2px; padding: 5px 4px calc(6px + env(safe-area-inset-bottom, 0px));
+        overflow: hidden; scroll-snap-type: none; background: linear-gradient(180deg,#4c2c1c,#261710);
+    }
+    :root body #navegacao-mobile-mestre .aba-navegacao.aba-cartucho,
+    :root body #navegacao-mobile-mestre .aba-navegacao.aba-cartucho.ativa,
+    :root body #navegacao-mobile-mestre .aba-navegacao.aba-cartucho:hover:not(:disabled) {
+        box-sizing: border-box; display: flex; flex: 1 1 0; width: auto; min-width: 0; max-width: none;
+        height: 55px; min-height: 55px; padding: 5px 0 4px; margin: 0;
+        flex-direction: column; justify-content: center; align-items: center; gap: 4px;
+        border: 1px solid transparent; border-radius: 7px; outline: none;
+        background: transparent !important; background-image: none !important;
+        color: #e9d5aa; text-shadow: none; box-shadow: none; filter: none;
+        transform: none !important; font-family: Georgia, serif;
+    }
+    :root body #navegacao-mobile-mestre .aba-navegacao.aba-cartucho.ativa {
+        border-color: #c79f58; background: #e3c07b20 !important; color: #ffe7aa;
+    }
+    :root body #navegacao-mobile-mestre .aba-navegacao.aba-cartucho:focus-visible {
+        outline: 2px solid #f6d889 !important; outline-offset: -2px;
+    }
+    :root body #navegacao-mobile-mestre .aba-navegacao.aba-cartucho::before,
+    :root body #navegacao-mobile-mestre .aba-navegacao.aba-cartucho::after { content: none !important; display: none !important; }
+    :root body #navegacao-mobile-mestre .rr-aba-icone { display: block; order: -1; flex: none; width: 22px; height: 22px; position: static; }
+    :root body #navegacao-mobile-mestre .aba-cartucho .cartucho-texto,
+    :root[data-rr-botoes] body #navegacao-mobile-mestre .aba-cartucho .cartucho-texto {
+        position: static; display: block; flex: none; left: auto; width: auto; max-width: 100%;
+        font: 700 clamp(8px, 2.05vw, 11px)/1.2 Georgia, serif;
+        text-align: center; letter-spacing: -.02em; text-shadow: none;
+        white-space: nowrap; transform: none; overflow: visible;
+    }
+}
+@media (max-width: 370px) {
+    :root body #navegacao-mobile-mestre .rr-aba-icone { width: 19px; height: 19px; }
+    :root body #navegacao-mobile-mestre .aba-cartucho .cartucho-texto { font-size: 7.5px; }
+}
+@media (max-width: 900px) and (orientation: landscape) {
+    :root { --rr-mobile-rodape: calc(49px + env(safe-area-inset-bottom, 0px)); }
+    :root body #navegacao-mobile-mestre .aba-navegacao.aba-cartucho { height: 38px; min-height: 38px; flex-direction: row; gap: 3px; }
+    :root body #navegacao-mobile-mestre .rr-aba-icone { width: 18px; height: 18px; }
+}
+
+/* Navegações independentes: a inferior nunca participa da geometria desktop. */
+@media (min-width: 901px) {
+    body #navegacao-mobile-mestre { display: none !important; }
+    body:not(.modo-entrada) > main { padding-bottom: 0 !important; }
+}
+@media (max-width: 900px) {
+    /* Desktop não ocupa uma segunda linha no cabeçalho mobile. */
+    body .barra-superior #navegacao-mestre { display: none !important; }
+    body:not(.modo-entrada) > #navegacao-mobile-mestre:not([hidden]) { display: flex !important; }
+}

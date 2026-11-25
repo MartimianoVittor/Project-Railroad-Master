@@ -11,9 +11,9 @@ const arquivos = [
     ...dialogos.map((dialogo) => `views/dialogs/${dialogo}.html`),
 ];
 
-test('index contém somente a estrutura principal e não replica as sete abas', () => {
+test('index contém apenas estrutura e as duas navegações, sem duplicar páginas', () => {
     const html = ler('index.html');
-    assert.ok(html.length < 7000);
+    assert.ok(html.length < 10000);
     assert.match(html, /id="marcador-paginas"/);
     assert.match(html, /id="marcador-dialogos"/);
     assert.doesNotMatch(html, /id="pagina-diario"|id="pagina-campanhas"/);

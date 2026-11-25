@@ -613,3 +613,8 @@
 @media (max-width: 1099px) {
     #painel #pagina-utilitarios .util-catalogo { padding-bottom: 15px; }
 }
+
+/* Aproveitamento uniforme do espaço dentro do cartão de consulta. */
+#pagina-utilitarios .util-consultas { box-sizing:border-box; }
+#pagina-utilitarios .util-grade { width:100%; max-width:100%; margin-inline:0; }
+#pagina-utilitarios .util-cartao { max-width:100%; }

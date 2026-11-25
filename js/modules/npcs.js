@@ -1,8 +1,9 @@
+import { imagemSegura } from '../services/imagensStorage.js?v=mesa-39';
 /** Modelo das fichas privadas de NPCs, sem dependências de interface ou banco. */
 import {
     ARMAS as ARMAS_NPC, CONDICOES as CONDICOES_NPC,
     DISTANCIAS as DISTANCIAS_NPC, TRACOS as TRACOS_NPC,
-} from './ficha/campos.js?v=mesa-35';
+} from './ficha/campos.js?v=mesa-39';
 
 export { ARMAS_NPC, CONDICOES_NPC, DISTANCIAS_NPC, TRACOS_NPC };
 
@@ -47,9 +48,8 @@ function normalizarItens(itens) {
         }));
 }
 
-const IMAGEM_EMBUTIDA = /^data:image\/(?:png|jpeg|webp);base64,[a-zA-Z0-9+/=]+$/;
 function normalizarImagem(imagem) {
-    return typeof imagem === 'string' && imagem.length <= 500000 && IMAGEM_EMBUTIDA.test(imagem) ? imagem : '';
+    return imagemSegura(imagem) ? imagem : '';
 }
 
 /** Valida e limita todos os campos, inclusive registros recuperados do navegador. */

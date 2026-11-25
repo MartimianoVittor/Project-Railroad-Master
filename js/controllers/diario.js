@@ -1,10 +1,11 @@
-import { listarSessoesRemotas, salvarSessoesRemotas } from '../services/conteudoCampanha.js?v=mesa-35';
+import { confirmar } from '../core/dialogos.js?v=mesa-39';
+import { listarSessoesRemotas, salvarSessoesRemotas } from '../services/conteudoCampanha.js?v=mesa-39';
 import {
     criarSessao, duplicarSessao, moverSessao,
     LIMITE_DESCRICAO_SESSAO, LIMITE_NOME_SESSAO, LIMITE_SESSOES,
-} from '../modules/diario/sessoes.js?v=mesa-35';
-import { executar, mostrarAviso } from '../core/feedback.js?v=mesa-35';
-import { porId, elemento } from '../core/dom.js?v=mesa-35';
+} from '../modules/diario/sessoes.js?v=mesa-39';
+import { executar, mostrarAviso } from '../core/feedback.js?v=mesa-39';
+import { porId, elemento } from '../core/dom.js?v=mesa-39';
 
 /** Coordena as sessões do Diário e suas cópias local e remota. */
 export function criarControladorDiario({ estado }, { listar = listarSessoesRemotas, salvar = salvarSessoesRemotas } = {}) {
@@ -109,7 +110,7 @@ export function criarControladorDiario({ estado }, { listar = listarSessoesRemot
             if (!aindaAtual()) return;
             const existentes = new Set(remoto.sessoes.map((sessao) => sessao.id));
             const ausentes = dados.sessoes.filter((sessao) => !existentes.has(sessao.id));
-            if (ausentes.length && confirm(`Há ${ausentes.length} sessão(ões) guardada(s) apenas neste navegador. Importar para o Supabase?`)) {
+            if (ausentes.length && await confirmar(`Há ${ausentes.length} sessão(ões) guardada(s) apenas neste navegador. Importar para o Supabase?`)) {
                 remoto.sessoes.push(...ausentes);
                 remoto.ativaId ||= dados.ativaId;
                 remoto.revisao = await salvar(campanhaId, remoto, new Set(), remoto.revisao ?? 0);
@@ -193,9 +194,9 @@ export function criarControladorDiario({ estado }, { listar = listarSessoesRemot
         porId('modal-criar-sessao').close();
     }
 
-    function limparMarcos() {
+    async function limparMarcos() {
         if (!porId('diario-anotacoes').value) return;
-        if (!confirm('Limpar os marcos e notas desta sessão? A alteração só será definitiva depois de salvar.')) return;
+        if (!await confirmar('Limpar os marcos e notas desta sessão? A alteração só será definitiva depois de salvar.')) return;
         porId('diario-anotacoes').value = '';
         marcarRascunhoAlterado();
     }
@@ -237,8 +238,8 @@ export function criarControladorDiario({ estado }, { listar = listarSessoesRemot
                     marcarRascunhoAlterado();
                     renderizarGerenciador();
                 }),
-                botao('Excluir', () => {
-                    if (!confirm(`Excluir a sessão ${indice + 1} — ${sessao.nome || 'Sem título'}?`)) return;
+                botao('Excluir', async () => {
+                    if (!await confirmar(`Excluir a sessão ${indice + 1} — ${sessao.nome || 'Sem título'}?`)) return;
                     const atual = estado.sessaoId;
                     if (atual !== sessao.id) guardarSessaoAtual();
                     estado.sessoes.splice(indice, 1);

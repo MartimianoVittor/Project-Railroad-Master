@@ -1,8 +1,9 @@
+import { obterImagensStorage } from './imagensStorage.js?v=mesa-39';
 /** Persistência remota de sessões e NPCs, com transações e controle de revisão.
  * Requer a migração supabase/012_integridade_conteudo_mestre.sql.
  */
-import { obterCliente, exigir } from '../core/cliente.js?v=mesa-35';
-import { normalizarNpc } from '../modules/npcs.js?v=mesa-35';
+import { obterCliente, exigir } from '../core/cliente.js?v=mesa-39';
+import { normalizarNpc } from '../modules/npcs.js?v=mesa-39';
 
 function revisaoRecebida(resultado) {
     const linha = Array.isArray(resultado) ? resultado[0] : resultado;
@@ -24,9 +25,10 @@ export async function listarNpcsRemotos(campanhaId, conectar = obterCliente) {
         .select('id,nome,dados,revisao')
         .eq('campanha_id', campanhaId)
         .order('created_at'));
-    return linhas.map(({ dados, id, nome, revisao }) => normalizarNpc({
-        ...dados, id, nome, revisao,
-    }));
+    const imagens = obterImagensStorage(db);
+    return Promise.all(linhas.map(async ({ dados, id, nome, revisao }) => normalizarNpc({
+        ...await imagens.resolverDocumento(dados), id, nome, revisao,
+    })));
 }
 
 /** Revisão zero cria um NPC; revisões positivas só atualizam a versão esperada. */
@@ -36,7 +38,8 @@ export async function gravarNpcRemoto(campanhaId, npc, conectar = obterCliente) 
         p_campanha_id: campanhaId,
         p_npc_id: npc.id,
         p_nome: npc.nome,
-        p_dados: dadosNpc(npc),
+        p_dados: await obterImagensStorage(db).prepararDocumento(dadosNpc(npc),
+            `campanhas/${campanhaId}/npcs/${npc.id}`),
         p_revisao: npc.revisao ?? 0,
     }));
     return revisaoRecebida(resposta);
@@ -62,11 +65,15 @@ export async function apagarNpcRemoto(campanhaId, id, revisao, conectar = obterC
 export async function gravarNpcsCombateRemoto(campanhaId, npcs, conectar = obterCliente) {
     if (!npcs.length) return [];
     const db = await conectar();
+    const imagens = obterImagensStorage(db);
+    const preparados = await Promise.all(npcs.map(async (npc) => ({
+        id: npc.id, nome: npc.nome,
+        dados: await imagens.prepararDocumento(dadosNpc(npc), `campanhas/${campanhaId}/npcs/${npc.id}`),
+        revisao: npc.revisao ?? 0,
+    })));
     const resultados = exigir(await db.rpc('salvar_npcs_combate_mestre', {
         p_campanha_id: campanhaId,
-        p_npcs: npcs.map((npc) => ({
-            id: npc.id, nome: npc.nome, dados: dadosNpc(npc), revisao: npc.revisao ?? 0,
-        })),
+        p_npcs: preparados,
     }));
     if (!Array.isArray(resultados) || resultados.length !== npcs.length) {
         throw new Error('O Supabase não confirmou a gravação de todos os NPCs.');
@@ -80,7 +87,9 @@ export async function listarSessoesRemotas(campanhaId, conectar = obterCliente) 
     const dados = exigir(await db.rpc('ler_diario_mestre', {
         p_campanha_id: campanhaId,
     }).single());
-    const sessoes = Array.isArray(dados.sessoes) ? dados.sessoes : [];
+    const imagens = obterImagensStorage(db);
+    const sessoes = Array.isArray(dados.sessoes)
+        ? await Promise.all(dados.sessoes.map((sessao) => imagens.resolverDocumento(sessao))) : [];
     return {
         sessoes,
         ativaId: dados.ativa_id ?? sessoes[0]?.id ?? null,
@@ -92,12 +101,20 @@ export async function listarSessoesRemotas(campanhaId, conectar = obterCliente) 
 /** Uma única operação SQL grava o diário ou rejeita tudo em caso de falha. */
 export async function salvarSessoesRemotas(campanhaId, diario, idsConhecidos, revisao = 0, conectar = obterCliente) {
     const db = await conectar();
+    const imagens = obterImagensStorage(db);
+    const sessoes = await Promise.all(diario.sessoes.map((sessao) => imagens.prepararDocumento(
+        sessao, `campanhas/${campanhaId}/sessoes/${sessao.id}`)));
     const resposta = exigir(await db.rpc('salvar_diario_mestre', {
         p_campanha_id: campanhaId,
-        p_sessoes: diario.sessoes,
+        p_sessoes: sessoes,
         p_ativa_id: diario.ativaId,
         p_ids_conhecidos: [...idsConhecidos],
         p_revisao: revisao,
     }));
-    return revisaoRecebida(resposta);
+    const novaRevisao = revisaoRecebida(resposta);
+    // Não atrasa o salvamento: a coleta é conservadora (30 dias) e autorizada
+    // novamente no PostgreSQL. Erros de limpeza não desfazem o Diário salvo.
+    void imagens.limparImagensObsoletasDasSessoes(campanhaId)
+        .catch((erro) => console.warn('Limpeza de imagens adiada:', erro.message));
+    return novaRevisao;
 }

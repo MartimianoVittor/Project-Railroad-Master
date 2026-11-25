@@ -7,7 +7,8 @@ const css = ler('css/personalizacao.css');
 
 test('as sete abas podem quebrar de linha em barras estreitas', () => {
     const html = ler('index.html');
-    assert.equal((html.match(/data-pagina="/g) || []).length, 7);
+    assert.equal((html.match(/data-pagina="/g) || []).length, 14);
+    assert.equal((html.match(/id="navegacao-mobile-mestre"/g) || []).length, 1);
     assert.ok(css.includes('#navegacao-mestre[hidden], body.modo-entrada #navegacao-mestre'));
     assert.match(css, /#navegacao-mestre\[hidden\][^{}]*\{[^}]*display: none !important/);
     assert.match(css, /#navegacao-mestre:not\(\[hidden\]\)\s*\{[^}]*display: flex[^}]*flex-wrap: wrap[^}]*overflow: visible/s);

@@ -71,3 +71,82 @@ dialog.modal-personalizacao .personalizacao-opcoes { padding: 14px 16px 20px; }
 @media (max-width:720px) {
     dialog.modal-personalizacao[open] { max-inline-size: 100%; max-block-size: 100dvh; }
 }
+
+/* Ajustes de moldura: a borda envolve a janela completa, inclusive o rodapé. */
+dialog#modal-gerador-npc, dialog#modal-personalizacao {
+  box-sizing:border-box;
+  background-clip:padding-box; overflow:hidden;
+}
+dialog#modal-gerador-npc { max-height:calc(100dvh - 24px); overflow-y:auto; }
+dialog#modal-personalizacao .personalizacao-form { min-height:0; }
+@media(max-width:740px) {
+  dialog#modal-gerador-npc, dialog#modal-personalizacao {
+    width:calc(100vw - 16px); max-width:calc(100vw - 16px);
+    max-height:calc(100dvh - 16px); margin:auto;
+  }
+}
+
+/* O acabamento é controlado pela escolha de borda em Personalização.
+   Somente o tema padrão recebe um contorno de fallback. */
+dialog#modal-gerador-npc[open]:not(.rr-tema-borda-ativa),
+dialog#modal-personalizacao[open]:not(.rr-tema-borda-ativa) {
+  border: 3px solid var(--rr-leitura-borda, #785234);
+  box-shadow: 0 16px 48px #160c08aa;
+}
+
+/* PATCH 027: a moldura pertence ao dialog; apenas o corpo pode rolar.
+   Reservar uma faixa física para que cabeçalho, scrollbar e conteúdo
+   nunca sejam desenhados sobre o acabamento. */
+dialog#modal-personalizacao[open],
+dialog#modal-gerador-npc[open] {
+  --rr-janela-respiro: 8px;
+  display: flex;
+  flex-direction: column;
+  padding: var(--rr-janela-respiro) !important;
+  overflow: hidden !important;
+  min-height: 0;
+  background-clip: padding-box;
+}
+dialog#modal-personalizacao[open] > .personalizacao-cabecalho,
+dialog#modal-gerador-npc[open] > .npc-gerador-cabecalho {
+  position: relative;
+  top: auto;
+  z-index: 1;
+  flex: 0 0 auto;
+  min-width: 0;
+}
+dialog#modal-personalizacao[open] > .personalizacao-form {
+  flex: 1 1 auto;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+dialog#modal-personalizacao[open] .personalizacao-opcoes {
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-gutter: stable;
+  padding-right: 18px;
+  overscroll-behavior: contain;
+}
+dialog#modal-gerador-npc[open] > .npc-gerador-conteudo {
+  flex: 1 1 auto;
+  min-height: 0;
+  min-width: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-gutter: stable;
+  overscroll-behavior: contain;
+}
+dialog#modal-gerador-npc[open] > .npc-gerador-acoes {
+  position: relative;
+  bottom: auto;
+  z-index: 1;
+  flex: 0 0 auto;
+}
+@media (max-width: 740px) {
+  dialog#modal-personalizacao[open],dialog#modal-gerador-npc[open] {
+    --rr-janela-respiro: 6px;
+  }
+  dialog#modal-personalizacao[open] .personalizacao-opcoes { padding-right: 12px; }
+}

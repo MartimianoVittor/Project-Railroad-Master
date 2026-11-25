@@ -1,9 +1,10 @@
+import { imagemSegura } from '../services/imagensStorage.js?v=mesa-39';
 /**
  * Visualização somente leitura das três partes da ficha do Railroad Jogador.
  * Não cria controles editáveis nem interpreta HTML recebido dos jogadores.
  * O quadro de ideias não faz parte dos dados solicitados pela RPC do Mestre.
  */
-import { ARMAS, CONDICOES, DISTANCIAS, TRACOS, nivelTraco } from './ficha/campos.js?v=mesa-35';
+import { ARMAS, CONDICOES, DISTANCIAS, TRACOS, nivelTraco } from './ficha/campos.js?v=mesa-39';
 
 export { nivelTraco };
 
@@ -47,10 +48,7 @@ function retrato(src, nome, tipo = 'personagem') {
     const padrao = tipo === 'jogador'
         ? 'assets/imgs/fundoCinza.jpg'
         : 'assets/imgs/imagemPersonagemPlaceholder.webp';
-    const permitido = typeof src === 'string' && (
-        /^data:image\/(?:png|jpe?g|webp|gif);base64,[a-z0-9+/=]+$/i.test(src)
-        || /^assets\/imgs\/[\w.-]+\.(?:png|jpe?g|webp|gif)$/i.test(src)
-    );
+    const permitido = imagemSegura(src);
     const origem = permitido ? src : padrao;
     // No Jogador o placeholder de personagem já é o próprio cartaz.
     // Exibi-lo como fotografia duplicaria a moldura.

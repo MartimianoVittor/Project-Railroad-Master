@@ -1,3 +1,5 @@
+import { confirmar, solicitar, informar } from '../core/dialogos.js?v=mesa-39';
+import { imagemSegura } from '../services/imagensStorage.js?v=mesa-39';
 /** Quadro do Mestre, baseado nas ferramentas do Quadro do Railroad Jogador.
  * Desenho livre, borracha, textos, imagens, movimentação e redimensionamento.
  * Cada sessão recebe seu próprio estado, coletado somente pelo controlador.
@@ -17,6 +19,10 @@ export function iniciarQuadroMestre({ aoAlterar = () => {} } = {}) {
     let ultima = null;
     let versaoImagem = 0;
     let carregandoImagem = null;
+    let fonteOriginal = null;
+    let desenhoModificado = false;
+    let instantaneoDesenho = null;
+    let temDesenho = false;
 
     canvas.width = 1200;
     canvas.height = 760;
@@ -129,6 +135,10 @@ export function iniciarQuadroMestre({ aoAlterar = () => {} } = {}) {
     function limparTudo(notificar = true) {
         versaoImagem++;
         carregandoImagem = null;
+        fonteOriginal = null;
+        desenhoModificado = false;
+        instantaneoDesenho = null;
+        temDesenho = false;
         contexto.clearRect(0, 0, canvas.width, canvas.height);
         zona.querySelectorAll('.item-movel').forEach((item) => item.remove());
         selecionar(null);
@@ -139,8 +149,11 @@ export function iniciarQuadroMestre({ aoAlterar = () => {} } = {}) {
         const versao = versaoImagem;
         const desenho = typeof quadro.desenhoCanvas === 'string' ? quadro.desenhoCanvas : '';
         if (desenho) {
+            temDesenho = true;
             carregandoImagem = desenho;
+            fonteOriginal = desenho;
             const img = new Image();
+            img.crossOrigin = 'anonymous';
             img.onload = () => {
                 if (versao !== versaoImagem) return;
                 contexto.clearRect(0, 0, canvas.width, canvas.height);
@@ -152,7 +165,7 @@ export function iniciarQuadroMestre({ aoAlterar = () => {} } = {}) {
         }
         for (const item of quadro.itensQuadro || []) {
             if (item?.tipo === 'texto' && typeof item.texto === 'string') criarItem(item, false);
-            else if (item?.tipo === 'imagem' && typeof item.src === 'string' && item.src.startsWith('data:image/')) criarItem(item, false);
+            else if (item?.tipo === 'imagem' && imagemSegura(item.src)) criarItem(item, false);
         }
         escolherFerramenta('lapis');
     }
@@ -170,7 +183,15 @@ export function iniciarQuadroMestre({ aoAlterar = () => {} } = {}) {
             }
             return { ...base, src: container.querySelector('img')?.getAttribute('src') || '' };
         });
-        return { desenhoCanvas: carregandoImagem || canvas.toDataURL('image/png'), itensQuadro };
+        // Editar textos, imagens ou suas posições não altera os pixels do desenho.
+        // Reutilizar a mesma fonte impede uploads novos a cada salvamento do Diário.
+        if (desenhoModificado && !instantaneoDesenho) {
+            instantaneoDesenho = canvas.toDataURL('image/png');
+        }
+        return {
+            desenhoCanvas: carregandoImagem || fonteOriginal || instantaneoDesenho || (temDesenho ? canvas.toDataURL('image/png') : ''),
+            itensQuadro,
+        };
     }
     function habilitar(valor) {
         ativo = Boolean(valor);
@@ -178,18 +199,22 @@ export function iniciarQuadroMestre({ aoAlterar = () => {} } = {}) {
         zona.classList.toggle('quadro-inativo', !ativo);
     }
     ferramentas.forEach((botao) => botao.addEventListener('click', () => escolherFerramenta(botao.dataset.ferramentaQuadro)));
-    limpar.addEventListener('click', () => {
-        if (confirm('Limpar todo o quadro desta sessão? A alteração só será definitiva depois de salvar.')) limparTudo();
+    limpar.addEventListener('click', async () => {
+        if (await confirmar('Limpar todo o quadro desta sessão? A alteração só será definitiva depois de salvar.')) limparTudo();
     });
-    canvas.addEventListener('pointerdown', (evento) => {
+    canvas.addEventListener('pointerdown', async (evento) => {
         if (!ativo || carregandoImagem || evento.button !== 0) return;
         if (modo === 'mover') { selecionar(null); return; }
         if (modo === 'texto') {
-            const texto = prompt('Texto para o quadro:');
+            const texto = await solicitar('Texto para o quadro:');
             if (texto?.trim()) criarItem({ tipo: 'texto', texto: texto.trim().slice(0, 2000), cor: seletorCor.value, ...posicao(evento) });
             return;
         }
         desenhando = true;
+        fonteOriginal = null;
+        desenhoModificado = true;
+        instantaneoDesenho = null;
+        temDesenho = true;
         ultima = posicaoCanvas(evento);
         canvas.setPointerCapture(evento.pointerId);
         contexto.beginPath();
@@ -238,18 +263,18 @@ export function iniciarQuadroMestre({ aoAlterar = () => {} } = {}) {
     upload.addEventListener('change', () => {
         const arquivo = upload.files?.[0];
         upload.value = '';
-        if (arquivo) void inserirImagem(arquivo).catch((erro) => alert(erro.message));
+        if (arquivo) void inserirImagem(arquivo).catch((erro) => void informar(erro.message));
     });
     zona.addEventListener('dragover', (e) => { if (ativo && e.dataTransfer?.types.includes('Files')) e.preventDefault(); });
     zona.addEventListener('drop', (e) => {
         if (!ativo || !e.dataTransfer?.files?.length) return;
         e.preventDefault();
-        void inserirImagem(e.dataTransfer.files[0], posicao(e)).catch((erro) => alert(erro.message));
+        void inserirImagem(e.dataTransfer.files[0], posicao(e)).catch((erro) => void informar(erro.message));
     });
     document.addEventListener('paste', (e) => {
         if (!ativo || document.getElementById('pagina-diario').hidden || e.target.closest('input,textarea,[contenteditable="true"]')) return;
         const arquivo = [...(e.clipboardData?.items || [])].find((item) => item.type.startsWith('image/'))?.getAsFile();
-        if (arquivo) { e.preventDefault(); void inserirImagem(arquivo).catch((erro) => alert(erro.message)); }
+        if (arquivo) { e.preventDefault(); void inserirImagem(arquivo).catch((erro) => void informar(erro.message)); }
     });
     document.addEventListener('keydown', (e) => {
         if (!ativo || document.getElementById('pagina-diario').hidden || modo !== 'mover' || !selecionado) return;

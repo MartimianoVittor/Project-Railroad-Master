@@ -278,3 +278,26 @@
         justify-content: flex-start;
     }
 }
+
+/* O controle de imagem é um label de upload, mas deve ter a mesma aparência dos botões. */
+#pagina-diario .ferramentas-quadro label.ferramenta-quadro.botao-upload {
+  box-sizing:border-box; display:inline-flex; align-items:center; justify-content:center;
+  min-height:33px; padding:.3rem .55rem; line-height:normal; margin:0;
+  font:bold .77rem Georgia,serif; text-align:center; cursor:pointer;
+}
+
+/* PATCH 026: o upload é um label, mas visualmente é um botão comum. */
+#pagina-diario .ferramentas-quadro > label.ferramenta-quadro.btn-oeste.botao-upload {
+  display: inline-flex !important; align-items: center; justify-content: center;
+  min-height: 33px; box-sizing: border-box; margin: 0;
+  padding: .3rem .55rem; border: 1px solid #6b4630; border-radius: 3px;
+  background: #e1c990; color: #3d2314 !important;
+  box-shadow: inset 0 1px 0 #f6e5b7;
+  font: bold .77rem Georgia, serif; line-height: normal; cursor: pointer;
+}
+#pagina-diario .ferramentas-quadro > label.ferramenta-quadro.btn-oeste.botao-upload:hover {
+  background: #f5dfa7; color: #3d2314 !important;
+}
+#pagina-diario .ferramentas-quadro > label.ferramenta-quadro.btn-oeste.botao-upload:focus-within {
+  outline: 2px solid #6b4630; outline-offset: 2px;
+}

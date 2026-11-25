@@ -1,3 +1,4 @@
+import { imagemSegura } from '../../services/imagensStorage.js?v=mesa-39';
 /** Regras das sessões e normalização dos dados guardados. */
 const LIMITE_NOTAS = 50000;
 export const LIMITE_SESSOES = 200;
@@ -26,7 +27,7 @@ function normalizarSessao(sessao, id) {
 
 function normalizarQuadro(quadro) {
     if (!quadro || typeof quadro !== 'object') return { desenhoCanvas: '', itensQuadro: [] };
-    const desenhoCanvas = typeof quadro.desenhoCanvas === 'string' && quadro.desenhoCanvas.startsWith('data:image/')
+    const desenhoCanvas = imagemSegura(quadro.desenhoCanvas)
         ? quadro.desenhoCanvas : '';
     const itensQuadro = Array.isArray(quadro.itensQuadro)
         ? quadro.itensQuadro.filter((item) => item && ['texto', 'imagem'].includes(item.tipo)).slice(0, 120).map((item) => ({
@@ -37,7 +38,7 @@ function normalizarQuadro(quadro) {
             texto: item.tipo === 'texto' ? String(item.texto || '').slice(0, 2000) : '',
             cor: typeof item.cor === 'string' ? item.cor : '#3d2314',
             tamanho: Math.max(10, Math.min(90, Number(item.tamanho) || 18)),
-            src: item.tipo === 'imagem' && typeof item.src === 'string' && item.src.startsWith('data:image/') ? item.src : '',
+            src: item.tipo === 'imagem' && imagemSegura(item.src) ? item.src : '',
         })).filter((item) => item.tipo !== 'imagem' || item.src)
         : [];
     return { desenhoCanvas, itensQuadro };

@@ -1,9 +1,10 @@
-import { comProcessamento } from '../core/processamento.js?v=mesa-35';
-import { entrarComGoogle, iniciarAutenticacao, obterCliente, sairDaConta } from '../core/cliente.js?v=mesa-35';
-import { porId } from '../core/dom.js?v=mesa-35';
-import { executar, mostrarAviso } from '../core/feedback.js?v=mesa-35';
-import { criarRepositorioCampanhas } from '../services/campanhas.js?v=mesa-35';
-import { criarRepositorioCampanhasLocal } from '../services/campanhasLocal.js?v=mesa-35';
+import { confirmar } from '../core/dialogos.js?v=mesa-39';
+import { comProcessamento } from '../core/processamento.js?v=mesa-39';
+import { entrarComGoogle, iniciarAutenticacao, obterCliente, sairDaConta } from '../core/cliente.js?v=mesa-39';
+import { porId } from '../core/dom.js?v=mesa-39';
+import { executar, mostrarAviso } from '../core/feedback.js?v=mesa-39';
+import { criarRepositorioCampanhas } from '../services/campanhas.js?v=mesa-39';
+import { criarRepositorioCampanhasLocal } from '../services/campanhasLocal.js?v=mesa-39';
 
 export function iniciarSessao(contexto, conta, armazenamento, conectarCliente = obterCliente) {
     const { estado } = contexto;
@@ -50,6 +51,7 @@ export function iniciarSessao(contexto, conta, armazenamento, conectarCliente = 
         porId('tela-entrada').hidden = Boolean(usuario);
         porId('painel').hidden = !usuario;
         porId('navegacao-mestre').hidden = !usuario;
+        porId('navegacao-mobile-mestre').hidden = !usuario;
         conta.atualizarSessao(usuario);
         porId('identidade-sessao').hidden = !usuario;
         porId('usuario-email').hidden = !usuario;
@@ -72,7 +74,7 @@ export function iniciarSessao(contexto, conta, armazenamento, conectarCliente = 
         void executar(porId('entrar'), async () => entrarComGoogle(await conectarCliente())));
     porId('sair').addEventListener('click', () =>
         void executar(porId('sair'), async () => {
-            if (estado.rascunhoSujo && !confirm(
+            if (estado.rascunhoSujo && !await confirmar(
                 'O diário tem alterações não salvas neste navegador. Deseja sair e descartá-las?'
             )) return;
             if (!contexto.npcs.confirmarSaida()) return;

@@ -1,5 +1,5 @@
-import { MECANICAS_POR_ID } from '../catalogoRegras.js?v=mesa-35';
-import { passoInteiro, MIN_LADO_CARTAO, MAX_COLUNAS_GRADE } from '../gradeConsultas.js?v=mesa-35';
+import { MECANICAS_POR_ID } from '../catalogoRegras.js?v=mesa-39';
+import { passoInteiro, MIN_LADO_CARTAO, MAX_COLUNAS_GRADE } from '../gradeConsultas.js?v=mesa-39';
 
 export const MAX_CARTOES = 100;
 

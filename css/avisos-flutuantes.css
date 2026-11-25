@@ -1,0 +1,37 @@
+/* Mensagens de feedback: mantidas fora do fluxo dos cartões.
+ * Algumas molduras de personalização declaram position:relative; isso colocava
+ * #aviso como um filho flex do body, reservando 40-100px sob o painel e
+ * cortando a própria notificação. O ID prevalece mesmo para bordas decorativas.
+ */
+#aviso.aviso {
+    position: fixed !important;
+    inset: auto 16px 16px auto !important;
+    z-index: 10050;
+    display: block;
+    box-sizing: border-box;
+    width: max-content;
+    min-width: 0;
+    max-width: min(470px, calc(100vw - 32px));
+    max-height: min(65dvh, calc(100dvh - 32px));
+    margin: 0 !important;
+    padding: 13px 17px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overflow-wrap: anywhere;
+    white-space: pre-line;
+    line-height: 1.5;
+    scrollbar-width: thin;
+    pointer-events: none;
+}
+/* A área dos cartões termina na viewport, e não antes da antiga margem de 3rem.
+ * Reafirma o ajuste mesmo enquanto houver uma folha anterior no cache. */
+body:not(.modo-entrada) #painel.painel { padding-bottom: 0; }
+
+@media (max-width: 900px) {
+    #aviso.aviso {
+        inset: auto 10px calc(var(--rr-mobile-rodape, 74px) + 12px) 10px !important;
+        width: auto;
+        max-width: none;
+        max-height: min(55dvh, calc(100dvh - var(--rr-mobile-rodape, 74px) - 24px));
+    }
+}

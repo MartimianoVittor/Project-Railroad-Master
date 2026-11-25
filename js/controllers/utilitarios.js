@@ -1,10 +1,11 @@
-import { elemento as criar } from '../core/dom.js?v=mesa-35';
-import { MECANICAS, MECANICAS_POR_ID, CATEGORIAS_REGRAS, CONSULTAS_PADRAO } from '../modules/catalogoRegras.js?v=mesa-35';
-import { encaixarCartoes, alturaInicialCartao, passoInteiro, MAX_LINHAS_GRADE, ESPACAMENTO_GRADE as GAP, MIN_LADO_CARTAO } from '../modules/gradeConsultas.js?v=mesa-35';
-import { montarCartao, ajustarEscalaConteudo } from '../modules/utilitarios/cartao.js?v=mesa-35';
-import { criarMedidorGrade } from '../modules/utilitarios/medidas.js?v=mesa-35';
-import { copiarCartoes, paraCartoes, nomeSeguro, idNovo, MAX_CARTOES } from '../modules/utilitarios/consultas.js?v=mesa-35';
-import { chaveConsultas, carregarConsultas, gravarConsultas } from '../services/consultasLocal.js?v=mesa-35';
+import { confirmar } from '../core/dialogos.js?v=mesa-39';
+import { elemento as criar } from '../core/dom.js?v=mesa-39';
+import { MECANICAS, MECANICAS_POR_ID, CATEGORIAS_REGRAS, CONSULTAS_PADRAO } from '../modules/catalogoRegras.js?v=mesa-39';
+import { encaixarCartoes, alturaInicialCartao, passoInteiro, MAX_LINHAS_GRADE, ESPACAMENTO_GRADE as GAP, MIN_LADO_CARTAO } from '../modules/gradeConsultas.js?v=mesa-39';
+import { montarCartao, ajustarEscalaConteudo } from '../modules/utilitarios/cartao.js?v=mesa-39';
+import { criarMedidorGrade } from '../modules/utilitarios/medidas.js?v=mesa-39';
+import { copiarCartoes, paraCartoes, nomeSeguro, idNovo, MAX_CARTOES } from '../modules/utilitarios/consultas.js?v=mesa-39';
+import { chaveConsultas, carregarConsultas, gravarConsultas } from '../services/consultasLocal.js?v=mesa-39';
 
 function normalizar(valor) {
     return String(valor || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
@@ -101,17 +102,17 @@ export function criarControladorUtilitarios({ estado }) {
         if (!persistir()) return;
         informar(`Consulta “${titulo}” salva neste navegador para a campanha atual.`);
     }
-    function limpar() {
-        if (cartas.length && !window.confirm('Limpar os cartões do quadro? Consultas já salvas não serão apagadas.')) return;
+    async function limpar() {
+        if (cartas.length && !await confirmar('Limpar os cartões do quadro? Consultas já salvas não serão apagadas.')) return;
         cartas = [];
         renderizarTudo();
         if (!persistir()) return;
         informar('Quadro limpo. As consultas salvas continuam disponíveis.');
     }
-    function excluirConsulta() {
+    async function excluirConsulta() {
         const atual = salvas.find((p) => p.id === selecionada);
         if (!atual) return;
-        if (!window.confirm(`Excluir a consulta salva “${atual.nome}”?`)) return;
+        if (!await confirmar(`Excluir a consulta salva “${atual.nome}”?`)) return;
         salvas = salvas.filter((p) => p.id !== atual.id);
         selecionada = 'rascunho';
         atualizarSeletores();

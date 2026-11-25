@@ -23,7 +23,7 @@
 .aviso-entrada { margin: 1.3rem auto 0; max-width: 470px; color: #785e46; font-size: .8rem; line-height: 1.7; }
 .entrada .botao { margin-top: .4rem; }
 
-.painel { min-width: 0; min-height: calc(100vh - 84px); padding-bottom: 3rem; }
+.painel { min-width: 0; min-height: calc(100vh - 84px); padding-bottom: 0; }
 .faixa-campanha {
     display: flex;
     align-items: center;

@@ -1,11 +1,12 @@
-import { elemento, porId } from '../core/dom.js?v=mesa-35';
-import { mostrarAviso } from '../core/feedback.js?v=mesa-35';
-import { listarPersonagensDisponiveis } from '../modules/personagensCampanha.js?v=mesa-35';
-import { criarGrupo, distanciaDoDia, normalizarViagens, novoId, inteiroNaoNegativo } from '../modules/viagem/modelo.js?v=mesa-35';
-import { mostrarPainelViagem } from '../modules/viagem/painel.js?v=mesa-35';
-import { iniciarSeletorViajante } from '../modules/viagem/seletorViajante.js?v=mesa-35';
-import { mostrarViajante } from '../modules/viagem/viajante.js?v=mesa-35';
-import { criarSincronizadorEstadoMesa } from '../services/estadosMesa.js?v=mesa-35';
+import { confirmar, informar } from '../core/dialogos.js?v=mesa-39';
+import { elemento, porId } from '../core/dom.js?v=mesa-39';
+import { mostrarAviso } from '../core/feedback.js?v=mesa-39';
+import { listarPersonagensDisponiveis } from '../modules/personagensCampanha.js?v=mesa-39';
+import { criarGrupo, distanciaDoDia, normalizarViagens, novoId, inteiroNaoNegativo } from '../modules/viagem/modelo.js?v=mesa-39';
+import { mostrarPainelViagem } from '../modules/viagem/painel.js?v=mesa-39';
+import { iniciarSeletorViajante } from '../modules/viagem/seletorViajante.js?v=mesa-39';
+import { mostrarViajante } from '../modules/viagem/viajante.js?v=mesa-39';
+import { criarSincronizadorEstadoMesa } from '../services/estadosMesa.js?v=mesa-39';
 
 export function criarControladorViagem({ estado }) {
     let chaveArmazenamento = '';
@@ -25,7 +26,7 @@ export function criarControladorViagem({ estado }) {
         try {
             localStorage.setItem(chaveArmazenamento, JSON.stringify(dados));
         } catch (e) {
-            alert('Falha ao salvar viagens no navegador: ' + e.message);
+            void informar('Falha ao salvar viagens no navegador: ' + e.message);
         }
     };
     const salvar = () => {
@@ -84,8 +85,8 @@ export function criarControladorViagem({ estado }) {
                 void buscarFicha(viajante);
             },
             aoEditar: abrirEdicaoViajante,
-            aoRemover(viajante) {
-                if (!confirm(`Remover ${viajante.nome} do grupo?`))
+            async aoRemover(viajante) {
+                if (!await confirmar(`Remover ${viajante.nome} do grupo?`))
                     return;
                 const atual = grupo();
                 atual.viajantes = atual.viajantes.filter(item => item.id !== viajante.id);
@@ -205,11 +206,11 @@ export function criarControladorViagem({ estado }) {
                 excluir: true
             });
         };
-        porId('vg-excluir-viagem').onclick = () => {
+        porId('vg-excluir-viagem').onclick = async () => {
             const viagemAtual = viagem();
             if (!viagemAtual)
                 return;
-            if (!confirm(`Excluir a viagem "${viagemAtual.nome}" e todos os seus grupos, viajantes e progressos? As demais viagens serão preservadas.`))
+            if (!await confirmar(`Excluir a viagem "${viagemAtual.nome}" e todos os seus grupos, viajantes e progressos? As demais viagens serão preservadas.`))
                 return;
             dados.viagens = dados.viagens.filter(item => item.id !== viagemAtual.id);
             dados.ativa = dados.viagens[0]?.id || null;
@@ -233,10 +234,10 @@ export function criarControladorViagem({ estado }) {
                 renderizar();
             });
         };
-        porId('vg-excluir-grupo').onclick = () => {
+        porId('vg-excluir-grupo').onclick = async () => {
             const viagemAtual = viagem();
             const grupoAtual = grupo();
-            if (!viagemAtual || !grupoAtual || !confirm(`Excluir ${grupoAtual.nome} e seu progresso nesta viagem?`))
+            if (!viagemAtual || !grupoAtual || !await confirmar(`Excluir ${grupoAtual.nome} e seu progresso nesta viagem?`))
                 return;
             viagemAtual.grupos = viagemAtual.grupos.filter(item => item.id !== grupoAtual.id);
             viagemAtual.ativo = viagemAtual.grupos[0]?.id || null;

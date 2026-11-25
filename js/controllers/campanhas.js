@@ -1,7 +1,8 @@
-import { agruparParticipantes } from '../modules/participantes.js?v=mesa-35';
-import { executar, mostrarAviso } from '../core/feedback.js?v=mesa-35';
-import { porId, elemento, mensagemLista, dataBreve, botaoAcao } from '../core/dom.js?v=mesa-35';
-import { UUID, ESTADOS_CONVITE, ESTADOS_FICHA } from '../app/estado.js?v=mesa-35';
+import { confirmar } from '../core/dialogos.js?v=mesa-39';
+import { agruparParticipantes } from '../modules/participantes.js?v=mesa-39';
+import { executar, mostrarAviso } from '../core/feedback.js?v=mesa-39';
+import { porId, elemento, mensagemLista, dataBreve, botaoAcao } from '../core/dom.js?v=mesa-39';
+import { UUID, ESTADOS_CONVITE, ESTADOS_FICHA } from '../app/estado.js?v=mesa-39';
 
 /** Prioriza a campanha ativa sem modificar a ordem dos registros restantes. */
 export function ordenarCampanhas(campanhas, idAtivo) {
@@ -178,10 +179,10 @@ export function criarControladorCampanhas(contexto) {
     async function selecionarCampanha(id) {
         if (!estado.campanhas.some((campanha) => campanha.campanha_id === id)) return;
         const mudou = estado.campanhaId !== id;
-        if (mudou && estado.rascunhoSujo && !confirm(
+        if (mudou && estado.rascunhoSujo && !await confirmar(
             'O diário da campanha atual tem alterações não salvas. Deseja trocar de campanha e descartá-las?'
         )) return;
-        if (mudou && !contexto.npcs.confirmarSaida()) return;
+        if (mudou && !(await contexto.npcs.confirmarSaida())) return;
 
         estado.campanhaId = id;
         estado.participantes = [];
@@ -231,7 +232,7 @@ export function criarControladorCampanhas(contexto) {
         const descricao = porId('descricao-campanha').value.trim();
         if (!nome || nome.length > 120) throw new Error('Informe um nome de campanha de até 120 caracteres.');
         if (descricao.length > 1000) throw new Error('A descrição deve ter no máximo 1000 caracteres.');
-        if (estado.rascunhoSujo && !confirm(
+        if (estado.rascunhoSujo && !await confirmar(
             'Há anotações não salvas na campanha atual. Criar outra campanha descartará essas alterações. Continuar?'
         )) return;
 
@@ -247,8 +248,8 @@ export function criarControladorCampanhas(contexto) {
     async function excluirCampanha(campanha) {
         if (!estado.usuario || !estado.campanhas.some((item) => item.campanha_id === campanha.campanha_id)) return;
         const nome = campanha.nome;
-        if (!confirm(estado.modoLocal ? `Excluir a campanha local “${nome}”? Os diários e NPCs locais associados poderão permanecer armazenados no navegador, mas a campanha deixará de ser acessível. Esta ação não pode ser desfeita.` : `Excluir permanentemente a campanha “${nome}”? Os convites, vínculos de jogadores e envios desta campanha serão removidos. As fichas pessoais dos jogadores serão preservadas. Esta ação não pode ser desfeita.`)) return;
-        if (!confirm(`Confirma a exclusão definitiva de “${nome}”?`)) return;
+        if (!await confirmar(estado.modoLocal ? `Excluir a campanha local “${nome}”? Os diários e NPCs locais associados poderão permanecer armazenados no navegador, mas a campanha deixará de ser acessível. Esta ação não pode ser desfeita.` : `Excluir permanentemente a campanha “${nome}”? Os convites, vínculos de jogadores e envios desta campanha serão removidos. As fichas pessoais dos jogadores serão preservadas. Esta ação não pode ser desfeita.`)) return;
+        if (!await confirmar(`Confirma a exclusão definitiva de “${nome}”?`)) return;
 
         try {
             await estado.repositorio.excluirCampanha(campanha.campanha_id);
@@ -280,7 +281,7 @@ export function criarControladorCampanhas(contexto) {
         if (!estado.campanhaId || !estado.participantes.some(
             (registro) => registro.jogador_id === participante.jogadorId)) return;
 
-        if (!confirm(`Excluir “${participante.jogadorNome}” da mesa? Todos os personagens enviados por esse jogador serão retirados desta campanha. As fichas continuarão salvas na conta do jogador.`)) return;
+        if (!await confirmar(`Excluir “${participante.jogadorNome}” da mesa? Todos os personagens enviados por esse jogador serão retirados desta campanha. As fichas continuarão salvas na conta do jogador.`)) return;
 
         await estado.repositorio.excluirJogador(estado.campanhaId, participante.jogadorId);
         await atualizarConteudoCampanha();

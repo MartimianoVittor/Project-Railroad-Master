@@ -1,5 +1,5 @@
-import { elemento as criar } from '../../core/dom.js?v=mesa-35';
-import { dadosTabela } from '../tabelasConsultas.js?v=mesa-35';
+import { elemento as criar } from '../../core/dom.js?v=mesa-39';
+import { dadosTabela } from '../tabelasConsultas.js?v=mesa-39';
 
 function botaoAjuste(acao, simbolo, titulo, id) {
     const botao = criar('button', acao === 'remover' ? 'util-remover' : '', simbolo);

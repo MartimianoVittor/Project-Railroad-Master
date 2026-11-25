@@ -1,6 +1,7 @@
-import { criarParteFicha, PARTES_FICHA } from '../modules/visualizarFicha.js?v=mesa-35';
-import { mostrarAviso } from '../core/feedback.js?v=mesa-35';
-import { porId, elemento } from '../core/dom.js?v=mesa-35';
+import { confirmar } from '../core/dialogos.js?v=mesa-39';
+import { criarParteFicha, PARTES_FICHA } from '../modules/visualizarFicha.js?v=mesa-39';
+import { mostrarAviso } from '../core/feedback.js?v=mesa-39';
+import { porId, elemento } from '../core/dom.js?v=mesa-39';
 
 /**
  * Seleção individual (três colunas) e comparação horizontal (uma parte de cada ficha).
@@ -98,7 +99,7 @@ export function criarControladorFichas(contexto) {
 
     async function removerFicha(envio) {
         if (!estado.envios.some((item) => item.envio_id === envio.envio_id)) return;
-        if (!confirm(`Retirar “${envio.titulo || 'esta ficha'}” da campanha? A ficha continuará salva na conta do jogador.`)) return;
+        if (!await confirmar(`Retirar “${envio.titulo || 'esta ficha'}” da campanha? A ficha continuará salva na conta do jogador.`)) return;
 
         await estado.repositorio.removerEnvio(envio.envio_id);
         await contexto.campanhas.atualizarConteudoCampanha();

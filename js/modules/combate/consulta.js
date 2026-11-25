@@ -1,7 +1,7 @@
-import { elemento, botao } from '../../core/dom.js?v=mesa-35';
-import { criarParteFicha, PARTES_FICHA } from '../visualizarFicha.js?v=mesa-35';
-import { TRACOS } from '../ficha/campos.js?v=mesa-35';
-import { inteiro } from './combatentes.js?v=mesa-35';
+import { elemento, botao } from '../../core/dom.js?v=mesa-39';
+import { criarParteFicha, PARTES_FICHA } from '../visualizarFicha.js?v=mesa-39';
+import { TRACOS } from '../ficha/campos.js?v=mesa-39';
+import { inteiro } from './combatentes.js?v=mesa-39';
 
 export function registroNpcParaConsulta(npc, combatente) {
     const marcas = {};

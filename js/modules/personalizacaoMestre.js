@@ -158,6 +158,8 @@ export function criarPersonalizacaoMestre(estado = {}) {
             if (atuais.botoes !== 'padrao') botao.classList.add(`rr-botao--${atuais.botoes}`);
         }
         for (const janela of document.querySelectorAll('dialog')) aplicarAcabamento(janela, 'principal', atuais);
+        const aviso = document.getElementById('aviso');
+        if (aviso) aplicarAcabamento(aviso, 'interno', atuais);
         for (const elemento of document.querySelectorAll(SELETORES_JANELAS_INTERNOS)) aplicarAcabamento(elemento, 'interno', atuais);
         const painel = document.getElementById('painel');
         if (!painel) return;

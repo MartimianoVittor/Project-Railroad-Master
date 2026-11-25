@@ -1,4 +1,5 @@
-import { LIMITE_NPCS, normalizarNpc, validarNpc } from '../modules/npcs.js?v=mesa-35';
+import { normalizarReferencias } from './imagensStorage.js?v=mesa-39';
+import { LIMITE_NPCS, normalizarNpc, validarNpc } from '../modules/npcs.js?v=mesa-39';
 
 const PREFIXO = 'railroad_mestre_npcs:v1';
 
@@ -48,7 +49,7 @@ export function criarRepositorioNpcs(armazenamento) {
                 ids.add(npc.id);
             }
             try {
-                armazenamento.setItem(chave(usuarioId, campanhaId), JSON.stringify(normalizados));
+                armazenamento.setItem(chave(usuarioId, campanhaId), JSON.stringify(normalizarReferencias(normalizados)));
             } catch (erro) {
                 throw new Error('Não foi possível salvar os NPCs neste navegador. Verifique o espaço de armazenamento disponível.', { cause: erro });
             }

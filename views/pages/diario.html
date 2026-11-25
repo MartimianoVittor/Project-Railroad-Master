@@ -37,8 +37,15 @@
                     <button id="limpar-quadro-mestre" type="button" class="ferramenta-quadro btn-oeste btn-perigo ferramenta-perigo">Limpar</button>
                 </div>
             </div>
-            <div id="zona-quadro-mestre" class="zona-quadro" aria-label="Quadro de ideias. Desenhe ou cole imagens aqui.">
-                <canvas id="quadro-mestre" aria-label="Área de desenho do quadro"></canvas>
+            <p class="quadro-mobile-instrucao">No celular, use as setas para percorrer o quadro sem modificar o desenho. Na horizontal, há mais espaço para editar.</p>
+            <div class="quadro-mobile-controles" role="group" aria-label="Deslocar a visualização do quadro">
+                <button type="button" class="botao botao-pequeno" data-quadro-mobile-deslocar="-1">← Esquerda</button>
+                <button type="button" class="botao botao-pequeno" data-quadro-mobile-deslocar="1">Direita →</button>
+            </div>
+            <div class="quadro-viewport-mobile" tabindex="0" aria-label="Quadro de ideias com rolagem horizontal">
+                <div id="zona-quadro-mestre" class="zona-quadro" aria-label="Quadro de ideias. Desenhe ou cole imagens aqui.">
+                    <canvas id="quadro-mestre" aria-label="Área de desenho do quadro"></canvas>
+                </div>
             </div>
         </section>
     </div>

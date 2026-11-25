@@ -1,9 +1,11 @@
+import { confirmar } from '../core/dialogos.js?v=mesa-39';
+import { obterImagensStorage, normalizarReferencias } from './imagensStorage.js?v=mesa-39';
 /**
  * Estados operacionais privados do Mestre (Combate e Viagens).
  * As migrações 007, 008 e 009 devem estar aplicadas no Supabase.
  * Não se escrevem fichas pertencentes aos jogadores.
  */
-import { obterCliente, exigir } from '../core/cliente.js?v=mesa-35';
+import { obterCliente, exigir } from '../core/cliente.js?v=mesa-39';
 
 const TIPOS = new Set(['combate', 'viagens']);
 function validar(tipo, campanhaId) {
@@ -12,16 +14,19 @@ function validar(tipo, campanhaId) {
 export async function lerEstadoMesa(campanhaId, tipo) {
     validar(tipo, campanhaId);
     const db = await obterCliente();
-    return exigir(await db.from('estados_mestre')
+    const registro = exigir(await db.from('estados_mestre')
         .select('dados,revisao,updated_at')
         .eq('campanha_id', campanhaId).eq('tipo', tipo).maybeSingle());
+    if (!registro) return null;
+    return { ...registro, dados: await obterImagensStorage(db).resolverDocumento(registro.dados) };
 }
 export async function gravarEstadoMesa(campanhaId, tipo, dados, revisao) {
     validar(tipo, campanhaId);
     const db = await obterCliente();
     return exigir(await db.rpc('salvar_estado_mestre', {
         p_campanha_id: campanhaId, p_tipo: tipo,
-        p_dados: dados, p_revisao: revisao,
+        p_dados: await obterImagensStorage(db).prepararDocumento(dados,
+            `campanhas/${campanhaId}/estados/${tipo}`), p_revisao: revisao,
     }));
 }
 
@@ -34,7 +39,7 @@ export function criarSincronizadorEstadoMesa({
     estado, tipo, obterDados, aplicarDados, temConteudo, preservarLocal,
     ler = lerEstadoMesa, gravar = gravarEstadoMesa,
     avisar = (mensagem) => console.warn(mensagem),
-    confirmar = (mensagem) => window.confirm(mensagem),
+    confirmar: confirmarResposta = confirmar,
     armazenamento = () => window.localStorage,
     aoBloqueio = () => {},
 }) {
@@ -74,7 +79,7 @@ export function criarSincronizadorEstadoMesa({
         const chave = `railroad-mestre:backup-pre-nuvem:${tipo}:${fila.chave}`;
         try {
             const local = armazenamento();
-            if (!local.getItem(chave)) local.setItem(chave, JSON.stringify(dados));
+            if (!local.getItem(chave)) local.setItem(chave, JSON.stringify(normalizarReferencias(dados)));
         } catch { /* A ausência de espaço para outra cópia não impede a leitura do servidor. */ }
     }
 
@@ -114,7 +119,7 @@ export function criarSincronizadorEstadoMesa({
         fila.editada = true;
         marcarPendencia(fila, true);
         // Sempre capture a versão mais recente, mesmo durante um bloqueio.
-        fila.pendente = JSON.stringify(obterDados());
+        fila.pendente = JSON.stringify(normalizarReferencias(obterDados()));
         if (!fila.carregada || fila.bloqueada) return;
         clearTimeout(fila.temporizador);
         fila.temporizador = setTimeout(() => void enviar(fila), 600);
@@ -140,9 +145,10 @@ export function criarSincronizadorEstadoMesa({
             fila.revisao = Number(remoto?.revisao ?? 0);
             const local = obterDados();
             const haPendencia = fila.editada || temPendencia(fila);
-            const enviarLocal = remoto && haPendencia && confirmar(
+            const enviarLocal = remoto && haPendencia && await confirmarResposta(
                 `Há modificações locais de ${tipo} não sincronizadas. Deseja enviar a cópia deste navegador ao Supabase? Cancelar mantém a versão remota.`
             );
+            if (!aindaAtivo(fila)) return; // A confirmação pode ser respondida após mudar de campanha.
             if (remoto && !enviarLocal) {
                 if (temConteudo(local) && JSON.stringify(local) !== JSON.stringify(remoto.dados)) {
                     guardarBackup(fila, local);
@@ -193,7 +199,7 @@ export function criarSincronizadorEstadoMesa({
                 return false;
             }
             // Atualiza a pendência com os dados em memória mais recentes.
-            fila.pendente = JSON.stringify(obterDados());
+            fila.pendente = JSON.stringify(normalizarReferencias(obterDados()));
             fila.bloqueada = false;
             indicarBloqueio(fila);
             return await enviar(fila);

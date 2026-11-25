@@ -1,4 +1,5 @@
-import { exigir } from '../core/cliente.js?v=mesa-35';
+import { obterImagensStorage } from './imagensStorage.js?v=mesa-39';
+import { exigir } from '../core/cliente.js?v=mesa-39';
 
 /**
  * O Mestre acessa campanhas exclusivamente por RPCs autenticadas.
@@ -48,9 +49,11 @@ export function criarRepositorioCampanhas(cliente) {
         }),
 
         // A RPC filtra os campos no banco e impede o acesso ao quadro de ideias.
-        obterFicha: (campanhaId, fichaId) => chamar('obter_ficha_para_mestre', {
-            p_campanha_id: campanhaId,
-            p_ficha_id: fichaId,
-        }),
+        obterFicha: async (campanhaId, fichaId) => {
+            const ficha = await chamar('obter_ficha_para_mestre', {
+                p_campanha_id: campanhaId, p_ficha_id: fichaId,
+            });
+            return obterImagensStorage(cliente).resolverDocumento(ficha);
+        },
     };
 }

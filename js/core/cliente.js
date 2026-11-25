@@ -1,4 +1,4 @@
-import { SUPABASE } from '../config/supabase.js?v=mesa-35';
+import { SUPABASE } from '../config/supabase.js?v=mesa-39';
 
 let promessaCliente;
 
@@ -40,7 +40,7 @@ export async function iniciarAutenticacao(cliente, aoAlterar) {
 export async function entrarComGoogle(cliente) {
     const { error } = await cliente.auth.signInWithOAuth({
         provider: 'google',
-        options: { redirectTo: `${location.origin}${location.pathname}` },
+        options: { redirectTo: `${location.origin}${location.pathname}`, queryParams: { prompt: 'select_account' } },
     });
     if (error) throw error;
 }

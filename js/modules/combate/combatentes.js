@@ -1,4 +1,5 @@
-import { ARMAS, DISTANCIAS, TRACOS, nivelTraco } from '../ficha/campos.js?v=mesa-35';
+import { imagemSegura } from '../../services/imagensStorage.js?v=mesa-39';
+import { ARMAS, DISTANCIAS, TRACOS, nivelTraco } from '../ficha/campos.js?v=mesa-39';
 
 export const RETRATO_PADRAO = 'assets/imgs/imagemPersonagemPlaceholder.webp';
 
@@ -9,8 +10,7 @@ export function inteiro(valor, minimo = 0, maximo = 9999) {
 
 export function imagemValida(valor) {
     if (typeof valor !== 'string' || valor === RETRATO_PADRAO) return false;
-    return /^data:image\/(?:png|jpe?g|webp|gif|avif);base64,/i.test(valor)
-        || /^assets\/imgs\/[a-z0-9_./-]+$/i.test(valor);
+    return imagemSegura(valor);
 }
 
 export function imagemDaFicha(ficha) {

@@ -139,32 +139,6 @@
 }
 
 
-/* Altura fluida: evita cortes verticais provocados pelo bloqueio da janela.
-   O documento rola quando o conteúdo ultrapassa a área disponível. */
-@media (min-width: 1100px) and (min-height: 620px) {
-    html, body { height: auto; min-height: 100%; overflow-x: clip; overflow-y: auto; }
-    body { display: block; min-height: 100vh; }
-    main { display: block; min-height: 0; }
-    .barra-superior { position: sticky; top: 0; }
-    .painel { display: block; height: auto; min-height: calc(100vh - 90px); overflow: visible; padding-bottom: 2rem; }
-    .pagina-mestre:not([hidden]) {
-        display: block;
-        min-height: 0;
-        overflow: visible;
-        padding: clamp(.85rem, 1.8vw, 1.5rem);
-    }
-    .grade-gerenciamento, .grade-ferramentas, .grade-utilitarios,
-    .grade-diario, .selecao-campanhas, .quadro-jogadores,
-    .divisao-lista-campanhas { min-height: 0; overflow: visible; }
-    .selecao-campanhas, .quadro-jogadores { min-height: 500px; }
-    .lista-campanhas, .lista-participantes { flex: initial; max-height: none; overflow: visible; }
-    .formulario-criar textarea { min-height: 85px; height: auto; resize: vertical; }
-    .descricao-campanha-ativa { max-height: none; overflow: visible; }
-    .grade-ferramentas > .cartao-campanha { overflow: visible; }
-    .cartao-marcos, .cartao-quadro { min-height: 480px; }
-    .zona-quadro { min-height: 350px; }
-    .grade-npcs, .painel-lista-npcs, .painel-ficha-npc { overflow: visible; }
-}
 /* Quando as sete munições não cabem na mesma linha, quebram em linhas
    sem cortar a ponta e sem encobrir Salvar ou Sair. */
 @media (min-width: 721px) and (max-width: 1480px) {

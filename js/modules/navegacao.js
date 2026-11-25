@@ -9,22 +9,30 @@ export function criarNavegacao({ aoNavegar = () => {}, antesDeNavegar = () => tr
     const paineis = [...document.querySelectorAll('[data-pagina-container]')];
     let paginaAtual = 'campanhas';
 
-    function abrir(pagina) {
-        if (!PAGINAS.includes(pagina)) throw new Error('Área inexistente na Mesa do Mestre.');
-        if (pagina !== paginaAtual && !antesDeNavegar(pagina, paginaAtual)) return;
-
+    let aguardandoConfirmacao = false;
+    function mostrar(pagina) {
         for (const botao of botoes) {
             const ativo = botao.dataset.pagina === pagina;
             botao.classList.toggle('ativa', ativo);
             if (ativo) botao.setAttribute('aria-current', 'page');
             else botao.removeAttribute('aria-current');
         }
-        for (const painel of paineis) {
-            painel.hidden = painel.dataset.paginaContainer !== pagina;
-        }
-
+        for (const painel of paineis) painel.hidden = painel.dataset.paginaContainer !== pagina;
         paginaAtual = pagina;
         aoNavegar(pagina);
+    }
+
+    function abrir(pagina) {
+        if (!PAGINAS.includes(pagina)) throw new Error('Área inexistente na Mesa do Mestre.');
+        if (aguardandoConfirmacao) return;
+        if (pagina === paginaAtual) { mostrar(pagina); return; }
+        const permitido = antesDeNavegar(pagina, paginaAtual);
+        if (permitido instanceof Promise) {
+            aguardandoConfirmacao = true;
+            return permitido.then(aceito => { if (aceito) mostrar(pagina); })
+                .finally(() => { aguardandoConfirmacao = false; });
+        }
+        if (permitido) mostrar(pagina);
     }
 
     for (const botao of botoes) {

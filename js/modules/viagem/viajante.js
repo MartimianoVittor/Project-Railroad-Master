@@ -1,5 +1,6 @@
-import { porId, elemento } from '../../core/dom.js?v=mesa-35';
-import { inteiroNaoNegativo, formatarNumero } from './modelo.js?v=mesa-35';
+import { imagemSegura } from '../../services/imagensStorage.js?v=mesa-39';
+import { porId, elemento } from '../../core/dom.js?v=mesa-39';
+import { inteiroNaoNegativo, formatarNumero } from './modelo.js?v=mesa-39';
 
 function secao(titulo, classe) {
     const cartao = elemento('section', `vg-ficha-cartao ${classe}`);
@@ -15,7 +16,14 @@ function identificacaoDoViajante(viajante, npc, personagem) {
     const identificacao = secao('', 'vg-ficha-identificacao');
     const retrato = elemento('img');
     retrato.alt = `Retrato de ${viajante.nome}`;
-    retrato.src = /^(data:image\/(png|jpeg|webp);base64,|assets\/imgs\/)/.test(imagem || '') ? imagem : 'assets/imgs/imagemPersonagemPlaceholder.webp';
+    const placeholder = 'assets/imgs/imagemPersonagemPlaceholder.webp';
+    // Não exibir o ícone nativo de imagem quebrada e seu texto alternativo
+    // sobre a moldura caso a URL assinada tenha expirado.
+    retrato.addEventListener('error', () => {
+        if (retrato.getAttribute('src') !== placeholder) retrato.src = placeholder;
+        else retrato.hidden = true;
+    });
+    retrato.src = imagemSegura(imagem) ? imagem : placeholder;
     const identidade = elemento('div', 'vg-ficha-identidade');
     identidade.append(elemento('strong', '', nome || viajante.nome), elemento('small', '', viajante.responsavel));
     if (profissao)

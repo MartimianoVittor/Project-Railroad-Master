@@ -1,12 +1,13 @@
-import { botao, elemento, porId } from '../core/dom.js?v=mesa-35';
-import { mostrarAviso } from '../core/feedback.js?v=mesa-35';
-import { criarCombatente, imagemDaFicha, imagemValida, inteiro, ordemDeIniciativa } from '../modules/combate/combatentes.js?v=mesa-35';
-import { desenharConsultaFicha, registroNpcParaConsulta } from '../modules/combate/consulta.js?v=mesa-35';
-import { mostrarIniciativa } from '../modules/combate/iniciativa.js?v=mesa-35';
-import { criarDetalhe } from '../modules/combate/detalhe.js?v=mesa-35';
-import { listarPersonagensDisponiveis } from '../modules/personagensCampanha.js?v=mesa-35';
-import { gravarNpcsCombateRemoto } from '../services/conteudoCampanha.js?v=mesa-35';
-import { criarSincronizadorEstadoMesa } from '../services/estadosMesa.js?v=mesa-35';
+import { confirmar, informar } from '../core/dialogos.js?v=mesa-39';
+import { botao, elemento, porId } from '../core/dom.js?v=mesa-39';
+import { mostrarAviso } from '../core/feedback.js?v=mesa-39';
+import { criarCombatente, imagemDaFicha, imagemValida, inteiro, ordemDeIniciativa } from '../modules/combate/combatentes.js?v=mesa-39';
+import { desenharConsultaFicha, registroNpcParaConsulta } from '../modules/combate/consulta.js?v=mesa-39';
+import { mostrarIniciativa } from '../modules/combate/iniciativa.js?v=mesa-39';
+import { criarDetalhe } from '../modules/combate/detalhe.js?v=mesa-39';
+import { listarPersonagensDisponiveis } from '../modules/personagensCampanha.js?v=mesa-39';
+import { gravarNpcsCombateRemoto } from '../services/conteudoCampanha.js?v=mesa-39';
+import { criarSincronizadorEstadoMesa } from '../services/estadosMesa.js?v=mesa-39';
 
 export function criarControladorCombate({ estado }) {
     let combatentes = [];
@@ -115,14 +116,14 @@ export function criarControladorCombate({ estado }) {
         let origem;
         if (item.tipo === 'jogador') {
             if (!estado.repositorio?.obterFicha) {
-                alert('Consulta de fichas indisponível neste modo.');
+                void informar('Consulta de fichas indisponível neste modo.');
                 return;
             }
             try {
                 origem = await estado.repositorio.obterFicha(campanha, item.ref);
             } catch {
                 if (estado.campanhaId === campanha)
-                    alert('Não foi possível carregar esta ficha.');
+                    void informar('Não foi possível carregar esta ficha.');
                 return;
             }
             if (campanha !== estado.campanhaId || sessao !== estado.versaoSessao || combatentes.some(combatente => combatente.id === item.id))
@@ -144,9 +145,9 @@ export function criarControladorCombate({ estado }) {
         renderizar();
     }
 
-    function removerCombatente(id) {
+    async function removerCombatente(id) {
         const combatente = combatentes.find(combatente => combatente.id === id);
-        if (!combatente || !confirm(`Retirar ${combatente.nome} do combate? Alterações temporárias desse personagem serão descartadas.`))
+        if (!combatente || !await confirmar(`Retirar ${combatente.nome} do combate? Alterações temporárias desse personagem serão descartadas.`))
             return;
         if (fichaEmConsulta?.id === id)
             fecharConsultaFicha(false);
@@ -372,7 +373,7 @@ export function criarControladorCombate({ estado }) {
             mostrarAviso(`Não é possível encerrar: ${indisponiveis.length} ficha(s) de NPC não estão disponíveis. O combate foi preservado.`, true);
             return;
         }
-        if (!confirm('Encerrar combate? Ferimentos e armas de NPCs serão salvos; o estado do combate será encerrado.'))
+        if (!await confirmar('Encerrar combate? Ferimentos e armas de NPCs serão salvos; o estado do combate será encerrado.'))
             return;
         const campanhaId = estado.campanhaId;
         const sessao = estado.versaoSessao;
@@ -404,11 +405,11 @@ export function criarControladorCombate({ estado }) {
             if (estado.campanhaId && estado.npcsRepo)
                 estado.npcs = estado.npcsRepo.salvar(estado.usuario?.id, estado.campanhaId, npcs);
         } catch (e) {
-            alert(`Não foi possível salvar os NPCs: ${e.message}. O combate foi preservado.`);
+            void informar(`Não foi possível salvar os NPCs: ${e.message}. O combate foi preservado.`);
             return;
         }
         if (combatentes.some(combatente => combatente.tipo === 'jogador'))
-            alert('As alterações nas fichas dos jogadores permanecem apenas neste combate. O Mestre não possui permissão para editar as fichas privadas dos jogadores.');
+            void informar('As alterações nas fichas dos jogadores permanecem apenas neste combate. O Mestre não possui permissão para editar as fichas privadas dos jogadores.');
         combatentes = [];
         selecionado = null;
         atual = null;

@@ -1,13 +1,14 @@
-import { listarNpcsRemotos, gravarNpcRemoto, apagarNpcRemoto } from '../services/conteudoCampanha.js?v=mesa-35';
-import { porId, elemento, mensagemLista } from '../core/dom.js?v=mesa-35';
-import { iniciarFormularioNpc, lerFormulario, nivelNoFormulario, preencherFormulario, mostrarRetrato } from '../modules/formularioNpc.js?v=mesa-35';
-import { ARQUETIPOS_NPC, sortearDadosNpc } from '../modules/npcs/gerador.js?v=mesa-35';
-import { rolarTraco } from '../modules/rolagem.js?v=mesa-35';
-import { mostrarAviso, executar } from '../core/feedback.js?v=mesa-35';
+import { confirmar } from '../core/dialogos.js?v=mesa-39';
+import { listarNpcsRemotos, gravarNpcRemoto, apagarNpcRemoto } from '../services/conteudoCampanha.js?v=mesa-39';
+import { porId, elemento, mensagemLista } from '../core/dom.js?v=mesa-39';
+import { iniciarFormularioNpc, lerFormulario, nivelNoFormulario, preencherFormulario, mostrarRetrato } from '../modules/formularioNpc.js?v=mesa-39';
+import { ARQUETIPOS_NPC, sortearDadosNpc } from '../modules/npcs/gerador.js?v=mesa-39';
+import { rolarTraco } from '../modules/rolagem.js?v=mesa-39';
+import { mostrarAviso, executar } from '../core/feedback.js?v=mesa-39';
 import {
     LIMITE_NPCS,
     TRACOS_NPC, criarNpc, normalizarNpc, validarNpc,
-} from '../modules/npcs.js?v=mesa-35';
+} from '../modules/npcs.js?v=mesa-39';
 
 /** Criação, consulta, edição e exclusão de NPCs da campanha ativa. */
 export function criarControladorNpcs({ estado }, {
@@ -190,7 +191,7 @@ export function criarControladorNpcs({ estado }, {
                 // NPCs locais com revisão anterior podem ter sido excluídos remotamente.
                 // Não recriá-los silenciosamente.
                 const nuncaEnviados = ausentes.filter((n) => !n.revisao);
-                if (nuncaEnviados.length && confirm(`Há ${nuncaEnviados.length} NPC(s) novos guardados apenas neste navegador. Importar para a campanha no Supabase?`)) {
+                if (nuncaEnviados.length && await confirmar(`Há ${nuncaEnviados.length} NPC(s) novos guardados apenas neste navegador. Importar para a campanha no Supabase?`)) {
                     for (const npc of nuncaEnviados) {
                         npc.revisao = await gravarRemoto(campanhaId, npc);
                         if (!aindaAtual()) return;
@@ -229,8 +230,8 @@ export function criarControladorNpcs({ estado }, {
 
     function temAlteracoesPendentes() { return Boolean(editando && alterado); }
 
-    function confirmarSaida() {
-        return !temAlteracoesPendentes() || confirm(
+    async function confirmarSaida() {
+        return !temAlteracoesPendentes() || await confirmar(
             'A ficha de NPC tem alterações não salvas. Deseja descartá-las?'
         );
     }
@@ -243,8 +244,8 @@ export function criarControladorNpcs({ estado }, {
         renderizarConsulta();
     }
 
-    function selecionarNpc(id) {
-        if (!estado.npcs.some((npc) => npc.id === id) || !confirmarSaida()) return;
+    async function selecionarNpc(id) {
+        if (!estado.npcs.some((npc) => npc.id === id) || !(await confirmarSaida())) return;
         editando = null;
         alterado = false;
         selecionadoId = id;
@@ -261,11 +262,11 @@ export function criarControladorNpcs({ estado }, {
         porId('npc-orig-nome-personagem').focus();
     }
 
-    function criarNovo() {
+    async function criarNovo() {
         exigirNpcsDisponiveis();
         if (!estado.campanhaId) throw new Error('Selecione uma campanha antes de criar NPCs.');
         if (estado.npcs.length >= LIMITE_NPCS) throw new Error(`Limite de ${LIMITE_NPCS} NPCs atingido.`);
-        if (!confirmarSaida()) return;
+        if (!(await confirmarSaida())) return;
         iniciarEdicao(criarNpc('completa'), true);
     }
 
@@ -310,7 +311,7 @@ export function criarControladorNpcs({ estado }, {
     async function excluirSelecionado() {
         exigirNpcsDisponiveis();
         const npc = npcSelecionado();
-        if (!npc || !confirm(`Excluir a ficha de NPC “${npc.nome}”? Esta ação não pode ser desfeita.`)) return;
+        if (!npc || !await confirmar(`Excluir a ficha de NPC “${npc.nome}”? Esta ação não pode ser desfeita.`)) return;
         const escopo = escopoAtual();
         if (!estado.modoLocal) await apagarRemoto(estado.campanhaId, npc.id, npc.revisao);
         if (escopoAtual() !== escopo) return;
@@ -348,7 +349,7 @@ export function criarControladorNpcs({ estado }, {
     async function gerarNpcAleatorio(salvarImediatamente = false) {
         if (!editando) return;
         const jaExiste = estado.npcs.some((npc) => npc.id === editando.id);
-        if ((jaExiste || alterado) && !confirm(
+        if ((jaExiste || alterado) && !await confirmar(
             'Substituir os dados preenchidos na ficha pelos dados de um NPC gerado?'
         )) return;
         const ficha = sortearDadosNpc(lerFormulario(editando), opcoesGerador());
@@ -416,8 +417,8 @@ export function criarControladorNpcs({ estado }, {
         porId('buscar-npc').addEventListener('input', mostrarLista);
         porId('editar-npc').addEventListener('click', editarSelecionado);
         porId('excluir-npc').addEventListener('click', () => void executar(porId('excluir-npc'), excluirSelecionado));
-        porId('cancelar-npc').addEventListener('click', () => {
-            if (confirmarSaida()) descartarEdicao();
+        porId('cancelar-npc').addEventListener('click', async () => {
+            if (await confirmarSaida()) descartarEdicao();
         });
         porId('form-npc').addEventListener('input', () => { if (editando) alterado = true; });
         porId('form-npc').addEventListener('change', () => { if (editando) alterado = true; });

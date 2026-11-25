@@ -1,0 +1,129 @@
+/* Encaixe do Escudo do Mestre em monitores desktop.
+   Carregado por último para preservar a rolagem e as bordas personalizadas. */
+@media (min-width: 1100px) {
+  /* Os cartões chegam às extremidades úteis da tela, sem largura máxima. */
+  #painel .pagina-mestre:not([hidden]) {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 4px;
+  }
+  #painel .pagina-mestre:not([hidden]) > :is(
+    .grade-gerenciamento, .grade-ferramentas, .grade-utilitarios,
+    .grade-diario, .grade-npcs
+  ) {
+    flex: 1 1 0;
+    height: auto;
+    min-height: 0;
+  }
+  /* A mensagem da campanha continua acima da grade sem faixa vazia. */
+  #painel #pagina-npcs { gap: 4px; }
+  #painel #pagina-npcs .barra-npcs { min-height: 0; }
+  #painel:not([hidden]) { padding-bottom: 0; }
+}
+
+/* Desktops compactos mantêm a rolagem natural sem rodapé excedente. */
+@media (min-width: 901px) and (max-width: 1099px) {
+  body:not(.modo-entrada) { display: flex; flex-direction: column; min-height: 100dvh; }
+  body:not(.modo-entrada) > main { display: flex; flex: 1 1 auto; flex-direction: column; }
+  #painel:not([hidden]) { display: flex; flex: 1 1 auto; flex-direction: column; min-height: 0; padding-bottom: 0; }
+  #painel .pagina-mestre:not([hidden]) {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 4px;
+  }
+  #painel .pagina-mestre:not([hidden]) > :is(
+    .grade-gerenciamento, .grade-ferramentas, .grade-utilitarios,
+    .grade-diario, .grade-npcs
+  ) { flex: 1 1 auto; }
+}
+
+/* Estende os cartões até o limite inferior real da viewport. */
+@media (min-width: 901px) {
+  html, body:not(.modo-entrada) { height: 100%; min-height: 0; }
+  body:not(.modo-entrada) { display: flex; flex-direction: column; height: 100dvh; overflow: hidden; }
+  body:not(.modo-entrada) > .barra-superior { flex: 0 0 auto; }
+  body:not(.modo-entrada) > main {
+    display: flex; flex: 1 1 0; flex-direction: column;
+    min-height: 0; height: auto; overflow: hidden;
+  }
+  body:not(.modo-entrada) #painel:not([hidden]) {
+    display: flex; flex: 1 1 0; flex-direction: column;
+    min-height: 0; height: auto; overflow: hidden; padding-bottom: 0;
+  }
+  body:not(.modo-entrada) #painel > .pagina-mestre:not([hidden]) {
+    display: flex; flex: 1 1 0; flex-direction: column;
+    min-height: 0; height: auto; overflow: hidden; padding-bottom: 2px;
+  }
+  body:not(.modo-entrada) #painel > .pagina-mestre:not([hidden]) > :is(
+    .grade-gerenciamento,.grade-ferramentas,.grade-utilitarios,
+    .grade-diario,.grade-npcs
+  ) { flex: 1 1 0; min-height: 0; height: auto; overflow: hidden; }
+}
+
+
+/* Desktop: os cartões, não apenas a página, crescem até a base da viewport.
+   Os elementos da interface mobile não participam do fluxo vertical. */
+@media (min-width: 1100px) {
+  html { height: 100%; }
+  body:not(.modo-entrada) {
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100dvh !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+  }
+  body:not(.modo-entrada) > header.barra-superior { flex: 0 0 auto; }
+  body:not(.modo-entrada) > main {
+    display: flex !important;
+    flex: 1 1 0 !important;
+    flex-direction: column;
+    min-height: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+  }
+  body:not(.modo-entrada) #painel:not([hidden]) {
+    display: flex !important;
+    flex: 1 1 0 !important;
+    flex-direction: column;
+    min-height: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+  }
+  body:not(.modo-entrada) #painel > .pagina-mestre:not([hidden]) {
+    display: flex !important;
+    flex: 1 1 0 !important;
+    flex-direction: column;
+    min-height: 0 !important;
+    height: 0 !important;
+    max-height: none !important;
+    overflow: hidden !important;
+    padding: 4px !important;
+  }
+  body:not(.modo-entrada) #painel > .pagina-mestre:not([hidden]) > :is(
+    .grade-gerenciamento, .grade-ferramentas, .grade-utilitarios,
+    .grade-diario, .grade-npcs
+  ) {
+    display: grid;
+    flex: 1 1 0 !important;
+    min-height: 0 !important;
+    height: 0 !important;
+    max-height: none !important;
+    overflow: hidden !important;
+    align-items: stretch;
+  }
+  body:not(.modo-entrada) #pagina-npcs .grade-npcs > :is(
+    .painel-lista-npcs, .painel-ficha-npc
+  ) {
+    height: 100% !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+}

@@ -1,8 +1,8 @@
 /** Persistência remota de sessões e NPCs, com transações e controle de revisão.
  * Requer a migração supabase/012_integridade_conteudo_mestre.sql.
  */
-import { obterCliente, exigir } from '../core/cliente.js?v=mesa-34';
-import { normalizarNpc } from '../modules/npcs.js?v=mesa-34';
+import { obterCliente, exigir } from '../core/cliente.js?v=mesa-35';
+import { normalizarNpc } from '../modules/npcs.js?v=mesa-35';
 
 function revisaoRecebida(resultado) {
     const linha = Array.isArray(resultado) ? resultado[0] : resultado;
@@ -48,11 +48,13 @@ export async function apagarNpcRemoto(campanhaId, id, revisao, conectar = obterC
         throw new Error('Atualize os NPCs antes de excluir uma ficha sem revisão remota.');
     }
     const db = await conectar();
-    const excluido = exigir(await db.from('npcs').delete()
-        .eq('campanha_id', campanhaId).eq('id', id).eq('revisao', revisao)
-        .select('id').maybeSingle());
-    if (!excluido) {
-        throw new Error('Conflito: o NPC foi alterado ou removido em outra aba. Recarregue a campanha antes de excluir.');
+    const excluido = exigir(await db.rpc('excluir_npc_mestre', {
+        p_campanha_id: campanhaId,
+        p_npc_id: id,
+        p_revisao: revisao,
+    }));
+    if (excluido !== true) {
+        throw new Error('O Supabase não confirmou a exclusão do NPC.');
     }
 }
 

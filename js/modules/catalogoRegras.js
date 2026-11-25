@@ -1,7 +1,7 @@
-import { FUNDAMENTOS } from './regras/fundamentos.js?v=mesa-34';
-import { COMBATE } from './regras/combate.js?v=mesa-34';
-import { EXPEDICAO } from './regras/expedicao.js?v=mesa-34';
-import { MESTRE } from './regras/mestre.js?v=mesa-34';
+import { FUNDAMENTOS } from './regras/fundamentos.js?v=mesa-35';
+import { COMBATE } from './regras/combate.js?v=mesa-35';
+import { EXPEDICAO } from './regras/expedicao.js?v=mesa-35';
+import { MESTRE } from './regras/mestre.js?v=mesa-35';
 
 /** Railroad RPG, livro de regras edição 1.0, novembro/2026.
  * Resumos autorais para consulta rápida: consultar páginas indicadas para o procedimento completo.

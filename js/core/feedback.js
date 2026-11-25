@@ -1,4 +1,4 @@
-import { comProcessamento } from './processamento.js?v=mesa-34';
+import { comProcessamento } from './processamento.js?v=mesa-35';
 let temporizador;
 
 export function mostrarAviso(texto, erro = false) {

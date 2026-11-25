@@ -1,5 +1,5 @@
-import { CONSULTAS_PADRAO } from '../modules/catalogoRegras.js?v=mesa-34';
-import { copiarCartoes, nomeSeguro, paraCartoes } from '../modules/utilitarios/consultas.js?v=mesa-34';
+import { CONSULTAS_PADRAO } from '../modules/catalogoRegras.js?v=mesa-35';
+import { copiarCartoes, nomeSeguro, paraCartoes } from '../modules/utilitarios/consultas.js?v=mesa-35';
 
 export function chaveConsultas({ modoLocal, usuario, campanhaId }) {
     const modo = modoLocal ? 'local' : 'online';

@@ -1,20 +1,20 @@
-import { criarRepositorioSessoes } from './services/sessoesLocal.js?v=mesa-34';
-import { criarRepositorioNpcs } from './services/npcsLocal.js?v=mesa-34';
-import { iniciarQuadroMestre } from './modules/quadroMestre.js?v=mesa-34';
-import { criarNavegacao } from './modules/navegacao.js?v=mesa-34';
-import { mostrarAviso, executar } from './core/feedback.js?v=mesa-34';
-import { carregarInterface } from './core/carregarInterface.js?v=mesa-34';
-import { porId } from './core/dom.js?v=mesa-34';
-import { iniciarSessao } from './app/sessao.js?v=mesa-34';
-import { estado } from './app/estado.js?v=mesa-34';
-import { criarControladorDiario } from './controllers/diario.js?v=mesa-34';
-import { criarControladorCampanhas } from './controllers/campanhas.js?v=mesa-34';
-import { criarControladorFichas } from './controllers/fichas.js?v=mesa-34';
-import { criarControladorNpcs } from './controllers/npcs.js?v=mesa-34';
-import { criarControladorCombate } from './controllers/combate.js?v=mesa-34';
-import { criarControladorViagem } from './controllers/viagem.js?v=mesa-34';
-import { criarMenuConta } from './modules/contaMestre.js?v=mesa-34';
-import { criarControladorUtilitarios } from './controllers/utilitarios.js?v=mesa-34';
+import { criarRepositorioSessoes } from './services/sessoesLocal.js?v=mesa-35';
+import { criarRepositorioNpcs } from './services/npcsLocal.js?v=mesa-35';
+import { iniciarQuadroMestre } from './modules/quadroMestre.js?v=mesa-35';
+import { criarNavegacao } from './modules/navegacao.js?v=mesa-35';
+import { mostrarAviso, executar } from './core/feedback.js?v=mesa-35';
+import { carregarInterface } from './core/carregarInterface.js?v=mesa-35';
+import { porId } from './core/dom.js?v=mesa-35';
+import { iniciarSessao } from './app/sessao.js?v=mesa-35';
+import { estado } from './app/estado.js?v=mesa-35';
+import { criarControladorDiario } from './controllers/diario.js?v=mesa-35';
+import { criarControladorCampanhas } from './controllers/campanhas.js?v=mesa-35';
+import { criarControladorFichas } from './controllers/fichas.js?v=mesa-35';
+import { criarControladorNpcs } from './controllers/npcs.js?v=mesa-35';
+import { criarControladorCombate } from './controllers/combate.js?v=mesa-35';
+import { criarControladorViagem } from './controllers/viagem.js?v=mesa-35';
+import { criarMenuConta } from './modules/contaMestre.js?v=mesa-35';
+import { criarControladorUtilitarios } from './controllers/utilitarios.js?v=mesa-35';
 
 // Controladores compartilham estado.
 const contexto = { estado };

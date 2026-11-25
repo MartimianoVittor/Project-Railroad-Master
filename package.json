@@ -1,11 +1,11 @@
 {
   "name": "railroad-mestre",
   "private": true,
-  "version": "0.9.2",
+  "version": "0.9.3",
   "type": "module",
   "scripts": {
     "test": "node --test",
     "preparar:publicacao": "node scripts/preparar-publicacao.mjs && node --test"
   },
-  "cacheVersion": "mesa-34"
+  "cacheVersion": "mesa-35"
 }

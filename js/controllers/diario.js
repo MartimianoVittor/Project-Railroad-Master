@@ -1,10 +1,10 @@
-import { listarSessoesRemotas, salvarSessoesRemotas } from '../services/conteudoCampanha.js?v=mesa-34';
+import { listarSessoesRemotas, salvarSessoesRemotas } from '../services/conteudoCampanha.js?v=mesa-35';
 import {
     criarSessao, duplicarSessao, moverSessao,
     LIMITE_DESCRICAO_SESSAO, LIMITE_NOME_SESSAO, LIMITE_SESSOES,
-} from '../modules/diario/sessoes.js?v=mesa-34';
-import { executar, mostrarAviso } from '../core/feedback.js?v=mesa-34';
-import { porId, elemento } from '../core/dom.js?v=mesa-34';
+} from '../modules/diario/sessoes.js?v=mesa-35';
+import { executar, mostrarAviso } from '../core/feedback.js?v=mesa-35';
+import { porId, elemento } from '../core/dom.js?v=mesa-35';
 
 /** Coordena as sessões do Diário e suas cópias local e remota. */
 export function criarControladorDiario({ estado }, { listar = listarSessoesRemotas, salvar = salvarSessoesRemotas } = {}) {

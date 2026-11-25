@@ -1,6 +1,6 @@
-import { porId } from '../core/dom.js?v=mesa-34';
-import { criarPersonalizacaoMestre } from './personalizacaoMestre.js?v=mesa-34';
-import { executar } from '../core/feedback.js?v=mesa-34';
+import { porId } from '../core/dom.js?v=mesa-35';
+import { criarPersonalizacaoMestre } from './personalizacaoMestre.js?v=mesa-35';
+import { executar } from '../core/feedback.js?v=mesa-35';
 
 // Opções da conta separadas da composição da Mesa.
 // Os elementos originais Salvar/Sair permanecem ocultos para preservar

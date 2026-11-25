@@ -81,15 +81,25 @@ test('encerramento de combate atualiza os NPCs em uma só operação', async () 
     assert.deepEqual(confirmado, [{ id: 'a', revisao: 3 }, { id: 'b', revisao: 6 }]);
 });
 
-test('exclusão não declara sucesso quando NPC foi alterado em outra aba', async () => {
-    const builder = {
-        eq() { return this; },
-        select() { return this; },
-        async maybeSingle() { return { data: null, error: null }; },
-    };
-    await assert.rejects(apagarNpcRemoto('c', 'npc', 3, async () => ({
-        from: () => ({ delete: () => builder }),
+test('exclusão de NPC usa RPC com revisão e rejeita conflito', async () => {
+    const chamadas = [];
+    await assert.rejects(apagarNpcRemoto('c', 'npc', 3, conectar(async (nome, parametros) => {
+        chamadas.push({ nome, parametros });
+        return { data: null, error: { message: 'Conflito: NPC alterado' } };
     })), /Conflito/);
+    assert.deepEqual(chamadas, [{ nome: 'excluir_npc_mestre', parametros: {
+        p_campanha_id: 'c', p_npc_id: 'npc', p_revisao: 3,
+    } }]);
+    await apagarNpcRemoto('c', 'npc', 3, conectar(async () => ({ data: true, error: null })));
+});
+
+test('migração 015 revoga escrita direta e exige RPC para exclusão', () => {
+    const sql = readFileSync(new URL('../supabase/015_gravacoes_protegidas_mestre.sql', import.meta.url), 'utf8');
+    for (const tabela of ['npcs', 'sessoes', 'estados_mestre', 'diarios_mestre']) {
+        assert.match(sql, new RegExp(`REVOKE INSERT, UPDATE, DELETE ON public\.${tabela} FROM authenticated`, 'i'));
+    }
+    assert.match(sql, /FUNCTION public\.excluir_npc_mestre\(/);
+    assert.match(sql, /mestre_possui_campanha/);
 });
 
 test('migração exige autorização, atomicidade, limites e revisões otimististas', () => {

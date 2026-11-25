@@ -1,4 +1,4 @@
-import { LIMITE_NPCS, normalizarNpc, validarNpc } from '../modules/npcs.js?v=mesa-34';
+import { LIMITE_NPCS, normalizarNpc, validarNpc } from '../modules/npcs.js?v=mesa-35';
 
 const PREFIXO = 'railroad_mestre_npcs:v1';
 

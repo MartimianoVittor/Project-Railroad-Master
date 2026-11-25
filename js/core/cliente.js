@@ -1,4 +1,4 @@
-import { SUPABASE } from '../config/supabase.js?v=mesa-34';
+import { SUPABASE } from '../config/supabase.js?v=mesa-35';
 
 let promessaCliente;
 

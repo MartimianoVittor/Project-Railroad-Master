@@ -1,4 +1,4 @@
-import { exigir } from '../core/cliente.js?v=mesa-34';
+import { exigir } from '../core/cliente.js?v=mesa-35';
 
 /**
  * O Mestre acessa campanhas exclusivamente por RPCs autenticadas.

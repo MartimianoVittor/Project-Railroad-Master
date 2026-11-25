@@ -1,12 +1,12 @@
-import { botao, elemento, porId } from '../core/dom.js?v=mesa-34';
-import { mostrarAviso } from '../core/feedback.js?v=mesa-34';
-import { criarCombatente, imagemDaFicha, imagemValida, inteiro, ordemDeIniciativa } from '../modules/combate/combatentes.js?v=mesa-34';
-import { desenharConsultaFicha, registroNpcParaConsulta } from '../modules/combate/consulta.js?v=mesa-34';
-import { mostrarIniciativa } from '../modules/combate/iniciativa.js?v=mesa-34';
-import { criarDetalhe } from '../modules/combate/detalhe.js?v=mesa-34';
-import { listarPersonagensDisponiveis } from '../modules/personagensCampanha.js?v=mesa-34';
-import { gravarNpcsCombateRemoto } from '../services/conteudoCampanha.js?v=mesa-34';
-import { criarSincronizadorEstadoMesa } from '../services/estadosMesa.js?v=mesa-34';
+import { botao, elemento, porId } from '../core/dom.js?v=mesa-35';
+import { mostrarAviso } from '../core/feedback.js?v=mesa-35';
+import { criarCombatente, imagemDaFicha, imagemValida, inteiro, ordemDeIniciativa } from '../modules/combate/combatentes.js?v=mesa-35';
+import { desenharConsultaFicha, registroNpcParaConsulta } from '../modules/combate/consulta.js?v=mesa-35';
+import { mostrarIniciativa } from '../modules/combate/iniciativa.js?v=mesa-35';
+import { criarDetalhe } from '../modules/combate/detalhe.js?v=mesa-35';
+import { listarPersonagensDisponiveis } from '../modules/personagensCampanha.js?v=mesa-35';
+import { gravarNpcsCombateRemoto } from '../services/conteudoCampanha.js?v=mesa-35';
+import { criarSincronizadorEstadoMesa } from '../services/estadosMesa.js?v=mesa-35';
 
 export function criarControladorCombate({ estado }) {
     let combatentes = [];

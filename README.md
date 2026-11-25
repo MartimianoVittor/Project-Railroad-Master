@@ -68,7 +68,9 @@ A aplicação funciona diretamente no navegador, com **modo local** e recursos o
 
 O Escudo do Mestre já oferece suas principais áreas de gerenciamento. A confiabilidade do modo online depende da aplicação das migrações e das políticas corretas no Supabase. Testes automatizados não substituem a validação dos fluxos reais com contas de jogadores e Mestres.
 
-A plataforma do Jogador está disponível no repositório [ProjectRailroad](https://github.com/MartimianoVittor/ProjectRailroad). O projeto do Mestre pode ser acompanhado em [Project-Railroad-Master](https://github.com/MartimianoVittor/Project-Railroad-Master).
+A plataforma para Jogadores está disponível no repositório [ProjectRailroad](https://github.com/MartimianoVittor/ProjectRailroad). 
+
+O projeto para Mestres pode ser acompanhado em [Project-Railroad-Master](https://github.com/MartimianoVittor/Project-Railroad-Master).
 
 ---
 

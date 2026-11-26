@@ -41,7 +41,7 @@ export function criarSincronizadorEstadoMesa({
     avisar = (mensagem) => console.warn(mensagem),
     confirmar: confirmarResposta = confirmar,
     armazenamento = () => window.localStorage,
-    aoBloqueio = () => {},
+    aoBloqueio = () => {}, aoCarregar = () => {},
 }) {
     validar(tipo, 'modelo');
     let ativo = null;
@@ -157,16 +157,19 @@ export function criarSincronizadorEstadoMesa({
                 preservarLocal();
                 marcarPendencia(fila, false);
                 fila.carregada = true;
+                aoCarregar();
                 return;
             }
             fila.carregada = true;
             if (enviarLocal || temConteudo(local)) {
                 fila.pendente = JSON.stringify(local);
                 marcarPendencia(fila, true);
-                void enviar(fila);
             } else {
                 marcarPendencia(fila, false);
             }
+            // A conciliação pode atualizar o estado antes da primeira gravação.
+            aoCarregar();
+            if (fila.pendente) void enviar(fila);
         } catch (erro) {
             if (!aindaAtivo(fila)) return;
             fila.bloqueada = true;

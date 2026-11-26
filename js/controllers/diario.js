@@ -213,6 +213,7 @@ export function criarControladorDiario({ estado }, { listar = listarSessoesRemot
             alca.title = 'Arraste esta sessão para mudar sua posição';
             alca.setAttribute('aria-hidden', 'true');
             const detalhes = elemento('div', 'detalhes-sessao-gerenciar');
+            detalhes.title = [sessao.nome, sessao.descricao].filter(Boolean).join(' — ');
             detalhes.append(
                 elemento('strong', 'numero-sessao-gerenciar', `Sessão ${String(indice + 1).padStart(2, '0')}`),
                 elemento('span', 'nome-sessao-gerenciar', sessao.nome || 'Sem título'),
@@ -226,9 +227,29 @@ export function criarControladorDiario({ estado }, { listar = listarSessoesRemot
                 b.addEventListener('click', acao);
                 return b;
             };
+            const subir = botao('↑', () => mudarPosicaoSessao(sessao.id, -1), 'Mover para cima');
+            const descer = botao('↓', () => mudarPosicaoSessao(sessao.id, 1), 'Mover para baixo');
+            subir.classList.add('acao-ordenar-sessao');
+            descer.classList.add('acao-ordenar-sessao');
+            subir.title = 'Mover para cima';
+            descer.title = 'Mover para baixo';
+            subir.disabled = indice === 0;
+            descer.disabled = indice === estado.sessoes.length - 1;
+            const excluir = botao('Excluir', async () => {
+                if (!await confirmar(`Excluir a sessão ${indice + 1} — ${sessao.nome || 'Sem título'}?`)) return;
+                const atual = estado.sessaoId;
+                if (atual !== sessao.id) guardarSessaoAtual();
+                estado.sessoes.splice(indice, 1);
+                if (atual === sessao.id) estado.sessaoId = estado.sessoes[Math.min(indice, estado.sessoes.length - 1)]?.id ?? null;
+                mostrarSessao();
+                estado.rascunhoSujo = true;
+                atualizarStatusRascunho();
+                renderizarGerenciador();
+            }, 'Excluir');
+            excluir.classList.add('acao-excluir-sessao');
             acoes.append(
-                botao('↑', () => mudarPosicaoSessao(sessao.id, -1), 'Mover para cima'),
-                botao('↓', () => mudarPosicaoSessao(sessao.id, 1), 'Mover para baixo'),
+                subir,
+                descer,
                 botao('Editar', () => abrirFormularioSessao(sessao.id)),
                 botao('Duplicar', () => {
                     guardarSessaoAtual();
@@ -239,17 +260,7 @@ export function criarControladorDiario({ estado }, { listar = listarSessoesRemot
                     marcarRascunhoAlterado();
                     renderizarGerenciador();
                 }),
-                botao('Excluir', async () => {
-                    if (!await confirmar(`Excluir a sessão ${indice + 1} — ${sessao.nome || 'Sem título'}?`)) return;
-                    const atual = estado.sessaoId;
-                    if (atual !== sessao.id) guardarSessaoAtual();
-                    estado.sessoes.splice(indice, 1);
-                    if (atual === sessao.id) estado.sessaoId = estado.sessoes[Math.min(indice, estado.sessoes.length - 1)]?.id ?? null;
-                    mostrarSessao();
-                    estado.rascunhoSujo = true;
-                    atualizarStatusRascunho();
-                    renderizarGerenciador();
-                }, 'Excluir'),
+                excluir,
             );
             linha.append(alca, detalhes, acoes);
             linha.addEventListener('dragstart', (evento) => {

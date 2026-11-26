@@ -29,6 +29,10 @@ export function listarPersonagensDisponiveis(estado, nomesJogadores = new Map())
         incluir(ficha.ficha_id, ficha.personagem_nome || ficha.titulo, ficha.jogador_nome);
     }
 
+    // Quando a RPC dedicada foi consultada com sucesso, ela é a fonte
+    // autoritativa de aprovados. Não misturar cópias legadas possivelmente antigas.
+    if (estado.catalogoDiretoConfirmado) return personagens;
+
     // A RPC de participantes retorna envio_id, NÃO ficha_id.
     // Uma ficha aprovada aparece na lista mesmo quando a RPC de envios
     // não inclui todos os metadados do personagem.

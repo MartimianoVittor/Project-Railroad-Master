@@ -11,11 +11,12 @@ import {
 } from '../modules/npcs.js?v=mesa-44';
 
 /** Criação, consulta, edição e exclusão de NPCs da campanha ativa. */
-export function criarControladorNpcs({ estado }, {
+export function criarControladorNpcs(contexto, {
     listarRemotos = listarNpcsRemotos,
     gravarRemoto = gravarNpcRemoto,
     apagarRemoto = apagarNpcRemoto,
 } = {}) {
+    const { estado } = contexto;
     let selecionadoId = null;
     let editando = null;
     let alterado = false;
@@ -207,6 +208,7 @@ export function criarControladorNpcs({ estado }, {
                 if (!aindaAtual()) return;
                 estado.npcs = remotos;
                 estado.npcsSincronizados = true;
+                for (const npc of remotos) estado.referenciasRemovidasMesa?.delete(`npc:${npc.id}`);
                 // Falha no cache não descarta registros já lidos na nuvem.
                 try { estado.npcsRepo.salvar(estado.usuario?.id, campanhaId, remotos); }
                 catch (erro) { mostrarAviso(`NPCs carregados, mas o backup local falhou: ${erro.message}`, true); }
@@ -232,6 +234,8 @@ export function criarControladorNpcs({ estado }, {
         atualizarContexto();
         mostrarLista();
         renderizarConsulta();
+        // Somente a lista confirmada pode invalidar participantes nas mesas.
+        if (estado.modoLocal || estado.npcsSincronizados) contexto.conciliarParticipantesMesa?.();
     }
 
     function temAlteracoesPendentes() { return Boolean(editando && alterado); }
@@ -322,6 +326,7 @@ export function criarControladorNpcs({ estado }, {
         if (!estado.modoLocal) await apagarRemoto(estado.campanhaId, npc.id, npc.revisao);
         if (escopoAtual() !== escopo) return;
         aplicarListaConfirmada(estado.npcs.filter((item) => item.id !== npc.id));
+        contexto.removerParticipanteMesa?.('npc', npc.id);
         selecionadoId = null;
         mostrarLista();
         renderizarConsulta();

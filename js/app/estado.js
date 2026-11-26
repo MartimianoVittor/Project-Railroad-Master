@@ -7,6 +7,8 @@ export const ESTADOS_FICHA = { pendente: 'Aguardando aprovação', aprovada: 'Ap
 export const estado = {
     cliente: null, repositorio: null, usuario: null, modoLocal: false,
     campanhas: [], campanhaId: null, participantes: [], envios: [], personagensAprovados: [],
+    catalogoJogadoresConfirmado: false, catalogoDiretoConfirmado: false,
+    referenciasRemovidasMesa: new Set(),
     versaoSessao: 0, versaoCampanha: 0, versaoFicha: 0, versaoLista: 0,
     navegacao: null, sessoesRepo: null, quadro: null, sessoes: [], sessaoId: null,
     rascunhoSujo: false, salvoEm: null, sessaoEmEdicaoId: null,

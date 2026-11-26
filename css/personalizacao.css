@@ -941,123 +941,124 @@ dialog [data-rr-papel].rr-borda--ferro-rebitado::after,
   color: var(--rr-leitura-titulo, #4f301e);
 }
 
-/* Prévia de personalização: composição compacta, sem título redundante. */
+/* Prévia de personalização: retratos à esquerda e campos à direita.
+   Regras consolidadas para evitar a sobreposição das revisões anteriores. */
 #previa-mestre {
-  justify-content: flex-start;
+  box-sizing: border-box;
+  margin: 12px;
+  padding: clamp(9px, 1.2vw, 16px);
+  height: calc(100% - 24px);
+  min-height: 0;
+  max-height: calc(100% - 24px);
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr);
+  justify-content: stretch;
+  align-content: stretch;
   align-items: stretch;
-  gap: 12px;
-  padding: 14px;
-  overflow-y: auto;
-  overflow-x: hidden;
+  gap: 10px;
+  overflow: hidden;
 }
 #previa-mestre > .rr-previa-botao {
-  align-self: center;
-  flex: 0 0 auto;
+  align-self: start;
+  justify-self: center;
+  width: min(170px, 55%);
+  max-height: 42px;
 }
 #previa-mestre > .rr-previa-cartao[data-rr-papel="principal"] {
-  display: flex;
-  flex-direction: column;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
+  grid-template-rows: auto minmax(0, 1fr);
+  align-items: stretch;
+  align-content: stretch;
   gap: 12px;
-  padding: 14px;
+  padding: clamp(10px, 1.2vw, 16px);
+  width: 100%;
   min-width: 0;
+  min-height: 0;
+  overflow: hidden;
 }
 #previa-mestre .rr-previa-retratos {
+  grid-column: 1;
+  grid-row: 1 / span 2;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   align-items: center;
   justify-items: center;
-  gap: 12px;
+  align-content: center;
+  gap: 8px;
   margin: 0;
-  min-height: 110px;
-}
-#previa-mestre .rr-previa-retratos > * {
-  max-width: 100%;
+  width: 100%;
   min-width: 0;
+  min-height: 0;
+  height: auto;
 }
+#previa-mestre .rr-previa-retratos > * { min-width: 0; max-width: 100%; box-sizing: border-box; }
 #previa-mestre .rr-previa-retratos .rr-retrato {
-  width: min(100%, 110px);
+  width: min(100%, 128px);
+  max-height: min(27dvh, 190px);
+  min-height: 0;
 }
 #previa-mestre .rr-previa-cartao > label {
+  grid-column: 2;
+  grid-row: 1;
   display: grid;
-  gap: 5px;
-  min-width: 0;
-  margin: 0;
-}
-#previa-mestre .rr-previa-cartao > label input {
-  min-width: 0;
-  height: 36px;
-  padding: 6px 9px;
-}
-#previa-mestre .rr-previa-cartao[data-rr-papel="interno"] {
-  display: grid;
-  gap: 9px;
-  padding: 12px;
-  min-width: 0;
-}
-#previa-mestre .rr-previa-cartao[data-rr-papel="interno"] h4 {
-  margin: 0;
-}
-#previa-mestre .rr-previa-cartao[data-rr-papel="interno"] textarea {
-  min-width: 0;
-  min-height: 64px;
-  max-height: 110px;
-  resize: none;
-  padding: 8px;
-}
-
-/* Prévia compacta: todos os exemplos visíveis sem rolagem interna. */
-#previa-mestre {
-  box-sizing: border-box;
-  height: calc(100% - 24px);
-  max-height: calc(100% - 24px);
-  min-height: 0;
-  overflow: hidden;
-  gap: 6px;
-  padding: 8px;
-  margin: 12px;
-  justify-content: center;
-}
-#previa-mestre > .rr-previa-botao { flex: 0 0 auto; max-height: 44px; }
-#previa-mestre > .rr-previa-cartao[data-rr-papel="principal"] {
-  flex: 0 1 auto;
-  min-height: 0;
-  gap: 6px;
-  padding: 8px;
-}
-#previa-mestre .rr-previa-retratos {
-  min-height: 0;
-  height: clamp(76px, 18dvh, 122px);
-  gap: 6px;
-  margin: 0;
-}
-#previa-mestre .rr-previa-retratos > * {
-  max-height: 100%;
-  box-sizing: border-box;
-}
-#previa-mestre .rr-previa-retratos .rr-retrato {
-  width: min(100%, 96px);
-  max-height: 100%;
-}
-#previa-mestre .rr-previa-cartao > label { gap: 2px; }
-#previa-mestre .rr-previa-cartao > label input {
-  height: 28px;
-  min-height: 28px;
-  padding: 3px 7px;
-}
-#previa-mestre .rr-previa-cartao[data-rr-papel="interno"] {
   gap: 4px;
-  padding: 8px;
+  margin: 0;
+  min-width: 0;
+  font-size: .8rem;
 }
+#previa-mestre .rr-previa-cartao > label input {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  min-height: 34px;
+  height: 34px;
+  padding: 5px 8px;
+}
+#previa-mestre .rr-previa-cartao[data-rr-papel="interno"] {
+  grid-column: 2;
+  grid-row: 2;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  align-content: stretch;
+  min-width: 0;
+  min-height: 0;
+  gap: 8px;
+  padding: 10px;
+}
+#previa-mestre .rr-previa-cartao[data-rr-papel="interno"] h4 { margin: 0; font-size: .85rem; }
 #previa-mestre .rr-previa-cartao[data-rr-papel="interno"] textarea {
-  min-height: 36px;
-  height: 42px;
-  max-height: 42px;
-  padding: 5px;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  height: 100%;
+  max-height: none;
+  padding: 7px;
+  resize: none;
 }
-@media (max-height: 700px) and (min-width: 721px) {
-  #previa-mestre { gap: 4px; padding: 6px; }
-  #previa-mestre > .rr-previa-cartao[data-rr-papel="principal"] { gap: 4px; padding: 6px; }
-  #previa-mestre .rr-previa-retratos { height: 75px; }
-  #previa-mestre .rr-previa-cartao[data-rr-papel="interno"] { padding: 6px; }
-  #previa-mestre .rr-previa-cartao[data-rr-papel="interno"] textarea { height: 34px; min-height: 34px; max-height: 34px; }
+@media (min-width: 721px) and (max-width: 850px) {
+  #previa-mestre > .rr-previa-cartao[data-rr-papel="principal"] {
+    grid-template-columns: minmax(0,1fr);
+    grid-template-rows: auto auto minmax(0,1fr);
+    gap: 6px;
+  }
+  #previa-mestre .rr-previa-retratos {
+    grid-column: 1;
+    grid-row: 1;
+    max-height: 100px;
+  }
+  #previa-mestre .rr-previa-retratos .rr-retrato { max-height: 90px; }
+  #previa-mestre .rr-previa-cartao > label { grid-column: 1; grid-row: 2; }
+  #previa-mestre .rr-previa-cartao[data-rr-papel="interno"] { grid-column: 1; grid-row: 3; }
+}
+@media (max-height: 650px) and (min-width: 721px) {
+  #previa-mestre { gap: 6px; padding: 7px; }
+  #previa-mestre > .rr-previa-cartao[data-rr-papel="principal"] { gap: 6px; padding: 8px; }
+  #previa-mestre .rr-previa-retratos .rr-retrato { max-height: 85px; }
+  #previa-mestre .rr-previa-cartao[data-rr-papel="interno"] { gap: 4px; padding: 6px; }
 }

@@ -6,6 +6,7 @@ import { desenharConsultaFicha, registroNpcParaConsulta } from '../modules/comba
 import { mostrarIniciativa } from '../modules/combate/iniciativa.js?v=mesa-44';
 import { criarDetalhe } from '../modules/combate/detalhe.js?v=mesa-44';
 import { listarPersonagensDisponiveis } from '../modules/personagensCampanha.js?v=mesa-44';
+import { catalogosConfirmadosMesa, filtrarParticipantesDesvinculados, filtrarReferenciaRemovida } from '../modules/participantesMesa.js?v=mesa-44';
 import { gravarNpcsCombateRemoto } from '../services/conteudoCampanha.js?v=mesa-44';
 import { criarSincronizadorEstadoMesa } from '../services/estadosMesa.js?v=mesa-44';
 import { atualizarCatalogoPersonagens } from '../services/catalogoPersonagens.js?v=mesa-44';
@@ -66,6 +67,7 @@ export function criarControladorCombate({ estado, campanhas }) {
         temConteudo: dados => Array.isArray(dados?.combatentes) && dados.combatentes.length > 0,
         preservarLocal,
         aoBloqueio: bloqueado => { porId('combate-sincronizar').hidden = !bloqueado; },
+        aoCarregar: () => reconciliarParticipantes(),
         avisar: mensagem => {
             console.warn(mensagem);
             mostrarAviso(mensagem, true);
@@ -171,7 +173,43 @@ export function criarControladorCombate({ estado, campanhas }) {
 
     function atualizar() {
         sincronizar();
+        reconciliarParticipantes();
         renderizar();
+    }
+
+    /** Só concilia categorias com fonte confirmada; rede indisponível não apaga a mesa. */
+    function reconciliarParticipantes() {
+        if (escopo !== `${estado.usuario?.id}:${estado.campanhaId}` || !estado.campanhaId) return 0;
+        const { itens, removidos } = filtrarParticipantesDesvinculados(
+            combatentes, catalogosConfirmadosMesa(estado));
+        if (!removidos.length) return 0;
+        combatentes = itens;
+        ajustarSelecaoAposRemocao(removidos);
+        salvar();
+        renderizar();
+        return removidos.length;
+    }
+
+    function ajustarSelecaoAposRemocao(removidos) {
+        const ids = new Set(removidos.map(item => item.id));
+        if (ids.has(fichaEmConsulta?.id)) fecharConsultaFicha(false);
+        if (ids.has(atual)) atual = null;
+        if (ids.has(selecionado)) selecionado = null;
+        const primeiro = ordenados()[0]?.id ?? null;
+        atual ||= primeiro;
+        selecionado ||= atual;
+    }
+
+    function removerReferencia(tipo, ref) {
+        if (!estado.campanhaId || !estado.usuario?.id) return 0;
+        if (escopo !== `${estado.usuario.id}:${estado.campanhaId}`) sincronizar();
+        const { itens, removidos } = filtrarReferenciaRemovida(combatentes, tipo, ref);
+        if (!removidos.length) return 0;
+        combatentes = itens;
+        ajustarSelecaoAposRemocao(removidos);
+        salvar();
+        renderizar();
+        return removidos.length;
     }
 
     function selecionar(combatente) {
@@ -455,6 +493,8 @@ export function criarControladorCombate({ estado, campanhas }) {
     }
     return {
         iniciarEventos,
-        atualizar
+        atualizar,
+        reconciliarParticipantes,
+        removerReferencia,
     };
 }

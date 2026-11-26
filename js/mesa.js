@@ -16,6 +16,7 @@ import { criarControladorCombate } from './controllers/combate.js?v=mesa-44';
 import { criarControladorViagem } from './controllers/viagem.js?v=mesa-44';
 import { criarMenuConta } from './modules/contaMestre.js?v=mesa-44';
 import { criarControladorUtilitarios } from './controllers/utilitarios.js?v=mesa-44';
+import { atualizarCatalogoPersonagens } from './services/catalogoPersonagens.js?v=mesa-44';
 
 // Controladores compartilham estado.
 const contexto = { estado };
@@ -26,6 +27,44 @@ contexto.campanhas = criarControladorCampanhas(contexto);
 contexto.combate = criarControladorCombate(contexto);
 contexto.viagem = criarControladorViagem(contexto);
 contexto.utilitarios = criarControladorUtilitarios(contexto);
+
+contexto.conciliarParticipantesMesa = () => {
+    contexto.combate.reconciliarParticipantes();
+    contexto.viagem.reconciliarParticipantes();
+};
+contexto.removerParticipanteMesa = (tipo, ref) => {
+    if (!tipo || !ref) return;
+    estado.referenciasRemovidasMesa.add(`${tipo}:${ref}`);
+    contexto.combate.removerReferencia(tipo, ref);
+    contexto.viagem.removerReferencia(tipo, ref);
+};
+let verificacaoMesa = null;
+let escopoVerificacao = '';
+contexto.revalidarParticipantesMesa = async ({ recarregarNpcs = true } = {}) => {
+    if (!estado.campanhaId || !estado.usuario) return;
+    const campanhaId = estado.campanhaId;
+    const versaoSessao = estado.versaoSessao;
+    const escopo = `${estado.usuario.id}:${campanhaId}:${versaoSessao}`;
+    if (verificacaoMesa && escopoVerificacao === escopo) return verificacaoMesa;
+    const tarefa = (async () => {
+        // Sincronizar cada fonte de forma independente; erro de rede não é lista vazia.
+        const consultas = [];
+        if (!estado.modoLocal) estado.catalogoJogadoresConfirmado = false;
+        if (recarregarNpcs) consultas.push(contexto.npcs.carregarCampanha());
+        if (!estado.modoLocal) consultas.push(atualizarCatalogoPersonagens({ estado, campanhas: contexto.campanhas }));
+        const resultados = await Promise.allSettled(consultas);
+        const falhas = resultados.filter(item => item.status === 'rejected');
+        if (falhas.length && campanhaId === estado.campanhaId && versaoSessao === estado.versaoSessao) {
+            console.warn('Fontes de participantes indisponíveis:', falhas.map(item => item.reason));
+            mostrarAviso('Não foi possível atualizar todos os participantes. As referências não confirmadas foram preservadas.', true);
+        }
+        if (campanhaId === estado.campanhaId && versaoSessao === estado.versaoSessao)
+            contexto.conciliarParticipantesMesa();
+    })();
+    verificacaoMesa = tarefa;
+    escopoVerificacao = escopo;
+    try { await tarefa; } finally { if (verificacaoMesa === tarefa) { verificacaoMesa = null; escopoVerificacao = ''; } }
+};
 
 async function salvarMesa() {
     await contexto.npcs.salvarEdicaoPendente();
@@ -60,6 +99,8 @@ async function iniciar() {
             if (pagina === 'fichas') void contexto.fichas.atualizarVisualizacao();
             if (pagina === 'combate') contexto.combate.atualizar();
             if (pagina === 'viagem') contexto.viagem.atualizar();
+            if (pagina === 'combate' || pagina === 'viagem')
+                void contexto.revalidarParticipantesMesa();
             if (pagina === 'utilitarios') contexto.utilitarios.atualizar();
         },
     });

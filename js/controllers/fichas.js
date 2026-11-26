@@ -102,7 +102,9 @@ export function criarControladorFichas(contexto) {
         if (!await confirmar(`Retirar “${envio.titulo || 'esta ficha'}” da campanha? A ficha continuará salva na conta do jogador.`)) return;
 
         await estado.repositorio.removerEnvio(envio.envio_id);
+        if (envio.ficha_id) contexto.removerParticipanteMesa?.('jogador', envio.ficha_id);
         await contexto.campanhas.atualizarConteudoCampanha();
+        await contexto.revalidarParticipantesMesa?.({ recarregarNpcs: false });
         mostrarAviso('Ficha retirada da campanha, sem apagar a ficha do jogador.');
     }
 

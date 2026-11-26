@@ -188,6 +188,9 @@ export function criarControladorCampanhas(contexto) {
         estado.participantes = [];
         estado.envios = [];
         estado.personagensAprovados = [];
+        estado.catalogoJogadoresConfirmado = false;
+        estado.catalogoDiretoConfirmado = false;
+        if (mudou) estado.referenciasRemovidasMesa = new Set();
         estado.versaoCampanha++;
         if (mudou) {
             await Promise.all([contexto.diario.carregarRascunho(), contexto.npcs.carregarCampanha()]);
@@ -285,8 +288,20 @@ export function criarControladorCampanhas(contexto) {
 
         if (!await confirmar(`Excluir “${participante.jogadorNome}” da mesa? Todos os personagens enviados por esse jogador serão retirados desta campanha. As fichas continuarão salvas na conta do jogador.`)) return;
 
+        // Registra as fichas da pessoa antes que as RPCs removam seus vínculos.
+        const enviosPorId = new Map(estado.envios.map(envio => [envio.envio_id, envio]));
+        const refs = new Set(estado.participantes
+            .filter(item => item.jogador_id === participante.jogadorId)
+            .map(item => item.ficha_id || enviosPorId.get(item.envio_id)?.ficha_id)
+            .filter(Boolean));
+        for (const envio of estado.envios)
+            if (envio.jogador_id === participante.jogadorId && envio.ficha_id) refs.add(envio.ficha_id);
+        for (const ficha of estado.personagensAprovados)
+            if (ficha.jogador_id === participante.jogadorId && ficha.ficha_id) refs.add(ficha.ficha_id);
         await estado.repositorio.excluirJogador(estado.campanhaId, participante.jogadorId);
+        for (const ref of refs) contexto.removerParticipanteMesa?.('jogador', ref);
         await atualizarConteudoCampanha();
+        await contexto.revalidarParticipantesMesa?.({ recarregarNpcs: false });
         mostrarAviso('Jogador excluído da mesa. Suas fichas pessoais foram preservadas.');
     }
 

@@ -13,11 +13,20 @@ export async function atualizarCatalogoPersonagens({ estado, campanhas }) {
         : Promise.reject(new Error('Catálogo dedicado indisponível.'));
     const [legado, direto] = await Promise.allSettled([carregarLegado, carregarDireto]);
     if (estado.campanhaId !== campanhaId || estado.versaoSessao !== versaoSessao) return;
-    if (direto.status === 'fulfilled')
-        estado.personagensAprovados = Array.isArray(direto.value) ? direto.value : [];
-    if (legado.status === 'rejected' && direto.status === 'rejected') {
+    // Não reaproveitar resultados de RPC anterior se a consulta atual falhou.
+    const diretoValido = direto.status === 'fulfilled' && Array.isArray(direto.value);
+    estado.catalogoDiretoConfirmado = diretoValido;
+    estado.personagensAprovados = diretoValido ? direto.value : [];
+    if (legado.status === 'rejected' && !diretoValido) {
         throw new Error(`Não foi possível carregar os personagens: ${legado.reason?.message || direto.reason?.message || 'erro de conexão'}`);
     }
     // Uma RPC ausente em versões anteriores do BD é tolerada, pois a consulta
     // antiga continua disponível. Não inserir personagens sem aprovação.
+    // A consulta legada é um fallback de exibição; só a fonte dedicada
+    // é completa o suficiente para autorizar remoções automáticas.
+    estado.catalogoJogadoresConfirmado = diretoValido;
+    if (diretoValido) {
+        for (const ficha of direto.value)
+            if (ficha?.ficha_id) estado.referenciasRemovidasMesa?.delete(`jogador:${ficha.ficha_id}`);
+    }
 }

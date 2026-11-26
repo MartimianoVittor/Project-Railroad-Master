@@ -3,6 +3,7 @@ import { confirmar, informar } from '../core/dialogos.js?v=mesa-44';
 import { elemento, porId } from '../core/dom.js?v=mesa-44';
 import { mostrarAviso } from '../core/feedback.js?v=mesa-44';
 import { listarPersonagensDisponiveis } from '../modules/personagensCampanha.js?v=mesa-44';
+import { catalogosConfirmadosMesa, filtrarParticipantesDesvinculados, filtrarReferenciaRemovida } from '../modules/participantesMesa.js?v=mesa-44';
 import { criarGrupo, distanciaDoDia, normalizarViagens, novoId, inteiroNaoNegativo } from '../modules/viagem/modelo.js?v=mesa-44';
 import { mostrarPainelViagem } from '../modules/viagem/painel.js?v=mesa-44';
 import { iniciarSeletorViajante } from '../modules/viagem/seletorViajante.js?v=mesa-44';
@@ -43,6 +44,7 @@ export function criarControladorViagem({ estado, campanhas }) {
             selecionado = '';
             renderizar();
         },
+        aoCarregar: () => reconciliarParticipantes(),
         temConteudo: conteudo => Array.isArray(conteudo?.viagens) && conteudo.viagens.length > 0,
         preservarLocal,
         aoBloqueio: bloqueado => { porId('vg-sincronizar').hidden = !bloqueado; },
@@ -69,8 +71,38 @@ export function criarControladorViagem({ estado, campanhas }) {
                 dados = normalizarViagens(null);
             }
         }
+        reconciliarParticipantes();
         renderizar();
         void sincronizador.ativar();
+    }
+
+    /** Remove referências inválidas de TODAS as viagens e grupos, sem alterar o progresso. */
+    function filtrarViajantes(filtro) {
+        if (!chaveArmazenamento || !estado.campanhaId) return 0;
+        let total = 0;
+        for (const viagemAtual of dados.viagens) {
+            for (const grupoAtual of viagemAtual.grupos) {
+                const { itens, removidos } = filtro(grupoAtual.viajantes);
+                if (!removidos.length) continue;
+                grupoAtual.viajantes = itens;
+                total += removidos.length;
+                if (removidos.some(item => item.id === selecionado)) selecionado = '';
+                for (const item of removidos) fichasPorViajante.delete(item.id);
+            }
+        }
+        if (total) { salvar(); renderizar(); }
+        return total;
+    }
+
+    function reconciliarParticipantes() {
+        const conjuntos = catalogosConfirmadosMesa(estado);
+        return filtrarViajantes(registros => filtrarParticipantesDesvinculados(registros, conjuntos));
+    }
+
+    function removerReferencia(tipo, ref) {
+        if (!estado.campanhaId || !estado.usuario?.id) return 0;
+        if (chaveArmazenamento !== `railroad-viagens:v2:${estado.usuario.id}:${estado.campanhaId}`) atualizar();
+        return filtrarViajantes(registros => filtrarReferenciaRemovida(registros, tipo, ref));
     }
 
     function renderizar() {
@@ -326,6 +358,8 @@ export function criarControladorViagem({ estado, campanhas }) {
     }
     return {
         atualizar,
-        iniciarEventos
+        iniciarEventos,
+        reconciliarParticipantes,
+        removerReferencia,
     };
 }

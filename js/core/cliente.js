@@ -26,15 +26,26 @@ export function exigir(resultado) {
     return resultado.data;
 }
 
+/** Uma sessão já encerrada não representa falha de logout ou de inicialização. */
+export function ehSessaoAusente(erro) {
+    return erro?.name === 'AuthSessionMissingError'
+        || erro?.code === 'session_not_found';
+}
+
 export async function iniciarAutenticacao(cliente, aoAlterar) {
     cliente.auth.onAuthStateChange((evento, sessao) => {
         if (['INITIAL_SESSION', 'SIGNED_IN', 'SIGNED_OUT'].includes(evento))
             queueMicrotask(() => { void aoAlterar(sessao?.user ?? null); });
     });
 
-    const { data, error } = await cliente.auth.getSession();
-    if (error) throw error;
-    await aoAlterar(data.session?.user ?? null);
+    try {
+        const { data, error } = await cliente.auth.getSession();
+        if (error) throw error;
+        await aoAlterar(data?.session?.user ?? null);
+    } catch (erro) {
+        if (!ehSessaoAusente(erro)) throw erro;
+        await aoAlterar(null);
+    }
 }
 
 export async function entrarComGoogle(cliente) {
@@ -46,6 +57,17 @@ export async function entrarComGoogle(cliente) {
 }
 
 export async function sairDaConta(cliente) {
-    const { error } = await cliente.auth.signOut();
-    if (error) throw error;
+    try {
+        // Não solicitar um logout remoto quando a sessão já foi encerrada.
+        const { data, error } = await cliente.auth.getSession();
+        if (error) throw error;
+        if (!data?.session) return;
+
+        const { error: erroSaida } = await cliente.auth.signOut();
+        if (erroSaida) throw erroSaida;
+    } catch (erro) {
+        // O Supabase também pode lançar esse erro durante refresh ou signOut.
+        // Erros de conexão, autorização e outros erros continuam sendo propagados.
+        if (!ehSessaoAusente(erro)) throw erro;
+    }
 }

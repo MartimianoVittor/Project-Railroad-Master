@@ -93,6 +93,8 @@ export function iniciarSessao(contexto, conta, armazenamento, conectarCliente = 
                 return;
             }
             await sairDaConta(estado.cliente);
+            // Mesmo sem evento SIGNED_OUT (sessão expirada), limpar a mesa localmente.
+            await quandoSessaoMudar(null);
         }));
 
     async function conectar() {

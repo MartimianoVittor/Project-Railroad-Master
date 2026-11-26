@@ -51,11 +51,13 @@ test('imports de CSS locais são resolvidos e versionados', () => {
     }
 });
 
-test('retratos padrão em WebP existem e são menores que os PNGs originais', () => {
+test('retratos padrão usam WebP otimizado, sem PNGs duplicados', () => {
     for (const base of ['imagemJogadorPlaceholder', 'imagemPersonagemPlaceholder']) {
         const png = join(raiz, 'assets', 'imgs', `${base}.png`);
         const webp = join(raiz, 'assets', 'imgs', `${base}.webp`);
-        assert.ok(existsSync(png) && existsSync(webp));
-        assert.ok(statSync(webp).size < statSync(png).size / 4);
+        assert.ok(existsSync(webp), `Retrato ausente: ${webp}`);
+        assert.ok(statSync(webp).size > 0 && statSync(webp).size < 1_000_000,
+            `Retrato WebP maior que o limite esperado: ${webp}`);
+        assert.equal(existsSync(png), false, `PNG redundante voltou à distribuição: ${png}`);
     }
 });

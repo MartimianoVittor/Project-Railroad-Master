@@ -1,8 +1,8 @@
-import { confirmar } from '../core/dialogos.js?v=mesa-39';
-import { agruparParticipantes } from '../modules/participantes.js?v=mesa-39';
-import { executar, mostrarAviso } from '../core/feedback.js?v=mesa-39';
-import { porId, elemento, mensagemLista, dataBreve, botaoAcao } from '../core/dom.js?v=mesa-39';
-import { UUID, ESTADOS_CONVITE, ESTADOS_FICHA } from '../app/estado.js?v=mesa-39';
+import { confirmar } from '../core/dialogos.js?v=mesa-44';
+import { agruparParticipantes } from '../modules/participantes.js?v=mesa-44';
+import { executar, mostrarAviso } from '../core/feedback.js?v=mesa-44';
+import { porId, elemento, mensagemLista, dataBreve, botaoAcao } from '../core/dom.js?v=mesa-44';
+import { UUID, ESTADOS_CONVITE, ESTADOS_FICHA } from '../app/estado.js?v=mesa-44';
 
 /** Prioriza a campanha ativa sem modificar a ordem dos registros restantes. */
 export function ordenarCampanhas(campanhas, idAtivo) {
@@ -187,6 +187,7 @@ export function criarControladorCampanhas(contexto) {
         estado.campanhaId = id;
         estado.participantes = [];
         estado.envios = [];
+        estado.personagensAprovados = [];
         estado.versaoCampanha++;
         if (mudou) {
             await Promise.all([contexto.diario.carregarRascunho(), contexto.npcs.carregarCampanha()]);
@@ -217,6 +218,7 @@ export function criarControladorCampanhas(contexto) {
             estado.campanhaId = null;
             estado.participantes = [];
             estado.envios = [];
+            estado.personagensAprovados = [];
             estado.versaoCampanha++;
             await Promise.all([contexto.diario.carregarRascunho(), contexto.npcs.carregarCampanha()]);
             listarCampanhas();

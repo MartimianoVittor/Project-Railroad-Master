@@ -1,10 +1,10 @@
-import { imagemSegura } from '../services/imagensStorage.js?v=mesa-39';
+import { imagemSegura } from '../services/imagensStorage.js?v=mesa-44';
 /**
  * Visualização somente leitura das três partes da ficha do Railroad Jogador.
  * Não cria controles editáveis nem interpreta HTML recebido dos jogadores.
  * O quadro de ideias não faz parte dos dados solicitados pela RPC do Mestre.
  */
-import { ARMAS, CONDICOES, DISTANCIAS, TRACOS, nivelTraco } from './ficha/campos.js?v=mesa-39';
+import { ARMAS, CONDICOES, DISTANCIAS, TRACOS, nivelTraco } from './ficha/campos.js?v=mesa-44';
 
 export { nivelTraco };
 

@@ -14,8 +14,8 @@ test('o painel não reserva rodapé desktop e o estilo novo carrega após os dem
     const css = ler('css/layout.css');
     assert.match(css, /\.painel\s*\{[^}]*padding-bottom:\s*0;/);
     const html = ler('index.html');
-    assert.ok(html.indexOf('css/desktop-viewport.css') < html.indexOf('css/avisos-flutuantes.css'));
-    assert.match(html, /css\/avisos-flutuantes\.css\?v=mesa-39/);
+    assert.ok(html.indexOf('css/viewport-colunas.css') < html.indexOf('css/avisos-flutuantes.css'));
+    assert.match(html, /css\/avisos-flutuantes\.css\?v=mesa-44/);
 });
 
 test('avisos mobile respeitam espaço da navegação inferior', () => {

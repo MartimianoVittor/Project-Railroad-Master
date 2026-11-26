@@ -1,14 +1,14 @@
 /* NPCs: lista lateral, consulta e edição de fichas privadas do Mestre. */
 .pagina-npcs { display: flex; flex-direction: column; gap: .75rem; }
-.barra-npcs {
-    display: flex;
+/* Avisos excepcionais aparecem dentro da lista, não em uma barra externa. */
+.painel-lista-npcs > .npc-contexto-alerta:not([hidden]) {
     flex: 0 0 auto;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: .5rem 1rem;
+    margin: 0;
+    padding: .55rem .65rem;
+    border-left: 3px solid #8b5d2e;
+    background: #f0e2c6;
+    font: .76rem/1.45 Georgia, serif;
 }
-.barra-npcs .instrucao-contextual { margin: 0; }
 .grade-npcs {
     display: grid;
     grid-template-columns: minmax(240px, .32fr) minmax(0, 1fr);
@@ -107,7 +107,6 @@
 }
 
 @media (max-width: 640px) {
-    .barra-npcs .botao { flex: 1 1 auto; }
     .grade-campos-npc, .grade-tracos-npc { grid-template-columns: minmax(0, 1fr); }
     .acoes-ficha-npc { width: 100%; }
     .acoes-ficha-npc .botao { flex: 1 1 auto; }

@@ -5,7 +5,7 @@ const ler = nome => readFileSync(new URL(`../${nome}`, import.meta.url), 'utf8')
 
 test('o layout dos cartões ocupa a viewport em qualquer largura desktop', () => {
     const html = ler('index.html');
-    assert.match(html, /css\/viewport-colunas\.css\?v=mesa-39/);
+    assert.match(html, /css\/viewport-colunas\.css\?v=mesa-44/);
     assert.doesNotMatch(html, /href="css\/(?:rolagem-colunas|encaixe-desktop)\.css/);
     assert.ok(html.indexOf('css/mobile-mestre.css') < html.indexOf('css/viewport-colunas.css'));
 });

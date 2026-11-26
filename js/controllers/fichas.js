@@ -1,7 +1,7 @@
-import { confirmar } from '../core/dialogos.js?v=mesa-39';
-import { criarParteFicha, PARTES_FICHA } from '../modules/visualizarFicha.js?v=mesa-39';
-import { mostrarAviso } from '../core/feedback.js?v=mesa-39';
-import { porId, elemento } from '../core/dom.js?v=mesa-39';
+import { confirmar } from '../core/dialogos.js?v=mesa-44';
+import { criarParteFicha, PARTES_FICHA } from '../modules/visualizarFicha.js?v=mesa-44';
+import { mostrarAviso } from '../core/feedback.js?v=mesa-44';
+import { porId, elemento } from '../core/dom.js?v=mesa-44';
 
 /**
  * Seleção individual (três colunas) e comparação horizontal (uma parte de cada ficha).

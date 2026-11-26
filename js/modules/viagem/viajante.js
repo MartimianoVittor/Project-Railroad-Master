@@ -1,6 +1,6 @@
-import { imagemSegura } from '../../services/imagensStorage.js?v=mesa-39';
-import { porId, elemento } from '../../core/dom.js?v=mesa-39';
-import { inteiroNaoNegativo, formatarNumero } from './modelo.js?v=mesa-39';
+import { imagemSegura } from '../../services/imagensStorage.js?v=mesa-44';
+import { porId, elemento } from '../../core/dom.js?v=mesa-44';
+import { inteiroNaoNegativo, formatarNumero } from './modelo.js?v=mesa-44';
 
 function secao(titulo, classe) {
     const cartao = elemento('section', `vg-ficha-cartao ${classe}`);

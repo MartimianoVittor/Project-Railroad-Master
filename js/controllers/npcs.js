@@ -1,14 +1,14 @@
-import { confirmar } from '../core/dialogos.js?v=mesa-39';
-import { listarNpcsRemotos, gravarNpcRemoto, apagarNpcRemoto } from '../services/conteudoCampanha.js?v=mesa-39';
-import { porId, elemento, mensagemLista } from '../core/dom.js?v=mesa-39';
-import { iniciarFormularioNpc, lerFormulario, nivelNoFormulario, preencherFormulario, mostrarRetrato } from '../modules/formularioNpc.js?v=mesa-39';
-import { ARQUETIPOS_NPC, sortearDadosNpc } from '../modules/npcs/gerador.js?v=mesa-39';
-import { rolarTraco } from '../modules/rolagem.js?v=mesa-39';
-import { mostrarAviso, executar } from '../core/feedback.js?v=mesa-39';
+import { confirmar } from '../core/dialogos.js?v=mesa-44';
+import { listarNpcsRemotos, gravarNpcRemoto, apagarNpcRemoto } from '../services/conteudoCampanha.js?v=mesa-44';
+import { porId, elemento, mensagemLista } from '../core/dom.js?v=mesa-44';
+import { iniciarFormularioNpc, lerFormulario, nivelNoFormulario, preencherFormulario, mostrarRetrato } from '../modules/formularioNpc.js?v=mesa-44';
+import { ARQUETIPOS_NPC, sortearDadosNpc } from '../modules/npcs/gerador.js?v=mesa-44';
+import { rolarTraco } from '../modules/rolagem.js?v=mesa-44';
+import { mostrarAviso, executar } from '../core/feedback.js?v=mesa-44';
 import {
     LIMITE_NPCS,
     TRACOS_NPC, criarNpc, normalizarNpc, validarNpc,
-} from '../modules/npcs.js?v=mesa-39';
+} from '../modules/npcs.js?v=mesa-44';
 
 /** Criação, consulta, edição e exclusão de NPCs da campanha ativa. */
 export function criarControladorNpcs({ estado }, {
@@ -167,9 +167,15 @@ export function criarControladorNpcs({ estado }, {
         porId('editar-npc').disabled = !habilitado || !podeGravarRemoto();
         porId('excluir-npc').disabled = !habilitado || !podeGravarRemoto();
         porId('buscar-npc').disabled = !habilitado;
-        porId('contexto-npcs').textContent = !habilitado
-            ? 'Selecione uma campanha para criar NPCs.'
-            : !podeGravarRemoto() ? 'Sem confirmação da nuvem. Cópia local disponível apenas para consulta; tente recarregar a campanha.' : '';
+        // A lista e o cartão vazio já orientam quando não há campanha.
+        // Exibir o aviso somente se os NPCs estiverem disponíveis apenas para leitura;
+        // não reservar uma faixa vazia acima dos cartões primários.
+        const contextoNpc = porId('contexto-npcs');
+        const avisoLocal = habilitado && !podeGravarRemoto()
+            ? 'Sem confirmação da nuvem. Cópia local disponível apenas para consulta; tente recarregar a campanha.'
+            : '';
+        contextoNpc.textContent = avisoLocal;
+        contextoNpc.hidden = !avisoLocal;
     }
 
     async function carregarCampanha() {

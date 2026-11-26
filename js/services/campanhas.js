@@ -1,5 +1,5 @@
-import { obterImagensStorage } from './imagensStorage.js?v=mesa-39';
-import { exigir } from '../core/cliente.js?v=mesa-39';
+import { obterImagensStorage } from './imagensStorage.js?v=mesa-44';
+import { exigir } from '../core/cliente.js?v=mesa-44';
 
 /**
  * O Mestre acessa campanhas exclusivamente por RPCs autenticadas.
@@ -31,6 +31,11 @@ export function criarRepositorioCampanhas(cliente) {
         }),
 
         listarEnvios: (campanhaId) => chamar('listar_fichas_campanha_mestre', {
+            p_campanha_id: campanhaId,
+        }),
+
+        // RPC dedicada: retorna ficha_id e nomes já vinculados e aprovados.
+        listarPersonagensAprovados: (campanhaId) => chamar('listar_personagens_aprovados_mestre', {
             p_campanha_id: campanhaId,
         }),
 

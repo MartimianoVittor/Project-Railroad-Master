@@ -1,5 +1,5 @@
-import { imagemSegura } from '../../services/imagensStorage.js?v=mesa-39';
-import { ARMAS, DISTANCIAS, TRACOS, nivelTraco } from '../ficha/campos.js?v=mesa-39';
+import { imagemSegura } from '../../services/imagensStorage.js?v=mesa-44';
+import { ARMAS, DISTANCIAS, TRACOS, nivelTraco } from '../ficha/campos.js?v=mesa-44';
 
 export const RETRATO_PADRAO = 'assets/imgs/imagemPersonagemPlaceholder.webp';
 

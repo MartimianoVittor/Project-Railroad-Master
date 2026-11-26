@@ -1,9 +1,9 @@
 import {
     colunasDaGrade, alturaInicialCartao, escolherTamanhoHorizontal,
     passoInteiro, ESPACAMENTO_GRADE as GAP, MIN_LADO_CARTAO,
-} from '../gradeConsultas.js?v=mesa-39';
-import { MECANICAS_POR_ID } from '../catalogoRegras.js?v=mesa-39';
-import { montarCartao } from './cartao.js?v=mesa-39';
+} from '../gradeConsultas.js?v=mesa-44';
+import { MECANICAS_POR_ID } from '../catalogoRegras.js?v=mesa-44';
+import { montarCartao } from './cartao.js?v=mesa-44';
 
 export function criarMedidorGrade(painel, grade) {
     let larguraGrade = 0;

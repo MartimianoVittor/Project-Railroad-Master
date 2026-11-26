@@ -1,11 +1,11 @@
-import { confirmar } from '../core/dialogos.js?v=mesa-39';
-import { elemento as criar } from '../core/dom.js?v=mesa-39';
-import { MECANICAS, MECANICAS_POR_ID, CATEGORIAS_REGRAS, CONSULTAS_PADRAO } from '../modules/catalogoRegras.js?v=mesa-39';
-import { encaixarCartoes, alturaInicialCartao, passoInteiro, MAX_LINHAS_GRADE, ESPACAMENTO_GRADE as GAP, MIN_LADO_CARTAO } from '../modules/gradeConsultas.js?v=mesa-39';
-import { montarCartao, ajustarEscalaConteudo } from '../modules/utilitarios/cartao.js?v=mesa-39';
-import { criarMedidorGrade } from '../modules/utilitarios/medidas.js?v=mesa-39';
-import { copiarCartoes, paraCartoes, nomeSeguro, idNovo, MAX_CARTOES } from '../modules/utilitarios/consultas.js?v=mesa-39';
-import { chaveConsultas, carregarConsultas, gravarConsultas } from '../services/consultasLocal.js?v=mesa-39';
+import { confirmar } from '../core/dialogos.js?v=mesa-44';
+import { elemento as criar } from '../core/dom.js?v=mesa-44';
+import { MECANICAS, MECANICAS_POR_ID, CATEGORIAS_REGRAS, CONSULTAS_PADRAO } from '../modules/catalogoRegras.js?v=mesa-44';
+import { encaixarCartoes, alturaInicialCartao, passoInteiro, MAX_LINHAS_GRADE, ESPACAMENTO_GRADE as GAP, MIN_LADO_CARTAO } from '../modules/gradeConsultas.js?v=mesa-44';
+import { montarCartao, ajustarEscalaConteudo } from '../modules/utilitarios/cartao.js?v=mesa-44';
+import { criarMedidorGrade } from '../modules/utilitarios/medidas.js?v=mesa-44';
+import { copiarCartoes, paraCartoes, nomeSeguro, idNovo, MAX_CARTOES } from '../modules/utilitarios/consultas.js?v=mesa-44';
+import { chaveConsultas, carregarConsultas, gravarConsultas } from '../services/consultasLocal.js?v=mesa-44';
 
 function normalizar(valor) {
     return String(valor || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();

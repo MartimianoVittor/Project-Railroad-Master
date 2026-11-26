@@ -1,9 +1,9 @@
-import { imagemSegura } from '../services/imagensStorage.js?v=mesa-39';
+import { imagemSegura } from '../services/imagensStorage.js?v=mesa-44';
 /** Modelo das fichas privadas de NPCs, sem dependências de interface ou banco. */
 import {
     ARMAS as ARMAS_NPC, CONDICOES as CONDICOES_NPC,
     DISTANCIAS as DISTANCIAS_NPC, TRACOS as TRACOS_NPC,
-} from './ficha/campos.js?v=mesa-39';
+} from './ficha/campos.js?v=mesa-44';
 
 export { ARMAS_NPC, CONDICOES_NPC, DISTANCIAS_NPC, TRACOS_NPC };
 

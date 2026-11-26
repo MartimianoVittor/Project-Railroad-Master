@@ -1,5 +1,6 @@
 import test from 'node:test';
 import { codigoDaArea } from './apoio/fontes.mjs';
+import { testarMigracaoLocal } from './apoio/migracoes-locais.mjs';
 import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -51,7 +52,8 @@ test('não restaram dependências funcionais do compartilhamento antigo SQL 003'
     }
 });
 
-test('as RPCs chamadas pelo Mestre existem nas migrações 003 a 006', () => {
+testarMigracaoLocal('as RPCs chamadas pelo Mestre existem nas migrações 003 a 006',
+    ['003.sql', '004.sql', '005.sql', '006.sql'], () => {
     const servico = ler('js/services/campanhas.js');
     const migracao = ['003.sql', '004.sql', '005.sql', '006.sql'].map((nome) => ler(`supabase/${nome}`)).join('\n');
     const funcoes = [...servico.matchAll(/chamar\('([^']+)'/g)].map((encontrado) => encontrado[1]);
@@ -78,7 +80,8 @@ test('aba Campanhas apresenta os campos, textos e ações solicitados', () => {
     }
 });
 
-test('SQL 004 é aditivo, protege a lista de jogadores e preserva fichas pessoais', () => {
+testarMigracaoLocal('SQL 004 é aditivo, protege a lista de jogadores e preserva fichas pessoais',
+    ['004.sql'], () => {
     const sql = ler('supabase/004.sql');
     assert.match(sql, /add column if not exists descricao/);
     assert.match(sql, /campanha\.mestre_id = \(select auth\.uid\(\)\)/);

@@ -3,7 +3,7 @@
  * As opções são sugestões narrativas, não modificam as regras do sistema.
  * Nenhum dado gerado é gravado aqui; persistência fica com o controlador de NPCs.
  */
-import { TRACOS } from '../ficha/campos.js?v=mesa-39';
+import { TRACOS } from '../ficha/campos.js?v=mesa-44';
 
 const NOMES = [
     'Antônio', 'Beatriz', 'Clara', 'Damião', 'Elisa', 'Francisco',

@@ -1,47 +1,43 @@
 /**
- * Railroad Mestre — versão de cache idempotente para GitHub Pages.
- * Ajusta URLs locais de CSS e importações ES nos próprios fontes; não usa bundler.
- * Alterar `cacheVersion` em package.json sempre que houver publicação.
+ * Railroad Mestre — preparação idempotente dos recursos locais para publicação.
+ * Sem compilação: as URLs são padronizadas em seus arquivos de origem.
+ * Execute antes de publicar e registre o resultado no Git.
  */
 import { readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import {
+    versionarImportacoesJs,
+    versionarImportacoesCss,
+    versionarRecursosHtml,
+} from './lib/versionamento.mjs';
 
-const configuracao = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8'));
+const raiz = fileURLToPath(new URL('../', import.meta.url));
+const configuracao = JSON.parse(readFileSync(join(raiz, 'package.json'), 'utf8'));
 const versao = configuracao.cacheVersion;
 if (!/^mesa-\d+$/.test(versao)) throw new Error('cacheVersion inválida em package.json.');
-const raiz = fileURLToPath(new URL('../', import.meta.url));
 
-function arquivos(pasta, extensao) {
-    const saida = [];
-    for (const entrada of readdirSync(join(raiz, pasta), { withFileTypes: true })) {
-        const relativo = join(pasta, entrada.name);
-        if (entrada.isDirectory()) saida.push(...arquivos(relativo, extensao));
-        else if (entrada.name.endsWith(extensao)) saida.push(relativo);
+function listarArquivos(pasta, extensao) {
+    const encontrados = [];
+    for (const item of readdirSync(join(raiz, pasta), { withFileTypes: true })) {
+        const relativo = join(pasta, item.name);
+        if (item.isDirectory()) encontrados.push(...listarArquivos(relativo, extensao));
+        else if (item.name.endsWith(extensao)) encontrados.push(relativo);
     }
-    return saida;
+    return encontrados;
 }
 
 function atualizar(caminho, transformar) {
     const original = readFileSync(join(raiz, caminho), 'utf8');
-    const novo = transformar(original);
-    if (novo !== original) {
-        writeFileSync(join(raiz, caminho), novo, 'utf8');
-        console.log(`Versão de cache atualizada: ${caminho}`);
-    }
+    const atualizado = transformar(original, versao);
+    if (atualizado === original) return false;
+    writeFileSync(join(raiz, caminho), atualizado, 'utf8');
+    console.log(`Versão de cache normalizada: ${caminho}`);
+    return true;
 }
 
-const moduloLocal = /((?:\bfrom\s*|\bimport\s*\(\s*|\bimport\s+)(['"]))([./][^'"\s]+\.js)(?:\?v=mesa-\d+)?\2/g;
-for (const arquivo of arquivos('js', '.js')) {
-    atualizar(arquivo, (fonte) => fonte.replace(moduloLocal,
-        (_, prefixo, aspas, caminho) => `${prefixo}${caminho}?v=${versao}${aspas}`));
-}
-const importacaoCss = /(@import\s+url\(\s*['"]?)(\.[^)'"\s]+\.css)(?:\?v=mesa-\d+)?(['"]?\s*\))/g;
-for (const arquivo of arquivos('css', '.css')) {
-    atualizar(arquivo, (fonte) => fonte.replace(importacaoCss,
-        (_, prefixo, caminho, fim) => `${prefixo}${caminho}?v=${versao}${fim}`));
-}
-const recursoHtml = /((?:href|src)=(['"]))([./\w-][^'"\s]+\.(?:css|js))(?:\?v=mesa-\d+)?\2/g;
-atualizar('index.html', (html) => html.replace(recursoHtml,
-    (_, prefixo, aspas, caminho) => `${prefixo}${caminho}?v=${versao}${aspas}`));
-console.log(`Railroad Mestre — recursos locais preparados para ${versao}.`);
+let alterados = 0;
+for (const arquivo of listarArquivos('js', '.js')) alterados += Number(atualizar(arquivo, versionarImportacoesJs));
+for (const arquivo of listarArquivos('css', '.css')) alterados += Number(atualizar(arquivo, versionarImportacoesCss));
+alterados += Number(atualizar('index.html', versionarRecursosHtml));
+console.log(`Railroad Mestre — ${versao}: ${alterados} arquivo(s) normalizado(s).`);

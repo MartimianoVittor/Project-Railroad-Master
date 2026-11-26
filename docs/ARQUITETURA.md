@@ -4,7 +4,7 @@
 
 O Escudo do Mestre é uma aplicação estática em JavaScript ES Modules, HTML e CSS, compatível com servidor HTTP simples e GitHub Pages. Não há etapa de compilação. O ponto de entrada é `index.html`, que carrega `js/mesa.js`. O módulo `js/core/carregarInterface.js` monta sete páginas de `views/pages/` e três diálogos de `views/dialogs/` antes de inicializar os controladores.
 
-Execute `npm test` para verificar a aplicação. Antes de publicar, execute `npm run preparar:publicacao`; esse comando padroniza as URLs locais de CSS e JavaScript com `cacheVersion`, do `package.json`, e executa os testes. Em Windows/PowerShell, `npm.cmd run preparar:publicacao` evita bloqueios da política de scripts.
+Execute `npm run validar` para verificar referências de recursos, sintaxe JavaScript e testes. Antes de publicar, execute `npm run preparar:publicacao`; esse comando padroniza as URLs locais de CSS e JavaScript com `cacheVersion`, do `package.json`, e executa a validação completa. A operação é idempotente. Em Windows/PowerShell, `npm.cmd run preparar:publicacao` evita bloqueios da política de scripts.
 
 ## Organização do código
 
@@ -52,10 +52,20 @@ O cliente não controla a atomicidade SQL por si só; essa propriedade depende d
 
 ## Personalização visual
 
-`css/tema/`, `assets/tema/` e os estilos em `css/personalizacao.css` mantêm os cartões, botões, molduras e fundos. Imagens padrão de retratos foram convertidas para WebP. Os arquivos PNG originais permanecem compatíveis com históricos antigos e podem ser removidos separadamente após conferência das referências.
+`css/tema/`, `assets/tema/` e os estilos em `css/personalizacao.css` mantêm os cartões, botões, molduras e fundos. Os retratos padrão usam WebP. Os PNGs duplicados, não referenciados pela interface, foram retirados da distribuição após verificação de dependências.
 
 ## Segurança e limites
 
 O frontend pode conter apenas a chave **pública** do Supabase. Não colocar chaves `service_role`, tokens privados ou dados pessoais em arquivos estáticos. As permissões de leitura de fichas de jogadores dependem das funções específicas de compartilhamento e das políticas RLS; a versão do Mestre nunca deve gravar diretamente os dados de fichas privadas de jogadores.
 
 **Verificação em produção:** usar contas de dois mestres, tentar acesso cruzado a sessões, NPCs e estados operacionais e testar uma edição simultânea em duas abas. A auditoria local e os testes Node não são substitutos desses testes de banco.
+
+## Organização dos estilos e recursos (revisão 2026-11)
+
+- `css/combate/` reúne o modal de condições e os ajustes de consulta. No `index.html`, os arquivos continuam carregados depois dos estilos base para preservar a precedência visual.
+- `css/rolagens-personalizadas.css` permanece por último entre as folhas de estilo, respeitando as variáveis de leitura do tema e as barras propositalmente ocultas.
+- As folhas CSS históricas sem referência, o renderizador NPC antigo e recursos gráficos duplicados foram removidos da distribuição. O histórico anterior continua recuperável pelo Git.
+- `scripts/lib/versionamento.mjs` concentra as transformações de URLs de cache, com testes para versões divergentes e referências externas.
+- `scripts/verificar-referencias.mjs` identifica importações e referências locais quebradas, sem inferir que classes construídas dinamicamente estão em desuso.
+
+**Compatibilidade:** `js/modules/sessoes.js` é mantido porque reexporta interfaces usadas em testes e por consumidores antigos. As políticas do Supabase e os testes de permissões reais continuam dependendo das migrações gerenciadas separadamente.

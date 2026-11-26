@@ -5,7 +5,7 @@ import { iniciarMobileMestre } from '../js/modules/mobileMestre.js';
 
 const ler = (caminho) => readFileSync(new URL(`../${caminho}`, import.meta.url), 'utf8');
 
-test('layout mobile cobre as sete páginas, preservando roladores próprios para canvas e consultas', () => {
+test('layout mobile cobre as sete páginas, preservando consultas e abas', () => {
     const css = ler('css/mobile-mestre.css');
     for (const area of ['campanhas', 'diario', 'fichas', 'npcs', 'combate', 'viagem', 'utilitarios']) {
         assert.match(css, new RegExp(`#pagina-${area}`), `Área não encontrada: ${area}`);
@@ -13,12 +13,11 @@ test('layout mobile cobre as sete páginas, preservando roladores próprios para
     assert.match(css, /#navegacao-mobile-mestre:not\(\[hidden\]\)/);
     assert.match(css, /overflow-x: auto/);
     const diario = ler('views/pages/diario.html');
-    assert.match(diario, /class="quadro-viewport-mobile"/);
-    assert.match(diario, /data-quadro-mobile-deslocar="-1"/);
-    assert.match(diario, /data-quadro-mobile-deslocar="1"/);
+    assert.match(diario, /quadro-viewport-mobile/);
+    assert.match(diario, /id="diario-anotacoes"/);
 });
 
-test('navegação mobile recentraliza a aba ativa e setas deslocam apenas a visualização do quadro', () => {
+test('navegação mobile recentraliza a aba ativa sem depender de canvas', () => {
     const original = { document: globalThis.document, window: globalThis.window, requestAnimationFrame: globalThis.requestAnimationFrame };
     const ouvintes = {};
     const botoes = [
@@ -42,10 +41,13 @@ test('navegação mobile recentraliza a aba ativa e setas deslocam apenas a visu
     try {
         iniciarMobileMestre();
         assert.equal(navegacao.scrollLeft, 465);
-        ouvintes.esquerda();
-        assert.equal(quadro.ultimoDeslocamento, -210);
+        // As setas do quadro permanecem funcionais no celular.
+        assert.equal(typeof ouvintes.esquerda, 'function');
+        assert.equal(typeof ouvintes.direita, 'function');
         ouvintes.direita();
         assert.equal(quadro.ultimoDeslocamento, 210);
+        ouvintes.esquerda();
+        assert.equal(quadro.ultimoDeslocamento, -210);
         assert.equal(typeof ouvintes.navegacao, 'function');
     } finally {
         for (const [chave, valor] of Object.entries(original)) {

@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { testarMigracaoLocal } from './apoio/migracoes-locais.mjs';
 import { readFileSync } from 'node:fs';
 import {
     salvarSessoesRemotas, listarSessoesRemotas, gravarNpcRemoto,
@@ -93,7 +94,8 @@ test('exclusão de NPC usa RPC com revisão e rejeita conflito', async () => {
     await apagarNpcRemoto('c', 'npc', 3, conectar(async () => ({ data: true, error: null })));
 });
 
-test('migração 015 revoga escrita direta e exige RPC para exclusão', () => {
+testarMigracaoLocal('migração 015 revoga escrita direta e exige RPC para exclusão',
+    ['015_gravacoes_protegidas_mestre.sql'], () => {
     const sql = readFileSync(new URL('../supabase/015_gravacoes_protegidas_mestre.sql', import.meta.url), 'utf8');
     for (const tabela of ['npcs', 'sessoes', 'estados_mestre', 'diarios_mestre']) {
         assert.match(sql, new RegExp(`REVOKE INSERT, UPDATE, DELETE ON public\.${tabela} FROM authenticated`, 'i'));
@@ -102,7 +104,8 @@ test('migração 015 revoga escrita direta e exige RPC para exclusão', () => {
     assert.match(sql, /mestre_possui_campanha/);
 });
 
-test('migração exige autorização, atomicidade, limites e revisões otimististas', () => {
+testarMigracaoLocal('migração exige autorização, atomicidade, limites e revisões otimististas',
+    ['012_integridade_conteudo_mestre.sql'], () => {
     const sql = readFileSync(new URL('../supabase/012_integridade_conteudo_mestre.sql', import.meta.url), 'utf8');
     for (const nome of ['ler_diario_mestre', 'salvar_diario_mestre', 'salvar_npc_mestre', 'salvar_npcs_combate_mestre']) {
         assert.match(sql, new RegExp(`FUNCTION public\\.${nome}\\(`));

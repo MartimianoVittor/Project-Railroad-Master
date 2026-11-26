@@ -1,7 +1,4 @@
 <section aria-label="NPCs" class="pagina-mestre pagina-npcs" data-pagina-container="npcs" hidden="" id="pagina-npcs">
-    <div class="barra-npcs">
-        <p aria-live="polite" class="instrucao-contextual" id="contexto-npcs">Selecione uma campanha para criar NPCs.</p>
-    </div>
     <div class="grade-npcs">
         <aside aria-label="NPCs da campanha" class="cartao-campanha painel-lista-npcs">
             <div class="cabecalho-lista-npcs">
@@ -13,6 +10,7 @@
                 <label class="sr-only" for="buscar-npc">Buscar NPC pelo nome ou função</label>
                 <input autocomplete="off" id="buscar-npc" placeholder="Buscar por nome ou função..." type="search">
             </div>
+            <p id="contexto-npcs" class="instrucao-contextual npc-contexto-alerta" aria-live="polite" hidden></p>
             <ul aria-label="Fichas de NPCs cadastradas" class="lista-npcs" id="lista-npcs"></ul>
         </aside>
         <section aria-label="Ficha do NPC selecionado" class="cartao-campanha painel-ficha-npc">

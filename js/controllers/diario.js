@@ -1,11 +1,11 @@
-import { confirmar } from '../core/dialogos.js?v=mesa-39';
-import { listarSessoesRemotas, salvarSessoesRemotas } from '../services/conteudoCampanha.js?v=mesa-39';
+import { confirmar } from '../core/dialogos.js?v=mesa-44';
+import { listarSessoesRemotas, salvarSessoesRemotas } from '../services/conteudoCampanha.js?v=mesa-44';
 import {
     criarSessao, duplicarSessao, moverSessao,
     LIMITE_DESCRICAO_SESSAO, LIMITE_NOME_SESSAO, LIMITE_SESSOES,
-} from '../modules/diario/sessoes.js?v=mesa-39';
-import { executar, mostrarAviso } from '../core/feedback.js?v=mesa-39';
-import { porId, elemento } from '../core/dom.js?v=mesa-39';
+} from '../modules/diario/sessoes.js?v=mesa-44';
+import { executar, mostrarAviso } from '../core/feedback.js?v=mesa-44';
+import { porId, elemento } from '../core/dom.js?v=mesa-44';
 
 /** Coordena as sessões do Diário e suas cópias local e remota. */
 export function criarControladorDiario({ estado }, { listar = listarSessoesRemotas, salvar = salvarSessoesRemotas } = {}) {
@@ -41,9 +41,10 @@ export function criarControladorDiario({ estado }, { listar = listarSessoesRemot
 
     function guardarSessaoAtual() {
         const sessao = estado.sessoes.find((item) => item.id === estado.sessaoId);
-        if (!sessao || !estado.quadro) return;
+        if (!sessao) return;
         sessao.notas = porId('diario-anotacoes').value;
-        sessao.quadro = estado.quadro.coletar();
+        // Guardar também o quadro desenhado, sem descartar dados quando não estiver montado.
+        if (estado.quadro) sessao.quadro = estado.quadro.coletar();
     }
 
     function renderizarSeletorSessoes() {

@@ -1,8 +1,8 @@
-import { elemento, botao, porId } from '../../core/dom.js?v=mesa-39';
-import { ARMAS, TRACOS } from '../ficha/campos.js?v=mesa-39';
-import { rolarTraco } from '../rolagem.js?v=mesa-39';
-import { imagemValida, inteiro, RETRATO_PADRAO as imagemPadrao } from './combatentes.js?v=mesa-39';
-import { abrirSeletorCondicoes } from './condicoes.js?v=mesa-39';
+import { elemento, botao, porId } from '../../core/dom.js?v=mesa-44';
+import { ARMAS, TRACOS } from '../ficha/campos.js?v=mesa-44';
+import { rolarTraco } from '../rolagem.js?v=mesa-44';
+import { imagemValida, inteiro, RETRATO_PADRAO as imagemPadrao } from './combatentes.js?v=mesa-44';
+import { abrirSeletorCondicoes } from './condicoes.js?v=mesa-44';
 
 function criarModelo(nome) {
     return porId(`modelo-combate-${nome}`).content.firstElementChild.cloneNode(true);
@@ -108,12 +108,12 @@ function rolagemDeTraco(combatente) {
         const indice = Number(seletorTraco.value.split('-')[1]) - 1;
         const traco = TRACOS[indice];
         if (!traco) {
-            resultado.textContent = 'Selecione um traço';
+            resultado.textContent = '';
             return;
         }
         const { soma } = rolarTraco(inteiro(combatente.tracos[traco], 0, 4));
         const bonus = inteiro(seletorBonus.value, -3, 3);
-        resultado.textContent = `Resultado: ${soma + bonus} (dados ${soma}, modificador ${bonus})`;
+        resultado.textContent = `Resultado: ${Math.trunc(soma + bonus)}`;
     });
     cartaoRolagem.append(rolagem);
     return cartaoRolagem;

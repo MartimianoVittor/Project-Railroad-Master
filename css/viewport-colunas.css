@@ -53,7 +53,7 @@
     }
     /* Os títulos/controles ficam acima da área que deve crescer. */
     #painel .pagina-mestre > :is(
-        .barra-npcs, .barra-sessoes, .barra-consulta-fichas,
+        .barra-sessoes, .barra-consulta-fichas,
         .util-barra-consultas, .combate-barra, .nota-escopo
     ) { flex: 0 0 auto; }
     #painel .pagina-mestre > :is(

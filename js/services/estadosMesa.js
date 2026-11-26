@@ -1,11 +1,11 @@
-import { confirmar } from '../core/dialogos.js?v=mesa-39';
-import { obterImagensStorage, normalizarReferencias } from './imagensStorage.js?v=mesa-39';
+import { confirmar } from '../core/dialogos.js?v=mesa-44';
+import { obterImagensStorage, normalizarReferencias } from './imagensStorage.js?v=mesa-44';
 /**
  * Estados operacionais privados do Mestre (Combate e Viagens).
  * As migrações 007, 008 e 009 devem estar aplicadas no Supabase.
  * Não se escrevem fichas pertencentes aos jogadores.
  */
-import { obterCliente, exigir } from '../core/cliente.js?v=mesa-39';
+import { obterCliente, exigir } from '../core/cliente.js?v=mesa-44';
 
 const TIPOS = new Set(['combate', 'viagens']);
 function validar(tipo, campanhaId) {

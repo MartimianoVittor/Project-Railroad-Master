@@ -1,10 +1,10 @@
-import { confirmar } from '../core/dialogos.js?v=mesa-39';
-import { comProcessamento } from '../core/processamento.js?v=mesa-39';
-import { entrarComGoogle, iniciarAutenticacao, obterCliente, sairDaConta } from '../core/cliente.js?v=mesa-39';
-import { porId } from '../core/dom.js?v=mesa-39';
-import { executar, mostrarAviso } from '../core/feedback.js?v=mesa-39';
-import { criarRepositorioCampanhas } from '../services/campanhas.js?v=mesa-39';
-import { criarRepositorioCampanhasLocal } from '../services/campanhasLocal.js?v=mesa-39';
+import { confirmar } from '../core/dialogos.js?v=mesa-44';
+import { comProcessamento } from '../core/processamento.js?v=mesa-44';
+import { entrarComGoogle, iniciarAutenticacao, obterCliente, sairDaConta } from '../core/cliente.js?v=mesa-44';
+import { porId } from '../core/dom.js?v=mesa-44';
+import { executar, mostrarAviso } from '../core/feedback.js?v=mesa-44';
+import { criarRepositorioCampanhas } from '../services/campanhas.js?v=mesa-44';
+import { criarRepositorioCampanhasLocal } from '../services/campanhasLocal.js?v=mesa-44';
 
 export function iniciarSessao(contexto, conta, armazenamento, conectarCliente = obterCliente) {
     const { estado } = contexto;
@@ -30,6 +30,7 @@ export function iniciarSessao(contexto, conta, armazenamento, conectarCliente = 
         estado.campanhaId = null;
         estado.participantes = [];
         estado.envios = [];
+        estado.personagensAprovados = [];
         estado.npcs = [];
         estado.npcsSincronizados = false;
         estado.rascunhoSujo = false;

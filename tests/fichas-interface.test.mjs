@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { testarMigracaoLocal } from './apoio/migracoes-locais.mjs';
 import { readFileSync } from 'node:fs';
 
 const ler = (arquivo) => readFileSync(new URL(`../${arquivo}`, import.meta.url), 'utf8');
@@ -23,7 +24,8 @@ test('o excesso fica no quadro e nas colunas, sem aumentar a página', () => {
     assert.match(css, /\.quadro-fichas\s*\{[^}]*overflow: hidden/s);
 });
 
-test('SQL 005 impede a leitura integral da ficha e não expõe o quadro de ideias', () => {
+testarMigracaoLocal('SQL 005 impede a leitura integral da ficha e não expõe o quadro de ideias',
+    ['005.sql'], () => {
     const sql = ler('supabase/005.sql');
     assert.match(sql, /drop policy if exists fichas_ler_em_campanhas/);
     assert.match(sql, /campanha\.mestre_id = \(select auth\.uid\(\)\)/);

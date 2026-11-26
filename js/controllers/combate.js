@@ -1,15 +1,16 @@
-import { confirmar, informar } from '../core/dialogos.js?v=mesa-39';
-import { botao, elemento, porId } from '../core/dom.js?v=mesa-39';
-import { mostrarAviso } from '../core/feedback.js?v=mesa-39';
-import { criarCombatente, imagemDaFicha, imagemValida, inteiro, ordemDeIniciativa } from '../modules/combate/combatentes.js?v=mesa-39';
-import { desenharConsultaFicha, registroNpcParaConsulta } from '../modules/combate/consulta.js?v=mesa-39';
-import { mostrarIniciativa } from '../modules/combate/iniciativa.js?v=mesa-39';
-import { criarDetalhe } from '../modules/combate/detalhe.js?v=mesa-39';
-import { listarPersonagensDisponiveis } from '../modules/personagensCampanha.js?v=mesa-39';
-import { gravarNpcsCombateRemoto } from '../services/conteudoCampanha.js?v=mesa-39';
-import { criarSincronizadorEstadoMesa } from '../services/estadosMesa.js?v=mesa-39';
+import { confirmar, informar } from '../core/dialogos.js?v=mesa-44';
+import { botao, elemento, porId } from '../core/dom.js?v=mesa-44';
+import { mostrarAviso } from '../core/feedback.js?v=mesa-44';
+import { criarCombatente, imagemDaFicha, imagemValida, inteiro, ordemDeIniciativa } from '../modules/combate/combatentes.js?v=mesa-44';
+import { desenharConsultaFicha, registroNpcParaConsulta } from '../modules/combate/consulta.js?v=mesa-44';
+import { mostrarIniciativa } from '../modules/combate/iniciativa.js?v=mesa-44';
+import { criarDetalhe } from '../modules/combate/detalhe.js?v=mesa-44';
+import { listarPersonagensDisponiveis } from '../modules/personagensCampanha.js?v=mesa-44';
+import { gravarNpcsCombateRemoto } from '../services/conteudoCampanha.js?v=mesa-44';
+import { criarSincronizadorEstadoMesa } from '../services/estadosMesa.js?v=mesa-44';
+import { atualizarCatalogoPersonagens } from '../services/catalogoPersonagens.js?v=mesa-44';
 
-export function criarControladorCombate({ estado }) {
+export function criarControladorCombate({ estado, campanhas }) {
     let combatentes = [];
     let selecionado = null;
     let atual = null;
@@ -307,11 +308,13 @@ export function criarControladorCombate({ estado }) {
         }));
     }
 
+    let erroListagem = '';
+
     async function carregarNomesJogadores() {
         if (!estado.repositorio?.obterFicha || !estado.campanhaId)
             return;
         const campanha = estado.campanhaId;
-        const pendentes = estado.envios.filter(e => e.status === 'aprovada' && e.ficha_id && !nomesJogadores.has(e.ficha_id));
+        const pendentes = obterDisponiveis().filter(e => e.tipo === 'jogador' && !nomesJogadores.has(e.ref)).map(e => ({ ficha_id: e.ref }));
         await Promise.all(pendentes.map(async e => {
             try {
                 const reg = await estado.repositorio.obterFicha(campanha, e.ficha_id);
@@ -329,9 +332,23 @@ export function criarControladorCombate({ estado }) {
     function abrirModal() {
         const modal = porId('combate-modal');
         porId('combate-busca').value = '';
+        erroListagem = '';
         listarDisponiveis();
         modal.showModal();
-        void carregarNomesJogadores();
+        void (async () => {
+            const campanhaId = estado.campanhaId;
+            try {
+                await atualizarCatalogoPersonagens({ estado, campanhas });
+                if (campanhaId !== estado.campanhaId || !modal.open) return;
+                await carregarNomesJogadores();
+                erroListagem = '';
+            } catch (erro) {
+                if (campanhaId !== estado.campanhaId || !modal.open) return;
+                console.warn('Falha ao atualizar personagens do combate:', erro);
+                erroListagem = `Falha ao atualizar fichas da campanha: ${erro.message}`;
+            }
+            if (modal.open && campanhaId === estado.campanhaId) listarDisponiveis();
+        })();
     }
 
     function listarDisponiveis() {
@@ -344,7 +361,11 @@ export function criarControladorCombate({ estado }) {
             area.append(opcao);
         }
         if (!area.children.length)
-            area.append(elemento('p', 'rr-estado-vazio rr-estado-vazio--compacto', 'Nenhum personagem encontrado.'));
+            area.append(elemento('p', 'rr-estado-vazio rr-estado-vazio--compacto',
+                estado.modoLocal ? 'Nenhum NPC disponível no modo local.'
+                    : 'Nenhuma ficha aprovada ou NPC disponível. Confira as aprovações na aba Campanhas.'));
+        if (erroListagem)
+            area.append(elemento('p', 'rr-estado-vazio rr-estado-vazio--compacto', erroListagem));
     }
 
     function passar() {

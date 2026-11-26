@@ -1,6 +1,6 @@
-import { normalizarReferencias } from './imagensStorage.js?v=mesa-39';
-import { criarSessao, normalizarDiario } from '../modules/diario/sessoes.js?v=mesa-39';
-import { criarRepositorioRascunhos } from '../modules/rascunhos.js?v=mesa-39';
+import { normalizarReferencias } from './imagensStorage.js?v=mesa-44';
+import { criarSessao, normalizarDiario } from '../modules/diario/sessoes.js?v=mesa-44';
+import { criarRepositorioRascunhos } from '../modules/rascunhos.js?v=mesa-44';
 
 const PREFIXO = 'railroad_mestre_sessoes:v2';
 

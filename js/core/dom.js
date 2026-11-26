@@ -1,4 +1,4 @@
-import { executar } from './feedback.js?v=mesa-39';
+import { executar } from './feedback.js?v=mesa-44';
 
 export const porId = (id) => document.getElementById(id);
 

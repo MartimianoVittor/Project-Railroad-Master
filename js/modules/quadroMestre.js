@@ -1,5 +1,5 @@
-import { confirmar, solicitar, informar } from '../core/dialogos.js?v=mesa-39';
-import { imagemSegura } from '../services/imagensStorage.js?v=mesa-39';
+import { confirmar, solicitar, informar } from '../core/dialogos.js?v=mesa-44';
+import { imagemSegura } from '../services/imagensStorage.js?v=mesa-44';
 /** Quadro do Mestre, baseado nas ferramentas do Quadro do Railroad Jogador.
  * Desenho livre, borracha, textos, imagens, movimentação e redimensionamento.
  * Cada sessão recebe seu próprio estado, coletado somente pelo controlador.

@@ -1,5 +1,5 @@
-import { porId, elemento } from '../../core/dom.js?v=mesa-39';
-import { inteiroNaoNegativo } from './modelo.js?v=mesa-39';
+import { porId, elemento } from '../../core/dom.js?v=mesa-44';
+import { inteiroNaoNegativo } from './modelo.js?v=mesa-44';
 
 export function iniciarSeletorViajante({ grupo, disponiveis, carregarNomesJogadores, aoConfirmar }) {
     let viajanteEscolhido = '';
@@ -13,7 +13,10 @@ export function iniciarSeletorViajante({ grupo, disponiveis, carregarNomesJogado
             const opcao = elemento('button', 'vg-opcao-viajante' + (viajanteEscolhido === viajante.id ? ' selecionado' : ''), '');
             opcao.type = 'button';
             opcao.setAttribute('aria-pressed', String(viajanteEscolhido === viajante.id));
-            opcao.append(elemento('strong', '', viajante.nome), elemento('small', '', viajante.responsavel));
+            const titulo = elemento('span', 'vg-opcao-identidade', '');
+            titulo.append(elemento('strong', '', viajante.nome),
+                elemento('small', 'vg-opcao-tipo', viajante.tipo === 'npc' ? 'NPC' : 'Jogador'));
+            opcao.append(titulo, elemento('small', 'vg-opcao-responsavel', viajante.responsavel));
             opcao.onclick = () => {
                 viajanteEscolhido = viajante.id;
                 porId('vg-escolhido').textContent = `Selecionado: ${viajante.nome} (${viajante.responsavel})`;
@@ -52,8 +55,12 @@ export function iniciarSeletorViajante({ grupo, disponiveis, carregarNomesJogado
         (alvo ? porId('vg-km-descanso') : porId('vg-busca-viajante')).focus();
         if (!alvo)
             void carregarNomesJogadores().then(() => {
-                if (porId('vg-dialog-viajante').open)
-                    desenharDisponiveis();
+                if (porId('vg-dialog-viajante').open) desenharDisponiveis();
+            }).catch(erro => {
+                if (!porId('vg-dialog-viajante').open) return;
+                desenharDisponiveis();
+                porId('vg-disponiveis').append(elemento('p', 'vg-vazio rr-estado-vazio rr-estado-vazio--compacto',
+                    `Erro ao consultar a campanha: ${erro?.message || 'tente novamente.'}`));
             });
     };
 

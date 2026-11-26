@@ -1,14 +1,15 @@
-import { confirmar, informar } from '../core/dialogos.js?v=mesa-39';
-import { elemento, porId } from '../core/dom.js?v=mesa-39';
-import { mostrarAviso } from '../core/feedback.js?v=mesa-39';
-import { listarPersonagensDisponiveis } from '../modules/personagensCampanha.js?v=mesa-39';
-import { criarGrupo, distanciaDoDia, normalizarViagens, novoId, inteiroNaoNegativo } from '../modules/viagem/modelo.js?v=mesa-39';
-import { mostrarPainelViagem } from '../modules/viagem/painel.js?v=mesa-39';
-import { iniciarSeletorViajante } from '../modules/viagem/seletorViajante.js?v=mesa-39';
-import { mostrarViajante } from '../modules/viagem/viajante.js?v=mesa-39';
-import { criarSincronizadorEstadoMesa } from '../services/estadosMesa.js?v=mesa-39';
+import { atualizarCatalogoPersonagens } from '../services/catalogoPersonagens.js?v=mesa-44';
+import { confirmar, informar } from '../core/dialogos.js?v=mesa-44';
+import { elemento, porId } from '../core/dom.js?v=mesa-44';
+import { mostrarAviso } from '../core/feedback.js?v=mesa-44';
+import { listarPersonagensDisponiveis } from '../modules/personagensCampanha.js?v=mesa-44';
+import { criarGrupo, distanciaDoDia, normalizarViagens, novoId, inteiroNaoNegativo } from '../modules/viagem/modelo.js?v=mesa-44';
+import { mostrarPainelViagem } from '../modules/viagem/painel.js?v=mesa-44';
+import { iniciarSeletorViajante } from '../modules/viagem/seletorViajante.js?v=mesa-44';
+import { mostrarViajante } from '../modules/viagem/viajante.js?v=mesa-44';
+import { criarSincronizadorEstadoMesa } from '../services/estadosMesa.js?v=mesa-44';
 
-export function criarControladorViagem({ estado }) {
+export function criarControladorViagem({ estado, campanhas }) {
     let chaveArmazenamento = '';
     let dados = normalizarViagens(null);
     let selecionado = '';
@@ -151,9 +152,18 @@ export function criarControladorViagem({ estado }) {
     }
 
     async function carregarNomesJogadores() {
-        if (!estado.repositorio?.obterFicha || !estado.campanhaId)
-            return;
+        if (!estado.campanhaId) return;
         const campanha = estado.campanhaId;
+        // Consulta feita quando a janela abre, não apenas na seleção da campanha.
+        if (!estado.modoLocal) {
+            try { await atualizarCatalogoPersonagens({ estado, campanhas }); }
+            catch (erro) {
+                console.warn('Falha ao atualizar personagens da viagem:', erro);
+                mostrarAviso(`Não foi possível consultar as fichas da campanha: ${erro.message}`, true);
+                throw erro;
+            }
+        }
+        if (!estado.repositorio?.obterFicha || campanha !== estado.campanhaId) return;
         const pendentes = disponiveis().filter(viajante => viajante.tipo === 'jogador' && !nomesJogadores.has(viajante.ref));
         await Promise.all(pendentes.map(async viajante => {
             try {

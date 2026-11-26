@@ -4,3 +4,6 @@ node_modules/
 *.zip
 .DS_Store
 .vscode/
+
+# As migrações são administradas fora deste repositório.
+/supabase/

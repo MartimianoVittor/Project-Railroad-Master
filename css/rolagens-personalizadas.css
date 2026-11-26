@@ -1,0 +1,67 @@
+/* Barras de rolagem do Mestre — uma paleta por contexto.
+   As cores --rr-leitura-* são definidas pelas escolhas de fundo do usuário
+   em personalizacao.css e herdadas por todos os painéis e diálogos. */
+:root {
+  --rr-scroll-thumb: var(--rr-leitura-borda, #967048);
+  --rr-scroll-track: var(--rr-leitura-campo, #ead9b8);
+}
+[data-rr-papel] {
+  --rr-scroll-thumb: var(--rr-leitura-borda, #967048);
+  --rr-scroll-track: var(--rr-leitura-campo, #ead9b8);
+}
+
+/* Firefox: uniformiza os elementos roláveis sem modificar overflow. */
+:where(html, body, body *, dialog, dialog *) {
+  scrollbar-color: var(--rr-scroll-thumb) var(--rr-scroll-track);
+}
+/* Regras legadas de Utilitários usavam cores fixas: a paleta escolhida
+   agora prevalece também nas duas listas de Mecânicas. */
+#pagina-utilitarios .util-lista-mecanicas,
+#pagina-utilitarios .util-grade {
+  scrollbar-color: var(--rr-scroll-thumb) var(--rr-scroll-track);
+}
+/* Largura coerente em listas, painéis e diálogos. */
+:where(
+  .pagina-mestre, .painel, .painel-lista-npcs, .lista-npcs,
+  .combate-coluna, .combate-detalhe, .util-lista-mecanicas,
+  .personalizacao-opcoes, .ficha-parte-corpo,
+  dialog, dialog *, textarea, .rr-dialogo-sistema__janela
+) {
+  scrollbar-width: thin;
+}
+
+/* Chromium, Edge e Safari: trilho e puxador ligados à paleta atual. */
+:where(html, body, body *, dialog, dialog *)::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+:where(html, body, body *, dialog, dialog *)::-webkit-scrollbar-track {
+  background: var(--rr-scroll-track);
+  border-radius: 8px;
+}
+:where(html, body, body *, dialog, dialog *)::-webkit-scrollbar-thumb {
+  background: var(--rr-scroll-thumb);
+  border: 2px solid var(--rr-scroll-track);
+  border-radius: 8px;
+}
+:where(html, body, body *, dialog, dialog *)::-webkit-scrollbar-thumb:hover {
+  filter: brightness(1.12);
+}
+:where(html, body, body *, dialog, dialog *)::-webkit-scrollbar-corner {
+  background: var(--rr-scroll-track);
+}
+
+/* Respeitar componentes cuja rolagem foi ocultada intencionalmente:
+   navegação horizontal mobile e colunas da consulta de combate. */
+@media (max-width: 900px) {
+  #navegacao-mobile-mestre { scrollbar-width: none; }
+  #navegacao-mobile-mestre::-webkit-scrollbar { display: none; }
+}
+@media (min-width: 851px) {
+  #pagina-combate :is(.combate-detalhe, .combate-coluna) {
+    scrollbar-width: none;
+  }
+  #pagina-combate :is(.combate-detalhe, .combate-coluna)::-webkit-scrollbar {
+    display: none;
+  }
+}

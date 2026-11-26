@@ -1,0 +1,511 @@
+/* Ajustes pontuais de consulta, viajantes e prévia. */
+@media (min-width: 851px) {
+  /* A altura da barra permanece padronizada; o nome não é cortado. */
+  #pagina-combate .combate-acao {
+    box-sizing: border-box;
+    min-width: 190px;
+    padding-block: 3px;
+    overflow: visible;
+  }
+  #pagina-combate #combate-atual { min-height: 0; }
+  #pagina-combate #combate-atual .combate-ficha-em-acao {
+    min-height: 0;
+    padding: 0;
+    gap: 1px;
+    line-height: 1.12;
+  }
+  #pagina-combate #combate-atual strong,
+  #pagina-combate #combate-atual small {
+    line-height: 1.2;
+    max-width: 100%;
+  }
+  /* Retrato horizontal: usa parte da folga vertical sem forçar rolagem na coluna. */
+  #pagina-combate .combate-identificacao-rolagem .combate-cartao-retrato {
+    display: grid;
+    grid-template-columns: minmax(115px, 44%) minmax(0, 1fr);
+    grid-auto-flow: row;
+    align-content: center;
+    align-items: center;
+    justify-items: start;
+    text-align: left;
+    column-gap: 12px;
+    row-gap: 3px;
+    min-height: clamp(145px, 21vh, 195px);
+    padding: 8px 9px;
+    box-sizing: border-box;
+  }
+  #pagina-combate .combate-identificacao-rolagem .combate-cartao-retrato .combate-poster {
+    grid-column: 1;
+    grid-row: 1 / span 5;
+    width: 100%;
+    max-width: 205px;
+    margin: 0;
+    align-self: center;
+  }
+  #pagina-combate .combate-identificacao-rolagem .combate-cartao-retrato > :not(.combate-poster) {
+    grid-column: 2;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  @media (max-height: 650px) {
+    #pagina-combate .combate-identificacao-rolagem .combate-cartao-retrato {
+      min-height: 0;
+    }
+  }
+  /* Esconder trilhos visuais sem bloquear conteúdo ou navegação. */
+  #pagina-combate .combate-detalhe,
+  #pagina-combate .combate-coluna {
+    scrollbar-width: none;
+  }
+  #pagina-combate .combate-detalhe::-webkit-scrollbar,
+  #pagina-combate .combate-coluna::-webkit-scrollbar { display: none; }
+}
+#vg-dialog-viajante .vg-opcao-viajante {
+  flex-direction: column;
+  min-width: 0;
+}
+#vg-dialog-viajante .vg-opcao-identidade {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 6px;
+  width: 100%;
+  min-width: 0;
+}
+#vg-dialog-viajante .vg-opcao-identidade strong { overflow-wrap: anywhere; }
+#vg-dialog-viajante .vg-opcao-tipo {
+  flex: none;
+  font-weight: 700;
+  white-space: nowrap;
+}
+#vg-dialog-viajante .vg-viajante-escolhido {
+  border: 0;
+  background: transparent;
+  padding: 3px 0;
+  border-radius: 0;
+}
+#previa-mestre .rr-previa-retratos {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+#previa-mestre .rr-previa-botao {
+  align-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 140px;
+  width: min(100%, 220px);
+  min-width: 140px;
+  min-height: 54px;
+  font-size: 14px;
+}
+#previa-mestre .rr-previa-retratos [data-previa-retrato] {
+  flex: 0 1 110px;
+  min-width: 85px;
+}
+@media (max-width: 1050px) {
+  #previa-mestre .rr-previa-botao { flex-basis: 100%; }
+}
+
+/* Aproveita a folga entre Ferimentos e Vantagens na primeira coluna. */
+@media (min-width: 1181px) {
+  #painel #pagina-combate .combate-coluna:first-child {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+  #painel #pagina-combate .combate-coluna:first-child > .combate-identificacao-rolagem {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+    gap: 8px;
+  }
+  #painel #pagina-combate .combate-coluna:first-child .combate-cartao-retrato {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+  #painel #pagina-combate .combate-coluna:first-child .combate-cartao-ferimentos {
+    flex: 0 0 auto;
+  }
+  #painel #pagina-combate .combate-coluna:first-child > .combate-vantagens-alinhadas {
+    flex: 0 0 auto;
+  }
+}
+
+/* Mesa 45: ampliar o cartaz dentro do cartão de identificação expandido. */
+@media (min-width: 1181px) {
+  #painel #pagina-combate .combate-identificacao-rolagem
+  .combate-cartao-retrato .combate-poster.rr-retrato {
+    width: min(100%, 205px);
+    max-width: 205px;
+    max-height: 100%;
+    margin: 0;
+    object-fit: contain;
+  }
+  #painel #pagina-combate .combate-identificacao-rolagem
+  .combate-cartao-retrato {
+    grid-template-columns: minmax(140px, 52%) minmax(0, 1fr);
+  }
+}
+
+/* Consulta de combate: reduzir a rolagem para liberar a arma secundária. */
+@media (min-width: 1181px) {
+  #painel #pagina-combate .combate-coluna:nth-child(2) {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    min-height: 0;
+  }
+  #painel #pagina-combate .combate-coluna:nth-child(2) > .combate-rolagem-compacta {
+    flex: 0 0 auto;
+    min-height: 0;
+    padding: 5px 8px;
+    margin: 0;
+  }
+  #painel #pagina-combate .combate-coluna:nth-child(2)
+  .combate-rolagem-compacta .cartao-rolagem {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 72px 96px;
+    gap: 5px;
+    padding: 0;
+    margin: 0;
+    min-height: 0;
+    align-items: center;
+  }
+  #painel #pagina-combate .combate-coluna:nth-child(2)
+  .combate-rolagem-compacta :is(select, button) {
+    height: 28px;
+    min-height: 28px;
+    max-height: 28px;
+    padding-block: 2px;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  #painel #pagina-combate .combate-coluna:nth-child(2)
+  .combate-rolagem-compacta .cartao-rolagem button {
+    grid-column: auto;
+    width: 100%;
+    min-width: 0;
+    padding-inline: 4px;
+    white-space: nowrap;
+    font-size: 11px;
+  }
+  #painel #pagina-combate .combate-coluna:nth-child(2)
+  .combate-rolagem-compacta .cartao-rolagem output {
+    grid-column: 1 / -1;
+    min-height: 0;
+    padding: 0;
+    margin: 0;
+    line-height: 1.1;
+  }
+  #painel #pagina-combate .combate-coluna:nth-child(2) > .combate-arma {
+    min-height: 0;
+  }
+}
+
+/* Rolar traço na mesma linha dos seletores, com controles mais altos. */
+@media (min-width: 1181px) {
+  #painel #pagina-combate .combate-rolagem-compacta > .cartao-rolagem {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 62px minmax(98px, 112px);
+    gap: 6px;
+    align-items: center;
+  }
+  #painel #pagina-combate .combate-rolagem-compacta > .cartao-rolagem
+  :is(select, .botao-rolar) {
+    height: 34px;
+    min-height: 34px;
+    max-height: 34px;
+    box-sizing: border-box;
+  }
+  #painel #pagina-combate .combate-rolagem-compacta > .cartao-rolagem .botao-rolar {
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: stretch;
+    min-width: 0;
+    width: 100%;
+    margin: 0;
+    padding: 3px 5px;
+    white-space: nowrap;
+  }
+  #painel #pagina-combate .combate-rolagem-compacta > .cartao-rolagem .resultado-rolagem:not(:empty) {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+}
+
+/* Mesa: redistribuir a altura da segunda coluna de consulta. */
+@media (min-width: 1181px) {
+  /* As duas armas não crescem para preencher espaço: deixam-no para a rolagem. */
+  #painel #pagina-combate .combate-coluna:nth-child(2) > .cartao-arma {
+    flex: 0 0 auto;
+    height: auto;
+    min-height: 0;
+    padding: 7px 9px 5px;
+    gap: 2px;
+    margin: 0;
+  }
+  #painel #pagina-combate .combate-coluna:nth-child(2) > .cartao-arma .bonus-distancias {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    gap: 3px;
+  }
+  #painel #pagina-combate .combate-coluna:nth-child(2) > .cartao-arma .bonus-distancia {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+  /* A rolagem recebe a folga recuperada sem reduzir os controles. */
+  #painel #pagina-combate .combate-coluna:nth-child(2) > .combate-rolagem-compacta {
+    flex: 1 1 auto;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    padding: 7px 9px;
+  }
+  #painel #pagina-combate .combate-coluna:nth-child(2) > .combate-rolagem-compacta > .cartao-rolagem {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+/* Reequilíbrio: rolagem compacta; armas preenchem a coluna com respiro inferior. */
+@media (min-width: 1181px) {
+  #painel #pagina-combate .combate-coluna:nth-child(2) > .combate-rolagem-compacta {
+    flex: 0 0 auto;
+    min-height: 0;
+    height: auto;
+    padding: 9px 10px;
+    display: block;
+  }
+  #painel #pagina-combate .combate-coluna:nth-child(2) > .combate-rolagem-compacta > .cartao-rolagem {
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+  }
+  #painel #pagina-combate .combate-coluna:nth-child(2) > .combate-rolagem-compacta .resultado-rolagem:empty {
+    display: none;
+  }
+  #painel #pagina-combate .combate-coluna:nth-child(2) > .cartao-arma {
+    flex: 1 1 0;
+    min-height: 0;
+    height: auto;
+    padding: 9px 10px 11px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+  }
+  #painel #pagina-combate .combate-coluna:nth-child(2) > .cartao-arma .bonus-distancias {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+}
+
+/* Equilíbrio refinado: rolagem intermediária e armas proporcionais. */
+@media (min-width: 1181px) {
+  #painel #pagina-combate .combate-coluna:nth-child(2) > .combate-rolagem-compacta {
+    flex: 0 0 clamp(82px, 23%, 112px);
+    min-height: 82px;
+    max-height: 112px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 10px;
+  }
+  #painel #pagina-combate .combate-coluna:nth-child(2) > .combate-rolagem-compacta > .cartao-rolagem {
+    width: 100%;
+    align-items: center;
+  }
+  #painel #pagina-combate .combate-coluna:nth-child(2) > .cartao-arma {
+    flex: 1 1 0;
+    min-height: 0;
+    padding: 9px 10px 10px;
+    justify-content: center;
+    gap: 4px;
+  }
+}
+
+/* Rolagem: dois seletores na primeira linha, botão ocupando toda a largura abaixo. */
+@media (min-width: 1181px) {
+  #painel #pagina-combate .combate-rolagem-compacta > .cartao-rolagem {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 76px;
+    grid-template-rows: 32px 34px auto;
+    align-content: center;
+    align-items: stretch;
+    gap: 6px;
+    width: 100%;
+  }
+  #painel #pagina-combate .combate-rolagem-compacta > .cartao-rolagem > label {
+    display: none;
+  }
+  #painel #pagina-combate .combate-rolagem-compacta > .cartao-rolagem > select {
+    height: 32px;
+    min-height: 32px;
+    max-height: 32px;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  #painel #pagina-combate .combate-rolagem-compacta > .cartao-rolagem > select:first-of-type {
+    grid-column: 1; grid-row: 1;
+  }
+  #painel #pagina-combate .combate-rolagem-compacta > .cartao-rolagem > select:nth-of-type(2) {
+    grid-column: 2; grid-row: 1;
+  }
+  #painel #pagina-combate .combate-rolagem-compacta > .cartao-rolagem > .botao-rolar {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    width: 100%;
+    min-width: 0;
+    height: 34px;
+    min-height: 34px;
+    max-height: 34px;
+    margin: 0;
+    padding: 3px 8px;
+    box-sizing: border-box;
+  }
+  #painel #pagina-combate .combate-rolagem-compacta > .cartao-rolagem > .resultado-rolagem {
+    grid-column: 1 / -1;
+    grid-row: 3;
+  }
+  #painel #pagina-combate .combate-rolagem-compacta > .cartao-rolagem > .resultado-rolagem:empty {
+    display: none;
+  }
+}
+
+/* Ajuste final: usar toda a largura disponível nos dois seletores e no botão. */
+@media (min-width: 1181px) {
+  #painel #pagina-combate .combate-coluna .combate-rolagem-compacta > .cartao-rolagem {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 68px;
+    grid-template-rows: 32px 34px;
+    gap: 6px;
+    width: 100%;
+    min-width: 0;
+    align-content: center;
+    justify-items: stretch;
+  }
+  #painel #pagina-combate .combate-coluna .combate-rolagem-compacta > .cartao-rolagem > select:first-of-type {
+    grid-column: 1;
+    grid-row: 1;
+    width: 100%;
+    min-width: 0;
+  }
+  #painel #pagina-combate .combate-coluna .combate-rolagem-compacta > .cartao-rolagem > select:nth-of-type(2) {
+    grid-column: 2;
+    grid-row: 1;
+    width: 100%;
+    min-width: 0;
+  }
+  #painel #pagina-combate .combate-coluna .combate-rolagem-compacta > .cartao-rolagem > button.botao-rolar {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-self: stretch;
+    width: 100%;
+    min-width: 0;
+    height: 34px;
+    margin: 0;
+  }
+  #painel #pagina-combate .combate-coluna .combate-rolagem-compacta > .cartao-rolagem > output.resultado-rolagem:not(:empty) {
+    grid-column: 1 / -1;
+    grid-row: 3;
+  }
+}
+
+/* Seleção de traço ocupa todo o espaço à esquerda do bônus. */
+@media (min-width: 1181px) {
+  #painel #pagina-combate .combate-coluna .combate-rolagem-compacta {
+    align-items: stretch;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  #painel #pagina-combate .combate-coluna .combate-rolagem-compacta > .cartao-rolagem {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 68px;
+    width: 100%;
+    max-width: none;
+    justify-self: stretch;
+    align-self: stretch;
+    box-sizing: border-box;
+  }
+  #painel #pagina-combate .combate-coluna .combate-rolagem-compacta > .cartao-rolagem > #combate-rolagem-traco {
+    grid-column: 1;
+    grid-row: 1;
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    justify-self: stretch;
+  }
+  #painel #pagina-combate .combate-coluna .combate-rolagem-compacta > .cartao-rolagem > #combate-rolagem-bonus {
+    grid-column: 2;
+    grid-row: 1;
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+/* Resultado da rolagem na primeira linha, à direita do modificador. */
+@media (min-width: 1181px) {
+  #painel #pagina-combate .combate-coluna .combate-rolagem-compacta > .cartao-rolagem {
+    grid-template-columns: minmax(0, 1fr) 64px minmax(72px, 92px);
+    grid-template-rows: 32px 34px;
+    align-items: center;
+  }
+  #painel #pagina-combate .combate-coluna .combate-rolagem-compacta > .cartao-rolagem > #combate-rolagem-traco {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  #painel #pagina-combate .combate-coluna .combate-rolagem-compacta > .cartao-rolagem > #combate-rolagem-bonus {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  #painel #pagina-combate .combate-coluna .combate-rolagem-compacta > .cartao-rolagem > #combate-resultado-traco,
+  #painel #pagina-combate .combate-coluna .combate-rolagem-compacta > .cartao-rolagem > #combate-resultado-traco:empty,
+  #painel #pagina-combate .combate-coluna .combate-rolagem-compacta > .cartao-rolagem > #combate-resultado-traco:not(:empty) {
+    display: flex;
+    grid-column: 3;
+    grid-row: 1;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-width: 0;
+    min-height: 32px;
+    max-height: 32px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 2px 4px;
+    overflow: hidden;
+    overflow-wrap: anywhere;
+    font-size: 11px;
+    line-height: 1.05;
+    text-align: center;
+  }
+  #painel #pagina-combate .combate-coluna .combate-rolagem-compacta > .cartao-rolagem > .botao-rolar {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+}
+
+/* Resultado aparece apenas após a rolagem e segue a paleta de leitura escolhida. */
+#painel #pagina-combate .combate-rolagem-compacta #combate-resultado-traco:empty {
+  visibility: hidden !important;
+  border: 0 !important;
+  background: transparent !important;
+}
+#painel #pagina-combate .combate-rolagem-compacta #combate-resultado-traco:not(:empty) {
+  visibility: visible;
+  color: var(--rr-leitura-campo-texto, #352113) !important;
+  background: var(--rr-leitura-campo, #fff6df) !important;
+  border: 1px solid var(--rr-leitura-borda, #9a754a);
+  font-weight: 700;
+  font-size: 12px;
+  white-space: nowrap;
+  overflow-wrap: normal;
+}

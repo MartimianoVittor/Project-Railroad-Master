@@ -1,0 +1,416 @@
+/* Railroad Mestre — espaçamento equilibrado e unificado (desktop).
+ * A página controla o afastamento das bordas da tela; as grades controlam
+ * a distância entre cartões; os próprios cartões não recebem margens extras.
+ * Isolado de até 900px para preservar o layout mobile. */
+@media (min-width: 901px) {
+    :root {
+        --rr-margem-lateral: clamp(13px, 1.6vw, 27px);
+        --rr-margem-superior: clamp(14px, 1.55vw, 25px);
+        --rr-margem-inferior: clamp(14px, 1.55vw, 25px);
+        --rr-intervalo-cartoes: var(--rr-margem-lateral);
+        --rr-intervalo-secoes: clamp(12px, 1.2vw, 20px);
+    }
+
+    /* O espaço abaixo da barra superior vem só do padding-top da página.
+       O fundo principal aparece também nas laterais e na base da viewport. */
+    body:not(.modo-entrada) #painel > .pagina-mestre:not([hidden]),
+    #painel #pagina-combate.pagina-mestre:not([hidden]) {
+        padding: var(--rr-margem-superior) var(--rr-margem-lateral)
+                 var(--rr-margem-inferior);
+        gap: var(--rr-intervalo-secoes);
+        min-height: 0;
+    }
+
+    /* NPCs não possuem barra secundária acima da grade. A primeira linha
+       de cartões começa após uma única margem superior, sem espaço duplicado. */
+    #painel #pagina-npcs > .grade-npcs:not([hidden]) { min-height: 0; }
+
+    /* O gap é o único espaço entre dois cartões primários adjacentes. */
+    #painel :is(.grade-gerenciamento, .grade-diario, .grade-npcs,
+               .grade-ferramentas, .grade-utilitarios) {
+        gap: var(--rr-intervalo-cartoes);
+    }
+    #painel :is(.grade-gerenciamento, .grade-diario, .grade-npcs,
+               .grade-ferramentas, .grade-utilitarios) > * {
+        margin: 0;
+    }
+
+    /* Evita somar margem de títulos ao gap entre seções. */
+    #painel #pagina-diario .barra-sessoes,
+    #painel #pagina-utilitarios .util-barra-consultas,
+    #painel .pagina-mestre > .nota-escopo {
+        margin-block: 0;
+    }
+
+    #painel #pagina-utilitarios .util-area-principal,
+    #painel #pagina-viagem .vg-grade,
+    #painel #pagina-combate .combate-grade {
+        gap: var(--rr-intervalo-cartoes);
+    }
+    #painel #pagina-viagem .vg-app,
+    #painel #pagina-fichas .conteudo-fichas {
+        gap: var(--rr-intervalo-secoes);
+    }
+
+
+    /* Viagens: cabeçalho compacto sem empilhar título e seletores.
+       Preserva o progresso e as quatro ações, sem alterar o mobile. */
+    #painel #pagina-viagem .vg-top {
+        grid-template-columns: minmax(300px, 1fr) minmax(115px, .8fr) minmax(255px, 270px);
+        padding: 7px 11px;
+        gap: 10px;
+    }
+    #painel #pagina-viagem .vg-top-contexto {
+        flex-direction: row;
+        align-items: center;
+        gap: 12px;
+    }
+    #painel #pagina-viagem .vg-top-contexto h2 {
+        flex: 0 0 auto;
+    }
+    #painel #pagina-viagem .vg-seletores {
+        flex: 1 1 auto;
+        gap: 7px;
+    }
+    #painel #pagina-viagem .vg-seletores label {
+        gap: 2px;
+        font-size: 11px;
+    }
+    #painel #pagina-viagem .vg-seletores select {
+        height: 30px;
+        padding-block: 4px;
+    }
+    #painel #pagina-viagem .vg-top-acoes {
+        gap: 4px 6px;
+    }
+    #painel #pagina-viagem .vg-top-acoes .botao {
+        padding: 2px 6px;
+        min-height: 25px;
+        line-height: 1.05;
+    }
+
+    /* Sessões, Fichas, Combates, Utilitários e Viagens: uma só altura.
+       NPCs não tem barra própria: seus controles ficam no primeiro cartão. */
+    #painel #pagina-diario > .barra-sessoes,
+    #painel #pagina-fichas > .barra-consulta-fichas,
+    #painel #pagina-combate > .combate-barra,
+    #painel #pagina-utilitarios > .util-barra-consultas,
+    #painel #pagina-viagem .vg-top {
+        box-sizing: border-box;
+        flex: 0 0 66px;
+        height: 66px;
+        min-height: 66px;
+        max-height: 66px;
+        padding: 6px 12px;
+        margin: 0;
+        align-items: center;
+    }
+    /* Combate: manter trilho e ações integralmente dentro de 66px. */
+    #painel #pagina-combate .combate-trilho { align-items: center; }
+    #painel #pagina-combate .combate-turno {
+        box-sizing: border-box;
+        height: 46px;
+        min-height: 0;
+        padding: 3px 7px;
+    }
+    #painel #pagina-combate .combate-barra-botoes .botao {
+        box-sizing: border-box;
+        min-height: 34px;
+        padding: 4px 8px;
+    }
+    /* Utilitários: dois campos à esquerda e os três botões alinhados à direita.
+       Sem quebra dos botões nem segunda linha no desktop. */
+    #painel #pagina-utilitarios > .util-barra-consultas {
+        display: grid;
+        grid-template-columns: minmax(175px, .95fr) minmax(190px, 1.15fr) max-content;
+        column-gap: 12px;
+        row-gap: 0;
+        align-items: center;
+    }
+    #painel #pagina-utilitarios .util-barra-acoes {
+        grid-column: 3;
+        grid-row: 1;
+        display: flex;
+        flex-wrap: nowrap;
+        justify-self: end;
+        align-self: center;
+        gap: 6px;
+    }
+    #painel #pagina-utilitarios .util-form-campo { gap: 3px; }
+    #painel #pagina-utilitarios .util-form-campo :is(input, select) {
+        min-height: 32px;
+        height: 32px;
+    }
+    #painel #pagina-utilitarios .util-barra-acoes .botao {
+        min-height: 32px;
+        padding: 5px 8px;
+        white-space: nowrap;
+    }
+    #painel #pagina-viagem .vg-top-acoes .botao {
+        box-sizing: border-box;
+        min-height: 22px;
+        padding: 2px 6px;
+        line-height: 1.05;
+    }
+    /* Sessões: manter o quadro de desenho e o cartão de notas lado a lado.
+       O título do quadro é removido apenas no HTML, não os seus recursos. */
+    #painel #pagina-diario .grade-diario {
+        grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+        grid-template-rows: minmax(0, 1fr);
+    }
+
+    /* Mecânicas: o catálogo tinha padding inferior de 15px e recuos da
+       área rolável que se somavam; reduzir apenas dentro deste cartão.
+       Mantém uma pequena folga da barra de rolagem às molduras. */
+    #painel #pagina-utilitarios .util-catalogo {
+        padding-bottom: 6px;
+    }
+    #painel #pagina-utilitarios .util-catalogo-topo {
+        padding: 9px 9px 7px;
+    }
+    #painel #pagina-utilitarios .util-catalogo > .util-lista-mecanicas {
+        margin: 4px 6px 0;
+        padding: 5px 4px 6px;
+        scroll-padding-block: 6px;
+    }
+}
+
+/* Entre 901 e 1040px a regra antiga usava 65dvh para o catálogo; com o
+   respiro externo isso fazia a moldura ultrapassar a área útil da página. */
+@media (min-width: 901px) and (max-width: 1040px) {
+    #painel #pagina-utilitarios .util-area-principal {
+        grid-template-rows: minmax(0, 1fr);
+    }
+    #painel #pagina-utilitarios .util-catalogo {
+        height: auto;
+        max-height: 100%;
+    }
+}
+
+@media (min-width: 901px) and (max-width: 1150px) {
+    #painel #pagina-viagem .vg-top {
+        grid-template-columns: minmax(280px, 1.3fr) minmax(100px, .7fr) minmax(225px, 250px);
+    }
+    #painel #pagina-viagem .vg-top-acoes {
+        grid-column: auto;
+        justify-self: stretch;
+        width: auto;
+    }
+    #painel #pagina-viagem .vg-top-acoes .botao { font-size: 10px; padding-inline: 3px; }
+    #painel #pagina-utilitarios .util-barra-acoes .botao { font-size: .68rem; padding-inline: 5px; }
+}
+
+/* Mesa 45: controles de Viagens em linha única, exclusão à direita. */
+@media (min-width: 901px) {
+  #painel #pagina-viagem .vg-top {
+    grid-template-columns: minmax(205px, 250px) minmax(105px, 1fr) auto;
+    column-gap: 12px;
+  }
+  #painel #pagina-viagem .vg-top-contexto {
+    min-width: 0;
+  }
+  #painel #pagina-viagem .vg-seletores {
+    width: 100%;
+    flex: none;
+    gap: 5px;
+  }
+  #painel #pagina-viagem .vg-top-acoes {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 5px;
+    grid-column: auto;
+    width: auto;
+    min-width: 0;
+  }
+  #painel #pagina-viagem .vg-top-acoes .botao {
+    flex: 0 0 auto;
+    width: auto;
+    min-width: 0;
+    white-space: nowrap;
+    font-size: clamp(9px, .79vw, 12px);
+    padding-inline: clamp(3px, .45vw, 7px);
+  }
+  #painel #pagina-viagem #vg-excluir-grupo {
+    margin-left: 7px;
+  }
+}
+
+/* Ajuste solicitado: dar prioridade horizontal às ações sem alterar os 66px
+   do cabeçalho. Regras anteriores de telas intermediárias ficam sobrescritas. */
+@media (min-width: 901px) {
+  #painel #pagina-viagem .vg-top {
+    grid-template-columns: clamp(190px, 18vw, 240px) minmax(150px, .62fr) minmax(440px, 1.38fr);
+    column-gap: clamp(6px, .65vw, 11px);
+  }
+  #painel #pagina-viagem .vg-progresso { min-width: 0; width: 100%; }
+  #painel #pagina-viagem .vg-progresso progress { width: 100%; }
+  #painel #pagina-viagem .vg-top-acoes {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    align-items: center;
+    gap: clamp(4px, .45vw, 8px);
+    min-width: 0;
+    width: 100%;
+  }
+  #painel #pagina-viagem .vg-top-acoes .botao {
+    flex: 1 1 auto;
+    width: auto;
+    min-width: 0;
+    padding: 2px clamp(5px, .65vw, 11px);
+    font-size: clamp(10px, .88vw, 13px);
+    min-height: 25px;
+    max-height: 30px;
+    line-height: 1.05;
+    white-space: nowrap;
+  }
+  #painel #pagina-viagem #vg-excluir-grupo {
+    flex: 0 0 auto;
+    margin-left: auto;
+  }
+}
+
+/* Ajuste final: quatro ações de largura e altura idênticas, sem mudar
+   a altura externa de 66px da barra de Viagens. */
+@media (min-width: 901px) {
+  #painel #pagina-viagem .vg-top-acoes {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    align-items: center;
+    gap: clamp(4px, .45vw, 8px);
+    width: 100%;
+    min-width: 0;
+  }
+  #painel #pagina-viagem .vg-top-acoes .botao,
+  #painel #pagina-viagem #vg-excluir-grupo {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    height: 36px;
+    min-height: 36px;
+    max-height: 36px;
+    margin: 0;
+    padding: 2px 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    line-height: 1.1;
+    white-space: normal;
+  }
+}
+
+
+/* Botões das barras principais: dimensões idênticas entre as cinco páginas.
+   Restringe-se ao desktop; os botões internos dos cartões não são afetados. */
+@media (min-width: 901px) {
+  #painel {
+    --rr-botao-barra-largura: clamp(104px, 10vw, 136px);
+    --rr-botao-barra-altura: 36px;
+  }
+  #painel #pagina-diario .acoes-barra-sessoes > .botao,
+  #painel #pagina-fichas .modos-consulta-fichas > .botao,
+  #painel #pagina-combate .combate-barra-botoes > .botao,
+  #painel #pagina-utilitarios .util-barra-acoes > .botao,
+  #painel #pagina-viagem .vg-top-acoes > .botao {
+    box-sizing: border-box;
+    flex: 0 0 var(--rr-botao-barra-largura);
+    width: var(--rr-botao-barra-largura);
+    min-width: var(--rr-botao-barra-largura);
+    max-width: var(--rr-botao-barra-largura);
+    height: var(--rr-botao-barra-altura);
+    min-height: var(--rr-botao-barra-altura);
+    max-height: var(--rr-botao-barra-altura);
+    padding: 3px 6px;
+    margin: 0;
+    font-size: clamp(10px, .82vw, 12px);
+    line-height: 1.12;
+    white-space: normal;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  #painel #pagina-viagem .vg-top-acoes {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 5px;
+    justify-content: flex-end;
+  }
+}
+
+
+/* Viagens: seletores simétricos, ações fixas e progresso flexível.
+   O progresso absorve todo o espaço horizontal que sobrar. */
+@media (min-width: 901px) {
+  #painel #pagina-viagem .vg-top {
+    display: grid;
+    grid-template-columns: 224px minmax(0, 1fr) max-content;
+    column-gap: 9px;
+    align-items: center;
+  }
+  #painel #pagina-viagem .vg-top-contexto {
+    width: 224px;
+    min-width: 0;
+  }
+  #painel #pagina-viagem .vg-seletores {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+    width: 100%;
+    min-width: 0;
+  }
+  #painel #pagina-viagem .vg-seletores label,
+  #painel #pagina-viagem .vg-seletores select {
+    box-sizing: border-box;
+    min-width: 0;
+    width: 100%;
+  }
+  #painel #pagina-viagem .vg-progresso {
+    min-width: 0;
+    width: 100%;
+    max-width: none;
+  }
+  #painel #pagina-viagem .vg-progresso progress {
+    display: block;
+    width: 100%;
+    max-width: none;
+  }
+  #painel #pagina-viagem .vg-top-acoes {
+    display: flex;
+    width: max-content;
+    min-width: 0;
+    flex-wrap: nowrap;
+    gap: 5px;
+    justify-content: flex-end;
+  }
+  #painel #pagina-viagem .vg-top-acoes > .botao:not([hidden]) {
+    flex: 0 0 var(--rr-botao-barra-largura);
+    width: var(--rr-botao-barra-largura);
+    min-width: var(--rr-botao-barra-largura);
+    max-width: var(--rr-botao-barra-largura);
+  }
+}
+
+/* Separação segura entre progresso e botões de Viagens. */
+@media (min-width: 901px) {
+  #painel #pagina-viagem .vg-top {
+    column-gap: 14px;
+  }
+  #painel #pagina-viagem .vg-progresso {
+    box-sizing: border-box;
+    width: calc(100% - 32px);
+    max-width: calc(100% - 32px);
+    min-width: 0;
+    justify-self: start;
+    overflow: hidden;
+  }
+  #painel #pagina-viagem .vg-progresso progress {
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+  }
+}

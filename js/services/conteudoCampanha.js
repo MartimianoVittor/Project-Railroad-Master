@@ -1,9 +1,9 @@
-import { obterImagensStorage } from './imagensStorage.js?v=mesa-39';
+import { obterImagensStorage } from './imagensStorage.js?v=mesa-44';
 /** Persistência remota de sessões e NPCs, com transações e controle de revisão.
  * Requer a migração supabase/012_integridade_conteudo_mestre.sql.
  */
-import { obterCliente, exigir } from '../core/cliente.js?v=mesa-39';
-import { normalizarNpc } from '../modules/npcs.js?v=mesa-39';
+import { obterCliente, exigir } from '../core/cliente.js?v=mesa-44';
+import { normalizarNpc } from '../modules/npcs.js?v=mesa-44';
 
 function revisaoRecebida(resultado) {
     const linha = Array.isArray(resultado) ? resultado[0] : resultado;

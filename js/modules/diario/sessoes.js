@@ -1,4 +1,4 @@
-import { imagemSegura } from '../../services/imagensStorage.js?v=mesa-39';
+import { imagemSegura } from '../../services/imagensStorage.js?v=mesa-44';
 /** Regras das sessões e normalização dos dados guardados. */
 const LIMITE_NOTAS = 50000;
 export const LIMITE_SESSOES = 200;

@@ -29,6 +29,22 @@ A aplicação funciona diretamente no navegador, com **modo local** e recursos o
 - [x] **Proteção de gravações:** controle de revisão de NPCs e Diário, gravações transacionais e recuperação assistida de sincronização.
 - [ ] **Expansões futuras:** melhorias contínuas na experiência de jogo e nas ferramentas do Mestre.
 
+## 💻 Desenvolvimento e qualidade
+
+O projeto mantém a arquitetura de módulos ES nativos, com testes de regressão e
+checagens de integridade dos arquivos locais. Para validar antes da publicação:
+
+```bash
+npm run validar
+npm run preparar:publicacao
+```
+
+O segundo comando normaliza as versões de cache dos recursos locais de acordo com
+`cacheVersion` em `package.json`; a operação é idempotente. Para trabalhar com o
+repositório, consulte [Guia de desenvolvimento](docs/GUIA_DESENVOLVIMENTO.md) e
+[Arquitetura](docs/ARQUITETURA.md). Os testes do frontend não verificam, por si só,
+as políticas e migrações do Supabase.
+
 ## 🛠️ Tecnologias
 
 - **HTML5** — estrutura das páginas e janelas.

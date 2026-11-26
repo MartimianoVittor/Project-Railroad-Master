@@ -1,5 +1,5 @@
-import { normalizarReferencias } from './imagensStorage.js?v=mesa-39';
-import { LIMITE_NPCS, normalizarNpc, validarNpc } from '../modules/npcs.js?v=mesa-39';
+import { normalizarReferencias } from './imagensStorage.js?v=mesa-44';
+import { LIMITE_NPCS, normalizarNpc, validarNpc } from '../modules/npcs.js?v=mesa-44';
 
 const PREFIXO = 'railroad_mestre_npcs:v1';
 

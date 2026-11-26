@@ -1,5 +1,5 @@
-import { elemento, porId } from '../../core/dom.js?v=mesa-39';
-import { distanciaDoDia, formatarNumero, limiteDescanso, inteiroNaoNegativo, velocidade } from './modelo.js?v=mesa-39';
+import { elemento, porId } from '../../core/dom.js?v=mesa-44';
+import { distanciaDoDia, formatarNumero, limiteDescanso, inteiroNaoNegativo, velocidade } from './modelo.js?v=mesa-44';
 
 export function mostrarPainelViagem({ viagens, viagem, grupo, temCampanha, selecionado, aoSelecionar, aoEditar, aoRemover }) {
     const seletorViagem = porId('vg-viagem');

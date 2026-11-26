@@ -5,7 +5,10 @@
   "type": "module",
   "scripts": {
     "test": "node --test",
-    "preparar:publicacao": "node scripts/preparar-publicacao.mjs && node --test"
+    "verificar:recursos": "node scripts/verificar-referencias.mjs",
+    "verificar:sintaxe": "node scripts/verificar-sintaxe.mjs",
+    "validar": "npm run verificar:recursos && npm run verificar:sintaxe && npm test",
+    "preparar:publicacao": "node scripts/preparar-publicacao.mjs && npm run validar"
   },
-  "cacheVersion": "mesa-39"
+  "cacheVersion": "mesa-44"
 }
